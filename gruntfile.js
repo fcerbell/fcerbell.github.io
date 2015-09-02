@@ -71,7 +71,7 @@ module.exports = function(grunt) {
                 command: "jekyll serve  --no-watch"
             },
             jekyllBuild: {
-                command: "jekyll build"
+                command: "jekyll build --drafts"
             }
         }
     });
