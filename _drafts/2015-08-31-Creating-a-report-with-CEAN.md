@@ -6,7 +6,7 @@ homedisplay: featimg
 author: fcerbell
 description: Comment créer un graphique D3 sur Couchbase en utilisant la pile CEAN
 tags: [cean, couchbase, D3, nodejs, express, angular, reporting]
-category: [tutorial, tutoriel]
+category: tutos
 ---
 
 [Couchbase], dispose d'une pile complète CEAN(Coucubase Express Angular NodeJS) permettant de développer rapidement une application [NodeJS]. Nous allons voir dans ce tutoriel comment créer un service côté serveur, un controlleur et des vues côté client pour obtenir une représentation graphique et moderne des données.

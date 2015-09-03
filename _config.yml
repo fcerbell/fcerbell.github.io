@@ -15,11 +15,14 @@ author_default_avatar: /profile-pic.jpg
 #tumblr: "#"
 #pinterest: "#"
 #instagram: "#"
-#twitter: "#"
-#facebook: "#"
-#youtube: "#"
+twitter: "http://www.twitter.com/fcerbelle"
+facebook: "http://www.facebook.com/francois.cerbelle"
+youtube: "http://www.youtube.com/user/FrancoisCerbelle"
 #vimeo: "#"
 #soundcloud: "#"
+
+gems:
+    - jekyll-sitemap
 
 encoding: utf-8
 defaults:
