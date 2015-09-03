@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 author: fcerbell
 title: Connexion JDBC depuis JasperReports Server à Couchbase
 categories: tutos
