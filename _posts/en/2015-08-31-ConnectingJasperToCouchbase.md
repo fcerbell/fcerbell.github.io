@@ -6,32 +6,29 @@ layout: post
 description:
 category: tutos
 tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
-published: false
+#published: false
 ---
 
-[Couchbase], une base BigData NoSQL, propose désormais un nouveau langage, N1QL, pour effectuer des requêtes. L'idée de cet article est de montrer comment utiliser le nouveau pilote JDBC de [Couchbase] dans [JasperReports Server][jrs] (Nous utiliserons l'abréviation JRS dans la suite de cet article), de manière à exécuter des requêtes SQL sur la base [Couchbase].
+[Couchbase], a NOSQL BigData database, now offers a new language, N1QL, to write queries. This article will show you how to use the new [Couchbase] JDBC driver in [JasperReports Server][jrs] (I will use tje JRS acronym from now), in order to execute SQL queries on the [Couchbase] database.
 
-Pré-requis
-==========
-Comme pour tout tutoriel, il y a des pré-requis nécessaires. Voici ceux concernant celui-ci.
+Prerequisites
+=============
+As for any tutorial, there are needed prerequisites. Here are them for this tuto.
 
 Couchbase Server
 ----------------
-En premier lieu, il faut bien évidemment disposer d'un cluster [Couchbase] au minimum en version 4.0. À l'heure où j'écris ces lignes, il est disponible en [version beta][cb40beta] sur le site de [Couchbase]. Ce cluster doit comporter au moins un nœud avec le service *Index* et au moins un nœud avec le service *Query*.
-
+First, you need a [Couchbase] cluster v4.0 or later. As I am writing this text, there is a [beta version][cb40beta] available on [Couchbase]'s website. This cluster needs to have at least one node with the *Index* service and one node with the *Query* service.
 
 JasperReports Server
 --------------------
-En second, il faut disposer d'un JRS fonctionnel. Le plus simple est de télécharger la version d'évaluation. Elle comporte toutes les fonctionnalités commerciales et permet de tester l'outil pendant un mois à partir de l'installation. Cette version d'évaluation présente
-l'avantage d'embarquer un serveur d'application (Tomcat) et un serveur de base de données (PostgreSQL). Ainsi, en acceptant les choix par défaut, l'application sera installée avec tous ses pré-requis.
+Then, you will need a working JRS. The easiest is to download the evaluation version. It has all the commercial features and enables you to test the server for one month from the installation date. This evaluation edition embeds an application server (Tomcat) and a database server (PostgreSQL). So, by accepting all the default choices, the server will be installed with all its prerequisites.
 
-Pilote JDBC Couchbase
+Couchbase JDBC driver
 ---------------------
-Enfin, il faut disposer du pilote JDBC fourni par [Couchbase]. Il n'est pas encore disponible publiquement pour l'instant, mais il est possible de le demander à Couchbase.
+Finally, you need the JDBC driver provided by [Couchbase]. It is currently not publicly available but you can ask Couchbase for it.
 
-Créer la structure de répertoires
+Folder structure creation
 =================================
-
 Nous allons commencer par créer une structure de répertoires pour ranger les différents éléments du tutoriel proprement en suivant les bonnes pratiques. Cette partie n'est pas obligatoire pour ajouter le pilote Couchbase et créer une source de données, cependant, elle permet de respecter les bonnes pratiques et servira de base pour d'autres articles à propos de JRS.
 
 Il faut commencer par se connecter à JRS en tant que *jasperadmin* avec le mot de passe par défaut *jasperadmin* (Les bonnes pratiques veulent que l'on ne se connecte **jamais** avec le compte *superuser*, celui-ci ne doit servir qu'à administrer l'instance de JRS). *jasperadmin* est un compte disposant du rôle d'administration. Il est automatiquement créé lors de la création d'une organisation. Dans notre cas, avec une installation d'évaluation, il existe et nous allons l'utiliser pour ajouter la source de données et la rendre disponible aux autres utilisateurs. Par défaut, *jasperadmin* peut lire et écrire partout (ou presque) alors que *joeuser* (l'utilisateur par défaut créé à l'installation) ne peut écrire que dans un seul répertoire.
