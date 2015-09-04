@@ -1,0 +1,11 @@
+---
+layout: default
+title: Blog
+uid: blog
+description:
+---
+<div class="home">
+  <h1>Posts</h1>
+  {% include post_list.html %}
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+</div>

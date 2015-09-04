@@ -1,124 +1,73 @@
-name: Sur le divan... / On the couch...
+# Site settings
 host: 0.0.0.0
-description: Le blog qui raconte tout
-url: #http://www.cerbelle.net/
+title: "Sur le divan... / On the couch"
+description: "Le blog qui raconte tout !"
+email: francois@cerbelle.net
 baseurl: #place folder name if site is served in subfolder
-permalink: /:title/
-paginate: 8
-paginate_path: /page/:num/
-tag_dir: /tag
-category_dir: /category
-author_dir: /author
-author_title_prefix: 'À propos de '
-media_folder: /img
-author_default_avatar: /profile-pic.jpg
+url: #http://www.cerbelle.net/
+twitter_username: fcerbelle
+github_username:  fcerbell
 #tumblr: "#"
 #pinterest: "#"
 #instagram: "#"
-twitter: "http://www.twitter.com/fcerbelle"
-facebook: "http://www.facebook.com/francois.cerbelle"
-youtube: "http://www.youtube.com/user/FrancoisCerbelle"
-#vimeo: "#"
-#soundcloud: "#"
+facebook: "francois.cerbelle"
+youtube: "FrancoisCerbelle"
+twitter: "fcerbelle"
+github: "fcerbell"
 
-gems:
-    - jekyll-sitemap
+# Build settings
+markdown: kramdown
+#permalink: pretty
+permalink: /:title/
+#permalink: :year/:month/:day/:title.html
 
 encoding: utf-8
 defaults:
   -
     scope:
       path: ""
-      type: "posts"
+    values:
+      layout: "default"
+      lang: "fr"
+  -
+    scope:
+      path: "pages/fr"
+    values:
+      description: "Site personnel de François Cerbelle"
+  -
+    scope:
+      path: "pages/en"
+    values:
+      lang: "en"
+      description: "François Cerbelle's web site"
+  -
+    scope:
+      path: "_posts"
     values:
       layout: "post"
-      type: "standard"
-      homedisplay: "featimg"
+  -
+    scope:
+      path: "_posts/en"
+    values:
+      lang: "en"
+  -
+    scope:
+      path: "_drafts"
+    values:
+      layout: "post"
+  -
+    scope:
+      path: "_drafts/en"
+    values:
+      lang: "en"
+
+disqus:
+    shortname: "surledivan"
+
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
 relative_permalinks: false
 exclude: [.git, .gitignore, sass, .sass-cache, package.json, gruntfile.js, node_modules, README.md, documentation]
-
-# prose.io configurations
-prose:
-  media: "img"
-  metadata:
-    _posts:
-      - name: "title"
-        field:
-          element: "text"
-          label: "title"
-      - name: "layout"
-        field:
-          element: "select"
-          label: "Layout"
-          help: "display post at full width or with sidebar"
-          options:
-            - name: "with sidebar"
-              value: "post"
-            - name: "full width"
-              value: "post_full"
-      - name: "author"
-        field:
-          element: "text"
-          label: "Author"
-          help: "author id as defined within _data/authors.yml"
-          type: "text"
-      - name: "featimg"
-        field:
-          element: "text"
-          label: "Featured Image"
-          help: "featured image within the img-folder"
-          type: "text"
-      - name: "type"
-        field:
-          element: "select"
-          label: "Post Type"
-          help: "each type has some special feature"
-          options:
-            - name: "Standard"
-              value: "standard"
-            - name: "Image"
-              value: "image"
-            - name: "Gallery"
-              value: "gallery"
-            - name: "Audio"
-              value: "audio"
-            - name: "YouTube"
-              value: "youtube"
-            - name: "Vimeo"
-              value: "vimeo"
-      - name: "homedisplay"
-        field:
-          element: "select"
-          label: "Home Display"
-          help: "decide whether to display embedded element (for post types: audio, youtube, vimeo) or Featured Image on home page"
-          options:
-            - name: "Featured Image"
-              value: "featimg"
-            - name: "Embedded Element"
-              value: "iframe"
-      - name: "vimeo-embed"
-        field:
-          element: "text"
-          label: "Vimeo Embedding Code"
-          help: "Set post type to vimeo in order for this to work"
-      - name: "gallery-id"
-        field:
-          element: "text"
-          label: "Gallery ID"
-          help: "ID of the gallery defined within _data/galleries.yml - use include in content to use"
-      - name: "audio-embed"
-        field:
-          element: "text"
-          label: "Audio Embedding Code"
-          help: "Set post type to audio in order for this to work"
-      - name: "yt-video-id"
-        field:
-          element: "text"
-          label: "YouTube Video ID"
-          help: "Set post type to youtube in order for this to work. Do not set featured image, as the youtube video thumbnail will be used"
-          type: "text"
 
