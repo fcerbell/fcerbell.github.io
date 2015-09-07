@@ -6,7 +6,7 @@ layout: post
 description:
 category: tutos
 tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
-published: false
+#published: false
 ---
 
 [Couchbase], a NOSQL BigData database, now offers a new language, N1QL, to write queries. This article will show you how to use the new [Couchbase] JDBC driver in [JasperReports Server][jrs] (I will use tje JRS acronym from now), in order to execute SQL queries on the [Couchbase] database.
@@ -28,24 +28,25 @@ Couchbase JDBC driver
 Finally, you need the JDBC driver provided by [Couchbase]. It is currently not publicly available but you can ask Couchbase for it.
 
 Folder structure creation
-=================================
-Nous allons commencer par créer une structure de répertoires pour ranger les différents éléments du tutoriel proprement en suivant les bonnes pratiques. Cette partie n'est pas obligatoire pour ajouter le pilote Couchbase et créer une source de données, cependant, elle permet de respecter les bonnes pratiques et servira de base pour d'autres articles à propos de JRS.
+=========================
+We will start by creating a folder structure to place the different elements of this tutorial following the best practices. This part is not mandatory to add Couchbase's JDBC driver and to create a data source, nevertheless it is better and will be assumed to be executed in other tutorials.
 
-Il faut commencer par se connecter à JRS en tant que *jasperadmin* avec le mot de passe par défaut *jasperadmin* (Les bonnes pratiques veulent que l'on ne se connecte **jamais** avec le compte *superuser*, celui-ci ne doit servir qu'à administrer l'instance de JRS). *jasperadmin* est un compte disposant du rôle d'administration. Il est automatiquement créé lors de la création d'une organisation. Dans notre cas, avec une installation d'évaluation, il existe et nous allons l'utiliser pour ajouter la source de données et la rendre disponible aux autres utilisateurs. Par défaut, *jasperadmin* peut lire et écrire partout (ou presque) alors que *joeuser* (l'utilisateur par défaut créé à l'installation) ne peut écrire que dans un seul répertoire.
+First, we have to login into JRS as *jasperadmin* with the default password *jasperadmin* (Best practices **strongly** discourage to connect as *superuser*, this account is designed to administrate the JRS instance, at the instance level). *jasperadmin* is an accound with the administrator role. It is automatically created when an organization is created. In our case, with an evaluation installation, it exists and we will use it to add the data source and make it available to the other users. By default, *jasperadmin* can read and write everywhere whereas *joeuser* (the default simple user automatically created) can only write in a single repertoire.
 
-Lorsqu'un utilisateur se connecte à JRS, il accède au référentiel de son organisation. Le référentiel est similaire à un répertoire partagé, avec des sous-répertoires et des objets. Il est possible de donner ou non des permissions sur les répertoires et les objets à des utilisateurs individuellement ou à des rôles (groupes).
+When a user connects to JRS, he goes to his organization's repository. The repository is like a shared folder, with sub-folders and objects. It is possible to give (or not) permissions on the folders and objects, to named users or to roles (groups).
 
-Il faut commencer par aller dans le référentiel en ouvrant le menu *Afficher*, puis en sélectionnant *Référentiel* :
+We have to open the repository, by opening the *View* menu and selecting *Repository* item :
 
 ![Menu Afficher/Référentiel]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-01.png)
 
-Une instance de JRS peut être disponible en mode SaaS. Cela signifie qu'elle peut accepter les connections de *Jean Dupont* de la société *JoliesFleurs* et celles de *Jean Dupont* de la société *Fleurs pour tous*, chacun ne pourra accéder qu'aux données de sa société, à travers de modèles de rapports propres à sa société ou partagés, le tout dans une interface aux couleurs de sa société. Il y a donc des emplacements privés par organisation et d'autres communs. Dans le cadre de notre tutoriel, nous allons placer les éléments de connexion dans la zone commune pour que toutes les organisations puissent utiliser cette connexion. Ce sera donc un répertoire projet dans le répertoire commun : */Public/WorldDevelopment*. Commençons par faire un clic droit sur le répertoire *Public* pour créer un nouveau dossier :
+A JRS instance can be available in SaaS. It means that it can accept connections from *John Doe*/*BeautifulFlowers* and from *John Doe*/*Flowers for everyone*, each of them will only be able to see his company's data through his company's report templates (or shared templates), in a customized user interface (colors, logo, layout, ...). So, there are private locations for each company (organization) and common shared locations. In the tutorial, we will place the data source in the common area so that every organization will be able to use it. We will begin by creating a project folder in this place : */Public/WorldDevelopment*. Right clic on the */Public* folder to create a new sub-folder :
 
 ![Menu Nouveau/Dossier]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-02.png)
 
-Saisissons ensuite son nom *WorldDevelopment* :
+Enter the folder's name *WorldDevelopment* :
 
 ![Création du dossier du projet]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-03.png)
+
 
 Parmi les éléments que nous allons créer, il y a des éléments techniques (les sources de données, les requêtes, les logos, les invites, ...) et les éléments métier (modèles de rapports, rapports, affichages à la demande, tableaux de bord, ...). Les éléments métier dépendent des éléments techniques pour pouvoir fonctionner. En revanche, autant l'utilisateur métier final souhaite voir les éléments métiers, autant il n'est pas intéressé par leurs dépendances techniques. Il est donc utile de les rendre utilisables par l'utilisateur final, sans lui laisser les voir pour ne pas polluer son interface. Nous allons donc créer un sous-répertoire technique dans lequel nous rangerons tous les éléments pour lesquels l'utilisateur final doit avoir les permissions d'utilisation, sans les permissions de listage : */Public/WorldDevelopment/Resources*.
 
