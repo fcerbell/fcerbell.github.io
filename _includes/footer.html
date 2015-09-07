@@ -13,52 +13,64 @@
 
     <div class="footer-col-2 column">
       <ul>
-        {% if site.pinterest %}<li>
-            <a href="http://www.pinterest.com/{{ site.pinterest }}">
+        {% if site.pinterest_username %}<li>
+            <a href="http://www.pinterest.com/{{ site.pinterest_username }}">
                 <span class="icon"><i class="fa fa-pinterest"></i></span>
-                <span class="username">{{ site.pinterest}}</span>
+                <span class="username">{{ site.pinterest_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.instagram %}<li>
-            <a href="http://www.instagram.com/{{ site.instagram }}">
+        {% if site.instagram_username %}<li>
+            <a href="http://www.instagram.com/{{ site.instagram_username }}">
                 <span class="icon"><i class="fa fa-instagram"></i></span>
-                <span class="username">{{ site.instagram}}</span>
+                <span class="username">{{ site.instagram_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.twitter %}<li>
-            <a href="http://www.twitter.com/{{ site.twitter }}">
+        {% if site.twitter_username %}<li>
+            <a href="http://www.twitter.com/{{ site.twitter_username }}">
                 <span class="icon"><i class="fa fa-twitter"></i></span>
-                <span class="username">{{ site.twitter}}</span>
+                <span class="username">{{ site.twitter_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.facebook %}<li>
-            <a href="http://www.facebook.com/{{ site.facebook }}">
+        {% if site.facebook_username %}<li>
+            <a href="http://www.facebook.com/{{ site.facebook_username }}">
                 <span class="icon"><i class="fa fa-facebook"></i></span>
-                <span class="username">{{ site.facebook}}</span>
+                <span class="username">{{ site.facebook_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.youtube %}<li>
-            <a href="http://www.youtube.com/{{ site.youtube }}">
+        {% if site.youtube_username %}<li>
+            <a href="http://www.youtube.com/{{ site.youtube_username }}">
                 <span class="icon"><i class="fa fa-youtube"></i></span>
-                <span class="username">{{ site.youtube}}</span>
+                <span class="username">{{ site.youtube_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.vimeo %}<li>
-            <a href="http://www.vimeo.com/{{ site.vimeo }}">
+        {% if site.vimeo_username %}<li>
+            <a href="http://www.vimeo.com/{{ site.vimeo_username }}">
                 <span class="icon"><i class="fa fa-vimeo"></i></span>
-                <span class="username">{{ site.vimeo}}</span>
+                <span class="username">{{ site.vimeo_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.soundcloud %}<li>
-            <a href="http://www.soundcloud.com/{{ site.soundcloud }}">
+        {% if site.soundcloud_username %}<li>
+            <a href="http://www.soundcloud.com/{{ site.soundcloud_username }}">
                 <span class="icon"><i class="fa fa-soundcloud"></i></span>
-                <span class="username">{{ site.soundcloud}}</span>
+                <span class="username">{{ site.soundcloud_username}}</span>
             </a>
         </li> {% endif %}
-        {% if site.github %}<li>
-            <a href="http://www.github.com/{{ site.github }}">
+        {% if site.github_username %}<li>
+            <a href="http://www.github.com/{{ site.github_username }}">
                 <span class="icon"><i class="fa fa-github"></i></span>
-                <span class="username">{{ site.github}}</span>
+                <span class="username">{{ site.github_username}}</span>
+            </a>
+        </li> {% endif %}
+        {% if site.tumblr_username %}<li>
+            <a href="http://www.tumblr.com/{{ site.tumblr_username }}">
+                <span class="icon"><i class="fa fa-tumblr"></i></span>
+                <span class="username">{{ site.tumblr_username}}</span>
+            </a>
+        </li> {% endif %}
+        {% if site.linkedin_username %}<li>
+            <a href="http://www.linkedin.com/in/{{ site.linkedin_username }}">
+                <span class="icon"><i class="fa fa-linkedin"></i></span>
+                <span class="username">{{ site.linkedin_username}}</span>
             </a>
         </li> {% endif %}
       </ul>
