@@ -8,7 +8,7 @@ category: tutos
 tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
 ---
 
-[Couchbase], une base BigData NoSQL, propose désormais un nouveau langage, N1QL, pour effectuer des requêtes. L'idée de cet article est de montrer comment utiliser le nouveau pilote JDBC de [Couchbase] dans [JasperReports Server][jrs] (Nous utiliserons l'abréviation JRS dans la suite de cet article), de manière à exécuter des requêtes SQL sur la base [Couchbase].
+[Couchbase], une base BigData NoSQL, propose désormais un nouveau langage, N1QL, pour effectuer des requêtes. L'idée de cet article est de montrer comment utiliser le nouveau pilote JDBC de [Couchbase] dans [JasperReports Server][jrs] (Nous utiliserons l'abréviation JRS dans la suite de cet article), de manière à exécuter des requêtes SQL(92) sur la base [Couchbase].
 
 Pré-requis
 ==========
@@ -109,7 +109,7 @@ Le pilote est désormais disponible dans JRS.
 Créer la source de données JDBC
 ===============================
 
-Nous pouvons maintenant créer la source de données JDBC utilisant le pilote Couchbase pour permettre à JRS de se connecter à Couchbase et d'exécuter des **requêtes SQL sur cette base NOSQL**.
+Nous pouvons maintenant créer la source de données JDBC utilisant le pilote Couchbase pour permettre à JRS de se connecter à Couchbase et d'exécuter des **requêtes SQL(92) sur cette base NOSQL**.
 
 Il faut commencer par se reconnecter à JRS en tant que *jasperadmin* avec le mot de passe *jasperadmin*. Puis, il faut aller dans le répertoire */Public/WorldDevelopment/Resources/DataSources*, faire un clic droit et choisir *Nouveau/Source de données* :
 
@@ -126,7 +126,7 @@ La dernière étape consiste à choisir un nom pour cette nouvelle source de don
 Voila
 =====
 
-Vous disposez désormais d'une connexion JDBC vers votre cluster Couchbase. Vous pouvez l'utiliser pour exécuter des requêtes N1QL (SQL) sur le cluster Couchbase. Il faut évidemment que vous disposiez d'un *bucket* avec des documents, ainsi que des index primaires et secondaires. Mais nous verrons cela lors d'un prochain article.
+Vous disposez désormais d'une connexion JDBC vers votre cluster Couchbase. Vous pouvez l'utiliser pour exécuter des requêtes N1QL (SQL92) sur le cluster Couchbase. Il faut évidemment que vous disposiez d'un *bucket* avec des documents, ainsi que des index primaires et secondaires. Mais nous verrons cela lors d'un prochain article.
 
 
 [cb40beta]: http://www.couchbase.com/preview/couchbase-server-4-0

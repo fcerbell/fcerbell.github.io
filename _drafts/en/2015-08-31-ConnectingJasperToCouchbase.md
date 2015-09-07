@@ -9,7 +9,7 @@ tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
 #published: false
 ---
 
-[Couchbase], a NOSQL BigData database, now offers a new language, N1QL, to write queries. This article will show you how to use the new [Couchbase] JDBC driver in [JasperReports Server][jrs] (I will use tje JRS acronym from now), in order to execute SQL queries on the [Couchbase] database.
+[Couchbase], a NOSQL BigData database, now offers a new language, N1QL, to write queries. This article will show you how to use the new [Couchbase] JDBC driver in [JasperReports Server][jrs] (I will use tje JRS acronym from now), in order to execute SQL(92) queries on the [Couchbase] database.
 
 Prerequisites
 =============
@@ -47,37 +47,39 @@ Enter the folder's name *WorldDevelopment* :
 
 ![Création du dossier du projet]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-03.png)
 
-
-Parmi les éléments que nous allons créer, il y a des éléments techniques (les sources de données, les requêtes, les logos, les invites, ...) et les éléments métier (modèles de rapports, rapports, affichages à la demande, tableaux de bord, ...). Les éléments métier dépendent des éléments techniques pour pouvoir fonctionner. En revanche, autant l'utilisateur métier final souhaite voir les éléments métiers, autant il n'est pas intéressé par leurs dépendances techniques. Il est donc utile de les rendre utilisables par l'utilisateur final, sans lui laisser les voir pour ne pas polluer son interface. Nous allons donc créer un sous-répertoire technique dans lequel nous rangerons tous les éléments pour lesquels l'utilisateur final doit avoir les permissions d'utilisation, sans les permissions de listage : */Public/WorldDevelopment/Resources*.
+Upon the different items that we will create, there are technical items (data sources, queries, logos, prompts, ...) and business items (report templates, reports, views, dashboards, ...). The business items depend on the technical items to be displayed. Even if the end-user needs to be able to display the business item list and to execute them, he is definitely not interested in listing the technical items. Theses technical items need to be useable but not listable by the end-user, to keep his user interface clean and business focused. We will create an hidden folder to gather all the technical items : */Public/WorldDevelopment/Resources*.
 
 ![Création du dossier des ressources techniques]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-04.png)
 
-Nous allons continuer à suivre les bonnes pratiques. Il n'est pas question de mettre en vrac tous les objets techniques, nous allons donc les ranger dans des sous-répertoires techniques. Dans ce tutoriel, nous voyons comment créer une source de données, nous allons donc ranger cette source de données avec toutes les autres sources de données du projet *WorldDevelopment* dans un sous-répertoire : */Public/WorldDevelopment/Resources/DataSources*.
+Let's continue with best practices. We will not create a technical mess with all technical resources together in a single folder. We will place
+them in sub-folders. In this tutorial, we learn how to create a data source, so we will create a datasource sub-folder in the resources folder,
+with all the projects items : */Public/WorldDevelopment/Resources/DataSources*.
 
 ![Création du dossier des sources de données]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-05.png)
 
-Nous allons donc utiliser le sous-répertoire *Resources* pour ranger tous les éléments techniques pour lesquels les utilisateurs auront les permissions d'utilisation sans pour autant avoir les permissions d'affichage. Pour cela, nous allons changer les permissions sur le dossier *Resources*. Il faut faire un clic droit sur le dossier Resources et choisir *Autorisations* :
+As we will place all the technical items in *Resources* sub-folders, we will change this common parent folder's permissions to allow the end-user to use all the included items, but not to list them. Right-clic on the *Resources* folder and choose *Authorizations* :
 
 ![Menu contextuel des autorisations]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-06.png)
 
-Donnons la permission *Exécuter seulement* au rôle *ROLE_USER* et refermons la boîte de dialogue :
+Lets give the *Execute only* permission on the *Resources* folder to the *ROLE_USER* role in the dialog :
 
 ![Permissions sur les ressources techniques]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-07.png)
 
-Nous disposons maintenant d'une structure de répertoires commune à toutes les organisations (il n'y en a qu'une seule par défaut à l'installation) et dont les éléments techniques seront cachés aux utilisateurs métiers.
+Congratulation, now, we have a common shared folder structure to all organizations (even if we only have one by default after the installation) with a special
+folder to hide technical stuffs to end-users.
 
-Ajouter le pilote JDBC dans le classpath
-========================================
+Add the JDBC driver files in the classpath
+==========================================
 
-Par défaut, JRS ne fournit pas le pilote JDBC pour Couchbase. Il faut donc ajouter le pilote dans le classpath de la JVM exécutant JRS. Ayant installé JRS avec l'installeur d'évaluation, Apache Tomcat a été installé et configuré pour exécuter JRS. Il se trouve dans le sous-répertoire *apache-tomcat* du répertoire d'installation. L'application JRS se trouve dans le sous-répertoire *apache-tomcat/webapps/jasperserver-pro*. Il est donc possible d'ajouter le pilote au niveau du serveur de conteneur JAVA (Tomcat), dans le sous-répertoire *apache-tomcat/lib* ou au niveau de l'application dans le sous-répertoire *apache-tomcat/webapps/jasperserver-pro/WEB-INF/lib*. J'ai fait le choix de l'installer au niveau du serveur de conteneur.
+By default, *Tibco* does not provide the Couchbase JDBC driver with JRS. Thus, we need to add it in the JVM classpath. After JRS installation (with the evaluation bundle), *Apache Tomcat* was installed and setup to execute JRS. It is located in the *apache-tomcat* sub-folder. The JRS application is located in the *apache-tomcat/webapps/jasperserver-pro* sub-folder. So, it is possible to add the driver either at the application server level (Tomcat) in the *apache-tomcat/lib* folder or at the application level in the *apache-tomcat/webapps/jasperserver-pro/WEB-INF/lib*. I chose to install it at the application server level.
 
-Il faut donc copier tous les fichiers du pilote JDBC (sauf éventuellement le fichier PDF), dans le sous-répertoire des bibliothèques partagées de Tomcat :
+We have to copy all the JDBC driver files (except the PDF one) in the shared libraries folder :
 
 ```bash
 cp SimbaCouchbaseJDBC41_Beta_Update3/*.{jar,lic} /opt/jasperreports-server-6.1.0/apache-tomcat/lib/
 ```
 
-Une fois les fichiers du pilote installés, nous pourrions nous connecter à l'interface WEB en tant que *superuser* et définir manuellement notre connection, cependant il existe une solution plus élégante : nous allons indiquer à JRS que nous disposons d'un nouveau pilote et comment l'utiliser, cela permet de mieux l'intégrer dans l'interface de JRS et de documenter la création d'une nouvelle source de données par un simple administrateur. Il va falloir ajouter la section suivante décrivant le pilote dans le fichier de configuration */opt/jasperreports-server-6.1.0/apache-tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext-webapp.xml*, dans la section *jdbcBasicConnectionMap* (ligne 64) :
+Once that the driver's files are installed, we could directly connect to the web user interface as *superuser* and manually define our datasource. But there is a more elegant solution : we will tell JRS that we have a new driver and how to use it. It enables us to have a better integration in JRS's UI and to document the data source creation process for a regular administrator. We will need to add the following XML section in the */opt/jasperreports-server-6.1.0/apache-tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext-webapp.xml* configuration file, in the *jdbcBasicConnectionMap* section (line 64) :
 
 ```xml
 <entry key="couchbase">
@@ -96,36 +98,37 @@ Une fois les fichiers du pilote installés, nous pourrions nous connecter à l'i
 </entry>
 ```
 
-Puis, il faut redémarrer Tomcat. Bien qu'il soit possible de redémarrer uniquement Tomcat, nous allons utiliser le script global qui va redémarrer à la fois Tomcat et PostgreSQL dans le cas d'une installation d'évaluation :
+Then, we need to restart Tomcat. Even if it would be possible to restart tomcat only, we will use the bundled global script to restart both
+Tomcat and PostGreSQL within an evaluation installation :
 
 ```
 cd jasperreports-server-6.1.0
 ./ctlscript.sh restart
 ```
 
-Le pilote est désormais disponible dans JRS.
+Congratulation, now the driver is available in JRS.
 
-Créer la source de données JDBC
-===============================
+JDBC datasource creation
+========================
 
-Nous pouvons maintenant créer la source de données JDBC utilisant le pilote Couchbase pour permettre à JRS de se connecter à Couchbase et d'exécuter des **requêtes SQL sur cette base NOSQL**.
+Now, we can create the JDBC datasource by using the Couchbase driver to enable connections from JRS to Couchbase and **SQL(92) queries executions on this NOSQL database**.
 
-Il faut commencer par se reconnecter à JRS en tant que *jasperadmin* avec le mot de passe *jasperadmin*. Puis, il faut aller dans le répertoire */Public/WorldDevelopment/Resources/DataSources*, faire un clic droit et choisir *Nouveau/Source de données* :
+We first have to connect to JRS as *jasperadmin* with the password *jasperadmin*. Then we have to go in the */Public/WorldDevelopment/Resources/DataSources* folder, right-clic on its name and choose *New/Datasource* :
 
 ![Menu Ajouter une source de données]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-08.png)
 
-Sélectionner *Source de données JDBC*, puis choisir *Couchbase*. Grâce à la modification des fichiers de configuration que nous avons effectuée plus tôt, le pilote est connu de JRS et il nous suffit de le choisir. JRS connaît déjà le nom de la classe JAVA à charger et les valeurs par défaut pour les différents champs. Il suffit just de remplacer *localhost* dans l'URL de connexion pour indiquer un des nœeuds du cluster Couchbase et de valider les informations en cliquant sur le bouton *Test* :
+Select *JDBC datasource*, then choose *Couchbase*. Thanks to the configuration file modification made earlier, the driver is already known by JRS and we only have to choose it. JRS already know the JAVA class name to load and the default values in the different fields. We only have to eventually replace *localhost* in the connection URL by one of the Couchbase cluster node and to validate the informations by a clic on the *Test* button :
 
 ![Propriétés de la source de données]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-09.png)
 
-La dernière étape consiste à choisir un nom pour cette nouvelle source de données, j'ai choisi de l'appeler *Couchbase_DS* :
+The last step is to give a name to this newly created data source, I chose *Couchbase_DS* :
 
 ![Enregistrer la source de données]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-10.png)
 
 Voila
 =====
 
-Vous disposez désormais d'une connexion JDBC vers votre cluster Couchbase. Vous pouvez l'utiliser pour exécuter des requêtes N1QL (SQL) sur le cluster Couchbase. Il faut évidemment que vous disposiez d'un *bucket* avec des documents, ainsi que des index primaires et secondaires. Mais nous verrons cela lors d'un prochain article.
+You now have a JDBC connection to your Couchbase cluster. You can use it to execute N1QL (SQL92) queries on the Couchbase cluster. You obviously need a *bucket* to store documents, with primary and secondary indexes. But this will be covered in another tutorial.
 
 
 [cb40beta]: http://www.couchbase.com/preview/couchbase-server-4-0
