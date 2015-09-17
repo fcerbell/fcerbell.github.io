@@ -13,8 +13,8 @@ tags: Java ReactiveX RxJava Couchbase Data
 
 Ce petit tutoriel explique comment trouver un jeu de données intéressant (quantitativement et qualitativement) et le charger dans CouchBase pour pouvoir le manipuler ensuite.  
 
-Télécharger des données
-=======================
+Télécharger un jeu de données
+=============================
 
 Il existe de nombreux sites avec des jeux de données. Mais ils sont souvent soit trop petits, soit peu intéressants d'un point de vue métier (logs, relevés de capteurs techniques, ...). Heureusement, un site regroupe plus de 1300 indicateurs du dévelopement des pays agrégés pour 215 pays, sur 50 ans. Il nous propose donc des indicateurs métiers (financiers, industriels, démographiques, sociaux, ...) selon un axe temps et un axe géographique. C'est parfait pour pouvoir s'amuser.  
 
@@ -56,6 +56,7 @@ classe en plus de mon programme, soit deux classes au total, ou deux fichiers.
 
 Je ne vais pas rentrer dans les détails de RxJava, pour faire court, c'est un framework qui permet de demander l'exécution d'actions sur des objets au moment où ils sont disponibles. Ainsi, l'application n'attend plus inutilement qu'un objet soit disponible, elle continue son flot d'exécution et l'action s'exécutera en arrière-plan, lorsque la donnée sera là (C'est vraiment beaucoup plus que ça, mais c'est la partie qui nous intéresse pour l'instant).
 
+La totalité des sources de cet article est disponible dans mon dépôt [Couchbase-RxImporter] sur GitHub.
 
 
 
@@ -80,10 +81,11 @@ CREATE INDEX CountryCode ON WorldDevelopmentIndicators(CountryCode) USING GSI;
 Voilà
 =====
 
-Nous disposons désormais d'un jeu de données à la fois riche et conséquent pour commencer à l'explorer avec un outil d'analyse ou de rapports, par exemple, mais ceci est le sujet d'un prochain article... En attendant, si cet article vous a plût, n'hésitez pas à vous abonner au [flux RSS]({{site.url}}/feed.xml) ou à le partager sur vos réseaux sociaux préférés. Vous pouvez aussi poser des questions ou donner des informations complémentaires dans les commentaires ci-dessous.
+Nous disposons désormais d'un jeu de données à la fois riche et conséquent pour commencer à l'explorer avec un outil d'analyse ou de rapports, par exemple, mais ceci est le sujet d'un prochain article... 
 
 [WorldDataBank]: http://databank.worldbank.org/data/reports.aspx?source=world-development-indicators#
 [all.csv]: {{site.url}}/assets/posts/DataLoading/all.csv.zip
 [IntelliJ IDEA]: https://www.jetbrains.com/idea/
 [SDK JAVA Couchbase]: http://developer.couchbase.com/documentation/server/4.0/sdks/java-2.2/download-links.html
 [Apache Commons CSV]: https://commons.apache.org/proper/commons-csv/
+[Couchbase-RxImporter]: https://github.com/fcerbell/Couchbase-RxImporter
