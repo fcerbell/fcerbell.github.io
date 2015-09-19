@@ -78,7 +78,7 @@ Il faut donc copier tous les fichiers du pilote JDBC (sauf éventuellement le fi
 cp SimbaCouchbaseJDBC41_Beta_Update3/*.{jar,lic} /opt/jasperreports-server-6.1.0/apache-tomcat/lib/
 ```
 
-Une fois les fichiers du pilote installés, nous pourrions nous connecter à l'interface WEB en tant que *superuser* et définir manuellement notre connection, cependant il existe une solution plus élégante : nous allons indiquer à JRS que nous disposons d'un nouveau pilote et comment l'utiliser, cela permet de mieux l'intégrer dans l'interface de JRS et de documenter la création d'une nouvelle source de données par un simple administrateur. Il va falloir ajouter la section suivante décrivant le pilote dans le fichier de configuration */opt/jasperreports-server-6.1.0/apache-tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext-webapp.xml*, dans la section *jdbcBasicConnectionMap* (ligne 64) :
+Une fois les fichiers du pilote installés, nous pourrions nous connecter à l'interface WEB en tant que *superuser* et définir manuellement notre connection, cependant il existe une solution plus élégante : nous allons indiquer à JRS que nous disposons d'un nouveau pilote et comment l'utiliser, cela permet de mieux l'intégrer dans l'interface de JRS et de documenter la création d'une nouvelle source de données par un simple administrateur. Il va falloir ajouter la section suivante décrivant le pilote dans le fichier de configuration */opt/jasperreports-server-6.1.0/apache-tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext-webapp.xml*, dans la section *jdbcTibcoConnectionMap* (ligne 240) :
 
 ```xml
 <entry key="couchbase">

@@ -79,7 +79,7 @@ We have to copy all the JDBC driver files (except the PDF one) in the shared lib
 cp SimbaCouchbaseJDBC41_Beta_Update3/*.{jar,lic} /opt/jasperreports-server-6.1.0/apache-tomcat/lib/
 ```
 
-Once that the driver's files are installed, we could directly connect to the web user interface as *superuser* and manually define our datasource. But there is a more elegant solution : we will tell JRS that we have a new driver and how to use it. It enables us to have a better integration in JRS's UI and to document the data source creation process for a regular administrator. We will need to add the following XML section in the */opt/jasperreports-server-6.1.0/apache-tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext-webapp.xml* configuration file, in the *jdbcBasicConnectionMap* section (line 64) :
+Once that the driver's files are installed, we could directly connect to the web user interface as *superuser* and manually define our datasource. But there is a more elegant solution : we will tell JRS that we have a new driver and how to use it. It enables us to have a better integration in JRS's UI and to document the data source creation process for a regular administrator. We will need to add the following XML section in the */opt/jasperreports-server-6.1.0/apache-tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext-webapp.xml* configuration file, in the *jdbcTibcoConnectionMap* section (line 240) :
 
 ```xml
 <entry key="couchbase">
