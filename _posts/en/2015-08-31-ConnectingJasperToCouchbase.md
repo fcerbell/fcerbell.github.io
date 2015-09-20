@@ -11,6 +11,9 @@ tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
 
 [Couchbase], a NOSQL BigData database, now offers a new language, N1QL, to write queries. This article will show you how to use the new [Couchbase] JDBC driver in [JasperReports Server][jrs] (I will use tje JRS acronym from now), in order to execute SQL(92) queries on the [Couchbase] database.
 
+* TOC
+{:toc}
+
 Prerequisites
 =============
 As for any tutorial, there are needed prerequisites. Here are them for this tuto.

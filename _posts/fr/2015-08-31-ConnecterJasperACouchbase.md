@@ -10,6 +10,9 @@ tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
 
 [Couchbase], une base BigData NoSQL, propose désormais un nouveau langage, N1QL, pour effectuer des requêtes. L'idée de cet article est de montrer comment utiliser le nouveau pilote JDBC de [Couchbase] dans [JasperReports Server][jrs] (Nous utiliserons l'abréviation JRS dans la suite de cet article), de manière à exécuter des requêtes SQL(92) sur la base [Couchbase].
 
+* TOC
+{:toc}
+
 Pré-requis
 ==========
 Comme pour tout tutoriel, il y a des pré-requis nécessaires. Voici ceux concernant celui-ci.
