@@ -1,123 +1,114 @@
 ---
 uid: DataLoading
-title: Charger des données dans Couchbase avec RxJava
+title: Loading data in Couchbase with RxJava
 author: fcerbell
 layout: post
 #description:
-category: Tuto
+category: tutos
 #categories
 tags: Java ReactiveX RxJava Couchbase Data
 #date
 #published: false
 ---
 
-Ce petit tutoriel explique comment trouver un jeu de données intéressant
-(quantitativement et qualitativement) et le charger dans CouchBase pour pouvoir
-le manipuler ensuite.
+This short tutorial explains how to find an interesting data set (quantitatively
+and qualitatively) and load it into Couchbase in order to play with it.
 
 * TOC
 {:toc}
 
-Télécharger un jeu de données
-=============================
+Downloading a dataset
+=====================
 
-Il existe de nombreux sites avec des jeux de données. Mais ils sont souvent soit
-trop petits, soit peu intéressants d'un point de vue métier (logs, relevés de
-capteurs techniques, ...). Heureusement, un site regroupe plus de 1300
-indicateurs du dévelopement des pays agrégés pour 215 pays, sur 50 ans.  Il nous
-propose donc des indicateurs métiers (financiers, industriels, démographiques,
-sociaux, ...) selon un axe temps et un axe géographique. C'est parfait pour
-pouvoir s'amuser.
+There are many sites with data sets. But they are often either too small or not
+very interesting from a business perspective (logs, records of Technical
+sensors, ...). Fortunately, a site has more than 1300 development indicators
+aggregated by country for 215 countries over 50 years. It proposes indicators of
+business (financial, industrial, demographic, social, ...) according to a time
+axis and a geographical axis. This is perfect to have some fun.
 
-Il faut commencer par aller sur le site [WorldDataBank] pour y effectuer sa
-selection d'indicateurs.Pour l'importation, j'ai choisi de placer en ligne les
-pays, en groupe les indicateurs, et en colonne les années. Ensuite, j'exporte en
-CSV.
+We must first go to the site [WorldDataBank] to select the wanted indicateurs.
+For the import step, I chose to put the countries in rows, the indicators in
+groups and the years in columns. Then I exported to CSV. 
 
-Comme il n'est pas possible de tout sélectionner pour des contraintes de
-volumes, j'ai du faire plusieurs selections/exportation puis j'ai concaténé les
-fichiers. Pour plus de facilité, vous pouvez télécharger le [Fichier
-complet][all.csv]. Il contient les 1300 indicateurs pour les 215 pays, de 1960 à
-2014, soit environ 5 million de valeurs (en retirant les valeurs absentes).
+Since it is not possible to select the whole dataset for performances
+constraints, I had to make several selections / export then I concatenated the
+files. For convenience you can download the [whole file] [all.csv]. It
+contains 1,300 indicators for 215 countries from 1960 to 2014, or about 5
+million values (after removing the missing values).
 
-Environnement de développement
-==============================
+Development environment
+=======================
 
-Couchbase fournit un outil *cbdocloader* pour charger des documents au format
-JSON ou CSV dans Couchbase, cependant le format du CSV ne correspond pas au
-schéma souhaité dans la base de document. Nous ne pouvons donc pas utiliser cet
-outil. Il est possible d'utiliser un ETL comme celui de Talend pour transformer
-les données et les injecter dans Couchbase, mais j'ai préféré utiliser le SDK
-pour illustrer sa simplicité de mise en œuvre, sa puissance et sa rapidité.
-
+Couchbase's `cbdocloader` provides a tool to load JSON or CSV documents
+in Couchbase, however the CSV format does not match the
+desired document design in the database. Therefore we can not use this
+tool. It is possible to use an ETL like Talend to transform
+data and inject them into Couchbase, but I preferred to use the SDK
+to illustrate its implementation simplicity, power and speed.
 
 IntelliJ IDEA
 -------------
 
-Il est possible d'utiliser n'importe quel studio de développement.
-Personnellement j'ai une préférence pour [IntelliJ IDEA] lorsque je n'édite pas
-mes fichiers sous *vi*. Je le trouve plus léger, plus rapide et plus réactif
-qu'Eclipse.
+You can use any development studio.
+Personally I have a preference for [IntelliJ IDEA] when I did not edit
+my files in *vi*. I find it lighter, faster and more responsive
+than Eclipse.
 
 Couchbase JAVA SDK 2.2
 ----------------------
 
-Pour pouvoir communiquer avec le cluster Couchbase, il va falloir télécharger le
-[SDK JAVA Couchbase]. J'ai rencontré quelques soucis avec la dernière version du
-SDK à cause d'un bug dans la bibliothèque Jackson, j'ai donc utilisé la version
-2.1.4 du SDK pour ce tutoriel.  Une fois le fichier téléchargé et décompressé,
-vous aurez besoin d'ajouter les trois fichiers JAR (couchbase-core-io-1.1.4.jar,
-couchbase-java-client-2.1.4.jar, rxjava-1.0.4.jar) dans le *classpath* de votre
-compilateur JAVA. Dans *IntelliJ*, il suffit de faire un copier/coller dans le
-projet et de les déclarer en tant que *library* d'un clic droit de la souris.
-
+To contact the Couchbase cluster, you will have to download the [SDK JAVA
+Couchbase]. I met some issues with the latest version of SDK because of a bug in
+the Jackson library, so I used the version SDK 2.1.4 for this tutorial. Once
+downloaded and unzipped, you'll need to add the three JAR files
+(Couchbase-core-io-1.1.4.jar, Couchbase-java-client-2.1.4.jar, rxjava-1.0.4.jar)
+in your JAVA compiler's *classpath*. In IntelliJ, simply copy / paste into the
+project and declare them as *library* with a right click.
 
 Apache Commons-CSV
 ------------------
 
-Le fichier de données sources étant au format *CSV*, j'ai choisi d'utiliser la
-bibliothèque [Apache Commons CSV] 1.2 pour lire le fichier. Tout comme pour le
-SDK de Couchbase, il faut décompresser le fichier et ajouter la bibliothèque
-(commons-csv-1.2.jar) dans le *classpath* du compilateur JAVA (copier/coller du
-fichier dans le projet et déclaration comme *library* par un clic droit de la
-souris).
+The source data file being in *CSV* format I, chose to use the [Apache Commons
+CSV] library (1.2) to read the file. As for the Couchbase SDK, you must
+decompress the file and add the library (commons-csv-1.2.jar) in the JAVA
+compiler's *classpath* (copy / paste file in the project and declaration as
+*library* by a right-clic).
 
-Application de chargement
-=========================
+Import application
+==================
 
-Il est possible d'utiliser le SDK avec des framework comme *Spring*, il est
-possible (et recommandé) de faire de classes propres pour les différents objets
-(Entrepot/Repository, Usine/Factory, TrucAbstrait, TrucVirtuel, TrucsPublics,
-TrucsPrivés...).  Mais je ne le ferai pas. Le but de cet article est de
-présenter des informations simples dans un minimum de fichiers (et donc de
-classes). Je ne vais utiliser qu'une seule classe en plus de mon programme, soit
-deux classes au total, ou deux fichiers.
+It is possible to use the SDK with development frameworks such as Spring, it is
+possible (and recommended) to create classes for different objects (Repository,
+Factory, AbstractStuff, VirtualStuff, PublicStuff, PrivateStuff, ...). But I
+will not do it. The purpose of this article is to present simple information in
+a minimum of files (and therefore classes). I will use only one class in
+addition to my program or two classes in total, or two files.
 
-Je ne vais pas rentrer dans les détails de RxJava, pour faire court, c'est un
-framework qui permet de demander l'exécution d'actions sur des objets au moment
-où ils sont disponibles. Ainsi, l'application n'attend plus inutilement qu'un
-objet soit disponible, elle continue son flot d'exécution et l'action
-s'exécutera en arrière-plan, lorsque la donnée sera là (C'est vraiment beaucoup
-plus que ça, mais c'est la partie qui nous intéresse pour l'instant).
+I will not go into details of RxJava, to make it short, is a framework that
+allows to request action execution on objects at the time where they are
+available. Thus, the application no longer needlessly waits for a object to be
+available, it continues its execution flow and the action will run in the
+background, when the data will be there (This really is much more than that, but
+that's the part that interests us for now).
 
-La totalité des sources de cet article est disponible dans mon dépôt
-[Couchbase-RxImporter] sur GitHub.
+All of the source code of this article is available in my [Couchbase-RxImporter]
+repository on GitHub.
 
-Lecture du fichier CSV
-----------------------
+CSV file reading
+----------------
 
-L'idée est très simple, le fichier CSV est dans un format connu et imposé :
+The idea is very simple, the CSV file has to be in a well known format :
 
-Code pays | Nom Pays | Code série | Nom série | Valeur 1960 | ... | Valeur 2014
-----------|----------|------------|-----------|-------------|-----|------------
-Code pays | Nom Pays | Code série | Nom série | Valeur 1960 | ... | Valeur 2014
+Country code | Country name | Serie code | Serie name | 1960 value | ... | 2014 value
+-------------|--------------|------------|------------|------------|-----|------------
+FRA          | France       | SP_POP_TOTL| Population | 46647521   | ... | 66201365
 
-Le nom du fichier CSV à charger sera passé en argument de ligne de commande au
-programme.
+The CSV file name will be passed as program argument on the command line.
 
-Nous utilisons la bibliothèque Apache-Commons-CSV pour lire et interpréter le
-fichier en ignorant la première ligne (ligne d'en-tête de colonne) et les lignes
-vides. Le code pour cela est relativement simple :
+We will use the Apache-Commons-CSV library to read and parse the file, we will
+skip the very first line (column header) and the empty lines. The JAVA code is
+quite simple :
 
 ```java
 package net.cerbelle.WDI;
@@ -166,23 +157,23 @@ public class Import {
 
 ```
 
-Connexion au cluster Couchbase
+Couchbase cluster connection
 ------------------------------
 
-Ajoutons les instructions de connexion au cluster Couchbase avant l'ouverture du
-fichier CSV. Par défaut, le SDK Couchbase est très bavard, nous allons donc en
-limiter la verbosité. Puis ouvrir une connexion sur le cluster.
+Let's add the Couchbase cluster connection instructions before opening the
+CSV file. By default, the Couchbase SDK is very verbose, we will first limit its
+verbosity and then open the connection to the cluster.
 
-Dans la logique de l'application, nous voulons effectuer un rechargement total à
-chaque lancement. Nous voulons également pouvoir faire des tests à la suite sans
-devoir vider le bucket ou le recréer à chaque fois depuis l'interface WEB. Nous
-allons donc commencer par tester l'existence du bucket pour le supprimer, puis
-tester son absence pour le créer avec la configuration qui nous intéresse. Cela
-nous permet de toujours être certain de la configuration du bucket et de son
-état avant le chargement.
+In the applications's logic, we want to make a total reloading
+at each launch. We also want to run tests in a row without
+having to empty the bucket or recreating it each time from the web interface. So
+let's start by testing the existence of the bucket to delete it and
+test his absence to create it with the needed configuration. It allows us to be
+sure that the bucket is in a known state : it exists, with the wanted settings
+and that it is empty.
 
-À la fin de cette séquence, nous allons << ouvrir >> le << bucket >> pour le mettre
-à disposition de la suite de l'application et permettre de le charger.
+At the end of this sequence, we will "open" the "bucket" to make it available
+for the application to populate it.
 
 ```java
         Logger logger = Logger.getLogger("com.couchbase.client");
@@ -228,8 +219,8 @@ nous permet de toujours être certain de la configuration du bucket et de son
 
 ```
 
-Même si ce n'est pas obligatoire, autant programmer proprement et ajouter la
-fermeture du << bucket >> et de la connexion au << cluster >> à la fin de notre
+Even if it is not mandatory, it is better to try to write clean code and to
+close properly the bucket and the cluster connection at the end of the
 application :
 
 ```java
@@ -237,10 +228,9 @@ application :
         cluster.disconnect();
 ```
 
-Si vous développez dans une interface de développement intégrée comme *Eclipse*
-ou *IntelliJ*, elle a certainement ajouté des lignes d'importation de
-paquetages au début de votre programme. Si ce n'est pas le cas, ajoutez-les
-manuellement :
+If you use an IDE such as *Eclipse* or *IntelliJ*, it might already added import
+statements at the begining of your code to import the required packages. If not,
+you can add them manually :
 
 ```java
 import com.couchbase.client.java.Bucket;
@@ -261,34 +251,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 ```
 
-Notre programme sait désormais ouvrir une connexion sur le cluster, préparer un
-<< bucket >> dans une configuration voulue, parcourir les lignes d'un fichier
-CSV, les lire et les interpréter, pour ensuite refermer les objets Couchbase.
+Our application knows how to open a cluster connection, how to prepare a bucket
+in a defined and well known state, how to read the CSV file lines and how to
+close things properly.
 
-Parcourir les enregistrements et les traiter
---------------------------------------------
+Parsing and processing the records
+----------------------------------
+The underlying idea behind the Couchbase SDK is to use the [ReactiveX] framework 
+that was initially developped by NetFlix, in its Java flavor (RxJava), to work
+asyncroneously. The goal is to define actions to execute on objects "as soon as
+they become available", to forget it and continue the application execution flow
+without waiting for the object to be processed. The object is `Observable` and
+the actions are defined in an `Observer`.
 
-Le principe du SDK Couchbase est d'utiliser le framework ReactiveX initialement
-développé par NetFlix, appliqué à JAVA (RxJava) pour travailler de manière
-asynchrone. L'idée est de définir les actions à effectuer sur des objets
-lorsqu'ils seront disponibles et de continuer à faire ce que l'on veut sans
-attendre. L'objet à traiter est un `Observable`, les actions à effectuer sur cet
-objet lorsqu'il sera disponible sont définies dans un `Observer`.
+To achieve this, we will use the classes and methods defined in the Couchbase
+SDK. First, we need to implement an `Observer` class with three methods :
 
-Pour cela, nous allons utiliser les classes et les méthodes fournies pas le SDK
-Couchbase. Nous allons commencer par implémenter une classe `Observer` qui
-disposera de trois méthodes :
+* a method to trigger when a new `Observable` object is available to be
+  processed (`onNext`) ;
 
-* une méthode à déclencher lorsqu'un objet à traiter est disponible (`onNext`);
-
-* une méthode à déclencher lorsque tous les objets ont été traités
+* a methods to trigger when all the `Observable` objects have been processed
   (`onComplete`) ;
 
-* une méthode à déclencher lorsqu'une erreur s'est produite dans la récupération
-  des objets à traiter (`onError`) ;
+* a method to call when an error occured during the `Observable` objects fetch
+  (`onError`).
 
-Le code source complet de cette classe est disponible dans mon dépôt
-[Couchbase-RxImporter] sur GitHub :
+The complete source code is available in my [Couchbase-RxImporter] GitHub
+repository :
 
 ```java
 package net.cerbelle.WDI;
@@ -550,3 +539,4 @@ ceci est le sujet d'un prochain article...
 [SDK JAVA Couchbase]: http://developer.couchbase.com/documentation/server/4.0/sdks/java-2.2/download-links.html
 [Apache Commons CSV]: https://commons.apache.org/proper/commons-csv/
 [Couchbase-RxImporter]: https://github.com/fcerbell/Couchbase-RxImporter
+[ReactiveX]: http://reactivex.io/
