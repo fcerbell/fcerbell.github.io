@@ -275,6 +275,181 @@ lorsqu'ils seront disponibles et de continuer à faire ce que l'on veut sans
 attendre. L'objet à traiter est un `Observable`, les actions à effectuer sur cet
 objet lorsqu'il sera disponible sont définies dans un `Observer`.
 
+Pour cela, nous allons utiliser les classes et les méthodes fournies pas le SDK
+Couchbase. Nous allons commencer par implémenter une classe `Observer` qui
+disposera de trois méthodes :
+
+* une méthode à déclencher lorsqu'un objet à traiter est disponible (`onNext`);
+
+* une méthode à déclencher lorsque tous les objets ont été traités
+  (`onComplete`) ;
+
+* une méthode à déclencher lorsqu'une erreur s'est produite dans la récupération
+  des objets à traiter (`onError`) ;
+
+Le code source complet de cette classe est disponible dans mon dépôt
+[Couchbase-RxImporter] sur GitHub :
+
+```java
+package net.cerbelle.WDI;
+
+import com.couchbase.client.java.document.JsonDocument;
+import com.couchbase.client.java.document.json.JsonObject;
+import rx.Observer;
+
+/**
+ * Created by fcerbell on 16/09/2015.
+ * CSVRecord upsert
+ */
+public class RecordObserver implements Observer<String[]> {
+    @Override
+    public void onCompleted() {
+        System.out.println("Finished.");
+    }
+
+    @Override
+    public void onError(Throwable exception) {
+        System.out.println("Oops!");
+        exception.printStackTrace();
+    }
+
+    @Override
+    public void onNext(String[] r) {
+        JsonDocument indicatorsDocument;
+        JsonObject indicatorsObject;
+
+//        System.out.println(r[0] + " " + r[1] + " " + r[2] + " " + r[3] + " " + r[4] + " " + r[5] + " (Observed by : " + Thread.currentThread().getName() + ")");
+        String Year = r[0];
+        String CountryCode = r[1];
+        String CountryName = r[2];
+        String SerieCode = r[3];
+        String SerieName = r[4];
+        String Value = r[5];
+
+        indicatorsDocument = Import.WDIBucket.get(Year + "_" + CountryCode);
+        if (indicatorsDocument == null) {
+            indicatorsObject = JsonObject.empty();
+        } else {
+            indicatorsObject = indicatorsDocument.content();
+        }
+        indicatorsObject
+                .put("Year", Year)
+                .put("CountryCode", CountryCode)
+                .put("CountryName", CountryName)
+                .put(SerieCode.replace('.', '_'), Double.valueOf(Value));
+        indicatorsDocument = JsonDocument.create(Year + "_" + CountryCode, indicatorsObject);
+        Import.WDIBucket.upsert(indicatorsDocument);
+    }
+}
+```
+
+Cette première version est très simple, tout en étant efficace.
+
+Nous allons maintenant utiliser cette classe dans notre programme principal pour
+charger les informations dans notre cluster. Le SDK fonctionne de manière
+asynchrone, si nous démarrons le chargement puis terminons le programme sans
+attendre, il est probable (et même certain) que toutes les informations ne
+seront pas traitées. On pourrait bien attendre un délai en utilisant
+`Thread.sleep(delai)`, mais si le delai est trop court, nous perdrions des
+informations et si le délai est trop long, nous perdrons du temps inutilement...
+La solution consiste à définie un compteur distribué (pour resister à
+d'éventuels effets de bord liés à la parallélisation), à attendre qu'il soit mis
+à jour avant de terminer le programme. Nous utiliseront le *callback*
+`doOnCompleted` pour le modifier, ce qui donne la trame suivante :
+
+```java
+        final CountDownLatch latch = new CountDownLatch(1);
+        Observable
+                .from(records)
+                .doOnCompleted(latch::countDown);
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+```
+
+Ce code ne peut pas fonctionner pour l'instant, il manque encore des éléments,
+en effet, l'`Observable` fournit des éléments de type `CVSRecord` alors que
+l'`Observer` attend un tableau de `String`.
+
+Pour commencer, nous allons filtrer les lignes pour lesquelles le champs
+`CountryCode` est vide, cela correspond au lignes vides pouvant se trouver à la
+fin du fichier :
+
+```java
+        Observable
+                .from(records)
+                .filter(r -> !r.get("CountryCode").isEmpty())
+```
+
+Nous allons ensuite convertir chaque élément observable (`CSVRecord`) en une
+série d'élement observable (`String[]`). Pour cela, je construis rapidement
+chaque table de chaîne de caractères manuellement à partir des méthodes de la
+classe `CSVRecord` :
+
+```
+                .flatMap(
+                        r -> Observable.from(new String[][]{
+                                {"1960", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1960")},
+                                {"1961", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1961")},
+                                ...
+                                {"2013", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2013")},
+                                {"2014", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2014")}
+                        })
+                )
+```
+
+Nous pourrions appeler l'`Observer` sur ce résultat, cependant notre fichier CSV
+comporte beaucoup de valeurs non définies. Dans le monde *BigData*, une valeur
+non-définie n'est habituellement pas stockées. Nous allons donc filtrer les
+valeurs non-définies pour ne pas créer de valeurs vides dans la base, nous
+allons en profiter pour modifier le compteur qui mettra fin au programme et
+nous allons inscrire notre `Observer` à ce flux d'éléments observables
+(`String[]`) pour qu'il applique les traitements (écriture dans la base), de
+manière parallèle selon un ordonnanceur créant un fil d'exécution par cœur
+processeur disponible :
+
+```java
+                .filter(valueLine -> valueLine[5] != null)
+                .doOnCompleted(latch::countDown)
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new RecordObserver());
+```
+
+Le bloc complet ressemble donc à :
+
+```java
+
+        final CountDownLatch latch = new CountDownLatch(1);
+        Observable
+                .from(records)
+                .filter(r -> !r.get("CountryCode").isEmpty())
+                .flatMap(
+                        r -> Observable.from(new String[][]{
+                                {"1960", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1960")},
+                                {"1961", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1961")},
+                                {"1962", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1962")},
+                                ...
+                                {"2010", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2010")},
+                                {"2011", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2011")},
+                                {"2012", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2012")},
+                                {"2013", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2013")},
+                                {"2014", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("2014")}
+                        })
+                )
+                .filter(valueLine -> valueLine[5] != null)
+                .doOnCompleted(latch::countDown)
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new RecordObserver());
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+```
+
 Gestion des conflits
 --------------------
 
@@ -289,6 +464,11 @@ d'exécution aient besoin d'accéder en création ou en modification au même
 document en même temps et il y a un risque pour que deux fils d'exécution lisent
 le contenu de la même ligne, la modifient chacun de son côté, puis l'écrive dans
 la base. Cela signifie qu'une des modifications sera écrasée par l'autre.
+
+Les base de données relationnelle traditionnelle supportent généralement les
+transactions. Il est donc possible de rendre la suite d'opérations entre la
+recherche et l'écriture atomiques. Couchbase ne dispose pas de mécanisme de
+transaction, ce n'est pas son but.
 
 Une première approche pessimiste et classique, consiste à utiliser des *mutex*
 pour protéger la section critique. La section critique qui serait à protéger
