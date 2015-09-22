@@ -457,12 +457,12 @@ support transactions, it is not a relational database and it is not its goal.
 A first possibility, pessimistic and usual, would be to use a *mutex* to protect
 the critical section. This critical section begins at the document search and
 ends at the document write. This section could be executed by one and only one
-thread at a time. The probleme is that this section is the whole payload of the
+thread at a time. The problem is that this section is the whole payload of the
 thread. Furthermore, it would be a waste to forbid two parallel execution when
 the needed document is not the same. At the end, it would mean to have several
 threads executing a linear flow.
 
-A second possibilité is to lock the document at read time and to unlock it at
+A second possibility is to lock the document at read time and to unlock it at
 write time. We would also have to check that a non existing document at read
 time still does not exist when we write it otherwise the thread would have to
 restart from the begining because another thread created the document in the
