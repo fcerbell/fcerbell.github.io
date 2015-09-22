@@ -13,7 +13,12 @@ tags: Java ReactiveX RxJava Couchbase Data
 
 Ce petit tutoriel explique comment trouver un jeu de données intéressant
 (quantitativement et qualitativement) et le charger dans CouchBase pour pouvoir
-le manipuler ensuite.
+le manipuler ensuite. Il s'agit d'une application de type preuve de concept,
+elle pourrait être très largement améliorée et optimisée. Je l'ai écrite pour
+charger rapidement mes données dans mon cluster, sans gérer tous les cas et sans
+optimisation. J'ai ensuite voulu la documenter et la partager dans ce blog, je
+l'ai un peu nettoyée, mais ce n'est en aucun cas une application à déployer en
+production ! ;)
 
 * TOC
 {:toc}
@@ -354,7 +359,7 @@ seront pas traitées. On pourrait bien attendre un délai en utilisant
 informations et si le délai est trop long, nous perdrons du temps inutilement...
 La solution consiste à définie un compteur distribué (pour resister à
 d'éventuels effets de bord liés à la parallélisation), à attendre qu'il soit mis
-à jour avant de terminer le programme. Nous utiliseront le *callback*
+à jour avant de terminer le programme. Nous utiliseront la méthode
 `doOnCompleted` pour le modifier, ce qui donne la trame suivante :
 
 ```java
@@ -384,9 +389,12 @@ fin du fichier :
 ```
 
 Nous allons ensuite convertir chaque élément observable (`CSVRecord`) en une
-série d'élement observable (`String[]`). Pour cela, je construis rapidement
-chaque table de chaîne de caractères manuellement à partir des méthodes de la
-classe `CSVRecord` :
+série d'élement observable (`String[]`) comme attendus par l'`Observer`. Nous
+pourrions aussi modifier l'`Observer` pour qu'il accepte un `CSVRecord` en
+entrée et le traite. Pour cela, je construis rapidement chaque table de chaîne
+de caractères manuellement à partir des méthodes de la classe `CSVRecord`. Cela
+pourrait être amélioré pour gérer un nombre arbitraire de colonnes, mais je n'en
+ai pas besoin :
 
 ```
                 .flatMap(
@@ -476,8 +484,10 @@ commencerait à la recherche du document dans Couchbase et irait jusqu'à
 l'écriture du nouveau document ou du document modifié dans Couchbase.  Cette
 section ne pourrait être exécutée que par un seul fil d'exécution à la fois. Le
 problème est que cette section correspond quasiment à la totalité des opérations
-parallélisées. Cela reviendrait donc à exécuter les insertions et les mises à
-jours de façons linéaire, en perdant tous les bénéfices d'une parallélisation.
+parallélisées. Par ailleurs, ce serait du gâchis d'interdire deux accès
+simultané à la base lorsque les documents ne sont pas les mêmes. Cela
+reviendrait donc à exécuter les insertions et les mises à jours de façons
+linéaire, en perdant tous les bénéfices d'une parallélisation.
 
 Une second approche pessimiste consiste à verrouiller le document lors de sa
 lecture et à le déverrouiller lors de son écriture. Si le document n'existait
@@ -508,8 +518,26 @@ blocs Pays/Indicateurs/Années. Il y a des risques de collisions, mais ils sont
 limités. Nous allons donc tenter une approche optimiste (Même si j'essaye de
 prévoir et de préparer le pire, j'essaie de rester optimiste).
 
+Nous devons donc modifier notre `Observer`... Mais très peu, car la méthode
+`get` retourne le document en incluant le numéro de série et ce numéro de série
+est pris en compte par la méthode `replace`. En revanche, il faut appeler
+explicitement la méthode `insert` lorsque nous créons un nouveau document pour
+qu'elle échoue si le document existe déjà :
 
-
+```java
+        indicatorsObject
+                .put("Year", Year)
+                .put("CountryCode", CountryCode)
+                .put("CountryName", CountryName)
+                .put(SerieCode.replace('.', '_'), Double.valueOf(Value));
+        if (indicatorsDocument == null) {
+            indicatorsDocument = JsonDocument.create(Year + "_" + CountryCode, indicatorsObject);
+            Import.WDIBucket.insert(indicatorsDocument);
+        } else {
+            indicatorsDocument = JsonDocument.create(Year + "_" + CountryCode, indicatorsObject);
+            Import.WDIBucket.replace(indicatorsDocument);
+        }
+```
 
 Création des index
 ==================
@@ -517,7 +545,7 @@ Création des index
 Le jeu de données est chargé. Nous allons créer quelques index basiques pour
 pouvoir l'utiliser d'une manière générale. Pour cela, le plus simple est de se
 connecter sur le serveur hébergeant Couchbase et de démarrer le client en ligne
-de commande `/opt/couchbase/cbq` :
+de commande `/opt/couchbase/bin/cbq` :
 
 ```sh
 /opt/couchbase/bin/cbq

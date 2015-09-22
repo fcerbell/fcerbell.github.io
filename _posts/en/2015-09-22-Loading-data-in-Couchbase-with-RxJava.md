@@ -12,7 +12,11 @@ tags: Java ReactiveX RxJava Couchbase Data
 ---
 
 This short tutorial explains how to find an interesting data set (quantitatively
-and qualitatively) and load it into Couchbase in order to play with it.
+and qualitatively) and load it into Couchbase in order to play with it. This is
+a quick and dirty application, it could be largely improved and optimized. I
+wrote it quickly because I needed something quickly up-and-running to load my
+data. I decided to write a post on it and I only cleaned the very-dirty things
+before writing this post. It is clearly not a production-class program ! ;)
 
 * TOC
 {:toc}
@@ -332,19 +336,17 @@ public class RecordObserver implements Observer<String[]> {
 }
 ```
 
-Cette première version est très simple, tout en étant efficace.
+This first version is very simple, but also very efficient.
 
-Nous allons maintenant utiliser cette classe dans notre programme principal pour
-charger les informations dans notre cluster. Le SDK fonctionne de manière
-asynchrone, si nous démarrons le chargement puis terminons le programme sans
-attendre, il est probable (et même certain) que toutes les informations ne
-seront pas traitées. On pourrait bien attendre un délai en utilisant
-`Thread.sleep(delai)`, mais si le delai est trop court, nous perdrions des
-informations et si le délai est trop long, nous perdrons du temps inutilement...
-La solution consiste à définie un compteur distribué (pour resister à
-d'éventuels effets de bord liés à la parallélisation), à attendre qu'il soit mis
-à jour avant de terminer le programme. Nous utiliseront le *callback*
-`doOnCompleted` pour le modifier, ce qui donne la trame suivante :
+We will now use this class in our main program to load information in our
+cluster. The SDK works asynchroneously, if we start the loading and stop the
+program without waiting, the odds are high that not all the information will be
+loaded. We could wait for a delay using `Thread.sleep(delay)` but if the
+specified delay is too short, we will still loose information and if the delay
+is too long, we will wait uselessly. The fix is to use a distributed counter (to
+be thread proof), to update it when all the data are processed and to end the
+program when the counter is updated. We will use the `doOnCompleted` method to
+update it :
 
 ```java
         final CountDownLatch latch = new CountDownLatch(1);
@@ -358,13 +360,11 @@ d'éventuels effets de bord liés à la parallélisation), à attendre qu'il soi
         }
 ```
 
-Ce code ne peut pas fonctionner pour l'instant, il manque encore des éléments,
-en effet, l'`Observable` fournit des éléments de type `CVSRecord` alors que
-l'`Observer` attend un tableau de `String`.
+This piece of code can not work yet. It still miss things. The `Observable`
+provide `CVSRecords` whereas the `Observer` waits for `String[]`.
 
-Pour commencer, nous allons filtrer les lignes pour lesquelles le champs
-`CountryCode` est vide, cela correspond au lignes vides pouvant se trouver à la
-fin du fichier :
+First, we will filter the `Observable` to remove the lines with an empty
+`CountryCode`, these lines are empty lines usually at the end of the file :
 
 ```java
         Observable
@@ -372,10 +372,11 @@ fin du fichier :
                 .filter(r -> !r.get("CountryCode").isEmpty())
 ```
 
-Nous allons ensuite convertir chaque élément observable (`CSVRecord`) en une
-série d'élement observable (`String[]`). Pour cela, je construis rapidement
-chaque table de chaîne de caractères manuellement à partir des méthodes de la
-classe `CSVRecord` :
+Then, we will convert each `Observable` record (`CSVRecord`) to an `Observable`
+list of string arrays (`String[]`), as expected by the `Observer`. We could also
+change the `Observer` to accept `CSVRecords` and to process them. I quickly
+build q string array by using the `CSVRecords` methods manually, it could be
+improved to deal with an arbitrary number of columns but I dont need this :
 
 ```
                 .flatMap(
@@ -389,15 +390,13 @@ classe `CSVRecord` :
                 )
 ```
 
-Nous pourrions appeler l'`Observer` sur ce résultat, cependant notre fichier CSV
-comporte beaucoup de valeurs non définies. Dans le monde *BigData*, une valeur
-non-définie n'est habituellement pas stockées. Nous allons donc filtrer les
-valeurs non-définies pour ne pas créer de valeurs vides dans la base, nous
-allons en profiter pour modifier le compteur qui mettra fin au programme et
-nous allons inscrire notre `Observer` à ce flux d'éléments observables
-(`String[]`) pour qu'il applique les traitements (écriture dans la base), de
-manière parallèle selon un ordonnanceur créant un fil d'exécution par cœur
-processeur disponible :
+We could call the `Observer` on this result, but our CSV file has a lot of
+undefined values. In the *BigData* world, an undefined value is not stored. So,
+we will remove theses undefined values. We will also change the counter value at
+the end of processing to notify the main class that it can end. And finally, we
+will subscribe our `Observer` to the built `Observable` so that it will process
+each item, using a scheduler to use parallel threads (in that case, one per
+core) :
 
 ```java
                 .filter(valueLine -> valueLine[5] != null)
@@ -406,7 +405,7 @@ processeur disponible :
                 .subscribe(new RecordObserver());
 ```
 
-Le bloc complet ressemble donc à :
+So, the whole bloc should be :
 
 ```java
 
@@ -439,85 +438,94 @@ Le bloc complet ressemble donc à :
         }
 ```
 
-Gestion des conflits
+Conflicts resolution
 --------------------
 
-Pour chaque ligne du fichier, le programme détermine les documents dans lesquels
-placer les informations de la ligne. Pour chacun de ces documents, il rechercher
-le document dans le cluster Couchbase. Si le document existe déjà, l'information
-de la ligne doit y être ajoutée, le document est donc chargé depuis Couchbase,
-l'information y est ajoutée et le document est remplacé dans Couchbase. Si le
-document n'existait pas, il est créé et enregistré dans Couchbase. Le programme
-d'importation pouvant être paralélisé, il est possible que plusieurs fils
-d'exécution aient besoin d'accéder en création ou en modification au même
-document en même temps et il y a un risque pour que deux fils d'exécution lisent
-le contenu de la même ligne, la modifient chacun de son côté, puis l'écrive dans
-la base. Cela signifie qu'une des modifications sera écrasée par l'autre.
+For each CSV line, the program finds the documents in which he needs to write
+the line details. For each of these documents, he search for the document in the
+Couchbase cluster. If the document already exists, he has to add the detail to
+the document, so the document is fetched from Couchbase, the details are added
+and the document is then pushed back to Couchbase. If the document did not
+already exist, it is created from scratch, and pushed to Couchbase. As the
+import program can be executed in parallel threads, it is possible that several
+threads need the same document at the same time. One of the change will be lost.
 
-Les base de données relationnelle traditionnelle supportent généralement les
-transactions. Il est donc possible de rendre la suite d'opérations entre la
-recherche et l'écriture atomiques. Couchbase ne dispose pas de mécanisme de
-transaction, ce n'est pas son but.
+The usual relational databases provide usually transactions to avoid this. It is
+possible to make the read/change/write sequence atomic. Couchbase does not
+support transactions, it is not a relational database and it is not its goal.
 
-Une première approche pessimiste et classique, consiste à utiliser des *mutex*
-pour protéger la section critique. La section critique qui serait à protéger
-commencerait à la recherche du document dans Couchbase et irait jusqu'à
-l'écriture du nouveau document ou du document modifié dans Couchbase.  Cette
-section ne pourrait être exécutée que par un seul fil d'exécution à la fois. Le
-problème est que cette section correspond quasiment à la totalité des opérations
-parallélisées. Cela reviendrait donc à exécuter les insertions et les mises à
-jours de façons linéaire, en perdant tous les bénéfices d'une parallélisation.
+A first possibility, pessimistic and usual, would be to use a *mutex* to protect
+the critical section. This critical section begins at the document search and
+ends at the document write. This section could be executed by one and only one
+thread at a time. The probleme is that this section is the whole payload of the
+thread. Furthermore, it would be a waste to forbid two parallel execution when
+the needed document is not the same. At the end, it would mean to have several
+threads executing a linear flow.
 
-Une second approche pessimiste consiste à verrouiller le document lors de sa
-lecture et à le déverrouiller lors de son écriture. Si le document n'existait
-pas lors de la lecture et existe lors de l'écriture, il faudrait que le fil
-d'exécution reprenne depuis le début car un autre fil d'exécution a créé le
-document entre temps. Cette implémentation permet d'éviter les écrasements, elle
-permet d'avoir un taux d'exécution en parallèle acceptable, cependant, elle
-entraine une surcharge de cycles CPU du côté cluster (avec les verrous) et du
-côté client (avec la gestion des conflits). Elle pourrait éventuellement être
-intéressante si on sait à l'avance qu'il y aura beaucoup de collisions car elle
-permet de les anticiper et d'en éviter un certain nombre par avance grâce aux
-verrous.
+A second possibilité is to lock the document at read time and to unlock it at
+write time. We would also have to check that a non existing document at read
+time still does not exist when we write it otherwise the thread would have to
+restart from the begining because another thread created the document in the
+meantime. This implementation would avoid overwritings and would lead to an
+acceptable parallel execution rate, but it also use a lot of CPU cycles on the
+cluster side (with locks) and on the client side (with the conflict management).
+It could be interesting if we know in advance that there will be a lot of
+collisions as it would avoid the collisions before they actually happen thanks
+to the locks.
 
-Une troisème approche optimiste consiste à considérer qu'il y aura des
-collisions, mais qu'il y en aura peu. On va donc éviter les protections << a
-priori >> qui pénalisent tous les accès, en acceptant de devoir gérer parfois
-une collision, quite à ce que ce traitement soit un peu plus complexe. Le fil
-d'exécution va rechercher le document, s'il existe, il va le lire avec son
-numéro de série (CAS), le modifier et l'écrire dans la base en incrémentant le
-numéro de série si celui-ci n'a pas été modifié par ailleurs. Si le document
-n'existe pas, il va être créé et écrit dans le cluster. Si le numéro de série
-avait changé ou si un document avait été créé entre temps, le fil d'exécution
-recommence depuis la recherche du document jusqu'à ce qu'il arrive à écrire
-l'information dans le document.
+The third possibility is optimistic. It considers that there will be collisions,
+but that there will be few collisions. It will not protect "a priori" against
+potential collisions but will accept to spend extra time to fix the collision
+when it happens. The thread will search for the document if it exists, read it
+with its serial number (CAS), alter it and write it back if the serial number
+wasn't change meanwhile. If the document did not exist, it will be created and
+written in *insert only* mode. So, if the serial number changed during the
+critical section or if the document was created by another thread, it will
+trigger an exception that will have to deal with the collision : restart from
+the begining of the critical section until it succeed.
 
-Dans le cadre de notre importation, les informations à insérer sont classées par
-blocs Pays/Indicateurs/Années. Il y a des risques de collisions, mais ils sont
-limités. Nous allons donc tenter une approche optimiste (Même si j'essaye de
-prévoir et de préparer le pire, j'essaie de rester optimiste).
+In our import, the informations are sorted by Country/Indicator/Year bloc. There
+are collision risk but not too high. We should use an optimistic implementation
+(even if I try to be prepared for the worst, I am still optimistic).
 
+We have to change our `Observer`... But not too much, because the `get` method
+already gets the serial number attached to the document and the `replace` method
+already takes care of it when it is defined. We only have to use the `insert`
+method instead of the `upsert` one in case of a new document to trigger an
+exception when the document was created by another thread. :
 
+```java
+        indicatorsObject
+                .put("Year", Year)
+                .put("CountryCode", CountryCode)
+                .put("CountryName", CountryName)
+                .put(SerieCode.replace('.', '_'), Double.valueOf(Value));
+        if (indicatorsDocument == null) {
+            indicatorsDocument = JsonDocument.create(Year + "_" + CountryCode, indicatorsObject);
+            Import.WDIBucket.insert(indicatorsDocument);
+        } else {
+            indicatorsDocument = JsonDocument.create(Year + "_" + CountryCode, indicatorsObject);
+            Import.WDIBucket.replace(indicatorsDocument);
+        }
+```
 
+Indexing
+========
 
-Création des index
-==================
+The dataset is loaded. We will create few general purpose indexes to be able to
+use it. Instead of sending commands from the application, I found easier to
+execute the SQL queries from the command line tool `/opt/couchbase/bin/cbq` :
 
-Le jeu de données est chargé. Nous allons créer quelques index basiques pour
-pouvoir l'utiliser d'une manière générale. Pour cela, le plus simple est de se
-connecter sur le serveur hébergeant Couchbase et de démarrer le client en ligne
-de commande `/opt/couchbase/cbq` :
 
 ```sh
 /opt/couchbase/bin/cbq
 ```
 
-Le premier index correspond à un index général. Le second est l'index primaire
-indispensable pour utiliser le langage N1QL. Il index les clés primaires des
-documents. Les deux derniers index correspondent aux cas d'utilisation théorique
-de notre jeu de données, d'une manière générale.  *GSI* signifie * Global
-Secondary Index*, il s'agit d'un nouveau type d'index centralisé (par opposition
-aux index locaux distribués que sont les vues).
+The very first index is a general index. The second one is the primary index,
+mandatory to execute *N1QL* queries, it indexes the document's primary keys (to
+have the list of the documents). Then, the two last are the most probably needed
+index to use our dataset. *GSI* means *Global Secondary Index*, it is a new
+centralized index type introduced in 4.0 used by *N1QL*.
 
 ```sql
 CREATE PRIMARY INDEX ON default;
@@ -529,9 +537,9 @@ CREATE INDEX CountryCode ON WorldDevelopmentIndicators(CountryCode) USING GSI;
 Voilà
 =====
 
-Nous disposons désormais d'un jeu de données à la fois riche et conséquent pour
-commencer à l'explorer avec un outil d'analyse ou de rapports, par exemple, mais
-ceci est le sujet d'un prochain article...
+We now have a dataset which is both rich and big enough. We can begin to explore
+it with an analysis tool or a reporting tool. But this will be explained in
+another post...
 
 [WorldDataBank]: http://databank.worldbank.org/data/reports.aspx?source=world-development-indicators#
 [all.csv]: {{site.url}}/assets/posts/DataLoading/all.csv.zip
