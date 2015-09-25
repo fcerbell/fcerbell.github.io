@@ -1,10 +1,29 @@
   <ul class="posts">
     {% assign posts=site.posts | where:"lang", page.lang %}
-    {% for post in posts %}
+    <hr/>
+    {% assign uids=site.posts | map:"uid" | sort %}
+    {% assign uids_str="" %}
+    {% for uid in uids %}
+      {% assign uids_array = uids_str | split: "," %}
+      {% unless uids_array contains uid %}
+        {% assign uids_str = uids_str | append: "," | append: uid %}
+      {% endunless %}
+    {% endfor %}
+    {% assign uids_uniq = uids_str | remove_first: "," | split: "," %}
+    <hr/>
+    {% for uid in uids_uniq %}
+      {% assign posts=site.posts | where:"uid",uid %}
+      {% assign thispost = "" %}
+      {% for post in posts %}
+        {% assign def_post = post %}
+        {% if post.lang == page.lang %}{% assign thispost = post %} {% endif %}
+      {% endfor %}
+      {% if thispost == "" %}{% assign thispost = def_post %}{% endif %}
+      {% assign otherlanguages=site.posts | where:"uid", thispost.uid %}
       <li>
-        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        <p class="post-excerpt">{{post.excerpt | remove: '<p>' | remove: '</p>' }}</p>
+        <span class="post-date">{{ thispost.date | date: "%b %-d, %Y" }}</span>
+        <a class="post-link" href="{{ thispost.url | prepend: site.baseurl }}">{{ thispost.title }}</a> ( lang: {% for l in otherlanguages %}<a class="post-link" href="{{ l.url | prepend: site.baseurl }}" title="{{ l.title }}">{{l.lang}}</a> {% endfor %})
+        <p class="post-excerpt">{{thispost.excerpt | remove: '<p>' | remove: '</p>' }}</p>
       </li>
     {% endfor %}
   </ul>
