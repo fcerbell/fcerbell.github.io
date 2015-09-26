@@ -26,7 +26,7 @@ linkedin_username: "fcerbell"
 #vk_username: "#"
 
 # Social share links
-#pinterest_sharing: true
+pinterest_sharing: true
 #instagram_sharing: true
 twitter_sharing: true
 facebook_sharing: true
@@ -40,7 +40,7 @@ googleplus_sharing: true
 reddit_sharing: true
 #digg_sharing: true
 #stumbleupon_sharing: true
-weibo_sharing: true
+#weibo_sharing: true
 #dounban_sharing: true
 #hackernews_sharing: true
 vk_sharing: true

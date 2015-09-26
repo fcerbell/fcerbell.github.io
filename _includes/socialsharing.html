@@ -7,84 +7,48 @@
         {% capture tagStr %}{{tagStr}},{{tag}}{% endcapture %}
     {% endfor %}
 {% endif %}
+{% case page.lang %}
+{% when "en" %}{% assign sharetext="Share this post on " %}
+{% else %}{% assign sharetext="Partager cet article sur " %}
+{% endcase %}
 <div class="social-share">
-    Share with : 
-<!-- Pinterest -->
-    {% if site.pinterest_sharing %}
-    <a class="social-share-element" id="social-pinterest" href="http://pinterest.com/pin/create/button/?url={{site.url}}{{page.url}}&description={{page.description}}" target="_blank" title="Share this post on Pinterest"><span class="icon"><i class="fa fa-pinterest"></i></span></a>
-    {% endif %}
-<!-- Instagram -->
-    {% if site.instagram_sharing %}
-    <a class="social-share-element" id="social-instagram" href="" target="_blank" title="Share this post on Instagram"><span class="icon"><i class="fa fa-instagram"></i></span></a>
-    {% endif %}
-<!-- Twitter -->
-    {% if site.twitter_sharing %}
-    <a class="social-share-element" id="social-twitter" href="https://twitter.com/intent/tweet?text={{page.title}}&url={{url}}&via={{site.twitter_username}}&hashtags={{tagStr}}&related={{site.twitter_username}}" target="_blank" title="Share this post on Twitter"><span class="icon"><i class="fa fa-twitter"></i></span></a>
-    {% endif %}
-<!-- Facebook -->
-    {% if site.facebook_sharing %}
-    <a class="social-share-element" id="social-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{page.url}}&t={{page.title}}" target="_blank" title="Share this post on Facebook"><span class="icon"><i class="fa fa-facebook"></i></span></a>
-    <!-- <a class="social-share-element" id="social-facebook" href="http://www.facebook.com/sharer.php?u={{site.url}}{{page.url}}&p[title]={{page.title}}" target="_blank" title="Share this post on Facebook"><span class="icon"><i class="fa fa-facebook"></i></span></a> -->
-    {% endif %}
-<!-- YouTube -->
-    {% if site.youtube_sharing %}
-    <a class="social-share-element" id="social-youtube" href="" target="_blank" title="Share this post on YouTube"><span class="icon"><i class="fa fa-youtube"></i></span></a>
-    {% endif %}
-<!-- Vimeo -->
-    {% if site.vimeo_sharing %}
-    <a class="social-share-element" id="social-vimeo" href="" target="_blank" title="Share this post on Vimeo"><span class="icon"><i class="fa fa-vimeo"></i></span></a>
-    {% endif %}
-<!-- SoundCloud -->
-    {% if site.soundcloud_sharing %}
-    <a class="social-share-element" id="social-soundcloud" href="" target="_blank" title="Share this post on SoundCloud"><span class="icon"><i class="fa fa-soundcloud"></i></span></a>
-    {% endif %}
-<!-- GitHub -->
-    {% if site.github_sharing %}
-    <a class="social-share-element" id="social-github" href="" target="_blank" title="Share this post on GitHub"><span class="icon"><i class="fa fa-github"></i></span></a>
-    {% endif %}
-<!-- Tumblr -->
-    {% if site.tumblr_sharing %}
-    <a class="social-share-element" id="social-tumblr" href="http://www.tumblr.com/share/link?url={{site.url}}{{page.url}}&name={{page.title}}&description={{page.description}}" target="_blank" title="Share this post on Tumblr"><span class="icon"><i class="fa fa-tumblr"></i></span></a>
-    {% endif %}
-<!-- LinkedIn -->
-    {% if site.linkedin_sharing %}
-    <a class="social-share-element" id="social-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{site.url}}{{page.url}}&title={{page.title}}&summary={{page.description}}&source={{site.url}}" target="_blank" title="Share this post on LinkedIn"><span class="icon"><i class="fa fa-linkedin"></i></span></a>
-    {% endif %}
-<!-- Google+ -->
-    {% if site.googleplus_sharing %}
-    <a class="social-share-element" id="social-googleplus" href="https://plus.google.com/share?url={{site.url}}{{page.url}}" target="_blank" title="Share this post on Google Plus"><span class="icon"><i class="fa fa-google-plus"></i></span></a>
-    {% endif %}
-<!-- Reddit -->
-    {% if site.reddit_sharing %}
-    <a class="social-share-element" id="social-reddit" href="http://www.reddit.com/submit?url={{site.url}}{{page.url}}&title={{page.title}}" target="_blank" title="Share this post on Reddit"><span class="icon"><i class="fa fa-reddit"></i></span></a>
-    {% endif %}
-<!-- Digg -->
-    {% if site.digg_sharing %}
-    <a class="social-share-element" id="social-digg" href="" target="_blank" title="Share this post on Digg"><span class="icon"><i class="fa fa-digg"></i></span></a>
-    {% endif %}
-<!-- StumbleUpon -->
-    {% if site.stumbleupon_sharing %}
-    <a class="social-share-element" id="social-stumbleupon" href="" target="_blank" title="Share this post on StumbleUpon"><span class="icon"><i class="fa fa-stumbleupon"></i></span></a>
-    {% endif %}
-<!-- Sina Weibo -->
-    {% if site.weibo_sharing %}
-    <a class="social-share-element" id="social-weibo" href="http://v.t.sina.com.cn/share/share.php?title={{site.title}}:{{page.title}}&url={{url}}" target="_blank" title="Share this post on Sina Weibo"><span class="icon"><i class="fa fa-weibo"></i></span></a>
-    {% endif %}
-<!-- Dounban -->
-    {% if site.dounban_sharing %}
-    <a class="social-share-element" id="social-dounban" href="" target="_blank" title="Share this post on Dounban"><span class="icon"><i class="fa fa-dounban"></i></span></a>
-    {% endif %}
-<!-- HackerNews -->
-    {% if site.hackernews_sharing %}
-    <a class="social-share-element" id="social-hackernews" href="" target="_blank" title="Share this post on Hacker-News"><span class="icon"><i class="fa fa-hacker-news"></i></span></a>
-    {% endif %}
-<!-- VKontakte -->
-    {% if site.vk_sharing %}
-    <a class="social-share-element" id="social-vk" href="http://vkontakte.ru/share.php?url={{site.url}}{{page.url}}" target="_blank" title="Share this post on VK"><span class="icon"><i class="fa fa-vk"></i></span></a>
-    {% endif %}
-<!-- Viadeo -->
-    {% if site.viadeo_sharing %}
-    <a class="social-share-element" id="social-viadeo" href="http://www.viadeo.com/shareit/share/?url={{site.url}}{{page.url}}&title={{page.title}}" target="_blank" title="Share this post on viadeo"><span class="icon"><img class="logoviadeo" src="{{site.url}}/assets/viadeo_logo.png"/></span></a>
-    {% endif %}
-
+    {% if site.pinterest_sharing %}<!-- Pinterest -->
+    <a class="socicon-pinterest" href="http://pinterest.com/pin/create/button/?url={{site.url}}{{page.url}}&description={{page.description}}" target="_blank" title="{{ sharetext }}Pinterest"></a>{% endif %}
+    {% if site.instagram_sharing %}<!-- Instagram -->
+    <a class="socicon-instagram" href="" target="_blank" title="{{ sharetext }}Instagram"></a>{% endif %}
+    {% if site.twitter_sharing %}<!-- Twitter -->
+    <a class="socicon-twitter" href="https://twitter.com/intent/tweet?text={{page.title}}&url={{url}}&via={{site.twitter_username}}&hashtags={{tagStr}}&related={{site.twitter_username}}" target="_blank" title="{{ sharetext }}Twitter"></a>{% endif %}
+    {% if site.facebook_sharing %}<!-- Facebook -->
+    <a class="socicon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{page.url}}&t={{page.title}}" target="_blank" title="{{ sharetext }}Facebook"></a>{% endif %}
+    {% comment %}<a class="socicon-facebook" href="http://www.facebook.com/sharer.php?u={{site.url}}{{page.url}}&p[title]={{page.title}}" target="_blank" title="{{ sharetext }}Facebook"></a>{% endcomment %}
+    {% if site.youtube_sharing %}<!-- YouTube -->
+    <a class="socicon-youtube" href="" target="_blank" title="{{ sharetext }}YouTube"></a>{% endif %}
+    {% if site.vimeo_sharing %}<!-- Vimeo -->
+    <a class="socicon-vimeo" href="" target="_blank" title="{{ sharetext }}Vimeo"></a>{% endif %}
+    {% if site.soundcloud_sharing %}<!-- SoundCloud -->
+    <a class="socicon-soundcloud" href="" target="_blank" title="{{ sharetext }}SoundCloud"></a>{% endif %}
+    {% if site.github_sharing %}<!-- GitHub -->
+    <a class="socicon-github" href="" target="_blank" title="{{ sharetext }}GitHub"></a>{% endif %}
+    {% if site.tumblr_sharing %}<!-- Tumblr -->
+    <a class="socicon-tumblr" href="http://www.tumblr.com/share/link?url={{site.url}}{{page.url}}&name={{page.title}}&description={{page.description}}" target="_blank" title="{{ sharetext }}Tumblr"></a>{% endif %}
+    {% if site.linkedin_sharing %}<!-- LinkedIn -->
+    <a class="socicon-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{site.url}}{{page.url}}&title={{page.title}}&summary={{page.description}}&source={{site.url}}" target="_blank" title="{{ sharetext }}LinkedIn"></a>{% endif %}
+    {% if site.googleplus_sharing %}<!-- Google+ -->
+    <a class="socicon-google" href="https://plus.google.com/share?url={{site.url}}{{page.url}}" target="_blank" title="{{ sharetext }}Google Plus"></a>{% endif %}
+    {% if site.reddit_sharing %}<!-- Reddit -->
+    <a class="socicon-reddit" href="http://www.reddit.com/submit?url={{site.url}}{{page.url}}&title={{page.title}}" target="_blank" title="{{ sharetext }}Reddit"></a>{% endif %}
+    {% if site.digg_sharing %}<!-- Digg -->
+    <a class="socicon-digg" href="" target="_blank" title="{{ sharetext }}Digg"></a>{% endif %}
+    {% if site.stumbleupon_sharing %}<!-- StumbleUpon -->
+    <a class="socicon-stumbleupon" href="" target="_blank" title="{{ sharetext }}StumbleUpon"></a>{% endif %}
+    {% if site.weibo_sharing %}<!-- Sina Weibo -->
+    <a class="socicon-weibo" href="http://v.t.sina.com.cn/share/share.php?title={{site.title}}:{{page.title}}&url={{url}}" target="_blank" title="{{ sharetext }}Sina Weibo"></a>{% endif %}
+    {% if site.dounban_sharing %}<!-- Dounban -->
+    <a class="socicon-dounban" href="" target="_blank" title="{{ sharetext }}Dounban"></a>{% endif %}
+    {% if site.hackernews_sharing %}<!-- HackerNews -->
+    <a class="socicon-hackernews" href="" target="_blank" title="{{ sharetext }}Hacker-News"></a>{% endif %}
+    {% if site.vk_sharing %}<!-- VKontakte -->
+    <a class="socicon-vkontakte" href="http://vkontakte.ru/share.php?url={{site.url}}{{page.url}}" target="_blank" title="{{ sharetext }}VK"></a>{% endif %}
+    {% if site.viadeo_sharing %}<!-- Viadeo -->
+    <a class="socicon-viadeo" id="social-viadeo" href="http://www.viadeo.com/shareit/share/?url={{site.url}}{{page.url}}&title={{page.title}}" target="_blank" title="{{ sharetext }}viadeo"></a>{% endif %}
 </div>
