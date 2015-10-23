@@ -41,10 +41,9 @@ d'impression, pas de serveur HTTP, ...).
 Couchbase Server
 ------------
 En premier lieu, il faut bien évidemment disposer d'un cluster [Couchbase] au
-minimum en version 4.0. À l'heure où j'écris ces lignes, il est disponible en
-[release candidate][cb40rc0] sur le site de [Couchbase]. Ce cluster doit comporter
-au moins un nœud avec le service *Index* et au moins un nœud avec le service
-*Query*.
+minimum en version 4.0. Il est disponible en [téléchargement] sur le site
+de [Couchbase].  Ce cluster doit comporter au moins un nœud avec le service
+*Index* et au moins un nœud avec le service *Query*.
 
 Installation de la pile CEAN de Couchbase
 =========================================
@@ -140,7 +139,7 @@ cluster) :
 
 Comme nous allons utiliser *N1QL*, il faut créer au moins les index primaires.
 Pour cela, nous allons utiliser le client de requêtage en ligne de commande
-fourni avec *Couchbase* : ```/opt/couchbase/bin/cbq``` et y exécuter les
+fourni avec *Couchbase* : `/opt/couchbase/bin/cbq` et y exécuter les
 commandes SQL suivantes :
 
 ```sql
@@ -220,7 +219,7 @@ Nous allons commencer par créer une route sur le serveur qui associe un URL ave
 des paramètres à l'exécution d'une requête *N1QL* en lui transmettant les
 paramètres. Cette route côté serveur sera appelée par le service s'exécutant sur
 le client. Pour ajouter la route et la logique associée à cette route, nous
-allons l'ajouter au fichier ```routes/demo.js``` :
+allons l'ajouter au fichier `routes/demo.js` :
 
 ```js
 /**
@@ -262,36 +261,6 @@ l'envoie sur la console du serveur pour la tracer et l'exécute. En cas
 d'erreur, elle est tracée sur la console et renvoyée au service client, sinon,
 le résultat est tracé sur la console du serveur et renvoyée au service client.
 
-Ajout d'une méthode de requêtage N1QL dans le service sur le client
--------------------------------------------------------------------
-
-Le principe est que le côté client comporte un service qui puisse être utilisé
-pour interroger le serveur sur un URL (et donc une route avec une fonction
-applicative associée à l'URL). Nous avons déjà défini la route avec deux
-paramètres sur le serveur. Nous devons donc créer un service du côté client qui
-puisse être appelé pour interroger le serveur.
-
-Nous allons donc ajouter une méthode dans le service existant ```myservice```
-pour exécuter une requête *N1QL* paramétrée. Voici la méthode à ajouter dans le
-fichier ```public/scripts/services/myservice.js``` pour récupérer les valeurs
-annuelles d'un pays et d'un indicateurs passés en paramètres :
-
-```js
-TMyService.prototype.getN1ql = function(countryId,categoryId)
-{
-    var url = "/service/getN1ql?countryId=" + countryId + "&categoryId=" + categoryId;
-    var promise = this.httpService.get(url, {}).success(function (data) { /*Allows to handle the result and errors */ });
-    return promise;
-}
-```
-
-Désormais, le client, dans le navigateur, dispose d'un service Javascript que
-l'on peut appeler avec deux paramètres, ce service va faire un appel asynchrone
-(sans attendre le résultat) à une URL sur le serveur en transmettant les deux
-paramètres, le serveur utilise une route pour associer l'URL et ses paramètres
-à une fonction qui génère une requête N1QL, en demande l'exécution et renvoie
-le résultat au service sur le client.
-
 Il est possible de tester le service depuis un navigateur internet en saisissant
 l'URL `http://localhost:9000/service/getN1ql?countryId=FRA&categoryId=LEB`, ce
 qui devrait afficher le résultat (remis en forme pour le blog) :
@@ -310,12 +279,42 @@ qui devrait afficher le résultat (remis en forme pour le blog) :
 ]
 ```
 
+Ajout d'une méthode de requêtage N1QL dans le service sur le client
+-------------------------------------------------------------------
+
+Le principe est que le côté client comporte un service qui puisse être utilisé
+pour interroger le serveur sur un URL (et donc une route avec une fonction
+applicative associée à l'URL). Nous avons déjà défini la route avec deux
+paramètres sur le serveur. Nous devons donc créer un service du côté client qui
+puisse être appelé pour interroger le serveur.
+
+Nous allons donc ajouter une méthode dans le service existant `myservice`
+pour iinterroger le cluster Couchbase. Voici la méthode à ajouter dans le
+fichier `public/scripts/services/myservice.js` pour récupérer les valeurs
+annuelles d'un pays et d'un indicateurs passés en paramètres :
+
+```js
+TMyService.prototype.getN1ql = function(countryId,categoryId)
+{
+    var url = "/service/getN1ql?countryId=" + countryId + "&categoryId=" + categoryId;
+    var promise = this.httpService.get(url, {}).success(function (data) { /*Allows to handle the result and errors */ });
+    return promise;
+}
+```
+
+Désormais, le client, dans le navigateur, dispose d'un service Javascript que
+l'on peut appeler avec deux paramètres, ce service va faire un appel asynchrone
+(sans attendre le résultat) à une URL sur le serveur en transmettant les deux
+paramètres, le serveur utilise une route pour associer l'URL et ses paramètres
+à une fonction qui génère une requête N1QL, en demande l'exécution et renvoie
+le résultat au service sur le client.
+
 Installation de d3js et nvd3
 ----------------------------
 
 Nous allons ensuite utiliser la bibliothèque [D3] pour effectuer le rendu des
 résultats. Pour faciliter son utilisation, nous allons utiliser la bibliothèque
-d'encapsulation [NVD3] et plus particulièrement sa version pour Angular,
+d'encapsulation [nvD3] et plus particulièrement sa version pour Angular,
 [Angular-nvD3].
 
 L'installation se fait à l'aide de la commande suivante exécutée dans le
@@ -326,7 +325,7 @@ bower install angular-nvd3
 ```
 
 Théoriquement, elle devrait installer automatiquement toutes les
-dépendances requises (Angular, [D3], et [nvD3]. Cependant, par précaution, au
+dépendances requises (Angular, [D3], et [nvD3]). Cependant, par précaution, au
 cas où les dépendances n'auraient pas été correctement installées, il est
 possible de les installer manuellement :
 
@@ -407,8 +406,9 @@ l'affichage du graphique dans l'en-tête du fichier `public/index.html` :
 
 L'application utilise une architecture *MVC* (Model-View-Controler) avec des
 modèles. Nous allons donc ajouter les boutons de sélection dans le fichier de
-la vue principale `public/views/main.html` en commentant au passage le bouton
-de l'application de démonstration :
+la vue principale `public/views/main.html` pour permettre la sélection des
+valeurs de paramètres et en commentant au passage le bouton de l'application de
+démonstration :
 
 ```html
 <div ng-include="'views/header.html'"/>
@@ -441,7 +441,7 @@ de l'application de démonstration :
 <div ng-include="'views/footer.html'"/>
 ```
 
-Modification du controlleur pour appeler la requête et mettre le graphique à jour
+Modification du controlleur pour interroger le cluster et mettre le graphique à jour
 ---------------------------------------------------------------------------------
 
 Nous allons maintenant écrire la partie cliente qui déclenche l'appel au
@@ -551,7 +551,7 @@ pile de dévelopement CEAN, comment fonctionnent les routes, les services, les
 controleurs, les vues, comment faire exécuter une requête N1QL paramétrée,
 récupérer le résultat et le représenter à l'aide d'un graphique D3 interactif.
 
-[cb40rc0]: http://www.couchbase.com/preview/couchbase-server-4-0
+[téléchargement]: http://www.couchbase.com/nosql-databases/downloads
 [Couchbase]: http://www.couchbase.com
 [NodeJS]: https://nodejs.org
 [CEAN]: https://sites.google.com/site/cbcean/documentation
