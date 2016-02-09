@@ -11,9 +11,46 @@ tags: android, couchbase, mobile
 published: true
 ---
 
-Getting started with Couchbase Lite as a storage backend embedded in an Android
+Getting started with _Couchbase Lite_ as a storage backend embedded in an Android
 application to store locally JSON documents and eventually synchronize them
-between the local database and a Couchbase Cluster.
+between the local database and a _Couchbase_ Cluster. This post will explain how
+to install _Android Studio_, how to start a new Android application project, how
+to add _Couchbase Lite_ library and how to configure it.
+
+# Download and Install Android Studio
+
+The very first step is to download _Android Studio_ from
+[Android.com](http://developer.android.com/sdk/index.html#Other). Choose to
+download the whole _IDE_ with the _SDK_ for your platform and install it with
+all the default choices.
+
+# Download Android images
+
+Then, I usually update the _Android SDK_ and install the Android images for all
+the targetted versions. In my case, I download one image for each version,
+_x86_64_  if available (faster emulation) or _ARM_, with _Google API_ if
+available.
+
+# Create Virtual Devices
+
+I have 2 Android phones that I sometimes use to test my applications, but I
+prefer to use an emulated phone to test on different Android versions. So, I
+usually create several virtual Android Virtual Devices, mostly for phones and
+tablets (TV and watches will come later).
+
+# Create a project
+
+# Add CBLite dependency
+
+Add workaround
+
+# Open a CBLite connection
+
+
+
+
+
+![Start a new Android Studio project]({{site.url}}/assets/posts/GettingStartedWithCBLiteAndAndroid/120303.png)
 
 
 Domoid : Home automation with Domoticz, Couchbase and CouchbaseLite
@@ -36,8 +73,7 @@ prepare the whole system for future standards, such as home automation. So, I
 installed Domoticz in 2014 on one of my 18 Raspberry Pi (15 of them are in
 cluster, maybe running Couchbase later) and began to install home automation
 micro-modules everywhere I can (switches, roller-shutters, doors and windows,
-radiators, Light sensors, temperature sensors, humidity sensors, IR
-sensors...).
+radiators, Light sensors, temperature sensors, humidity sensors, IR sensors...).
 
 ## Goals
 
