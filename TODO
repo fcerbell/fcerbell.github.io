@@ -1,0 +1,49 @@
+Quadcopter
+
+- Taranis X9D
+- X8R receiver
+- CC3D Revolution Flight Controler
+- U-Blox Neo M8N GPS
+- Frame
+- Motors
+- ESC
+- Propellers
+- Battery
+- Alarm
+- OpLink
+- Power distribution
+- OpenPilot ground station
+
+
+Goals :
+- Telemetry in ground station and remote control
+- GPS assisted flights
+- FPV
+
+Design:
+Connection diagram
+CC3D initial configuration
+Telemetry link to the ground station
+Flight modes configuration
+Failsafe (receiver and flight controler)
+Calibration (Accel, Gyros, Magneto, Level)
+Tip : resurect firmware
+
+
+
+
+
+Couchbase sizing
+- CPU/core per node
+- RAM size (global)
+- Disk size (global)
+- Disk IO (global)
+- Network IO (global)
+- Extra (XDCR, backup, ...)
+- Number of nodes depending on the sizing values
+
+Couchbase tuning and optimizations
+
+Couchbase monitoring
+
+

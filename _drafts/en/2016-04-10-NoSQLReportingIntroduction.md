@@ -14,14 +14,14 @@ published: true
 
 Whatever the database technology is, there is a business application using it
 and there is most of the time a reporting need on the business data. I will try
-to introduce how to design reporting data, the concepts are applicable to
-relational SQL databases and to non-relational NOSQL databases either.
-There are two distinct reporting needs : the operational reporting, which
-applies to live operational data to create operational reports such as
-invoices, order forms, assets inventories, and so on, and the business
-intelligence reporting which is higher level reporting to give trends and to
-help people to take decisions. In this first post, I'll try to explain the
-reporting general concepts.
+to introduce how to design a reporting architecture, the concepts are applicable
+to relational SQL databases and to non-relational NOSQL databases either.  There
+are two distinct reporting needs : the operational reporting, which applies to
+live operational data to create operational reports such as invoices, order
+forms, assets inventories, and so on, and the business intelligence reporting
+which is higher level reporting to give trends and to help people to take
+decisions. In this first post, I'll try to explain the reporting general
+concepts.
 
 
 * TOC
@@ -30,7 +30,7 @@ reporting general concepts.
 # Operational reporting
 
 This reporting is directly used by the business application to deliver
-operational reports and the live data. The business needs this kind of reports.
+operational reports on the live data. The business needs this kind of reports.
 As an example, if the business is to plan train travels, the business
 application enables to find a train route for the user with appropriate date
 and time, then to book the train and to charge the user's bank account. At the
@@ -99,14 +99,14 @@ Hopefully, some NOSQL databases provide a SQL interface, such as N1QL for
 
 # Business intelligence reporting
 
-In the business intelligence reporting, the business application does not
-provide the source data and ask the function to generate a report. Most of the
-time, the application provides a source data connection and let the user create
-his own analysis. It means that the reporting function needs to be able to
-connect to the data source to execute a predefined query, or to generate an
-AdHoc query to return the exact resultset asked by the user, leveraging the
-underlying data storage technology by pushing down the aggregations and
-filters.
+In the business intelligence reporting, the business application does not need
+to provide the source data and ask the function to generate a predefined report
+from a report template. Most of the time, the application provides a source data
+connection and let the user create his own analysis. It means that the reporting
+function needs to be able to connect to the data source to execute a predefined
+query, or to generate an AdHoc query to return the exact resultset asked by the
+user, leveraging the underlying data storage technology by pushing down the
+aggregations and filters.
 
 ![BI Architecture][]
 [BI Architecture][]
