@@ -3,6 +3,7 @@ uid: CeanAndD3
 title: Create a D3 chart with CEAN and N1QL on Couchbase
 author: fcerbell
 layout: post
+lang: en
 description: How to create a D3 chart on Couchbase, using the CEAN stack
 category: tutos
 tags: [cean, couchbase, D3, nodejs, express, angular, reporting, N1QL]

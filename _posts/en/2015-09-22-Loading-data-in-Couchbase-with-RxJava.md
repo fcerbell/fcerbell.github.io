@@ -3,6 +3,7 @@ uid: DataLoading
 title: Loading data in Couchbase with RxJava
 author: fcerbell
 layout: post
+lang: en
 #description:
 category: tutos
 #categories

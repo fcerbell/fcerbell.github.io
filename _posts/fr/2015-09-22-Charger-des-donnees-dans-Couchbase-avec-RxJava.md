@@ -3,6 +3,7 @@ uid: DataLoading
 title: Charger des données dans Couchbase avec RxJava
 author: fcerbell
 layout: post
+lang: fr
 #description:
 category: tutos
 #categories

@@ -3,6 +3,7 @@ uid: ConnecterJasperACouchbase
 title: Connexion JDBC depuis JasperReports Server à Couchbase
 author: fcerbell
 layout: post
+lang: fr
 description:
 category: tutos
 tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]

@@ -1,6 +1,6 @@
   <ul class="posts">
-    {% assign posts=site.posts | where:"lang", page.lang %}
     <hr/>
+    {% assign posts=site.posts | where:"lang", page.lang %}
     {% assign uids=site.posts | sort: 'date' | reverse | map:"uid" %}
     {% assign uids_str="" %}
     {% for uid in uids %}
@@ -10,7 +10,6 @@
       {% endunless %}
     {% endfor %}
     {% assign uids_uniq = uids_str | remove_first: "," | split: "," %}
-    <hr/>
     {% for uid in uids_uniq %}
       {% assign posts=site.posts | where:"uid",uid %}
       {% assign thispost = "" %}
