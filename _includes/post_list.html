@@ -1,7 +1,7 @@
   <ul class="posts">
     {% assign posts=site.posts | where:"lang", page.lang %}
     <hr/>
-    {% assign uids=site.posts | map:"uid" | sort %}
+    {% assign uids=site.posts | sort: 'date' | reverse | map:"uid" %}
     {% assign uids_str="" %}
     {% for uid in uids %}
       {% assign uids_array = uids_str | split: "," %}
@@ -19,7 +19,7 @@
         {% if post.lang == page.lang %}{% assign thispost = post %} {% endif %}
       {% endfor %}
       {% if thispost == "" %}{% assign thispost = def_post %}{% endif %}
-      {% assign otherlanguages=site.posts | where:"uid", thispost.uid %}
+      {% assign otherlanguages=site.posts | where:"uid", thispost.uid | sort: 'lang'%}
       <li>
         <span class="post-date">{{ thispost.date | date: "%b %-d, %Y" }}</span>
         <a class="post-link" href="{{ thispost.url | prepend: site.baseurl }}">{{ thispost.title }}</a> ( lang: {% for l in otherlanguages %}<a class="post-link" href="{{ l.url | prepend: site.baseurl }}" title="{{ l.title }}">{{l.lang}}</a> {% endfor %})
