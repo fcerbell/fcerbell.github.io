@@ -3,6 +3,7 @@ uid: skel
 author: fcerbell
 title: Getting started with Couchbase Lite and Android
 layout: post
+lang: en
 #description:
 #category: Test
 #categories

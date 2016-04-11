@@ -3,6 +3,7 @@ uid: NoSQLReportingIntroduction
 author: fcerbell
 title: Introduction to NoSQL reporting
 layout: post
+lang: en
 #description:
 #category: Test
 #categories
