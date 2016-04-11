@@ -41,6 +41,8 @@ Dans ce contexte, la plupart des outils décisionnels (Qlikview, Tableau, BO, Pe
 * H6 : ###### Header 6
 * Links : [Label](URL 'title')
 * Links : [Label][linkid]
+[linkid]: http://www.example.com/ "Optional Title"
+
 * Bold : **Bold**
 * Italicize : *Italics*
 * Strike-through : ~~text~~
@@ -52,8 +54,5 @@ Dans ce contexte, la plupart des outils décisionnels (Qlikview, Tableau, BO, Pe
 * Inline Code : `alert('Hello World');`
 * Horizontal Rule (HR) : --------
 * Footnote[^1]
-
-[linkid]: http://www.example.com/ "Optional Title"
-
 [^1]: This is my first footnote
 

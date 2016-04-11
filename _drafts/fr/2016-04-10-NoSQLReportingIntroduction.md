@@ -1,13 +1,13 @@
 ---
 uid: NoSQLReportingIntroduction
 author: fcerbell
-title: Introduction to NoSQL reporting
+title: Introduction à la génération de rapports NoSQL
 layout: post
-lang: en
+lang: fr
 #description:
-#category: Test
+category: Tutos
 #categories
-#tags
+tags: nosql reporting
 #date
 published: true
 ---
@@ -236,7 +236,7 @@ FROM Sales
 WHERE ( [Store].[USA].[CA] )
 ~~~
 
-[BI Architecture]:{{site.url}}/assets/posts/NoSQLReportingIntroduction/BIArch_en.png "Business Intelligence Architecture"
+[BI Architecture]:{{site.url}}/assets/posts/NoSQLReportingIntroduction/BIArch_fr.png "Architecture décisionnelle"
 [Couchbase]: http://www.couchbase.com "Couchbase website"
 [JasperReports]: http://community.jaspersoft.com/project/jasperreports-library "JasperReports Library page"
 [Pentaho]: https://www.pentaho.com "Pentaho website"

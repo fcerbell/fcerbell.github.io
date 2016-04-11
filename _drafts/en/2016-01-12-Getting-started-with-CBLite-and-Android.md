@@ -202,6 +202,8 @@ authentication
 * H5 : ##### Header 5
 * H6 : ###### Header 6
 * Links : [Title](URL)
+* Links : [Label][linkid]
+[linkid]: http://www.example.com/ "Optional Title"
 * Bold : **Bold**
 * Italicize : *Italics*
 * Strike-through : ~~text~~
