@@ -18,17 +18,16 @@ to introduce how to design reporting data, the concepts are applicable to
 relational SQL databases and to non-relational NOSQL databases either.
 There are two distinct reporting needs : the operational reporting, which
 applies to live operational data to create operational reports such as
-invoices, order forms, assets inventories, and so on, and  the business
+invoices, order forms, assets inventories, and so on, and the business
 intelligence reporting which is higher level reporting to give trends and to
-help people to take decisions.
+help people to take decisions. In this first post, I'll try to explain the
+reporting general concepts.
 
 
 * TOC
 {:toc}
 
-# Reporting general concepts
-
-## Operational reporting
+# Operational reporting
 
 This reporting is directly used by the business application to deliver
 operational reports and the live data. The business needs this kind of reports.
@@ -49,7 +48,7 @@ the application, or it can be a standalone third party reporting application.
 Some third party tools can be embedded, other cannot, some are specific (stream
 oriented or query oriented).
 
-### Source data passed
+## Source data passed
 
 Whatever the archiecture is, the reporting code needs to have the source data
 to create the report. In this first case, the source data is queried or
@@ -63,7 +62,7 @@ So, the application eventually queries the data storage, using the usual API,
 and pass to the reporting function the source data, the report template and the
 output format to generate the report.
 
-### Source data queried
+## Source data queried
 
 In this second use case, the business application passes very few information
 to the reporting function (internal, embedded or external), it will be up to
@@ -97,7 +96,7 @@ storage (key-value, JSON, graph, wide-columns, ...), there will be an issue.
 Hopefully, some NOSQL databases provide a SQL interface, such as N1QL for
 Couchbase.
 
-## Business intelligence reporting
+# Business intelligence reporting
 
 In the business intelligence reporting, the business application does not
 provide the source data and ask the function to generate a report. Most of the
@@ -108,13 +107,13 @@ AdHoc query to return the exact resultset asked by the user, leveraging the
 underlying data storage technology by pushing down the aggregations and
 filters.
 
-### Live, on-line operational data
+## Live, on-line operational data
 
 In business intelligence reporting, there is a commonly accepted architecture.
 The operational live data are stored in a database, historically a relational
 SQL database and the data are normalized. These are live data, online data.
 
-### The Operational Data Store (ODS)
+## The Operational Data Store (ODS)
 
 Then, they are pushed to an ODS (Operational Data Store) which is usually a
 relational SQL database, too, with a normalized schema. It can store some chosen
@@ -122,7 +121,7 @@ historical data. The idea is to feed it enough to be able to feed the next level
 and to empty it. As an example, the ODS can be fed daily, then it is used to
 feed the data warehouse (DWH) and it is cleaned to begin a new month.
 
-### The Datawarehouse (DWH)
+## The Datawarehouse (DWH)
 
 The next level is the data warehouse (DWH), it is not supposed to have a
 normalized schema, but a schema which fits to the reporting needs. Most of the
@@ -134,7 +133,7 @@ hourly data in the DWH. There are usually two kinds of tables : facts tables to
 store the actual indicators values, and the dimensions (or reference) tables to
 store the possible analyzis axis.
 
-#### Dimensions 
+### Dimensions 
 
 Dimensions are the different axis to analyze the key performance indicators
 (KPI). Common dimensions are a time dimension, and a geographic dimensions, but
@@ -147,7 +146,7 @@ A dimension is made of hierarchies. Why hierarchies and not hierarchy ? Because
 if there was only one hierarchy, there would be no dimension need ! Dimensions
 are a concept. 
 
-##### Hierarchies
+#### Hierarchies
 
 The time dimension is the concept of time, nothing else. It does
 not describe how the time is represented. Business may need to analyze the KPI
@@ -156,7 +155,7 @@ incompatible with the others, each one will be a different time dimension
 implementation, a different hierarchy. The geographic dimension would also have
 several hierarchies inside : Economic areas, countries, sales territories, ...
 
-###### Levels
+##### Levels
 
 Each hierarchy is made of levels, here are some level examples for the time
 dimension's hierarchies :
@@ -187,7 +186,7 @@ month and day information. This makes the records bigger, but minimize the hops
 (joins) and provide good performances with relevant indexes (at the price of
 even more disk space needed).
 
-#### Facts tables
+### Facts tables
 
 The fact tables are simpler to understand. There is one fact table to store all
 preaggregated KPIs which share the same hierarchies. Each record is the KPIs
@@ -200,50 +199,39 @@ data leade to 24*NbCities more records and there will always be a computation
 for the daily aggregation which is the lowest level asked by the business,
 instead of saving space and having immediate static results.
 
+Obviously, a datawarehouse can be very big as it contains a record for all the
+hierarchies lowest granularity combination. With 10 KPIs only, and two
+dimensions (and only one hierarchy in each) : 100 cities and a single year of
+historical data, you will have 100x365=36,500 records.
 
-# Reporting with Couchbase
+## The Datamarts (DMT)
 
-## Operational reporting
+Datamarts are often called hyper-cubes. There can be several datamarts built
+from a single data warehouse. They can be built and rebuilt on demand and are
+often wiped/rebuild by a nightly batch, with a frequency related to the
+datawarehouse refresh frequency. Each datamart contains only a consistent
+subseti of the data warehouse, with one or few fact tables sharing the same
+hierarchies, at the business requested granularity. A datamart is designed to
+provide consistent data, which are comparables (same hierarchies), to answer to
+targetted business questions as fast as possible. They are usuallu stored in a
+dedicated storage engine (MOLAP), a relational storage engine with a star or
+snowflake schema (ROLAP), or an hybrid storage (HOLAP) which can store
+preaggregated intermediate levels. The datamarts can be seen as datasources
+designed to be used in a pivot table. Some of the datamart storage provide a
+dedicated query language : MDX, an SQL like query language for multi-dimensional
+data, often transmitted over the network using XMLA protocol.
 
-## Couchbase as an ODS
+MDX sample :
 
-## Couchbase as a DWH
-
-## Couchbase as a DMT with views
-
-
----
-
-Concernant la possibilité de connecter des outils décisionnels à Couchbase. Il faut commencer par prendre en compte que Couchbase est utilisée comme base de données opérationnelle. Une architecture décisionnelle typique comporte théoriquement une base de type ODS (Operational Data Store) avec un schéma opérationnel, un Datawarehouse (DWH) ayant un schéma démoralisé plutôt en étoile ou en flocon et comportant des données nettoyées, validée et potentiellement pré-agrégées, et des Datamarts (DMT) avec des données agrégées dans un schéma en étoile ou flocon (pour faire du ROLAP) ou un stockage spécialisé (pour du HOLAP ou du MOLAP), le tout lié par des traitements Extract-Transform-Load (ETL) ou Extract-Load-Transform (ELT) et de validation/redressement des données. Il est cependant toujours possible de connecter un outil d’analyse décisionnelle à une base opérationnelle en ayant conscience des impacts en terme de dimensionnement de l’infrastructure et de qualité des données.
-
-Dans ce contexte, la plupart des outils décisionnels (Qlikview, Tableau, BO, Pentaho, Jaspersoft) ne savent pas toujours dialoguer avec une base de données non-relationnelle et NoSQL. Ils utilisent principalement le SQL ou le MDX pour interroger les données. Certains outils (comme Pentaho et Jaspersoft) peuvent être étendus pour utiliser d’autres langages de requête. Un accès purement clé/valeur n’est pas toujours suffisant pour créer des rapports décisionnels sur des documents opérationnels non-modélisés dans un but décisionnel. Il est donc possible d’étendre ces outils pour leur permettre d’utiliser un accès clé/valeur, à condition d’avoir par ailleurs des traitements construisant des documents agrégés. Il est également possible d’étendre ces mêmes outils pour leur permettre d’exploiter les vues (MapReduce) de Couchbase et ainsi de bénéficier d’agrégations partiellement précalculées et distribuées, particulièrement les vues multi-dimensionnelles qui peuvent s’apparenter à un stockage OLAP. Mais surtout, Couchbase a l’avantage d’être une base de données NOSQL (dans le sens Not Only SQL) et de pouvoir interpréter des requêtes SQL grâce à ses pilotes ODBC et JDBC. Cela signifie qu’il est possible de connecter tout outil décisionnel en mesure d’utiliser une connection ODBC ou JDBC en lui fournissant une requête comme source de données. Dès lors, il devient possible d’exprimer des requêtes en SQL sur les documents opérationnels, et de les utiliser directement comme sources de données depuis les outils décisionnels.
-
-$$
-\begin{align*}
-  & \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
-  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
-  & (x_1, \ldots, x_n) \left( \begin{array}{ccc}
-      \phi(e_1, e_1) & \cdots & \phi(e_1, e_n) \\
-      \vdots & \ddots & \vdots \\
-      \phi(e_n, e_1) & \cdots & \phi(e_n, e_n)
-    \end{array} \right)
-  \left( \begin{array}{c}
-      y_1 \\
-      \vdots \\
-      y_n
-    \end{array} \right)
-\end{align*}
-$$
-
-$$ 5 + 5 $$
+~~~
+SELECT
+   { [Measures].[Store Sales] } ON COLUMNS,
+   { [Date].[2002], [Date].[2003] } ON ROWS
+FROM Sales
+WHERE ( [Store].[USA].[CA] )
+~~~
 
 
-* H1 : # Header 1
-* H2 : ## Header 2
-* H3 : ### Header 3
-* H4 : #### Header 4
-* H5 : ##### Header 5
-* H6 : ###### Header 6
 * Links : [Label](URL 'title')
 * Links : [Label][linkid]
 * Bold : **Bold**
@@ -261,6 +249,4 @@ $$ 5 + 5 $$
 [linkid]: http://www.example.com/ "Optional Title"
 
 [^1]: This is my first footnote
-
-
 
