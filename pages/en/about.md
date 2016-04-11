@@ -12,4 +12,4 @@ I will probably also share on other topics such as photo or cooking.
 
 My [CV].
 
-[CV]: {{site.url}}/assets/pages/CV-Anglais.pdf
+[CV]: {{site.url}}{{site.baseurl}}/assets/pages/CV-Anglais.pdf

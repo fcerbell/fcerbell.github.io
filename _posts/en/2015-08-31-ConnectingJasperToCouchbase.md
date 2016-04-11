@@ -41,33 +41,33 @@ When a user connects to JRS, he goes to his organization's repository. The repos
 
 We have to open the repository, by opening the *View* menu and selecting *Repository* item :
 
-![View/Repository menu]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-01.png)
+![View/Repository menu]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-01.png)
 
 A JRS instance can be available in SaaS. It means that it can accept connections from *John Doe*/*BeautifulFlowers* and from *John Doe*/*Flowers for everyone*, each of them will only be able to see his company's data through his company's report templates (or shared templates), in a customized user interface (colors, logo, layout, ...). So, there are private locations for each company (organization) and common shared locations. In the tutorial, we will place the data source in the common area so that every organization will be able to use it. We will begin by creating a project folder in this place : */Public/WorldDevelopment*. Right clic on the */Public* folder to create a new sub-folder :
 
-![New folder menu]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-02.png)
+![New folder menu]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-02.png)
 
 Enter the folder's name *WorldDevelopment* :
 
-![Project folder creation]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-03.png)
+![Project folder creation]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-03.png)
 
 Upon the different items that we will create, there are technical items (data sources, queries, logos, prompts, ...) and business items (report templates, reports, views, dashboards, ...). The business items depend on the technical items to be displayed. Even if the end-user needs to be able to display the business item list and to execute them, he is definitely not interested in listing the technical items. Theses technical items need to be useable but not listable by the end-user, to keep his user interface clean and business focused. We will create an hidden folder to gather all the technical items : */Public/WorldDevelopment/Resources*.
 
-![Technical resources folder creation]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-04.png)
+![Technical resources folder creation]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-04.png)
 
 Let's continue with best practices. We will not create a technical mess with all technical resources together in a single folder. We will place
 them in sub-folders. In this tutorial, we learn how to create a data source, so we will create a datasource sub-folder in the resources folder,
 with all the projects items : */Public/WorldDevelopment/Resources/DataSources*.
 
-![Datasources folder creation]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-05.png)
+![Datasources folder creation]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-05.png)
 
 As we will place all the technical items in *Resources* sub-folders, we will change this common parent folder's permissions to allow the end-user to use all the included items, but not to list them. Right-clic on the *Resources* folder and choose *Permissions* :
 
-![Permissions contextual menu]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-06.png)
+![Permissions contextual menu]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-06.png)
 
 Lets give the *Execute only* permission on the *Resources* folder to the *ROLE_USER* role in the dialog :
 
-![Technical resources permissions]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-07.png)
+![Technical resources permissions]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-07.png)
 
 Congratulation, now, we have a common shared folder structure to all organizations (even if we only have one by default after the installation) with a special
 folder to hide technical stuffs to end-users.
@@ -119,15 +119,15 @@ Now, we can create the JDBC datasource by using the Couchbase driver to enable c
 
 We first have to connect to JRS as *jasperadmin* with the password *jasperadmin*. Then we have to go in the */Public/WorldDevelopment/Resources/DataSources* folder, right-clic on its name and choose *New/Datasource* :
 
-![New/Datasource menu]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-08.png)
+![New/Datasource menu]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-08.png)
 
 Select *JDBC datasource*, then choose *Couchbase*. Thanks to the configuration file modification made earlier, the driver is already known by JRS and we only have to choose it. JRS already know the JAVA class name to load and the default values in the different fields. We only have to eventually replace *localhost* in the connection URL by one of the Couchbase cluster node and to validate the informations by a clic on the *Test* button :
 
-![Datasource properties]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-09.png)
+![Datasource properties]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-09.png)
 
 The last step is to give a name to this newly created data source, I chose *Couchbase_DS* :
 
-![Datasource name]({{site.url}}/assets/posts/ConnecterJasperACouchbase/JRS_en-10.png)
+![Datasource name]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_en-10.png)
 
 Voila
 =====

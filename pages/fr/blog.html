@@ -7,5 +7,5 @@ description:
 <div class="home">
   <h1>Articles</h1>
   {% include post_list.html %}
-  <p class="rss-subscribe">S'abonner au <a href="{{ "/feed.xml" | prepend: site.baseurl }}">flux RSS</a></p>
+  <p class="rss-subscribe">S'abonner au <a href="{{"/feed.xml" | prepend: site.baseurl | prepend: site.url}}">flux RSS</a></p>
 </div>

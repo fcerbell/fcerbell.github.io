@@ -1,6 +1,6 @@
 <header class="site-header">
   <div class="wrap">
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a class="site-title" href="{{site.url}}{{site.baseurl}}/">{{site.title}}</a>
     <nav class="site-nav">
       <a href="#" class="menu-icon">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -17,7 +17,7 @@
         <ul>
         {% assign pages=site.pages | where:"lang",page.lang %}
         {% for page in pages %}
-          {% if page.title %}<a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>{% endif %}
+          {% if page.title %}<a class="page-link" href="{{page.url | prepend: site.baseurl | prepend: site.url}}">{{page.title}}</a>{% endif %}
         {% endfor %}
         </ul>
       </div>
@@ -25,8 +25,8 @@
   </div>
   <div class="languages">
   {% if page.uid %}
-    {% assign list=site.posts | where:"uid", page.uid | sort: 'path' %}{% for p in list %}<a href="{{ p.url }}" class="{{ p.lang }}">{{ p.lang }}</a>{% endfor %}
-    {% assign list=site.pages | where:"uid", page.uid | sort: 'path' %}{% for p in list %}<a href="{{ p.url }}" class="{{ p.lang }}">{{ p.lang }}</a>{% endfor %}
+    {% assign list=site.posts | where:"uid", page.uid | sort: 'path' %}{% for p in list %}<a href="{{p.url | prepend: site.baseurl | prepend: site.url}}" class="{{p.lang}}">{{p.lang}}</a>{% endfor %}
+    {% assign list=site.pages | where:"uid", page.uid | sort: 'path' %}{% for p in list %}<a href="{{p.url | prepend: site.baseurl | prepend: site.url}}" class="{{p.lang}}">{{p.lang}}</a>{% endfor %}
   {% endif %}
   </div>
 </header>

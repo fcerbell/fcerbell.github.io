@@ -20,9 +20,9 @@
       {% if thispost == "" %}{% assign thispost = def_post %}{% endif %}
       {% assign otherlanguages=site.posts | where:"uid", thispost.uid | sort: 'lang' %}
       <li>
-        <span class="post-date">{{ thispost.date | date: "%b %-d, %Y" }}</span>
-        <a class="post-link" href="{{ thispost.url | prepend: site.baseurl }}">{{ thispost.title }}</a> ( lang: {% for l in otherlanguages %}<a class="post-link" href="{{ l.url | prepend: site.baseurl }}" title="{{ l.title }}">{{l.lang}}</a> {% endfor %})
-        <p class="post-excerpt">{{thispost.excerpt | remove: '<p>' | remove: '</p>' }}</p>
+        <span class="post-date">{{thispost.date | date: "%b %-d, %Y"}}</span>
+        <a class="post-link" href="{{thispost.url | prepend: site.baseurl | prepend: site.url}}">{{thispost.title}}</a> ( lang: {% for l in otherlanguages %}<a class="post-link" href="{{l.url | prepend: site.baseurl | prepend: site.url}}" title="{{l.title}}">{{l.lang}}</a> {% endfor %})
+        <p class="post-excerpt">{{thispost.excerpt | remove: '<p>' | remove: '</p>'}}</p>
       </li>
     {% endfor %}
   </ul>

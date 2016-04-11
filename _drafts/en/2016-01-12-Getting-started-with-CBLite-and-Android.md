@@ -51,7 +51,7 @@ Add workaround
 
 
 
-![Start a new Android Studio project]({{site.url}}/assets/posts/GettingStartedWithCBLiteAndAndroid/120303.png)
+![Start a new Android Studio project]({{site.url}}{{site.baseurl}}/assets/posts/GettingStartedWithCBLiteAndAndroid/120303.png)
 
 
 Domoid : Home automation with Domoticz, Couchbase and CouchbaseLite

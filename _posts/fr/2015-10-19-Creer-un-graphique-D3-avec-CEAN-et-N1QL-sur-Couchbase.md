@@ -532,7 +532,7 @@ Vous pouvez ensuite connecter votre navigateur sur l'adresse et le port de votre
 application `http://localhost:9000/` et vous devriez pouvoir utiliser votre
 nouvelle application de visualisation interactive :
 
-![Application]({{site.url}}/assets/posts/CeanAndD3/application.png)
+![Application]({{site.url}}{{site.baseurl}}/assets/posts/CeanAndD3/application.png)
 
 La console de l'application devrait afficher les requêtes N1QL et les valeurs
 retournées :
@@ -556,7 +556,7 @@ récupérer le résultat et le représenter à l'aide d'un graphique D3 interact
 [Couchbase]: http://www.couchbase.com
 [NodeJS]: https://nodejs.org
 [CEAN]: https://sites.google.com/site/cbcean/documentation
-[jeu de données]: {{site.baseurl}}/assets/posts/CeanAndD3/WorldDataBank.dump.zip
+[jeu de données]: {{site.url}}{{site.baseurl}}/assets/posts/CeanAndD3/WorldDataBank.dump.zip
 [D3]: http://d3js.org
 [NVD3]: http://nvd3.org
 [Angular-nvD3]: http://krispo.github.io/angular-nvd3/

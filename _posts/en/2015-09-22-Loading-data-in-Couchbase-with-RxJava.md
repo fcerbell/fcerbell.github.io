@@ -543,7 +543,7 @@ it with an analysis tool or a reporting tool. But this will be explained in
 another post...
 
 [WorldDataBank]: http://databank.worldbank.org/data/reports.aspx?source=world-development-indicators#
-[all.csv]: {{site.url}}/assets/posts/DataLoading/all.csv.zip
+[all.csv]: {{site.url}}{{site.baseurl}}/assets/posts/DataLoading/all.csv.zip
 [IntelliJ IDEA]: https://www.jetbrains.com/idea/
 [SDK JAVA Couchbase]: http://developer.couchbase.com/documentation/server/4.0/sdks/java-2.2/download-links.html
 [Apache Commons CSV]: https://commons.apache.org/proper/commons-csv/

@@ -1,6 +1,6 @@
 <!-- Inspired by http://zhangwenli.com/blog/2014/08/03/make-your-own-social-sharing-bar-with-jekyll/ -->
 {% assign tagStr = '' %}
-{% capture url %}{{site.url}}{{page.url}}{% endcapture %}
+{% capture url %}{{site.url}}{{site.baseurl}}{{page.url}}{% endcapture %}
 {% if page.shortUrl != null %}
     {% assign url = page.shortUrl %}
     {% for tag in page.tags %}
@@ -13,42 +13,42 @@
 {% endcase %}
 <div class="social-share">
     {% if site.pinterest_sharing %}<!-- Pinterest -->
-    <a class="socicon-pinterest" href="http://pinterest.com/pin/create/button/?url={{site.url}}{{page.url}}&description={{page.description}}" target="_blank" title="{{ sharetext }}Pinterest"></a>{% endif %}
+    <a class="socicon-pinterest" href="http://pinterest.com/pin/create/button/?url={{site.url}}{{site.baseurl}}{{page.url}}&description={{page.description}}" target="_blank" title="{{sharetext}}Pinterest"></a>{% endif %}
     {% if site.instagram_sharing %}<!-- Instagram -->
-    <a class="socicon-instagram" href="" target="_blank" title="{{ sharetext }}Instagram"></a>{% endif %}
+    <a class="socicon-instagram" href="" target="_blank" title="{{sharetext}}Instagram"></a>{% endif %}
     {% if site.twitter_sharing %}<!-- Twitter -->
-    <a class="socicon-twitter" href="https://twitter.com/intent/tweet?text={{page.title}}&url={{url}}&via={{site.twitter_username}}&hashtags={{tagStr}}&related={{site.twitter_username}}" target="_blank" title="{{ sharetext }}Twitter"></a>{% endif %}
+    <a class="socicon-twitter" href="https://twitter.com/intent/tweet?text={{page.title}}&url={{url}}&via={{site.twitter_username}}&hashtags={{tagStr}}&related={{site.twitter_username}}" target="_blank" title="{{sharetext}}Twitter"></a>{% endif %}
     {% if site.facebook_sharing %}<!-- Facebook -->
-    <a class="socicon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{page.url}}&t={{page.title}}" target="_blank" title="{{ sharetext }}Facebook"></a>{% endif %}
-    {% comment %}<a class="socicon-facebook" href="http://www.facebook.com/sharer.php?u={{site.url}}{{page.url}}&p[title]={{page.title}}" target="_blank" title="{{ sharetext }}Facebook"></a>{% endcomment %}
+    <a class="socicon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{site.baseurl}}{{page.url}}&t={{page.title}}" target="_blank" title="{{sharetext}}Facebook"></a>{% endif %}
+    {% comment %}<a class="socicon-facebook" href="http://www.facebook.com/sharer.php?u={{site.url}}{{site.baseurl}}{{page.url}}&p[title]={{page.title}}" target="_blank" title="{{sharetext}}Facebook"></a>{% endcomment %}
     {% if site.youtube_sharing %}<!-- YouTube -->
-    <a class="socicon-youtube" href="" target="_blank" title="{{ sharetext }}YouTube"></a>{% endif %}
+    <a class="socicon-youtube" href="" target="_blank" title="{{sharetext}}YouTube"></a>{% endif %}
     {% if site.vimeo_sharing %}<!-- Vimeo -->
-    <a class="socicon-vimeo" href="" target="_blank" title="{{ sharetext }}Vimeo"></a>{% endif %}
+    <a class="socicon-vimeo" href="" target="_blank" title="{{sharetext}}Vimeo"></a>{% endif %}
     {% if site.soundcloud_sharing %}<!-- SoundCloud -->
-    <a class="socicon-soundcloud" href="" target="_blank" title="{{ sharetext }}SoundCloud"></a>{% endif %}
+    <a class="socicon-soundcloud" href="" target="_blank" title="{{sharetext}}SoundCloud"></a>{% endif %}
     {% if site.github_sharing %}<!-- GitHub -->
-    <a class="socicon-github" href="" target="_blank" title="{{ sharetext }}GitHub"></a>{% endif %}
+    <a class="socicon-github" href="" target="_blank" title="{{sharetext}}GitHub"></a>{% endif %}
     {% if site.tumblr_sharing %}<!-- Tumblr -->
-    <a class="socicon-tumblr" href="http://www.tumblr.com/share/link?url={{site.url}}{{page.url}}&name={{page.title}}&description={{page.description}}" target="_blank" title="{{ sharetext }}Tumblr"></a>{% endif %}
+    <a class="socicon-tumblr" href="http://www.tumblr.com/share/link?url={{site.url}}{{site.baseurl}}{{page.url}}&name={{page.title}}&description={{page.description}}" target="_blank" title="{{sharetext}}Tumblr"></a>{% endif %}
     {% if site.linkedin_sharing %}<!-- LinkedIn -->
-    <a class="socicon-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{site.url}}{{page.url}}&title={{page.title}}&summary={{page.description}}&source={{site.url}}" target="_blank" title="{{ sharetext }}LinkedIn"></a>{% endif %}
+    <a class="socicon-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{site.url}}{{site.baseurl}}{{page.url}}&title={{page.title}}&summary={{page.description}}&source={{site.url}}{{site.baseurl}}" target="_blank" title="{{sharetext}}LinkedIn"></a>{% endif %}
     {% if site.googleplus_sharing %}<!-- Google+ -->
-    <a class="socicon-google" href="https://plus.google.com/share?url={{site.url}}{{page.url}}" target="_blank" title="{{ sharetext }}Google Plus"></a>{% endif %}
+    <a class="socicon-google" href="https://plus.google.com/share?url={{site.url}}{{site.baseurl}}{{page.url}}" target="_blank" title="{{sharetext}}Google Plus"></a>{% endif %}
     {% if site.reddit_sharing %}<!-- Reddit -->
-    <a class="socicon-reddit" href="http://www.reddit.com/submit?url={{site.url}}{{page.url}}&title={{page.title}}" target="_blank" title="{{ sharetext }}Reddit"></a>{% endif %}
+    <a class="socicon-reddit" href="http://www.reddit.com/submit?url={{site.url}}{{site.baseurl}}{{page.url}}&title={{page.title}}" target="_blank" title="{{sharetext}}Reddit"></a>{% endif %}
     {% if site.digg_sharing %}<!-- Digg -->
-    <a class="socicon-digg" href="" target="_blank" title="{{ sharetext }}Digg"></a>{% endif %}
+    <a class="socicon-digg" href="" target="_blank" title="{{sharetext}}Digg"></a>{% endif %}
     {% if site.stumbleupon_sharing %}<!-- StumbleUpon -->
-    <a class="socicon-stumbleupon" href="" target="_blank" title="{{ sharetext }}StumbleUpon"></a>{% endif %}
+    <a class="socicon-stumbleupon" href="" target="_blank" title="{{sharetext}}StumbleUpon"></a>{% endif %}
     {% if site.weibo_sharing %}<!-- Sina Weibo -->
-    <a class="socicon-weibo" href="http://v.t.sina.com.cn/share/share.php?title={{site.title}}:{{page.title}}&url={{url}}" target="_blank" title="{{ sharetext }}Sina Weibo"></a>{% endif %}
+    <a class="socicon-weibo" href="http://v.t.sina.com.cn/share/share.php?title={{site.title}}:{{page.title}}&url={{url}}" target="_blank" title="{{sharetext}}Sina Weibo"></a>{% endif %}
     {% if site.dounban_sharing %}<!-- Dounban -->
-    <a class="socicon-dounban" href="" target="_blank" title="{{ sharetext }}Dounban"></a>{% endif %}
+    <a class="socicon-dounban" href="" target="_blank" title="{{sharetext}}Dounban"></a>{% endif %}
     {% if site.hackernews_sharing %}<!-- HackerNews -->
-    <a class="socicon-hackernews" href="" target="_blank" title="{{ sharetext }}Hacker-News"></a>{% endif %}
+    <a class="socicon-hackernews" href="" target="_blank" title="{{sharetext}}Hacker-News"></a>{% endif %}
     {% if site.vk_sharing %}<!-- VKontakte -->
-    <a class="socicon-vkontakte" href="http://vkontakte.ru/share.php?url={{site.url}}{{page.url}}" target="_blank" title="{{ sharetext }}VK"></a>{% endif %}
+    <a class="socicon-vkontakte" href="http://vkontakte.ru/share.php?url={{site.url}}{{site.baseurl}}{{page.url}}" target="_blank" title="{{sharetext}}VK"></a>{% endif %}
     {% if site.viadeo_sharing %}<!-- Viadeo -->
-    <a class="socicon-viadeo" id="social-viadeo" href="http://www.viadeo.com/shareit/share/?url={{site.url}}{{page.url}}&title={{page.title}}" target="_blank" title="{{ sharetext }}viadeo"></a>{% endif %}
+    <a class="socicon-viadeo" id="social-viadeo" href="http://www.viadeo.com/shareit/share/?url={{site.url}}{{site.baseurl}}{{page.url}}&title={{page.title}}" target="_blank" title="{{sharetext}}viadeo"></a>{% endif %}
 </div>

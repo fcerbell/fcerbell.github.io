@@ -514,7 +514,7 @@ You can now connect your internet browser to the IP address or hostname and port
 that your application is listening on `http://localhost:9000/` and you should be
 able to use your brand new shiny application :
 
-![Application]({{site.url}}/assets/posts/CeanAndD3/application.png)
+![Application]({{site.url}}{{site.baseurl}}/assets/posts/CeanAndD3/application.png)
 
 The server's console should list all the N1QL queries that are generated and the
 returned results:
@@ -538,7 +538,7 @@ interactive D3 chart.
 [Couchbase]: http://www.couchbase.com
 [NodeJS]: https://nodejs.org
 [CEAN]: https://sites.google.com/site/cbcean/documentation
-[dataset]: {{site.baseurl}}/assets/posts/CeanAndD3/WorldDataBank.dump.zip
+[dataset]: {{site.url}}{{site.baseurl}}/assets/posts/CeanAndD3/WorldDataBank.dump.zip
 [D3]: http://d3js.org
 [NVD3]: http://nvd3.org
 [Angular-nvD3]: http://krispo.github.io/angular-nvd3/
