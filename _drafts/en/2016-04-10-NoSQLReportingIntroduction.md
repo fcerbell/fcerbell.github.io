@@ -108,6 +108,99 @@ AdHoc query to return the exact resultset asked by the user, leveraging the
 underlying data storage technology by pushing down the aggregations and
 filters.
 
+### Live, on-line operational data
+
+In business intelligence reporting, there is a commonly accepted architecture.
+The operational live data are stored in a database, historically a relational
+SQL database and the data are normalized. These are live data, online data.
+
+### The Operational Data Store (ODS)
+
+Then, they are pushed to an ODS (Operational Data Store) which is usually a
+relational SQL database, too, with a normalized schema. It can store some chosen
+historical data. The idea is to feed it enough to be able to feed the next level
+and to empty it. As an example, the ODS can be fed daily, then it is used to
+feed the data warehouse (DWH) and it is cleaned to begin a new month.
+
+### The Datawarehouse (DWH)
+
+The next level is the data warehouse (DWH), it is not supposed to have a
+normalized schema, but a schema which fits to the reporting needs. Most of the
+time, it is stored in a relational SQL database, with a star schema or a
+snowflake schema, which are highly denormalized. The DWH is supposed to store
+clean data, preaggregated data (no useless data, just in case of...), quality
+data. If the reporting smaller granularity is the day, you should not find
+hourly data in the DWH. There are usually two kinds of tables : facts tables to
+store the actual indicators values, and the dimensions (or reference) tables to
+store the possible analyzis axis.
+
+#### Dimensions 
+
+Dimensions are the different axis to analyze the key performance indicators
+(KPI). Common dimensions are a time dimension, and a geographic dimensions, but
+there are a lot of other dimensions implemented in the DWH, depending on the
+business (sales territory, sales market, customer segmentation, product
+category, product line, economic regions, ...). We will focus on the geographic
+and time dimensions as they are typical dimensions.
+
+A dimension is made of hierarchies. Why hierarchies and not hierarchy ? Because
+if there was only one hierarchy, there would be no dimension need ! Dimensions
+are a concept. 
+
+##### Hierarchies
+
+The time dimension is the concept of time, nothing else. It does
+not describe how the time is represented. Business may need to analyze the KPI
+on monthes, on weeks, on seasons, on fiscal years, ... Each of them are
+incompatible with the others, each one will be a different time dimension
+implementation, a different hierarchy. The geographic dimension would also have
+several hierarchies inside : Economic areas, countries, sales territories, ...
+
+###### Levels
+
+Each hierarchy is made of levels, here are some level examples for the time
+dimension's hierarchies :
+
+* Year, Half, Quarter, Month, Date
+* Year, Week, Day of the week
+* Year range, Season
+* Fiscal year, Half, Quarter, Month (remember to not store too smaller
+  granularity than needed)
+
+In the time dimension, the date level can store extra information such as
+week-end or not, holidays or not, first/last business day of the week/month or
+not. The year level could also store information such as leap year or not. From
+a business point of view, these extra information can be used as facets or
+filters.
+
+* Year : isLeap
+* Day : isWeekDay, isHoliday, isFirstDayOfMonth, isLastDayOfMonth, ...
+
+As the DWH is usually stored in a relational SQL database, it has a
+table/relation schema. For sure, a hierarchy can be normalized with a table for
+the years, a table for the halfs, and another for each levels, with a
+parent-child relationship. This leads to a *snowflake* schema at the end, but as
+I said previously, the DWH is not normalized, so the hierarchies can be
+flattened to have only one table for each hierarchy, with one record for each
+smaller granularity (the day) grouping alltogether the year, half, quarter,
+month and day information. This makes the records bigger, but minimize the hops
+(joins) and provide good performances with relevant indexes (at the price of
+even more disk space needed).
+
+#### Facts tables
+
+The fact tables are simpler to understand. There is one fact table to store all
+preaggregated KPIs which share the same hierarchies. Each record is the KPIs
+aggregation at the cross of the hierarchies. Given our example, if some KPIs are
+sharing the Year/Month/Date and the Continent/Country/City hierarchy, there
+would be a record for each Date/City combination. That's why useless levels and
+granularities should be avoided, it leads to disk space useage and to extra
+computation when asking for useful granularity aggregations, ie storing hourly
+data leade to 24*NbCities more records and there will always be a computation
+for the daily aggregation which is the lowest level asked by the business,
+instead of saving space and having immediate static results.
+
+
 # Reporting with Couchbase
 
 ## Operational reporting
