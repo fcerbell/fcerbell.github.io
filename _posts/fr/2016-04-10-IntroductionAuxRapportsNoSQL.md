@@ -132,7 +132,7 @@ communément appelées chaudes, vivantes ou encore en-ligne.
 ## Le puit de données (Operational Data Store, ODS[^11])
 
 Elles sont ensuite poussées vers un ODS (Operational Data Store), qui est
-habituellement dans une base de données relationelle SQL, également, avec un
+habituellement dans une base de données relationnelle SQL, également, avec un
 schéma normalisé. Il peut stocker un historique pour certaines données choisies.
 L'idée est de le remplir assez (généralement à l'aide d'un outil ETL[^9] ou
 ELT[^10]) pour être en mesure d'alimenter leniveau suivant avant de le purger.
@@ -200,7 +200,7 @@ peuvent être utilisées par des filtres ou en tant que facettes.
 * Année : Bissextile
 * Date : Travaillé, Férié, Vacances, PremierJourDuMois, DernierJourDuMois, ...
 
-Comme l'entrepôt est habituellement stocké dans une base de données relationelle
+Comme l'entrepôt est habituellement stocké dans une base de données relationnelle
 SQL, il dispose d'un schéma table/relation. Évidemment, une hiérarchie peut être
 normalisée avec une table pour les années, une pour les semestres, etc. avec des
 relations parent/enfant. Cela mène à un schéma dit en *flocon* mais, comme je
