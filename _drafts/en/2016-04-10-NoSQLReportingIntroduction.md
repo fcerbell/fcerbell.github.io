@@ -114,10 +114,10 @@ aggregations and filters.
 ## Live, on-line operational data
 
 In business intelligence reporting, there is a commonly accepted architecture.
-The operational live data are stored in a database, historically a relational
-SQL database and the data are normalized. These are live data, online data.
+The operational live data are stored in databases, historically relational
+SQL databases and the data are normalized. These are live data, online data.
 
-## The Operational Data Store (ODS)
+## The Operational Data Store (ODS[^11])
 
 Then, they are pushed to an ODS (Operational Data Store) which is usually a
 relational SQL database, too, with a normalized schema. It can store some
@@ -126,7 +126,7 @@ or ELT[^10] tool) to be able to feed the next level and to empty it. As an
 example, the ODS can be fed daily, then it is used to feed the data warehouse
 (DWH) and it is cleaned to begin a new month.
 
-## The Datawarehouse (DWH)
+## The Datawarehouse (DWH[^12])
 
 The next level is the data warehouse (DWH), it is not supposed to have a
 normalized schema, but a schema which fits to the reporting needs. Most of the
@@ -141,15 +141,16 @@ store the possible analyzis axis.
 ### Dimensions 
 
 Dimensions are the different axis to analyze the key performance indicators
-(KPI). Common dimensions are a time dimension, and a geographic dimensions, but
-there are a lot of other dimensions implemented in the DWH, depending on the
-business (sales territory, sales market, customer segmentation, product
-category, product line, economic regions, ...). We will focus on the geographic
-and time dimensions as they are typical dimensions.
+(KPI[^14]). Common dimensions are a time dimension, and a geographic
+dimensions, but there are a lot of other dimensions implemented in the DWH,
+depending on the business (sales territory, sales market, customer
+segmentation, product category, product line, economic regions, ...). We will
+focus on the geographic and time dimensions as they are typical BI[^15] 
+dimensions.
 
 A dimension is made of hierarchies. Why hierarchies and not hierarchy ? Because
 if there was only one hierarchy, there would be no dimension need ! Dimensions
-are a concept. 
+are a concept, hierarchies are implementations. 
 
 #### Hierarchies
 
@@ -171,7 +172,7 @@ dimension's hierarchies :
 * Fiscal year, Half, Quarter, Month (remember to not store too smaller
   granularity than needed)
 
-In the time dimension, the date level can store extra information such as
+In the time dimension, the *Date* level can store extra information such as
 week-end or not, holidays or not, first/last business day of the week/month or
 not. The year level could also store information such as leap year or not. From
 a business point of view, these extra information can be used as facets or
@@ -186,45 +187,60 @@ the years, a table for the halfs, and another for each levels, with a
 parent-child relationship. This leads to a *snowflake* schema at the end, but as
 I said previously, the DWH is not normalized, so the hierarchies can be
 flattened to have only one table for each hierarchy, with one record for each
-smaller granularity (the day) grouping alltogether the year, half, quarter,
-month and day information. This makes the records bigger, but minimize the hops
-(joins) and provide good performances with relevant indexes (at the price of
-even more disk space needed).
+smaller granularity (the day) grouping (and duplicating) alltogether the year,
+half, quarter, month and day information. This makes the records bigger and
+duplicated, but minimize the hops (joins) and provide better performances with
+relevant indexes (at the price of even more disk space needed).
 
 ### Facts tables
 
 The fact tables are simpler to understand. There is one fact table to store all
 preaggregated KPIs which share the same hierarchies. Each record is the KPIs
-aggregation at the cross of the hierarchies. Given our example, if some KPIs are
-sharing the Year/Month/Date and the Continent/Country/City hierarchy, there
-would be a record for each Date/City combination. That's why useless levels and
+aggregation at the cross of the hierarchies. Given our example, if some KPIs
+are sharing the Year/Month/Date and the Continent/Country/City hierarchy, there
+would eventually be records for each Date/City combination that has a KPI
+value. If there is no KPI value for a specific Date/City combination, there
+will be no fact record for this combination.  That's why useless levels and
 granularities should be avoided, it leads to disk space useage and to extra
 computation when asking for useful granularity aggregations, ie storing hourly
 data leade to 24*NbCities more records and there will always be a computation
 for the daily aggregation which is the lowest level asked by the business,
 instead of saving space and having immediate static results.
 
-Obviously, a datawarehouse can be very big as it contains a record for all the
-hierarchies lowest granularity combination. With 10 KPIs only, and two
+It is very common to have holes in the fact tables, there can be no existing
+aggregated value for all the hierarchy level combinations. A city can exist in
+the reference tables, but we have no customer there. All the dates could exist
+(and most of the time, should) in the time dimension hierarchies, even if there
+was no sale at a specific date : no sale occured at a specific date, for a
+specific city and there will be no record for this combination in the fact
+table. If we consider the DWH as an hyper-cube, it is very often full of ...
+holes !
+
+Obviously, a datawarehouse can be very big as it could contain a record for all
+the hierarchies lowest granularity combination. With 10 KPIs only, and two
 dimensions (and only one hierarchy in each) : 100 cities and a single year of
 historical data, you will have 100x365=36,500 records.
 
-## The Datamarts (DMT)
+## The Datamarts (DMT[^14])
 
 Datamarts are often called hyper-cubes. There can be several datamarts built
 from a single data warehouse. They can be built and rebuilt on demand and are
 often wiped/rebuild by a nightly batch, with a frequency related to the
 datawarehouse refresh frequency. Each datamart contains only a consistent
-subseti of the data warehouse, with one or few fact tables sharing the same
-hierarchies, at the business requested granularity. A datamart is designed to
-provide consistent data, which are comparables (same hierarchies), to answer to
-targetted business questions as fast as possible. They are usuallu stored in a
-dedicated storage engine (MOLAP), a relational storage engine with a star or
-snowflake schema (ROLAP), or an hybrid storage (HOLAP) which can store
-preaggregated intermediate levels. The datamarts can be seen as datasources
-designed to be used in a pivot table. Some of the datamart storage provide a
-dedicated query language : MDX, an SQL like query language for multi-dimensional
-data, often transmitted over the network using XMLA protocol.
+subset of the data warehouse, with one or few fact tables sharing the same
+hierarchies that need to be compared together, at the business requested
+granularity. It is possible to preaggregate KPI values in a datamart at a higher
+level than in the datawarehouse. If the business user wants to zoom in the data
+at a lower granularity, the analytic tool will *drill-through* by using the
+datawarehouse data. A datamart is designed to provide consistent data, which are
+comparables (same hierarchies), to answer to targetted business questions as
+fast as possible. They are usually stored in a dedicated storage engine
+(MOLAP[^16]), a relational storage engine with a star or snowflake schema
+(ROLAP[^17]), or an hybrid storage (HOLAP[^18]) which can store preaggregated
+intermediate levels. The datamarts can be seen as datasources designed to be
+used in a pivot table. Some of the datamart storage provide a dedicated query
+language : MDX, an SQL like query language for multi-dimensional data, often
+transmitted over the network using XMLA protocol.
 
 MDX sample :
 
@@ -240,7 +256,7 @@ WHERE ( [Store].[USA].[CA] )
 [Couchbase]: http://www.couchbase.com "Couchbase website"
 [JasperReports]: http://community.jaspersoft.com/project/jasperreports-library "JasperReports Library page"
 [Pentaho]: https://www.pentaho.com "Pentaho website"
-[^1]: ODBO (OLE[^1] DB for OLAP[^3]) is a connector type to connect to multi-dimensional data-sources
+[^1]: ODBO (OLE DB for OLAP) is a connector type to connect to multi-dimensional data-sources
 [^2]: OLE (Object Linking and Embedding) is a way to embed a copy of an object into another object or to create a link to a shared object from another object
 [^3]: OLAP (OnLine Analytic Processing) : Multi-dimensional data manipulation
 [^4]: ODBC (Open DataBase Connectivity) : a generic type of SQL database connector specification (Microsoft eco system)
@@ -250,3 +266,11 @@ WHERE ( [Store].[USA].[CA] )
 [^8]: MDX (MultiDimensional eXpressions) : An SQL-like query language optimized to query multi-dimensional data-sources.
 [^9]: ETL (Extract, Transform and Load) : Application that takes data from a datasource, transform them (aggregation, validation, ...) and loads them into a datasink
 [^10]: ELT (Extract, Load and Transform) : Application that takes data from a datasource, inject them unchanged into a datasink and transform them (aggregation, validation, ...) using the sink manipulation tools
+[^11]: ODS (Operational Data Store), temporary staging area to store operational data before pre-aggregation
+[^12]: DWH (Data WareHouse), persistent area to store historical aggregates in a denormalized schema
+[^13]: DMT (DataMart), persistent but ephemer area to store multi-dimensional hypercubes to create analysis
+[^14]: KPI (Key Performance Indicator), Indicator
+[^15]: BI (Business Intelligence)
+[^16]: MOLAP (Multidimensional OLAP), storage engine optimized for OLAP
+[^17]: ROLAP (Relational OLAP), OLAP storage engine in relational database
+[^18]: HOLAP (Hybrid OLAP), Hybrid storage engine with several level of preaggregation

@@ -3,12 +3,11 @@ host: 0.0.0.0
 title: "Sur le divan... / On the couch"
 description: "Le blog qui raconte tout !"
 email: francois@cerbelle.net
-url: http://fcerbell.github.io
-baseurl: 
-#url: http://www.cerbelle.net
-#baseurl: /_site
 #url: 
-#baseurl: 
+url: http://fcerbell.github.io
+#url: http://www.cerbelle.net
+baseurl: 
+#baseurl: /_site
 
 # Social follow links
 #pinterest_username: "#"
