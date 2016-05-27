@@ -8,31 +8,32 @@ lang: en
 #category: Test
 #categories
 #tags
-#date
+date: 2016-05-27
 published: true
 ---
 
 Here, we will see how to download, install, configure and use Simba's JDBC
-driver for Couchbase. We will test the connection with SquirrelSQL but the
+driver for Couchbase. We will test the connection with SQuirreLSQL and the
 driver will be configured for any other incomming connection.
+
+You can find links to the related video recordings and printable materials at
+the end of this post.
 
 * TOC
 {:toc}
 
+# Video
+
+<center><iframe width="420" height="315" src="https://www.youtube.com/embed/kK4GxAwJKD0" frameborder="0" allowfullscreen></iframe></center>
+
 # Prerequisites
 
 I assume that you already have a working Couchbase cluster, even a single-node
-cluster, with at least one node hosting the index service and one node hosting
-the query service. In other words, you need to have the data service, the index
-service and the query service running somewhere in your cluster.
+cluster. As the JDBC driver relies on N1QL, you need to have a sample dataset,
+the index service running on one of your cluster nodes, the query service
+running on one of your cluster nodes, and a primary index.
 
-# Configure N1QL in Couchbase
-
-As the JDBC driver relies on N1QL, you need to have a sample dataset, the index
-service running on one of your cluster nodes, the query service running on one
-of your cluster nodes, and a primary index.
-
-# The JDBC driver
+# About the JDBC driver
 
 Couchbase does not develop the JDBC and the ODBC drivers by itself. Simba is a
 company that developed ODBC/JDBC drivers for a long time. Their drivers can
@@ -54,11 +55,11 @@ Connect your browser to the [Driver's description page][SimbaWebSite][^1] on
 Simba's website.
 
 Then, you need to clic on the *Download now (30 days free trial)* to choose and
-add the relevant driver to your cart. I chose the JAVA (JDBC) driver here.
-Simba provides a driver for JDK from 1.6 (JDBC 4.0) and from JDK 1.7 (JDBC 4.1)
-in the same package.  Then, you can clic on "Proceed to checkout" for your
-$0.00 cart! ;) You will be asked for personal details and email. Then,
-Simba will send you three emails: 
+add the relevant driver to your cart. I chose the *JAVA (JDBC)* driver here.
+Simba provides a driver for JDK from 1.6 and another for JDK from 1.7 in the
+same package.  Then, you can clic on *Proceed to checkout* for your $0.00 cart!
+;) You will be asked for personal details and email. Then, Simba will send you
+three emails: 
 
 * a welcome message
 
@@ -82,7 +83,7 @@ too. You should end with the following folder structure:
 ![Driver's Folders][03-FolderStructure.png]
 
 You got everything needed to install the driver in your favorite SQL-only
-application. All the information that I used to create this post are available
+application. All the information that I used to write this post are available
 in the included PDF documentations, **I strongly recommend to read the driver
 PDF documentation** because I only use a subset of the available features.
 
@@ -96,20 +97,21 @@ folders :
 
 ![License file installation][04-LicensefileInstallation.png]
 
-# Install SquirrelSQL
+# Install SQuirreLSQL
 
 Next, the idea is to have a SQL-only client. There are so many... I chose to
-use SQuirrelSQL because it is lightweight and easy to install. I used it and
+use SQuirreLSQL because it is lightweight and easy to install. I used it and
 still use it quite often, at least to quick check the JAVA connection strings. 
 
-You can find and download SQuirrelSQL for your platform on [SQuirrelSQL
-website][SQuirrelSQLWebsite]. You will get an installer in a JAR file for your
+You can find and download SQuirreLSQL for your platform on [SQuirreLSQL
+website][SQuirreLSQLWebsite]. You will get an installer in a JAR file for your
 platform. You should be able to execute is by double clicking on it from your
-favorite file browser. You need to have a working JDK installed.
+favorite file browser or by entering the command given on the download page in
+a shell. You need to have a working JDK installed.
 
-# Add the driver to SQuirrelSQL
+# Add the driver to SQuirreLSQL
 
-Once SQuirrelSQL is installed, it does not know Couchbase as a potential SQL
+Once SQuirreLSQL is installed, it does not know Couchbase as a potential SQL
 datasource. So, we have to add the Couchbase JDBC driver in his driver list.
 Open the *Drivers* tab on the left side of the main window and clic on the *Add
 a new driver* button:
@@ -119,17 +121,17 @@ a new driver* button:
 Then, you have to enter a driver name, I suggest *Couchbase*, a connection
 string example that will help you each time you will create a new connection, I
 suggest to have a very simple one such as
-*jdbc:couchbase://localhost:8093/default*, the website field is optional, you
+`jdbc:couchbase://localhost:8093/default`, the website field is optional, you
 need to enter the driver class name which is
-*com.simba.couchbase.jdbc4.Driver* if you use a JDK version older than 1.7, or
-*com.simba.couchbase.jdbc41.Driver* if your JDK version is newer. Finally, you
+`com.simba.couchbase.jdbc4.Driver` if you use a JDK version older than 1.7, or
+`com.simba.couchbase.jdbc41.Driver` if your JDK version is newer. Finally, you
 have to use the *Add* button in the *Extra Class Path* tab to add all the
 driver's JAR files from either the *CouchbaseJDBC41* or *CouchbaseJDBC4*
 folder: 
 
 ![Squirrel Add a new driver Dialog][06-SquirrelAddDriverDialog.png]
 
-SQuirrelSQL knows our driver and can now use it to create a connection.
+SQuirreLSQL knows our driver and can now use it to create a connection.
 
 # Create the database schema description file
 
@@ -160,7 +162,7 @@ new alias* button:
 
 ![Squirrel Add a new alias button][07-SquirrelAddAliasButton.png]
 
-It opens an *Add Alias* Dialog, in SquirrelSQL, an Alias is a connection
+It opens an *Add Alias* Dialog, in SQuirreLSQL, an Alias is a connection
 definition. We will define a connection, and will use the *Test* button to
 open/close a connection to Couchbase with the technical parameters, it is
 sufficient to create the schema file. So, you have to give it a name, as we
@@ -173,24 +175,25 @@ choose the *Couchbase* driver that we configured, to edit the connection string
 When you clic on the *Test* button, it will ask you for a user and password, as
 we did not define them in the Alias. It will open a connection, using the
 technical parameters to generate a schema and write it to a file. The first
-parameter tells to dump the schema to a file on the local filesystem and the
-second one is the file path and file name (you can adapt it to your system).
-If you want to see how it looks like without creating it by yourself, you can
-have a look at [my beers.json file][beers.json].
+parameter (`SchemaMapOperation=1`) tells to dump the schema to a file on the local
+filesystem and the second one (`LocalSchemaFile=/tmp/beers.json`) is the file
+path and file name (you can adapt it to your system).  If you want to see how
+it looks like without creating it by yourself, you can have a look at [my
+beers.json file][beers.json].
 
 # Edit the schema file
 
 You dont need to edit it in our case. The JDBC driver use a document field to
 split the documents into virtual tables, the default name for this field is
-*type* and, by chance, we have such a field, with this exact meaning. In the
+`type` and, by chance, we have such a field, with this exact meaning. In the
 samples, we have three possible values for this field, in each document:
-*beer*, *brewry*, and *brewry address*. It menas that the JDBC driver, without
-further parameters, identified 3 tables and groupped the documents by type in
-these virtual tables. It also parsed a subset of the documents to try to find
-all possible fields in each type of documents. In some cases, it might not scan
-enough documents to have all the possible fields and you could have to add them
-manually in the schema. It is not needed in our case. Once again, everything is
-documented. 
+*beer*, *brewery*, and *brewery address*. It menas that the JDBC driver,
+without further parameters, identified 3 tables and groupped the documents by
+type in these virtual tables. It also parsed a subset of the documents to try
+to find all possible fields in each type of documents. In some cases, it might
+not scan enough documents to have all the possible fields and you could have to
+add them manually in the schema. It is not needed in our case. Once again,
+everything is documented. 
 
 Simba provides a schema editor to edit the file. It is in the *SchemaEditor*
 subfolder, under the driver version relevant to your JDK version. You can
@@ -211,7 +214,7 @@ one place to update and it will work from everywhere... Lets upload it !
 
 The idea is the same, we only have theses few JDBC fields to control the JDBC
 driver, and we have o use them to tell him to upload the local schema file to
-the database. So, you should still have the SquirrelSQL alias dialog open, with
+the database. So, you should still have the SQuirreLSQL alias dialog open, with
 our first connection string. The local file location did not change, but the
 operation is now *upload*, as per the documentation, number 2. So, you just
 have to change the value from 1 to 2 and clic on the *Test* button:
@@ -257,9 +260,11 @@ Or view the virtual RDBMS meta data:
 | [DemoBook][demobook], Slides([dualhead][demodeck_dualhead], [notesonly][demodeck_notesonly], [paper][demodeck_paper], [slidesonly][demodeck_slidesonly]) | Demo script booklet to print and associated slidedeck |
 | [LabsBook][labsbook], Slides([dualhead][labsdeck_dualhead], [notesonly][labsdeck_notesonly], [paper][labsdeck_paper], [slidesonly][labsdeck_slidesonly]) | Hands-on scripts booklet to print and associated slidedeck |
 | [ExercicesBook][exercicesbook], Slides([dualhead][exercicesdeck_dualhead], [notesonly][exercicesdeck_notesonly], [paper][exercicesdeck_paper], [slidesonly][exercicesdeck_slidesonly]) | Exercices and solutions booklet to print and associated slidedeck |
-| [VideoFR], [VideoEN] | Demonstration screencast recording in several languages |
+| [Video] | Demonstration screencast recording |
 
-[SQuirrelSQLWebSite]: http://squirrel-sql.sourceforge.net "Link to SQuirrelSQL's website"
+# Footnotes
+
+[SQuirreLSQLWebSite]: http://squirrel-sql.sourceforge.net "Link to SQuirreLSQL's website"
 [SimbaWebSite]: http://www.simba.com/drivers/couchbase-odbc-jdbc/ "Link to Simba's website"
 [01-SimbaLicenseEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/01-SimbaLicenseEmail.png "Simba's email with license file"
 [02-SimbaDownloadEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/02-SimbaDownloadEmail.png "Simba's email with download link"
@@ -296,6 +301,5 @@ Or view the virtual RDBMS meta data:
 [exercicesdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_notesonly.pdf "Description"
 [exercicesdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_paper.pdf "Description"
 [exercicesdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_slidesonly.pdf "Description"
-[VideoFR]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/VideoFR.pdf "Description"
-[VideoEN]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/VideoEN.pdf "Description"
+[Video]: https://youtu.be/kK4GxAwJKD0 "Description"
 [^1]: [http://www.simba.com/drivers/couchbase-odbc-jdbc/][SimbaWebSite]
