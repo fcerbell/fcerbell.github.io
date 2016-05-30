@@ -8,7 +8,7 @@ lang: fr
 #category: Test
 #categories
 #tags
-date: 2016-05-27
+#date: 2016-05-27
 published: true
 ---
 
@@ -209,50 +209,57 @@ possibles de chaque type de document et il faut les ajouter manuellement dans
 le schéma. Ce n'est pas utile dans notre cas. Une fois encore, tout cela est
 parfaitement documenté dans le fichier PDF.
 
-Simba provides a schema editor to edit the file. It is in the *SchemaEditor*
-subfolder, under the driver version relevant to your JDK version. You can
-double clic on the JAR file to start it, and choose to open your schema file.
-You should have the following window. I wont describe or document how to use
-it, I suggest that you open and read the associated PDF file.
+Simba fournit un éditeur de schéma pour l'ajuster à vos besoins. Il se trouve
+dans le sous-répertoire `SchemaEditor`, sous le dossier relatif à votre version
+du pilote pour votre JDK. Vous pouvez double-cliquer sur le fichier JAR pour le
+démarrer et choisir le fichier de schéma local à ouvrir. Vous devriez obtenir
+la fenêtre suivante. Je ne vais pas décrire comment l'utiliser, je suggère de
+lire le fichier de documentation PDF associé.
 
 ![Edit the schema file][09-SchemaEditor.png]
 
-# Upload the database schema description file
+# Enregistrement du fichier de schéma dans la base
 
-Ok, now that we have a schema file, fitting our needs, we could deploy it
-everywhere with the JDBC driver and reference this local file for each
-connection to our database, but Simba provides a better approach. We can deploy
-the schema file in the database, and the JDBC driver will automatically
-retrieve it from there at each connection. It will be easier to maintain, only
-one place to update and it will work from everywhere... Lets upload it !
+Ok, maintenant que nous disposons du fichier de schéma, correspondant à notre
+besoin, nous pourrions le déployer partout avec le pilote JDBC et y faire
+référence pour chaque connexion à la base, mais Simba offre une meilleure
+solution. Nous pouvons déployer le schéma dans la base de données et le pilote
+le retrouvera automatiquement lors des connexions. Ce sera plus facile à
+maintenir, un seul endroit où le mettre à jour et il sera utilisé par toutes
+les connexions... Allons-y !
 
-The idea is the same, we only have theses few JDBC fields to control the JDBC
-driver, and we have o use them to tell him to upload the local schema file to
-the database. So, you should still have the SQuirreLSQL alias dialog open, with
-our first connection string. The local file location did not change, but the
-operation is now *upload*, as per the documentation, number 2. So, you just
-have to change the value from 1 to 2 and clic on the *Test* button:
+L'idée est la même que précédemment, nous ne disposons que de quelques champs
+standard JDBC pour interragir avec le pilote JDBC et nous allons les utiliser
+pour lui indiquer l'emplacement du fichier et lui demander de l'envoyer sur le
+cluster. Vous devriez toujours avoir la boîte de dialogue SQuirreLSQL ouverte
+sur la définition de l'alias, avec notre première chaîne de connexion.
+L'emplacement du fichier n'a pas changé, mais l'opération à demander au pilote
+est d'envoyer ce fichier dans la base, comme indiqué dans la documentation, le
+chiffre `2`. Il suffit donc de remplacer la valeur et de cliquer sur le bouton
+*Test*.
 
 ![Upload the schema file][10-SquirrelUploadSchema.png]
 
-If you noticed, there is one more document in each bucket, now, the schema.
-Should you be curious, here is its key: *~~~SchemaMap*
+En regardant dans la base, Il y a désormais un document supplémentaire dans
+chaque *bucket*, le schéma. Au cas où vous seriez curieux, sa clé est
+`~~~SchemaMap`.
 
-# Open a standard JDBC SQL connection and play
+# Ouverture d'une connexion JDBC SQL standard et utilisation
 
-Well, now, each time that the Simba JDBC driver is used somewhere to connect to
-this Couchbase cluster, it will automatically retrieve the schema definition
-and use it. So, we can remove all the extra API parameters from the connection
-string and save the connection:
+Bien, à partir de maintenant, à chaque connexion utilisant le pilote JDBC vers
+ce cluster, le pilote va automatiquement retrouver la définition du schéma et
+l'utiliser. Nous pouvons donc retirer tous les paramêtres d'interraction avec
+le pilote de la chaîne de connexion et sauvegarder l'alias :
 
 ![Save the alias][11-SquirrelSaveAlias.png]
 
-It not only save the alias, but also open a connection using it, so, you should
-be connected to the cluster:
+Cela ne fait pas que sauvegarder la définiton de l'alias, mais propose de
+l'utiliser pour ouvrir une nouvelle connexion, nous devrions donc être connecté
+au cluster :
 
 ![SquirrelConnected][12-SquirrelConnected.png]
 
-Then, you can execute SQL queries:
+Nous pouvons exécuter des requêtes SQL :
 
 ```sql
 SELECT b.name, a.name, a.abv 
@@ -262,58 +269,34 @@ WHERE a.brewery_id=b.PK
 
 ![SquirrelQuery][13-SquirrelQuery.png]
 
-Or view the virtual RDBMS meta data:
+Ou encore consulter les meta-données de ce SGBDR virtuel :
 
 ![SquirrelMeta][14-SquirrelMeta.png]
 
-# Materials and Links
+# Supports et liens
 
 | Link | Description |
 |---|---|
-| [MainBook][mainbook], Slides([dualhead][maindeck_dualhead], [notesonly][maindeck_notesonly], [paper][maindeck_paper], [slidesonly][maindeck_slidesonly]) | Article booklet to print and associated slidedeck |
-| [DemoBook][demobook], Slides([dualhead][demodeck_dualhead], [notesonly][demodeck_notesonly], [paper][demodeck_paper], [slidesonly][demodeck_slidesonly]) | Demo script booklet to print and associated slidedeck |
-| [LabsBook][labsbook], Slides([dualhead][labsdeck_dualhead], [notesonly][labsdeck_notesonly], [paper][labsdeck_paper], [slidesonly][labsdeck_slidesonly]) | Hands-on scripts booklet to print and associated slidedeck |
-| [ExercicesBook][exercicesbook], Slides([dualhead][exercicesdeck_dualhead], [notesonly][exercicesdeck_notesonly], [paper][exercicesdeck_paper], [slidesonly][exercicesdeck_slidesonly]) | Exercices and solutions booklet to print and associated slidedeck |
-| [Video] | Demonstration screencast recording |
+| [Video] | Enregistrement vidéo de la démonstration |
 
-# Footnotes
+# Notes de bas de page
 
 [SQuirreLSQLWebSite]: http://squirrel-sql.sourceforge.net "Link to SQuirreLSQL's website"
 [SimbaWebSite]: http://www.simba.com/drivers/couchbase-odbc-jdbc/ "Link to Simba's website"
-[01-SimbaLicenseEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/01-SimbaLicenseEmail.png "Simba's email with license file"
-[02-SimbaDownloadEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/02-SimbaDownloadEmail.png "Simba's email with download link"
-[03-FolderStructure.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/03-FolderStructure.png "Driver's folder structure"
-[04-LicensefileInstallation.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/04-LicensefileInstallation.png "License file installation"
-[05-SquirrelAddDriverButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/05-SquirrelAddDriverButton.png "Add driver button"
-[06-SquirrelAddDriverDialog.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/06-SquirrelAddDriverDialog.png "Add driver dialog"
-[07-SquirrelAddAliasButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/07-SquirrelAddAliasButton.png "Add alias button"
-[08-SquirrelGenerateSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/08-SquirrelGenerateSchema.png "Generate the schema file"
-[beers.json]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/beers.json "My beers.json file"
-[09-SchemaEditor.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/09-SchemaEditor.png "Edit the schema file"
-[10-SquirrelUploadSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/10-SquirrelUploadSchema.png "Upload the schema file"
-[11-SquirrelSaveAlias.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/11-SquirrelSaveAlias.png "Save the alias"
-[12-SquirrelConnected.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/12-SquirrelConnected.png "Connected using Squirrel"
-[13-SquirrelQuery.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/13-SquirrelQuery.png "Executing a SQL query from Squirrel"
-[14-SquirrelMeta.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/14-SquirrelMeta.png "Database Metadata from Squirrel"
-[mainbook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/mainbook.pdf "Description"
-[maindeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_dualhead.pdf "Description"
-[maindeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_notesonly.pdf "Description"
-[maindeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_paper.pdf "Description"
-[maindeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_slidesonly.pdf "Description"
-[demobook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demobook.pdf "Description"
-[demodeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_dualhead.pdf "Description"
-[demodeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_notesonly.pdf "Description"
-[demodeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_paper.pdf "Description"
-[demodeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_slidesonly.pdf "Description"
-[labsbook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsbook.pdf "Description"
-[labsdeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_dualhead.pdf "Description"
-[labsdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_notesonly.pdf "Description"
-[labsdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_paper.pdf "Description"
-[labsdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_slidesonly.pdf "Description"
-[exercicesbook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesbook.pdf "Description"
-[exercicesdeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_dualhead.pdf "Description"
-[exercicesdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_notesonly.pdf "Description"
-[exercicesdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_paper.pdf "Description"
-[exercicesdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_slidesonly.pdf "Description"
-[Video]: https://youtu.be/FH0nBiCX2cw "Description"
+[01-SimbaLicenseEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/01-SimbaLicenseEmail.png "Simba's email with license file"
+[02-SimbaDownloadEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/02-SimbaDownloadEmail.png "Simba's email with download link"
+[03-FolderStructure.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/03-FolderStructure.png "Driver's folder structure"
+[04-LicensefileInstallation.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/04-LicensefileInstallation.png "License file installation"
+[05-SquirrelAddDriverButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/05-SquirrelAddDriverButton.png "Add driver button"
+[06-SquirrelAddDriverDialog.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/06-SquirrelAddDriverDialog.png "Add driver dialog"
+[07-SquirrelAddAliasButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/07-SquirrelAddAliasButton.png "Add alias button"
+[08-SquirrelGenerateSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/08-SquirrelGenerateSchema.png "Generate the schema file"
+[beers.json]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/beers.json "My beers.json file"
+[09-SchemaEditor.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/09-SchemaEditor.png "Edit the schema file"
+[10-SquirrelUploadSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/10-SquirrelUploadSchema.png "Upload the schema file"
+[11-SquirrelSaveAlias.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/11-SquirrelSaveAlias.png "Save the alias"
+[12-SquirrelConnected.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/12-SquirrelConnected.png "Connected using Squirrel"
+[13-SquirrelQuery.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/13-SquirrelQuery.png "Executing a SQL query from Squirrel"
+[14-SquirrelMeta.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/14-SquirrelMeta.png "Database Metadata from Squirrel"
+[Video]: https://youtu.be/FH0nBiCX2cw "Enregistrement vidéo de la démonstration"
 [^1]: [http://www.simba.com/drivers/couchbase-odbc-jdbc/][SimbaWebSite]

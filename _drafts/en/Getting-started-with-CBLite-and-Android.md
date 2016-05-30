@@ -1,5 +1,5 @@
 ---
-uid: skel
+uid: GettingStartedWithCBLiteAndAndroid
 author: fcerbell
 title: Getting started with Couchbase Lite and Android
 layout: post

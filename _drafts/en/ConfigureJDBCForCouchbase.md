@@ -8,7 +8,7 @@ lang: en
 #category: Test
 #categories
 #tags
-date: 2016-05-27
+#date: 2016-05-27
 published: true
 ---
 
@@ -195,7 +195,7 @@ not scan enough documents to have all the possible fields and you could have to
 add them manually in the schema. It is not needed in our case. Once again,
 everything is documented. 
 
-Simba provides a schema editor to edit the file. It is in the *SchemaEditor*
+Simba provides a schema editor to edit the file. It is in the `SchemaEditor`
 subfolder, under the driver version relevant to your JDK version. You can
 double clic on the JAR file to start it, and choose to open your schema file.
 You should have the following window. I wont describe or document how to use
@@ -222,7 +222,7 @@ have to change the value from 1 to 2 and clic on the *Test* button:
 ![Upload the schema file][10-SquirrelUploadSchema.png]
 
 If you noticed, there is one more document in each bucket, now, the schema.
-Should you be curious, here is its key: *~~~SchemaMap*
+Should you be curious, here is its key: `~~~SchemaMap`
 
 # Open a standard JDBC SQL connection and play
 
@@ -233,8 +233,8 @@ string and save the connection:
 
 ![Save the alias][11-SquirrelSaveAlias.png]
 
-It not only save the alias, but also open a connection using it, so, you should
-be connected to the cluster:
+It not only saving the alias, but also open a connection using it, so, you
+should be connected to the cluster:
 
 ![SquirrelConnected][12-SquirrelConnected.png]
 
@@ -256,50 +256,26 @@ Or view the virtual RDBMS meta data:
 
 | Link | Description |
 |---|---|
-| [MainBook][mainbook], Slides([dualhead][maindeck_dualhead], [notesonly][maindeck_notesonly], [paper][maindeck_paper], [slidesonly][maindeck_slidesonly]) | Article booklet to print and associated slidedeck |
-| [DemoBook][demobook], Slides([dualhead][demodeck_dualhead], [notesonly][demodeck_notesonly], [paper][demodeck_paper], [slidesonly][demodeck_slidesonly]) | Demo script booklet to print and associated slidedeck |
-| [LabsBook][labsbook], Slides([dualhead][labsdeck_dualhead], [notesonly][labsdeck_notesonly], [paper][labsdeck_paper], [slidesonly][labsdeck_slidesonly]) | Hands-on scripts booklet to print and associated slidedeck |
-| [ExercicesBook][exercicesbook], Slides([dualhead][exercicesdeck_dualhead], [notesonly][exercicesdeck_notesonly], [paper][exercicesdeck_paper], [slidesonly][exercicesdeck_slidesonly]) | Exercices and solutions booklet to print and associated slidedeck |
 | [Video] | Demonstration screencast recording |
 
 # Footnotes
 
 [SQuirreLSQLWebSite]: http://squirrel-sql.sourceforge.net "Link to SQuirreLSQL's website"
 [SimbaWebSite]: http://www.simba.com/drivers/couchbase-odbc-jdbc/ "Link to Simba's website"
-[01-SimbaLicenseEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/01-SimbaLicenseEmail.png "Simba's email with license file"
-[02-SimbaDownloadEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/02-SimbaDownloadEmail.png "Simba's email with download link"
-[03-FolderStructure.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/03-FolderStructure.png "Driver's folder structure"
-[04-LicensefileInstallation.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/04-LicensefileInstallation.png "License file installation"
-[05-SquirrelAddDriverButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/05-SquirrelAddDriverButton.png "Add driver button"
-[06-SquirrelAddDriverDialog.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/06-SquirrelAddDriverDialog.png "Add driver dialog"
-[07-SquirrelAddAliasButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/07-SquirrelAddAliasButton.png "Add alias button"
-[08-SquirrelGenerateSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/08-SquirrelGenerateSchema.png "Generate the schema file"
-[beers.json]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/beers.json "My beers.json file"
-[09-SchemaEditor.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/09-SchemaEditor.png "Edit the schema file"
-[10-SquirrelUploadSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/10-SquirrelUploadSchema.png "Upload the schema file"
-[11-SquirrelSaveAlias.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/11-SquirrelSaveAlias.png "Save the alias"
-[12-SquirrelConnected.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/12-SquirrelConnected.png "Connected using Squirrel"
-[13-SquirrelQuery.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/13-SquirrelQuery.png "Executing a SQL query from Squirrel"
-[14-SquirrelMeta.png]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/14-SquirrelMeta.png "Database Metadata from Squirrel"
-[mainbook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/mainbook.pdf "Description"
-[maindeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_dualhead.pdf "Description"
-[maindeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_notesonly.pdf "Description"
-[maindeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_paper.pdf "Description"
-[maindeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/maindeck_slidesonly.pdf "Description"
-[demobook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demobook.pdf "Description"
-[demodeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_dualhead.pdf "Description"
-[demodeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_notesonly.pdf "Description"
-[demodeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_paper.pdf "Description"
-[demodeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/demodeck_slidesonly.pdf "Description"
-[labsbook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsbook.pdf "Description"
-[labsdeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_dualhead.pdf "Description"
-[labsdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_notesonly.pdf "Description"
-[labsdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_paper.pdf "Description"
-[labsdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/labsdeck_slidesonly.pdf "Description"
-[exercicesbook]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesbook.pdf "Description"
-[exercicesdeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_dualhead.pdf "Description"
-[exercicesdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_notesonly.pdf "Description"
-[exercicesdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_paper.pdf "Description"
-[exercicesdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/ConfigureJDBCForCouchbase/exercicesdeck_slidesonly.pdf "Description"
-[Video]: https://youtu.be/kK4GxAwJKD0 "Description"
+[01-SimbaLicenseEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/01-SimbaLicenseEmail.png "Simba's email with license file"
+[02-SimbaDownloadEmail.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/02-SimbaDownloadEmail.png "Simba's email with download link"
+[03-FolderStructure.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/03-FolderStructure.png "Driver's folder structure"
+[04-LicensefileInstallation.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/04-LicensefileInstallation.png "License file installation"
+[05-SquirrelAddDriverButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/05-SquirrelAddDriverButton.png "Add driver button"
+[06-SquirrelAddDriverDialog.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/06-SquirrelAddDriverDialog.png "Add driver dialog"
+[07-SquirrelAddAliasButton.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/07-SquirrelAddAliasButton.png "Add alias button"
+[08-SquirrelGenerateSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/08-SquirrelGenerateSchema.png "Generate the schema file"
+[beers.json]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/beers.json "My beers.json file"
+[09-SchemaEditor.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/09-SchemaEditor.png "Edit the schema file"
+[10-SquirrelUploadSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/10-SquirrelUploadSchema.png "Upload the schema file"
+[11-SquirrelSaveAlias.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/11-SquirrelSaveAlias.png "Save the alias"
+[12-SquirrelConnected.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/12-SquirrelConnected.png "Connected using Squirrel"
+[13-SquirrelQuery.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/13-SquirrelQuery.png "Executing a SQL query from Squirrel"
+[14-SquirrelMeta.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/14-SquirrelMeta.png "Database Metadata from Squirrel"
+[Video]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
 [^1]: [http://www.simba.com/drivers/couchbase-odbc-jdbc/][SimbaWebSite]

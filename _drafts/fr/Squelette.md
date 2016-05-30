@@ -8,7 +8,7 @@ lang: fr
 #category: Test
 #categories
 #tags
-date: 9999-01-01
+#date: 9999-01-01
 published: true
 ---
 
@@ -59,7 +59,28 @@ Contenu
 | [DemoBook][demobook], Slides([dualhead][demodeck_dualhead], [notesonly][demodeck_notesonly], [paper][demodeck_paper], [slidesonly][demodeck_slidesonly]) | Demo script booklet to print and associated slidedeck |
 | [LabsBook][labsbook], Slides([dualhead][labsdeck_dualhead], [notesonly][labsdeck_notesonly], [paper][labsdeck_paper], [slidesonly][labsdeck_slidesonly]) | Hands-on scripts booklet to print and associated slidedeck |
 | [ExercicesBook][exercicesbook], Slides([dualhead][exercicesdeck_dualhead], [notesonly][exercicesdeck_notesonly], [paper][exercicesdeck_paper], [slidesonly][exercicesdeck_slidesonly]) | Exercices and solutions booklet to print and associated slidedeck |
-| [Video] | Demonstration screencast recording |
+| [Video] | Enregistrement vidéo de la démonstration |
 
 # Notes de bas de page
 
+[mainbook]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/mainbook.pdf "Livret principal imprimable"
+[maindeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/maindeck_dualhead.pdf "Diaporama du livret principal avec les notes, dans un format pour deux écrans"
+[maindeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/maindeck_notesonly.pdf "Notes du diaporama du livret principal"
+[maindeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/maindeck_paper.pdf "Diaporama du livret principal imprimable sur papier avec les notes"
+[maindeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/maindeck_slidesonly.pdf "Diaporama du livret principal sans les notes"
+[demobook]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/demobook.pdf "Script de démonstration imprimable"
+[demodeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/demodeck_dualhead.pdf "Diaporama du script de démonstration avec les notes, dans un format à deux écrans"
+[demodeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/demodeck_notesonly.pdf "Notes diaporama du script de démonstration"
+[demodeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/demodeck_paper.pdf "Diaporama du script de demonstration imprimable sur papier avec les notes"
+[demodeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/demodeck_slidesonly.pdf "Diaporama du script de démonstration sans les notes"
+[labsbook]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/labsbook.pdf "Cahier de travaux dirigés imprimable"
+[labsdeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/labsdeck_dualhead.pdf "Diaporama du cahier de travaux dirigés avec les notes, dans un format à deux écrans"
+[labsdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/labsdeck_notesonly.pdf "Notes du diaporama du cahier de travaux dirigés"
+[labsdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/labsdeck_paper.pdf "Diaporama du cahier de travaux dirigés imprimable sur papier avec les notes"
+[labsdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/labsdeck_slidesonly.pdf "Diaporama du cahier de travaux dirigés sans les notes"
+[exercicesbook]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/exercicesbook.pdf "Livret d'exercices imprimable"
+[exercicesdeck_dualhead]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/exercicesdeck_dualhead.pdf "Diaporama du livret d'exercices avec les notes au format double-écran"
+[exercicesdeck_notesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/exercicesdeck_notesonly.pdf "Notes du diaporama du cahier d'exercices"
+[exercicesdeck_paper]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/exercicesdeck_paper.pdf "Diaporama du cahier d'exercices avec les notes au format papier"
+[exercicesdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/exercicesdeck_slidesonly.pdf "Diaporama du cahier d'exercices sans les notes"
+[Video]: https://youtu.be/kK4GxAwJKD0 "Enregistrement vidéo de la démonstration"
