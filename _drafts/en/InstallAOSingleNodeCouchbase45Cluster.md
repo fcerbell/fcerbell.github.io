@@ -1,6 +1,6 @@
 ---
-uid: skel
-title: English Skeleton
+uid: InstallASingleNodeCouchbase45Cluster.md
+title: Install a single node Couchbase 4.5 Cluster
 author: fcerbell
 layout: post
 lang: en
@@ -9,10 +9,16 @@ lang: en
 #categories
 #tags
 #date: 9999-01-01
-published: false
+published: true
 ---
 
-Abstract/Excerpt/Intro
+Couchbase nodes are designed to work in a cluster. When installing a new
+cluster, we have to install a first node. This node will be the minimal form of
+the cluster before other nodes are added. We will see how to install this first
+node. We will enable all services, so it will be possible to use this single
+node as a Couchbase cluster, without redundancy (and replication). It is enough
+to test the data access, to develop an application or to evaluate some of the
+product's features.
 
 You can find links to the related video recordings and printable materials at
 the <a href="#materials-and-links">end of this post</a>.
@@ -20,35 +26,64 @@ the <a href="#materials-and-links">end of this post</a>.
 * TOC
 {:toc}
 
-* H1 : # Header 1
-* H2 : ## Header 2
-* H3 : ### Header 3
-* H4 : #### Header 4
-* H5 : ##### Header 5
-* H6 : ###### Header 6
-* Links : [Title](URL)
-* Links : [Label][linkid]
-[linkid]: http://www.example.com/ "Optional Title"
-* Bold : **Bold**
-* Italicize : *Italics*
-* Strike-through : ~~text~~
-* Highlight : ==text==
-* Paragraphs : Line space between paragraphs
-* Line break : Add two spaces to the end of the line
-* Lists : * an asterisk for every new list item.
-* Quotes : > Quote
-* Inline Code : `alert('Hello World');`
-* Horizontal Rule (HR) : --------
-[^1]: This is my first footnote
-[^n]: Visit http://milanaryal.com
-[^n]: A final footnote
-
 # Video
 
 <center></center>
 
 # Prerequisites
-Content
+You will need a computer with at least 2 GB of RAM and 2 cores, even if the
+recommended settings are 4 GB of RAM and 4 cores. You will also need one of the
+supported operating systems installed on this computer. It can be a physical
+computer or a virtual computer. Couchbase also provides a *Docker* container,
+but it is currently not officially supported and I won't use it here.
+
+# Prepare the operating system
+
+## Windows
+
+## Debian
+
+## Ubuntu
+
+## CentOS/RedHat
+
+## MacOS
+
+
+# Download Coucbase server 4.5
+
+## Windows
+
+## Debian
+
+## Ubuntu
+
+## CentOS/RedHat
+
+## MacOS
+
+
+# Installation
+
+## Windows
+
+## Debian
+
+## Ubuntu
+
+## CentOS/RedHat
+
+## MacOS
+
+# Configuration
+
+## Cluster name
+
+## Auto-failover
+
+## Audit logging
+
+# Sample data loading
 
 # Materials and Links
 

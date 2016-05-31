@@ -18,7 +18,7 @@ SQuirreLSQL, et le pilote sera configuré pour servir toutes les nouvelles
 connexions entrantes.
 
 Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
-imprimables associés à la fin de cet article.
+imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 
 * TOC
 {:toc}

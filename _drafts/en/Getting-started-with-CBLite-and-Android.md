@@ -9,7 +9,7 @@ lang: en
 #categories
 tags: android, couchbase, mobile
 #date
-published: true
+published: false
 ---
 
 Getting started with _Couchbase Lite_ as a storage backend embedded in an Android

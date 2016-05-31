@@ -17,7 +17,7 @@ driver for Couchbase. We will test the connection with SQuirreLSQL and the
 driver will be configured for any other incomming connection.
 
 You can find links to the related video recordings and printable materials at
-the end of this post.
+the <a href="#materials-and-links">end of this post</a>.
 
 * TOC
 {:toc}
