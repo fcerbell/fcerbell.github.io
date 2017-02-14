@@ -45,7 +45,7 @@ imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 
 # Video
 
-<center></center>
+<center><iframe width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></center>
 
 # Pré-requis
 

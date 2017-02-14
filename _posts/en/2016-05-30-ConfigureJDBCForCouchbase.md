@@ -1,7 +1,7 @@
 ---
 uid: ConfigureJDBCForCouchbase
-author: fcerbell
 title: Configure JDBC for Couchbase
+author: fcerbell
 layout: post
 lang: en
 #description:

@@ -1,7 +1,7 @@
 ---
 uid: ConfigureJDBCForCouchbase
-author: fcerbell
 title: Configurer JDBC pour Couchbase
+author: fcerbell
 layout: post
 lang: fr
 #description:
@@ -275,7 +275,7 @@ Ou encore consulter les meta-données de ce SGBDR virtuel :
 
 # Supports et liens
 
-| Link | Description |
+| Lien | Description |
 |---|---|
 | [Video] | Enregistrement vidéo de la démonstration |
 
@@ -298,5 +298,5 @@ Ou encore consulter les meta-données de ce SGBDR virtuel :
 [12-SquirrelConnected.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/12-SquirrelConnected.png "Connected using Squirrel"
 [13-SquirrelQuery.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/13-SquirrelQuery.png "Executing a SQL query from Squirrel"
 [14-SquirrelMeta.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/14-SquirrelMeta.png "Database Metadata from Squirrel"
-[Video]: https://youtu.be/FH0nBiCX2cw "Enregistrement vidéo de la démonstration"
 [^1]: [http://www.simba.com/drivers/couchbase-odbc-jdbc/][SimbaWebSite]
+[Video]: https://youtu.be/FH0nBiCX2cw "Enregistrement vidéo de la démonstration"

@@ -45,9 +45,10 @@ the <a href="#materials-and-links">end of this post</a>.
 
 # Video
 
-<center></center>
+<center><iframe width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></center>
 
 # Prerequisites
+
 Content
 
 # Materials and Links
