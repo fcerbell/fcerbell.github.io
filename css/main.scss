@@ -48,6 +48,12 @@ a:visited { color: #205caa; }
     padding: 5px;
 }
 
+article .externalLink,
+footer .externalLink {
+    background: url(/images/external.png) center right no-repeat;
+    padding-right: 13px;
+}
+
 
 /* Layout Styles */
 /* ----------------------------------------------------------*/

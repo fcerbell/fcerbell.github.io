@@ -19,7 +19,8 @@
     {% if site.twitter_sharing %}<!-- Twitter -->
     <a class="socicon-twitter" href="https://twitter.com/intent/tweet?text={{page.title}}&url={{url}}&via={{site.twitter_username}}&hashtags={{tagStr}}&related={{site.twitter_username}}" target="_blank" title="{{sharetext}}Twitter"></a>{% endif %}
     {% if site.facebook_sharing %}<!-- Facebook -->
-    <a class="socicon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{site.baseurl}}{{page.url}}&t={{page.title}}" target="_blank" title="{{sharetext}}Facebook"></a>{% endif %}
+    <a class="socicon-facebook" href="https://www.facebook.com/sharer/sharer.php?href={{site.url}}{{site.baseurl}}{{page.url}}" target="_blank" title="{{sharetext}}Facebook"></a>{% endif %}
+    {% comment %}<a class="socicon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{site.baseurl}}{{page.url}}&t={{page.title}}" target="_blank" title="{{sharetext}}Facebook"></a>{% endcomment %}
     {% comment %}<a class="socicon-facebook" href="http://www.facebook.com/sharer.php?u={{site.url}}{{site.baseurl}}{{page.url}}&p[title]={{page.title}}" target="_blank" title="{{sharetext}}Facebook"></a>{% endcomment %}
     {% if site.youtube_sharing %}<!-- YouTube -->
     <a class="socicon-youtube" href="" target="_blank" title="{{sharetext}}YouTube"></a>{% endif %}
