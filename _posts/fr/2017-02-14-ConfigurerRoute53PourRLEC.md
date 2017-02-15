@@ -50,25 +50,28 @@ en état de lui répondre et la connexion réussira.
 
 # Configuration
 
-After the theory, we can go through the hands-on steps to achieve this configuration with AWS's Route53 DNS as your domain or sub-domain official name server.
+Après la théorie, on peut passer à la pratique pour réaliser cette configuration avec le DNS *Route53* d'Amazon comme serveur officiel de votre domaine ou sous-domaine.
 
 ## Connexion au DNS Route53 d'Amazon
 
-The first step is to connect your browser to AWS and to login into the administration interface. Then, you have to go in the *Services* menu at the top of the page and clic on the *Route53* menu item :
+La première étape consiste à connecter votre navigateur à *AWS*[^4] et à vous connecter à l'interface d'administration. Ansuite, vous devez aller dans le menu *Services* en
+haut à gauche de la page et cliquer sur *Route53*:
 
 ![Route53 dans le menu Services][01-ServicesRoute53.png]
 
-Then, I assume that you already have registered a domain, and that you defined *Route53* as the primary/master name server for the whole domain or for one of its sub-domains. So, you should have at least one zone in *Route53*. Clic on the *Hosted zones* link to open it:
+Ensuite, je suppose que vous avez déjà enregistré un domaine et que vous avez défini *Route53* comme serveur maître/primaire pour tout le domaine ou un de ses sous-domaine.
+Vous devriez vons avoir au moins une zone dans *Route53*. Cliquez sur *Zones hébergées* pour ouvrir la liste:
 
 ![Zones hébergées dans Route53][02-Route53HostedZones.png]
 
-*Route53* is now displaying the list of the zones that you defined. You need to clic on the zone in which you want to define your cluster, *demo-rlec.redislabs.com* in my case:
+*Route53* affiche désormais la liste des zones que vous avez définies. Vous devez cliquer sur la zone dans laquelle vous voulez définir votre cluster, *demo-rlec.redislabs.com*, dans mon cas:
 
-![Séléction de la zone hébergée][03-HostedZoneSelection.png]
+![Sélection de la zone hébergée][03-HostedZoneSelection.png]
 
 ## Création des enregistrements des serveurs de nom
 
-The next step is to create the record that returns the IP address of your cluster's name servers, ie one of your cluster's nodes. To create the first name server IP address resolution record, you need to clic on the *Create Record Set* blue button at the top of the list:
+L'étape suivante consiste à créer les enregistrements qui renvoient l'adresse IP des serveurs de nom du cluster, les nœuds du cluster. Pour créer le premier enregistrement de
+résolution des adresses IP des serveurs de nom du cluster, vous devez cliquer sur le bouton bleu *Créer un jeu d'enregistrements* en haut de la liste:
 
 ![Créer un jeu d'enregistrements][04-CreateRecordSet.png]
 
@@ -160,3 +163,4 @@ Now you can either install and configure your nodes, if not already made, or con
 [^1]: RedisLabs Enterprise Cluster
 [^2]: Fully Qualified Domain Name
 [^3]: Top Level Domins
+[^4]: Amazon Web Services
