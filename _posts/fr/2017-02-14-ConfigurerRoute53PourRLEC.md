@@ -15,8 +15,6 @@ published: true
 RedisLabs Enterprise Cluster (RLEC[^1]) nécessite une configuration DNS particulière pour offrir la haute-disponibilité (HA). Cet article décrit comment configurer le DNS *Route53* d'*Amazon Web Services* (AWS) correctement.
 
 
-# *Traduction du texte en cours. Vidéo déjà en Français*
-
 Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
 imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 
@@ -75,44 +73,56 @@ résolution des adresses IP des serveurs de nom du cluster, vous devez cliquer s
 
 ![Créer un jeu d'enregistrements][04-CreateRecordSet.png]
 
-This record will **only** be used to resolve the IP address of the cluster name server to query, it is **not** used by the application to connect to the cluster. This kind of record is an *A* record type and associates an IP address to a name. To avoid the whole resolving process each time that a name
-is requested, the results are cached in the forwarding DNS and in the application's resolver library. Given that the IP address associated with a node can change when thoe related hardware fails, the information needs to expire quickly, otherwise, the node fails, the name servers reflects the failover,
-but they are not queried again and the local resolver still returns the IP of the failed node. This is the Time To Live (TTL) field associated to the record.
+Cet enregistrement sera **seulement** utilisé pour résoudre l'adresse IP du serveur de nom à interroger. Il **ne servira pas** à l'application pour se connecter au cluster.
+Cet enregistrement est de type *A* et associe une adresse IP à un nom. Pour éviter tout le processus de résolution à chaque fois qu'un nom en a besoin, les résultats sont
+conservés en cache par les serveurs DNS intermédiaires (forwarding) et par la bibliothèque du résolveur. Étant donné que l'adresse IP associée à un nœud peut changer lorsque
+cd nœud est indisponible, l'information doit se périmer rapidement, sinon le nœud tombe, les DNS du cluster le prennent en compte, mais ils ne reçoivent jamais les requêtes et
+le résolveur local continue à renvoyer l'adresse IP périmée et invalide. Pour l'expiration, c'est le champs Time To Live (TTL) associé à l'enregistrement.
 
-So, you need to enter the name used as the name server's name, despite that it could be different, I suggest that you use the node name. You need to enter its IP address, to set the TTL to something short, I'll set it to one minute. This is the maximum amount of time that the record will be kept in
-cache of the resolver and of the forwarding DNS. If the node goes down, the resolver will still use this value until the record expires in his cache, but as the node will not answer, the resolver will try the next name server in the list (he has the *A* record because he needed to know the IP of the
-first name server, and if he needed this IP, he already had the name server list).
+C'est pourquoi vous devez saisir le nom utilisé pour le serveur de nom du cluster, bien que l'on puisse saisir autrechose, je recommande de saisir le nom du nœud. Vous devez
+saisir son adresse IP, configurer le TTL à une période courte. Je le règle à une minute. Cela correspond au délai maximum pendant lequel l'enregistrement sera conservé dans le
+cache du résolveur et dans les DNS relais. Si le nœud tombe, le résolveur continuera à utiliser cette valeur jusqu'à son expiration mais, étant donné que le nœud ne répond
+plus, le résolveur tentera d'utiliser le serveur suivant dans la liste (il dispose de l'enregistrement *A* car il a eu besoin de connaître l'adresse IP du premier serveur de
+nom, et s'il a eu besoin de cette IP, c'est qu'il dispose déjà de la liste des serveurs de nom).
 
-Finally submit the first name server's *A* record to *Route53*, using the *Create* button at the bottom of the right panel:
+Finalement, soumettez l'enregistrement *A* du premier serveur de nom à *Route53* en utilisant le bouton *Créer* en bas du paneau latéral droit:
 
 ![Configuration du premier serveur de noms][05-NS1Configuration.png]
 
-You want (and need) to have all your cluster nodes acting asname servers, soyou have to repeat these steps for all your nodes and you should get a list of *A* records in *Route53* interface:
+Vous voulez (et devez) avoir tous vos nœuds de cluster agissant comme serveurs de noms, vous devez donc répéter ces étapes pour tous vos nœuds et devez obtenir une liste
+d'enregistrements *A* dans l'interface de *Route53* :
 
 ![Liste de serveurs de noms][06-NSList.png]
 
-Now, the client-side resolver and the forwarding DNS can reach the cluster nmeservers by their IP address, if they know what are the names of the cluster's name servers. That's the next point.
+Maintenance, le résolveur du côté client et les DNS relais peuvent atteindre les serveurs de noms du cluster grâce à leur adresse IP s'ils en connaissent le nom. C'est donc le
+but de la prochaine étape.
 
 ## Définition de la liste des serveurs de nom de la sous-zone
 
-Here, the idea is to provide the list of the cluster nameserver's names to the resolvers and the forwarding DNS, so that they will be able to resolve the IP address of one of them and query it for node's IP. To achieve that, we have to define a new record in *Route53*, an *NS* record for Name Server
-record. So, once again, we will clic on the button to *Create [a] Record Set* and we will enter the relevant informations in the right panel.
+Ici, l'idée est de pouvoir fournir la liste des serveurs de nom du cluster au résolveur et aux DNS relais pour qu'ils soient capable de résoudre l'adresses IP de l'un
+d'entre-eux et de l'interroger pour connaître l'adresse IP du nœud souhaité. Pour cela, nous devons définir un nouvel enregistrement dans *Route53*, un enregistrement *NS*
+pour *Name Server* (serveur de nom). Une fois de plus, il faut cliquer sur le bouton *Créer un jeu d'enregistrements* et saisir les informations dans le panneau latéral droit:
 
-The name is the name of the cluster, if your cluster nodes are `nodeX.mycluster.enterprise.com`, then the cluster name is `mycluster.enterprise.com`. Remember, the resolver will ask "who are the name servers for zone <ClusterName>". The name is the searched key, the record type is the field. In our
-case, the resolver will ask for the `NS` record type to get the nameservers list of the clustername, so we have to choose this type. A short TTL, such as one minute, is a good idea here, too. And we have to enter the node name list in the text box. In other DNS, we would have to create one NS record
-for each item, but *Route53* takes care of that for us. I also have the habbit to end these records with a final dot, it is not a typo, because some other DNS require it and it does not seem to be an issue with *Route53*. At the end, we can clic on the *Create* button:
+Le nom est celui du cluster, si vos nœuds sont nommés `noeudX.moncluster.entreprise.fr` alors le nom du cluster est `moncluster.entreprise.fr`. Souvenez-vous, le résolveur va
+commencer par demander «Qui est responsable de la zone <Cluster> ?». Le nom est la clé de recherche, le type d'enregistrement est un champ. Dans notre cas, le résolveur va
+demander l'enregistrement de type *NS* pour obtenir la liste des serveurs de noms du cluster, nous devons donc choisir ce type. Un TTL court, tel qu'une minute, est aussi une
+bonne idée. Puis nous devons saisir la liste des serveurs de noms du cluster, donc la liste des nœuds. Dans d'autres logiciels de DNS, nous devrions saisir un enregistrement
+*NS* par valeur mais *Route53* s'en charge pour nous. J'ai également pris l'habitude de terminer chaque valeur par un point, ce n'est pas une coquille, car certains logiciels
+DNS le nécessitent et cela ne semble pas poser de problème à *Route53*. Finalement, cliquez sur le bouton *Créer*:
 
 ![Enregistrement des noms de serveurs][07-NSRecord.png]
 
-Congratulations, you completed the *Route53* DNS configuration for your RLEC. Let's check what you have.
+Félicitations, vous avez terminé la configuration DNS dans *Route53* pour votre cluster RLEC. Il est temps de vérifier ce que nous avons.
 
 # Vérification
 
-You should end with several name server *A* record (one for each cluster node) to be able to reach any of them by its name. You should also have one record that lists the nameservers names for the zone (cluster):
+Vous devriez avoir plusieurs enregistrements *A* de serveur DNS (un pour chaque nœud du cluster) pour pouvoir atteindre n'importe lequel par son nom. Vous devriez également
+disposer d'un enregistrement *NS* qui liste tous les DNS de la zone (cluster):
 
 ![Configuration finale][08-FinalConfig.png]
 
-If your cluster nodes are healthy, up and running, with DNS network ports unfiltered, you can test the configuration. Who are the nameservers in charge of the resolution in the cluster:
+Si les nœuds du cluster sont en bonne santé et fonctionnels, avec les ports réseau DNS ouverts, vous pouvez tester la configuration. Qui sont les serveurs de noms en carge de
+la résolution dans le cluster:
 
 ```
 dig ns demo.francois.demo-rlec.redislabs.com
@@ -139,9 +149,10 @@ demo.francois.demo-rlec.redislabs.com. 3409 IN NS ns3.demo.francois.demo-rlec.re
 ;; MSG SIZE  rcvd: 120
 ```
 
-You can see that the name were changed to `ns?`. This answer does not come from *Route53* but from the cluster nameservers themselves.
+Vous pouvez constater que les noms ont été remplacés par `ns?`. Cette réponse ne provient pas de *Route53*, mais des serveurs de nom du cluster.
 
-Now you can either install and configure your nodes, if not already made, or connect your client, using the cluster name (**not the IP address**).
+Maintenant, vous pouvez soit installer et configurer vos nœuds, si ce n'est déjà fait, soit connecter votre client en utilisant le nom d'un des nœuds du cluster (**surtout pas
+une adresse IP**)
 
 # Supports et liens
 

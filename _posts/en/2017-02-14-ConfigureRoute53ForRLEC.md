@@ -68,7 +68,7 @@ The next step is to create the record that returns the IP address of your cluste
 ![Create a new record set][04-CreateRecordSet.png]
 
 This record will **only** be used to resolve the IP address of the cluster name server to query, it is **not** used by the application to connect to the cluster. This kind of record is an *A* record type and associates an IP address to a name. To avoid the whole resolving process each time that a name
-is requested, the results are cached in the forwarding DNS and in the application's resolver library. Given that the IP address associated with a node can change when thoe related hardware fails, the information needs to expire quickly, otherwise, the node fails, the name servers reflects the failover,
+is requested, the results are cached in the forwarding DNS and in the application's resolver library. Given that the IP address associated with a node can change when the related hardware fails, the information needs to expire quickly, otherwise, the node fails, the name servers reflects the failover,
 but they are not queried again and the local resolver still returns the IP of the failed node. This is the Time To Live (TTL) field associated to the record.
 
 So, you need to enter the name used as the name server's name, despite that it could be different, I suggest that you use the node name. You need to enter its IP address, to set the TTL to something short, I'll set it to one minute. This is the maximum amount of time that the record will be kept in
@@ -79,7 +79,7 @@ Finally submit the first name server's *A* record to *Route53*, using the *Creat
 
 ![First nameserver configuration][05-NS1Configuration.png]
 
-You want (and need) to have all your cluster nodes acting asname servers, soyou have to repeat these steps for all your nodes and you should get a list of *A* records in *Route53* interface:
+You want (and need) to have all your cluster nodes acting asname servers, so you have to repeat these steps for all your nodes and you should get a list of *A* records in *Route53* interface:
 
 ![Nameservers list][06-NSList.png]
 
@@ -91,7 +91,7 @@ Here, the idea is to provide the list of the cluster nameserver's names to the r
 record. So, once again, we will clic on the button to *Create [a] Record Set* and we will enter the relevant informations in the right panel.
 
 The name is the name of the cluster, if your cluster nodes are `nodeX.mycluster.enterprise.com`, then the cluster name is `mycluster.enterprise.com`. Remember, the resolver will ask "who are the name servers for zone <ClusterName>". The name is the searched key, the record type is the field. In our
-case, the resolver will ask for the `NS` record type to get the nameservers list of the clustername, so we have to choose this type. A short TTL, such as one minute, is a good idea here, too. And we have to enter the node name list in the text box. In other DNS, we would have to create one NS record
+case, the resolver will ask for the *NS* record type to get the nameservers list of the clustername, so we have to choose this type. A short TTL, such as one minute, is a good idea here, too. And we have to enter the node name list in the text box. In other DNS softwares, we would have to create one NS record
 for each item, but *Route53* takes care of that for us. I also have the habbit to end these records with a final dot, it is not a typo, because some other DNS require it and it does not seem to be an issue with *Route53*. At the end, we can clic on the *Create* button:
 
 ![Nameservers record][07-NSRecord.png]
