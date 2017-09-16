@@ -4,11 +4,9 @@ title: Loading data in Couchbase with RxJava
 author: fcerbell
 layout: post
 lang: en
-#description:
-category: tutos
-#categories
-tags: Java ReactiveX RxJava Couchbase Data
-#date
+description:
+category: Tutos
+tags: [ Java, ReactiveX, RxJava, Couchbase, Data ]
 #published: false
 ---
 

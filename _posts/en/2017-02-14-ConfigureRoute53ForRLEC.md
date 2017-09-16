@@ -5,9 +5,8 @@ author: fcerbell
 layout: post
 lang: en
 #description:
-#category: Test
-#categories
-#tags
+category: Tutos
+tags: [ DNS, Route53, AWS, Amazon, Redis ]
 #date: 9999-01-01
 published: true
 ---

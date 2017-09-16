@@ -5,8 +5,8 @@ author: fcerbell
 layout: post
 lang: en
 description:
-category: tutos
-tags: [couchbase, jaspersoft, reporting, jdbc, n1ql]
+category: Tutos
+tags: [ Couchbase, Jaspersoft, Reporting, JDBC, N1QL ]
 #published: false
 ---
 

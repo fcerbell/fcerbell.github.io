@@ -6,8 +6,7 @@ layout: post
 lang: en
 #description:
 #category: Test
-#categories
-#tags
+tags: [ JDBC, Couchbase ]
 #date: 2016-05-27
 published: true
 ---

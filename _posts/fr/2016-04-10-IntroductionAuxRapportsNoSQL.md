@@ -6,8 +6,7 @@ layout: post
 lang: fr
 #description:
 category: Tutos
-#categories
-tags: nosql reporting
+tags: [ NoSQL, Reporting ]
 #date
 published: true
 ---

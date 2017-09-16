@@ -5,9 +5,8 @@ author: fcerbell
 layout: post
 lang: fr
 #description:
-category: tutos
-#categories
-tags: Java ReactiveX RxJava Couchbase Data
+category: Tutos
+tags: [ Java, ReactiveX, RxJava, Couchbase, Data ]
 #date
 #published: false
 ---

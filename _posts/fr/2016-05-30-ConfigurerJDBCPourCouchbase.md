@@ -5,9 +5,8 @@ author: fcerbell
 layout: post
 lang: fr
 #description:
-#category: Test
-#categories
-#tags
+category: Tutos
+tags: [ JDBC, Couchbase ]
 #date: 2016-05-27
 published: true
 ---

@@ -5,9 +5,8 @@ title: Introduction to NoSQL reporting
 layout: post
 lang: en
 #description:
-#category: Test
-#categories
-#tags
+category: Article
+tags: [ NoSQL, Database, Architecture ]
 #date
 published: true
 ---

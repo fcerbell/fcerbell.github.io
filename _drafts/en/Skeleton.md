@@ -6,8 +6,7 @@ layout: post
 lang: en
 #description:
 #category: Test
-#categories
-#tags
+#tags: [ tag1, tag2 ]
 #date: 9999-01-01
 published: false
 ---

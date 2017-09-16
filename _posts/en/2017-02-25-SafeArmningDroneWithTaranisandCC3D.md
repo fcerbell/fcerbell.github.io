@@ -6,8 +6,7 @@ layout: post
 lang: en
 #description:
 category: Drone
-#categories
-tags: CC3D, Taranis, Drone, Multi-copter, Quadcopter
+tags: [ CC3D, Taranis, Drone, Multi-copter, Quadcopter ]
 #date: 9999-01-01
 published: true
 ---
