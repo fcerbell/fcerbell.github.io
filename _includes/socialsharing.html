@@ -12,6 +12,12 @@
 {% else %}{% assign sharetext="Partager cet article sur " %}
 {% endcase %}
 <div class="social-share">
+    {% case page.lang %}
+      {% when "en" %}
+      <p>You enjoyed this blog post ? Share it :</p>
+      {% else %}
+      <p>Cet article vous a plû ? Partagez-le :</p>
+    {% endcase %}
     {% if site.pinterest_sharing %}<!-- Pinterest -->
     <a class="socicon-pinterest" href="http://pinterest.com/pin/create/button/?url={{site.url}}{{site.baseurl}}{{page.url}}&description={{page.description}}" target="_blank" title="{{sharetext}}Pinterest"></a>{% endif %}
     {% if site.instagram_sharing %}<!-- Instagram -->

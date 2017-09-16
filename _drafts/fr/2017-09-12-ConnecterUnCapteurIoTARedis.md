@@ -1,9 +1,9 @@
 ---
 uid: IotSensorSendingToRedis
-title: Iot sensor on ESP8266 sending values to Redis
+title: Envoyer des valeurs dans Redis depuis un capteur IoT sur ESP8266
 author: fcerbell
 layout: post
-lang: en
+lang: fr
 #description:
 category: Tutos
 tags: [iot, embedded, esp8266, arduino, redis, home automation]
@@ -11,16 +11,18 @@ tags: [iot, embedded, esp8266, arduino, redis, home automation]
 #published: true
 ---
 
-Create a light sensor using an ESP8266 and an LDR for 5€, directly send the
-measures to a Redis database via a Wifi/TCP/IP stack and publish a push
-notification to notify your frontend user interface (described in a future blog
-post) that there is a new value to display in realtime.  Redis is an in-memory
-key-value store with persistency to disk, high-availability and clustering. It
-is so easy to use that a simple micro-controller, such as an Arduino or an
-ESP8266, with a TCP/IP stack can connect and use it.
+Créer un capteur de luminosité en utilisant un ESP8266 et une photoresistance
+pour 5€, envoyer directement les mesures dans une base de données Redis via la
+pile Wifi/TCP/IP et publier un message « push » pour notifier votre interface
+utilisateur (décrite dans un futur article) qu'il y a une nouvelle valeur à
+afficher en temps réel. Redis est une base clé-valeur en mémoire avec la
+persistence sur le disque, la haute-disponibilité et la distribution des données
+en cluster. Il est tellement facile à utiliser qu'un simple micro-controleur,
+tel qu'un Arduino ou un ESP8266, avec une pile TCP/IP peut s'y connecter et
+l'utiliser.
 
-You can find links to the related video recordings and printable materials at
-the <a href="#materials-and-links">end of this post</a>.
+Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
+imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 
 * TOC
 {:toc}
@@ -29,180 +31,193 @@ the <a href="#materials-and-links">end of this post</a>.
 
 <center><iframe width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></center>
 
-# Prerequisites
+# Pré-requis
 
-## Hardware
+## Matériel
 
-I had to build about 200 such devices, for the cheapest price, within as short
-time as possible. The idea was to build these devices and teach how to use them
-with Redis in our French Redis meetups. The attendees can keep the device after
-the meetup to continue to play with it at home. 
+Je devais construire environ 200 de ces périphériques, au plus bas prix, dans un
+délais aussi court que possible. L'idée était de les construire et d'enseigner
+comment les utiliser avec Redis dans les meetups en France. Les participants
+pouvaient conserver les périphériques après la rencontre pour continuer à jouer
+avec à la maison.
 
-It had to be as cheap as possible (reached less than 5€), as easy and fast to
-build as possible (30 seconds less per device is important when building 200 of
-them), as versatile as possible to connect other sensors (thermistors, digital
-sensors, I2C sensors, SPI sensors, ...).
+Ils devaient être aussi peu cher que possible (j'ai atteint moins de 5€), aussi
+faciles et rapides que possible à assembler (30 secondes de moins par
+périphérique sont importantes quand on en fabrique 200), aussi polyvalents que
+possibles pour y connecter d'autres capteurs (thermistances, capteurs
+numériques, capteurs I2C, capteurs SPI, ...).
 
-First of all, you need some hardware. Despite I am an Arduino addict it would
-require a Wifi shield (expensive) and some soldering (longer to build). I chose
-to use a small breadboard, an all-in-one ESP8266, a resistor and an Light
-Dependent Resistor (LDR or photoresistor), that can be easily replaced with a
-thermistor for the same price.
+Tout d'abord, il faut un peu de matériel. Malgré le fait que je sois un adepte
+d'Arduino, ils nécessiteraient une carte Wifi (chère) et de la soudure (long à
+construire). J'ai choisi d'utiliser des petites plaques de prototypage, un
+ESP8266 tout-en-un, une résistance et une photorésistance (LDR), qui peut
+facilement être remplacée par une thermistance pour le même prix.
 
-### Parts and tools
+### Composants et outils
 
-Lets talk about furnitures :
+Parlons maintenant des fournitures :
 ![IoT1][iot-device-build-01.jpg]
-[Full size][iot-device-build-01.jpg]
+[Pleine taille][iot-device-build-01.jpg]
 
-My prices have a discount because I ordered more than 100 of each.
+Mes prix comportent une remise car j'en ai commandé 100 de chaque.
 
-|-----+-------------------------------------+-----------|------------|
-| Qty | Item                                | Price (€) | Link       |
-|----:+:------------------------------------+----------:|:-----------|
-|   1 | 170 points breadboard               |      0.86 | [Banggood](https://www.banggood.com/Mini-Solderless-Prototype-Breadboard-170-Points-For-Arduino-Shield-p-74814.html) |
-|   1 | ESP8266 ESP-12E/F breakout          |      3.18 | [Banggood](https://www.banggood.com/Geekcreit-Doit-NodeMcu-Lua-ESP8266-ESP-12E-WIFI-Development-Board-p-985891.html)|
-|   1 | 10K Ohms resistor (metal or carbon) |      0.03 | [Conrad](http://www.conrad.fr/ce/fr/product/1417697/Rsistance-couche-carbone-Yageo-CFR25J10KH-10-k-sortie-axiale-0207-025-W-1-pcs)|
-|   1 | GL5528 LDR                          |      0.02 | [Banggood](https://www.banggood.com/100Pcs-5MM-GL5528-Light-Dependent-Resistor-Photoresistor-LDR-p-943463.html)|
-|   1 | Micro-USB cable                     |      1.10 | [Banggood](https://www.banggood.com/12cm-Universal-Micro-USB-2_0-Data-And-Charging-Cable-For-Raspberry-Pi-p-1079610.html)|
-|=====+=====================================+===========+============|
-|     | **Total**                           |  **5.19** |            |
-|-----+-------------------------------------+-----------|------------|
+|-----+-------------------------------------+----------|------------|
+| Qté | Composant                           | Prix (€) | Lien       |
+|----:+:------------------------------------+---------:|:-----------|
+|   1 | Plaque de prototypage 170 points    |     0.86 | [Banggood](https://www.banggood.com/Mini-Solderless-Prototype-Breadboard-170-Points-For-Arduino-Shield-p-74814.html) |
+|   1 | ESP8266 ESP-12E/F sur PCB           |     3.18 | [Banggood](https://www.banggood.com/Geekcreit-Doit-NodeMcu-Lua-ESP8266-ESP-12E-WIFI-Development-Board-p-985891.html)|
+|   1 | Résistance 10K Ohms (metal/carbone) |     0.03 | [Conrad](http://www.conrad.fr/ce/fr/product/1417697/Rsistance-couche-carbone-Yageo-CFR25J10KH-10-k-sortie-axiale-0207-025-W-1-pcs)|
+|   1 | GL5528 LDR (Photorésistance)        |     0.02 | [Banggood](https://www.banggood.com/100Pcs-5MM-GL5528-Light-Dependent-Resistor-Photoresistor-LDR-p-943463.html)|
+|   1 | Cable micro-USB                     |     1.10 | [Banggood](https://www.banggood.com/12cm-Universal-Micro-USB-2_0-Data-And-Charging-Cable-For-Raspberry-Pi-p-1079610.html)|
+|=====+=====================================+==========+============|
+|     | **Total**                           | **5.19** |            |
+|-----+-------------------------------------+----------|------------|
 
-* Noze plier
-* Cutting plier
+* Pince fine
+* Pince coupante
 
-### Build
+### Construction
 
-Here are the steps. Links are opening detailled pictures of steps.
+Voici les étapes. Les liens permettent d'ouvrir les photos détaillées
+intermédiaires.
 
-* First, use the cutting plier to shorten the resistor legs.
-[Shortenned resistor picture][iot-device-build-02.jpg]
+* Commencer par utiliser la pince coupante pour raccourcir les pattes de la
+  résistance.
+[Résistance coupée][iot-device-build-02.jpg]
 
-* Fold the resistor legs to cross 9 holes (2.29cm)
-[Folded resistor picture][iot-device-build-03.jpg]
+* Plier les pattes de la résistance pour traverser 9 trous (2.29 cm)
+[Résistance pliée][iot-device-build-03.jpg]
 
-* Place the resistor between C3 and L3 on the breadboard.
-[Placed resistor picture][iot-device-build-04.jpg]
+* Placer la résistance entre C3 et L3sur la plaque.
+[Place the resistor picture][iot-device-build-04.jpg]
 
-* Cut the LDR legs to 2cm each.
-[Shortenned LDR picture][iot-device-build-05.jpg]
+* Raccourcir les pattes de la photorésistance à 2 cm chacune.
+[Cut the LDR picture][iot-device-build-05.jpg]
 
-* Fold the LDR leds to cross 10 holes (2.54cm)
-[Folded LDR picture][iot-device-build-06.jpg]
+* Plier les pattes de la photorésistance pour traverser 10 trous (2.54 cm).
+[Fold the LDR picture][iot-device-build-06.jpg]
 
-* Place the LDR between C1 and M1
-[Placed LDR picture][iot-device-build-07.jpg]
+* Placer la photorésistance entre C1 et M1.
+[Place the LDR picture][iot-device-build-07.jpg]
 
-* Place the ESP breakout in order to have the AD0 pin in C2 and
-the 3.3V pin in M2
-[Placed ESP picture][iot-device-build-08.jpg]
+* Placer le PCB de l'ESP de façon à placer AD0 en C2 et 3.3V dans M2.
+[Place the ESP picture][iot-device-build-08.jpg]
 
-* Press gently and keep the LDR outside !!! ;)
+* Presser doucement et garder la photorésistance à l'extérieur !!! ;)
 ![Build completed][iot-device-build-09.jpg]
-[Full size][iot-device-build-09.jpg]
+[Pleine taille][iot-device-build-09.jpg]
 
-Congratulations !!! That's ok for the hardware !
+Félicitations !!! C'est terminé pour le matériel !
 
-## Software
+## Logiciel
 
-### IDE, cross-compiler and upload
+### Interface de développement, compilateur croisé et téléversement
 
-We will need the software to write our code, the IDE, the software to compile
-our code which depends both on the combination computer/OS and targetted
-micro-controller, the cross-compiler, and the software to upload the compiled
-code to the device.
+Nous allons avoir besoin d'un logiciel pour écrire notre code, l'interface de
+développement (IDE), le logiciel pour compiler notre code dépendant à la fois du
+couple ordinateur/système d'exploitation et du micro-controlleur visé, le
+compilateur croisé, et du logiciel pour téléverser le code compilé dans le
+périphérique.
 
-There are several IDE and toolchains available to compile C/C++ code for
-microcontrolers. I chose to use the very simple but sufficient IDE provided by
-the [Arduino][Arduino] project. It is generic, but can automatically download
-the cross-compiler that runs on your computer to compile for your target device
-and it can also download and include a lot of helper libraries from internet
-repositories.
+Il existe plusieurs interface et chaînes de compilation disponibles pour
+compiler du code C/C++ pour des micro-controlleurs. J'ai choisi d'utiliser l'IDE
+très simple mais suffisante fournie par le projet [Arduino][Arduino]. Elle est
+générique mais peut automatiquement télécharger la chaîne de compilation
+nécessaire pour un micro-controlleur et compatible avec votre ordinateur, elle
+peut également télécharger et inclure de nombreuses bibliothèques depuis des
+dépôts sur internet.
 
-You can either go the the [Arduino][Arduino] website to download the IDE[^1] or
-click on the direct download links :
+Vous pouvez soit aller sur le site [Arduino][Arduino] pour télécharger
+l'IDE[^1], soit cliquer sur les liens de téléchargement direct :
 
 * [Linux 64bits][ArduinoIDE-Linux64]
 * [Linux 32bits][ArduinoIDE-Linux32]
 * [Windows][ArduinoIDE-Windows]
 * [MacOS][ArduinoIDE-MacOS]
 
-Extract the archive in a folder anywhere in your filesystem. The IDE will be
-executed from this folder and all your files will reside inside this folder. The
-folder can be moved anywhere anytime.
+Extraire l'archive dans un répertoire, n'importe où dans votre système de
+fichiers. l'interface sera exécutée depuis ce répertoire et tous vos fichiers
+s'ytrouveront aussi. Le répertoire pourra être déplacé n'importe où, n'importe
+quand.
 
-### Libraries, code sample and IDE Customization
+### Bibliothèques, extraits de code et personnalisation de l'interface
 
-The IDE can be customized to be portable and have everything in a single folder
-(the IDE itself, the configuration, the toolchains for the devices and your
-code). We only need to create a *portable* subfolder that will host all your
-code, all your libraries and your IDE configuration file (like some kind of home
-directory). 
+L'interface peut être personnalisée pour devenir déplaçable et embarquer tout
+dans un seul répertoire (l'interface elle-même, la configuration, la chaîne de
+compilation pour les périphériques et votre code). Pour cela, nous devons
+uniquement créer un sous-répertoire *portable* qui contiendra tout notre code,
+toutes les bibliothèques et les fichiers de configuration (un peu comme un
+répertoire personnel).
 
-I prepared one and created a configuration file with the external repositories.
-As said previously, a cross-compiler toolchain needs to be installed. As the
-binaries depend on your computer and OS, I can only preconfigure the repository
-from which you'll have to download and install them by youself. A Redis helper
-library and an empty code template are also included in the customization file.
+J'en ai préparé un et ai créé un fichier de configuration avec les dépôts
+externes. Comme indiqué précédemment, la chaîne de compilation doit être
+installes. Comme les binaires dépendent de votre ordinateur et de votre système
+d'exploitation, je ne peux que préconfigurer le dépôt à partir duquel vous
+devrez les télécharger et les installer par vous-même. Une bibliothèque de
+connection à Redis et un modèle de code sont également inclus dans le fichier de
+configuration.
 
-The file will also add the full source code of this blog in your sketchbook.
+Le fichier ajoutera aussi le code source complet de cet article de blog.
 
-* Download the [portable archive][PortableArchive]
+* Télécharger l'[archive de personnalisation][PortableArchive]
 
-* Extract the archive at the top level of your IDE folder (or in the
-  *Contents/java* subfolder for MacOSX users).
+* Extraire l'archive à la racine du répertoire d'installation de l'interface (ou
+  dans le sous-répertoire *Contents/java* pour les utilisateurs de MacOS).
 
-* Start the IDE
+* Démarrer l'interface
 
-* Go to the *Tools/Board/Board manager menu* 
-![Boardmanager menu][arduino-ide-boardsmanager-00.png]
+* Aller dans le menu *Tools/Board/Board manager* (éventuellement Françisé)
+![menu du gestionnaire de cartes][arduino-ide-boardsmanager-00.png]
 
-* Search for *ESP8266* (there should be one found from the preconfigured
-  repository), **select** it in the list and install it.
-![Boardmanager menu][arduino-ide-boardsmanager-01.png]
+* Chercher *ESP8266* (il devrait y en avoir un trouvé depuis les dépôts
+  préconfigurés). le **Selectionner** dans la liste et l'installer.
+![Menu du gestionnaire de cartes][arduino-ide-boardsmanager-01.png]
 
-* Close the dialog, and select the *Tools/Board/NodeMCU 1.0 (ESP-12E Module)* in
-  the menu
-![Boardmanager menu][arduino-ide-boardsmanager-03.png]
+* Refermer la boîte de dialogue et sélectionner *NodeMCU 1.0 (ESP-12E Module)*
+  dans le menu *Tools/Board* 
+![Menu du gestionnaire de cartes][arduino-ide-boardsmanager-03.png]
 
-You're done with the IDE installation and configuration.
+C'en est terminé avec l'installation et la configuration de l'interface.
 
 ### Redis
 
-You need a Redis database, it can either be the community or the enterprise
-edition. This blog post will not tell you how to implement the *sentinel*
-protocol, nor the *cluster API*, respectively needed for high-availability and
-for clustering in the community edition. These two protocols are not needed for
-high-availability and clustering in the enterprise edition, these features will
-be automatically enabled if using the enterprise edition.
+Vous aurez besoin d'une base de données Redis, il peut s'agit de l'édition
+communautaire ou de l'édition entreprise. Cet article de blog ne traitera pas de
+l'implémentation du protocole des *sentinelles*, ni de celui du *cluster*,
+nécessaire respectivement pour la haute-disponibilité et pour la répartition des
+données dans l'édition communautaire. Ces deux protocoles ne sont pas
+nécessaires ni pour la haute-disponibilité, ni pour la répartition dans
+l'édition entreprise, ces fonctionnalités seront automatiquement activées dans
+l'édition entreprise.
 
-Given that the enterprise edition is seen as a single Redis instance by the
-applications, regardless if there is sharding and/or replication behind, and in
-order to keep this post not too long, I'll describe the Redis community
-installation, without clustering or high-availability, and use it.
+Étant donné que l'édition entreprise est vue comme une simple instance Redis par
+les applications, indépendemment de l'activation de la répartition ou de la
+réplication, et afin de garder cet article d'une taille raisonnable, je décrirai
+l'installation et l'utilisation de l'édition communautaire, sans répartition et
+sans réplication.
 
-To avoid admin permissions requirement, to keep Redis portable and to master the
-used version, I will not use the pre-packaged redis server available in most of
-the Linux distributions repositories, but I'll download, compile, configure and
-run the Redis version available on the [official Redis community
-homepage][RedisIO] .
+Pour éviter d'avoir besoin des droits d'administration, pour garder
+l'installation de Redis déplaçable et pour maîtriser les versions utilisées, je
+n'utiliserai pas les paquetages *redis-server* disponible dans la plupart des
+distributions Linux, mais je vais télécharger, compiler, configurer et
+exécuter la version de Redis disponible sur le [site officiel de Redis
+communautaire][RedisIO].
 
-Download the source code from the following link [Redis source][RedisTGZ] and
-unzip it in a folder. Open a terminal inside this folder and type `make`. Once
-the compilation is complete, run Redis from here without installing it in your
-system, by typing `./src/redis-server --protected-mode no` (without turning off
-the protection, you will only be able to connect from localhost).
+Télécharger le code source depuis le lien suivant [Source Redis][RedisTGZ] et
+l'extraire dans un répertoire. Ouvrir un terminal dans ce répertoire et saisir
+`make`. Une fois la compilation terminée, exécuter Redis à partir du même
+répertoire, en saisissant `./src/redis-server --protected-mode no` (la
+protection limite les connexions entrantes à l'ordinateur local).
 
-You're done with Redis. Amazing, isn't it, only four commands (download,
-extract, build and execute) and you have an up-and-running portable
-installation.
+C'est terminé en ce qui concerne Redis. Epoustouflant, n'est-ce pas ? Seulement
+quatre commandes (téléchargement, extraction, compilation et exécution) et vous
+disposez d'une installation déplaçable démarrée.
 
-## Micro controler application
+## Application sur le micro-controlleur
 
-Now, it is time to start coding!
+Il est désormais temps de commencer à coder !
 
-### Create a new application
+### Création d'une nouvelle application
 
 You should have an empty application skeleton in your IDE when you start it.
 Basically, there are two mandatory functions : `void setup()` and `void loop()`.
@@ -431,7 +446,7 @@ reply at each loop iteration and to consume it. Just before the end of the
 Compile, upload and observe
 
 ![Result in Arduino console][serial-monitor.png]
-[Full size][serial-monitor.png]
+[Pleine taille][serial-monitor.png]
 
 ### Push notification with a PUBLISH
 
@@ -454,7 +469,7 @@ decoder plugin][EspExceptionDecoder] in the IDE.
 If you want to see what happens on your Redis server, you can monitor it using
 the `src/redis-cli -h <IP> -p <PORT>` tool and typing `MONITOR`.
 ![Result in Redis monitor][redis-monitor.png]
-[Full size][redis-monitor.png]
+[Pleine taille][redis-monitor.png]
 
 # Improvements
 
@@ -481,36 +496,36 @@ redis command to add some security to your database.
 You can implement a library to encode commands in the [REdis Serialization
 Protocol][RESP] and another one to manage the redis connection, with pipelining.
 
-# Materials and Links
+# Supports et liens
 
-| Link | Description |
+| Lien | Description |
 |---|---|
 | [Full source][Sketch] | Full source code without the publish |
-| [Video] | Demonstration screencast recording |
-| [06/09/2017: Redis IOT meetup in Tel Aviv, Israël][MeetupTLV] | at [RedisLabs Tel Aviv][RedisLabsTLV] |
-| [10/10/2017: Redis IOT meetup in Paris, France][MeetupParis] | at [SOAT] |
-| [17/10/2017: Redis IOT meetup in Toulouse, France][MeetupToulouse] | at [Étincelle coworking Toulouse][EtincelleTLS] |
-| [07/11/2017: Redis IOT meetup in Lille, France][MeetupLille] | at [Zenika Lille][ZenikaLille] |
-| [14/11/2017: Redis IOT meetup in Bordeaux, France][MeetupBordeaux] | at [Le Wagon Bordeaux][LeWagonBDX] |
-| [21/11/2017: Redis IOT meetup in Lyon, France][MeetupLyon] | at [La cordée coworking][LaCordee] |
-| [Redis France][MeetupFrance] | Redis meetup group in France |
+| [Video] | Enregistrement vidéo de la démonstration |
+| [06/09/2017: Meetup Redis IOT à Tel Aviv, Israël][MeetupTLV] | chez [RedisLabs Tel Aviv][RedisLabsTLV] |
+| [10/10/2017: Meetup Redis IOT à Paris, France][MeetupParis] | chez [SOAT] |
+| [17/10/2017: Meetup Redis IOT à Toulouse, France][MeetupToulouse] | chez [Étincelle coworking Toulouse][EtincelleTLS] |
+| [07/11/2017: Meetup Redis IOT à Lille, France][MeetupLille] | chez [Zenika Lille][ZenikaLille] |
+| [14/11/2017: Meetup Redis IOT à Bordeaux, France][MeetupBordeaux] | chez [Le Wagon Bordeaux][LeWagonBDX] |
+| [21/11/2017: Meetup Redis IOT à Lyon, France][MeetupLyon] | chez [La cordée coworking][LaCordee] |
+| [Redis France][MeetupFrance] | Groupe meetup sur Redis en France |
 
-# Footnotes
+# Notes de bas de page
 
-[Video]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
-[MeetupParis]: https://www.meetup.com/fr-FR/Paris-Redis-Meetup/events/242249391/ "Meetup on this topic in Paris,France"
-[MeetupLille]: https://www.meetup.com/fr-FR/Redis-Lille/events/242029096/ "Meetup on this topic in Lille,France"
-[MeetupToulouse]: https://www.meetup.com/fr-FR/Redis-Toulouse/events/242029119/ "Meetup on this topic in Toulouse,France"
-[MeetupBordeaux]: https://www.meetup.com/fr-FR/Redis-Bordeaux/events/242029157/ "Meetup on this topic in Bordeaux,France"
-[MeetupLyon]: https://www.meetup.com/fr-FR/Redis-Lyon/events/242029145/ "Meetup on this topic in Lyon,France"
+[Video]: https://youtu.be/kK4GxAwJKD0 "Enregistrement vidéo de la démonstration"
+[MeetupParis]: https://www.meetup.com/fr-FR/Paris-Redis-Meetup/events/242249391/ "Meetup sur le sujet à Paris, France"
+[MeetupLille]: https://www.meetup.com/fr-FR/Redis-Lille/events/242029096/ "Meetup sur le sujet à Lille, France"
+[MeetupToulouse]: https://www.meetup.com/fr-FR/Redis-Toulouse/events/242029119/ "Meetup sur le sujet à Toulouse, France"
+[MeetupBordeaux]: https://www.meetup.com/fr-FR/Redis-Bordeaux/events/242029157/ "Meetup sur le sujet à Bordeaux, France"
+[MeetupLyon]: https://www.meetup.com/fr-FR/Redis-Lyon/events/242029145/ "Meetup sur le sujet à Lyon, France"
 [MeetupFrance]: https://www.meetup.com/fr-FR/Redis-France/ "Meetup sur Redis en France"
-[MeetupTLV]: https://www.meetup.com/fr-FR/Tel-Aviv-Redis-Meetup/events/242587656/ "Meetup on this topic à Tel Aviv, Israël"
-[SOAT]: http://www.soat.fr "Corporate website of SOAT"
-[ZenikaLille]: https://zenika.com "Corporate website of Zenika"
-[EtincelleTLS]: http://www.coworking-toulouse.com/ "Corporate website of Étincelle coworking in Toulouse"
-[LeWagonBDX]: https://www.lewagon.com/fr/bordeaux "Corporate website of Le Wagon in Bordeaux"
-[LaCordee]: https://www.la-cordee.net/ "Corporate website of La Cordée"
-[RedisLabsTLV]: http://www.redislabs.com/ "Corporate website of RedisLabs"
+[MeetupTLV]: https://www.meetup.com/fr-FR/Tel-Aviv-Redis-Meetup/events/242587656/ "Meetup sur le sujet à Tel Aviv, Israël"
+[SOAT]: http://www.soat.fr "Site officiel de SOAT"
+[ZenikaLille]: https://zenika.com "Site officiel de Zenika"
+[EtincelleTLS]: http://www.coworking-toulouse.com/ "Site officiel d'Étincelle coworking à Toulouse"
+[LeWagonBDX]: https://www.lewagon.com/fr/bordeaux "Site officiel du Wagon à Bordeaux"
+[LaCordee]: https://www.la-cordee.net/ "Site officiel de la Cordée"
+[RedisLabsTLV]: http://www.redislabs.com/ "Site officiel de RedisLabs"
 [iot-device-build-01.jpg]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/iot-device-build-01.jpg "IoT device build : Furnitures"
 [iot-device-build-02.jpg]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/iot-device-build-02.jpg "IoT device build : Cut the resistor"
 [iot-device-build-03.jpg]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/iot-device-build-03.jpg "IoT device build : Fold the resistor"
