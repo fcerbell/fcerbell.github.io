@@ -231,7 +231,7 @@ In the `setup` function, initialize the serial console, wait for its
 initialization (only useful for some Arduino such as the Yun, but
 without drawback on others).
 
-``` c
+{% highlight c %}
 void setup() {
   // Serial console initialization for debugging
   Serial.begin(115200);
@@ -239,17 +239,17 @@ void setup() {
   while (!Serial);
   Serial.println("Serial initialized.");
 }
-```
+{% endhighlight %}
 In the `loop` function, print the sensor's value, from the
 Analog-Ditial-Converter, to the serial console.
 
 
-``` c
+{% highlight c %}
 void loop() {
     Serial.print("Sensor value (0-1024) : ");
     Serial.println(analogRead(0));
 }
-```
+{% endhighlight %}
 
 Test your sketch with the *tick* icon in the toolbar, or from the menu *Sketch >
 Verify/Compile* or with the keyboard shortcut *Ctrl+R*. 
@@ -268,7 +268,7 @@ function needs to be executed as fast as possible, without blocking,
 this is the main event loop. It is better to initialize a millisecond
 timestamp at each print and to only read a new value after a timeout :
 
-``` c
+{% highlight c %}
 //  your network SSID (name)
 #define WIFI_SSID "YourWifiNetwork"
 #define WIFI_PASS "YourWifiNetworkPassword"
@@ -276,9 +276,9 @@ timestamp at each print and to only read a new value after a timeout :
 #include <ESP8266WiFi.h>
 
 unsigned long lastSensorRead=0;
-```
+{% endhighlight %}
 
-``` c
+{% highlight c %}
 void loop() {
   if ((millis() - lastSensorRead)>5000) {
     lastSensorRead = millis();
@@ -286,7 +286,7 @@ void loop() {
     Serial.println(analogRead(0));
   }
 }
-```
+{% endhighlight %}
 
 Compile, upload and observe... It is better, one value every 5 seconds.
 
@@ -301,7 +301,7 @@ blinking during the WIFI connection, to have an hardware status
 feedback, and resetting lines (commented) in case of unexplainable
 issue.
 
-``` c
+{% highlight c %}
 //  your network SSID (name)
 #define WIFI_SSID "YourWifiNetwork"
 #define WIFI_PASS "YourWifiNetworkPassword"
@@ -344,7 +344,7 @@ void setup() {
   Serial.print("DNS1 : ");
   Serial.println(WiFi.dnsIP(1));
 }
-```
+{% endhighlight %}
 
 Compile, upload and watch. 
 
@@ -363,7 +363,7 @@ read, if not we open it.
 Define your Redis connection, add a `WiFiClient` object and change your `loop`
 function :
 
-``` c
+{% highlight c %}
 //  your network SSID (name)
 #define WIFI_SSID "Freebox-AEA6A1"
 #define WIFI_PASS "adherebit-commend96-sonatio#!-calidior26"
@@ -378,9 +378,9 @@ unsigned long lastSensorRead=0;
 WiFiClient redis;
 unsigned long lastValue=0;
 
-```
+{% endhighlight %}
 
-``` c
+{% highlight c %}
 void loop() {
   if ((millis() - lastSensorRead)>5000) {
     lastSensorRead = millis();
@@ -397,7 +397,7 @@ void loop() {
         Serial.println("OK");
     }
 }
-```
+{% endhighlight %}
 
 ### Send Redis commands
 
@@ -407,7 +407,7 @@ concatenation of the string "v:" and the the device's MAC address.
 
 Add this code immediately after the connection test.
 
-``` c
+{% highlight c %}
     // 10 is the base
     ltoa(lastValue,szValue,10);
     redis.print(
@@ -416,7 +416,7 @@ Add this code immediately after the connection test.
       +"$19\r\n"+"v:"+WiFi.macAddress().c_str()+"\r\n"
       +"$"+strlen(szValue)+"\r\n"+szValue+"\r\n"
     );
-```
+{% endhighlight %}
 
 I used a C++ `String` to make the code shorter. 
 
@@ -429,12 +429,12 @@ Redis server replies very fast, it is a bad practice. I chose to test for a
 reply at each loop iteration and to consume it. Just before the end of the
 `loop`.
 
-``` c
+{% highlight c %}
   // If there is an answer from the Redis server available
   // Consume Redis server replies from the buffer and discard them
   while (redis.available() != 0)
     Serial.print((char)redis.read());
-```
+{% endhighlight %}
 
 Compile, upload and observe
 

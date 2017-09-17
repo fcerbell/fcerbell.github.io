@@ -193,7 +193,7 @@ HMSET "routes:2BEGOKGD" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "EGO" SRCAIRPORT
 
 ### Primary indices
 
-Having data is fine, but I want to wuery the data, and to search
+Having data is fine, but I want to query the data, and to search
 them for a flight or an airport. So, I need some indices. Even
 if it would be possible to use the (evil) `key` command to
 get all the airport, airlines or route keys, I preferred to
@@ -283,7 +283,7 @@ HMSET "routes:2BEGOKGD" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "EGO" SRCAIRPORT
 
 Primary indices are perfect to get the list of specific keys,
 but it is quite useless. I'd like to find specific values
-depending on fun fields. Here come the secondary indices.
+depending on fields. Here come the secondary indices.
 
 Given that the airports have geographic location data, I wanted
 to play with these. I don't want to learn and remember the
@@ -487,7 +487,7 @@ First of all, I'll start `redis-cli` to connect to my Redis database.  As I
 use the enterprise edition, I'll use the endpoint provided by it for my
 database.
 
-How to get the distance in KM between Paris Charles de Gaulle (IATA:CDG)and
+How to get the distance in KM between Paris Charles de Gaulle (IATA:CDG) and
 San Francisco International (IATA:SFO) airports ? Given that both are
 commercial and internationals, thay have both an IATA code, thus I'll use tha
 geo index by IATA :
@@ -551,7 +551,7 @@ know where. I am limited to 50 km around my takeoff airport. Let's ask Redis:
 ```
 
 Ok, now, I'm searching for vacation place, but I don't like to spend too much
-time in a place and I want to limit my search to 300 km, and only commercial
+time in a plane and I want to limit my search to 300 km, and only commercial
 airports (those with an IATA code):
 
 ```
@@ -580,7 +580,7 @@ airports (those with an IATA code):
 
 Ok, I choose to go to Luxembourg (LUX), which is only 273 km far away, now I
 need to find a flight and I love to fly with AirFrance (AF). Is there a direct
-flight ?
+flight ? Once again, Redis is my friend...
 
 ```
 192.168.56.101:12928> HGETALL routes:AFCDGLUX
@@ -605,8 +605,6 @@ flight ?
 ```
 
 Sorry, guys, I need to pack my stuff, I'll send you a postcard...
-
-# Footnotes
 
 [OpenFlights]: http://openflights.org/
 [Redis community edition]: http://redis.io

@@ -250,7 +250,7 @@ Dans la fonction `setup`, initialiser la console série et attendre que
 ce soit fait (uniquement utile pour certains modèles d'Arduino, tels
 que le Yun, mais sans incidence pour les autres).
 
-``` c
+{% highlight c %}
 void setup() {
   // Serial console initialization for debugging
   Serial.begin(115200);
@@ -258,17 +258,17 @@ void setup() {
   while (!Serial);
   Serial.println("Serial initialized.");
 }
-```
+{% endhighlight %}
 In the `loop` function, print the sensor's value, from the
 Analog-Ditial-Converter, to the serial console.
 
 
-``` c
+{% highlight c %}
 void loop() {
     Serial.print("Sensor value (0-1024) : ");
     Serial.println(analogRead(0));
 }
-```
+{% endhighlight %}
 
 Tester le code avec l'icone *Vérifier* dans la barre d'outils, depuis
 le menu *Sketch > Verify/Compile* ou avec le raccourcis clavier
@@ -293,11 +293,11 @@ que possible, sans blocage, c'est la boucle principale de gestion des
 l'heure de la dernière lecture à chaque affichage et de ne lire une
 nouvelle valeur qu'après un certain délai.
 
-``` c
+{% highlight c %}
 unsigned long lastSensorRead=0;
-```
+{% endhighlight %}
 
-``` c
+{% highlight c %}
 void loop() {
   if ((millis() - lastSensorRead)>5000) {
     lastSensorRead = millis();
@@ -305,7 +305,7 @@ void loop() {
     Serial.println(analogRead(0));
   }
 }
-```
+{% endhighlight %}
 
 Compiler, téléverser et observer... C'est mieux, seulement une valeur
 toutes les 5 secondes.
@@ -320,7 +320,7 @@ clignotement de la LED pendant la phase de connexion pour avoir un
 retour d'état matériel, ainsi que des lignes de réinitialisation
 commentées en cas de problème inexplicable.
 
-``` c
+{% highlight c %}
 //  your network SSID (name)
 #define WIFI_SSID "YourWifiNetwork"
 #define WIFI_PASS "YourWifiNetworkPassword"
@@ -363,7 +363,7 @@ void setup() {
   Serial.print("DNS1 : ");
   Serial.println(WiFi.dnsIP(1));
 }
-```
+{% endhighlight %}
 
 Compiler, Téléverser et observer...
 
@@ -384,7 +384,7 @@ chaque lecture de la mesure. Si nous ne l'avons pas, nous l'ouvrons.
 Définir la connexion Redis, ajouter un objet `WiFiClient` et modifier
 la fonction `loop` :
 
-``` c
+{% highlight c %}
 //  your network SSID (name)
 #define WIFI_SSID "Freebox-AEA6A1"
 #define WIFI_PASS "adherebit-commend96-sonatio#!-calidior26"
@@ -399,9 +399,9 @@ unsigned long lastSensorRead=0;
 WiFiClient redis;
 unsigned long lastValue=0;
 
-```
+{% endhighlight %}
 
-``` c
+{% highlight c %}
 void loop() {
   if ((millis() - lastSensorRead)>5000) {
     lastSensorRead = millis();
@@ -418,7 +418,7 @@ void loop() {
         Serial.println("OK");
     }
 }
-```
+{% endhighlight %}
 
 ### Envoi de commandes à Redis
 
@@ -429,7 +429,7 @@ l'adresse MAC du périphérique.
 
 Ajouter ce code immédiatement après le test de connexion.
 
-``` c
+{% highlight c %}
     // 10 is the base
     ltoa(lastValue,szValue,10);
     redis.print(
@@ -438,7 +438,7 @@ Ajouter ce code immédiatement après le test de connexion.
       +"$19\r\n"+"v:"+WiFi.macAddress().c_str()+"\r\n"
       +"$"+strlen(szValue)+"\r\n"+szValue+"\r\n"
     );
-```
+{% endhighlight %}
 
 J'ai utilisé une `String` C++ pour rendre le code plus compact.
 
@@ -454,12 +454,12 @@ pratique. J'ai choisi de tester la présence d'une éventuelle réponse à
 chaque tour de boucle et de la consommer, juste avant la fin de la
 fonction `loop`.
 
-``` c
+{% highlight c %}
   // If there is an answer from the Redis server available
   // Consume Redis server replies from the buffer and discard them
   while (redis.available() != 0)
     Serial.print((char)redis.read());
-```
+{% endhighlight %}
 
 Compiler, téléverser et observer le résultat.
 

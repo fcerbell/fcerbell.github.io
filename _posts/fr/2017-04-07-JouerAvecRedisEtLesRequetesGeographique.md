@@ -18,16 +18,8 @@ géographiques puissantes et intéressantes. Cet article décrit un moyen de cha
 aériennes et des routes avec des indexes dans Redis^e Pack (édition pour les entreprises anciennement connue sous le nom de RLEC)
 et comment les requêter par distance.
 
-Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
-imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
-
-
 * TOC
 {:toc}
-
-# Video
-
-<center><iframe width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></center>
 
 # Pré-requis
 
@@ -53,27 +45,28 @@ Il vous faut donc télécharger au moins trois fichiers depuis
 
 # Chargement massif
 
-These files are clean CSV files. There are several way to load
-them, but I chose to convert them in Redis operations using one
-of my favorite tools, *sed*. It would also be possible to write
-a small application that reads the files and load them. To be
-efficient, a bulk load has to pipeline the commands and to be
-asynchronous. In our case, the size is small and I won't care,
-maybe later, in another post, with more data to load.
+Ces fichiers sont des fichiers CSV propres. Il existe de nombreux moyens de les
+charger, mais j'ai choisi de les convertir en commandes Redis grâce à un de mes
+outils favoris, *sed*. Il serait aussi possible d'écrire une petite application
+qui lise les fichiers et les charge. Pour être efficace, un chargement massif
+doit placer les commandes dans un *pipeline* et doit soumettre de pipeline
+(traitement par lots) de manière asynchrone. Dans notre cas, la taille des
+fichiers étant petite je ne m'inquiète pas de cela ; peut-être plus tard dans un
+autre article, avec plus de données à charger.
 
-## Data conversion
+## Conversion des données
 
-**I could be a lot more efficient by parsing only once each file
-and generate the indices commands together with the data, but I
-wanted to be more readable than performant.**
+**Je pourrais être beaucoup plus efficace en ne parcourant les fichiers qu'une
+seule fois et en générant les commandes d'index en même temps que les commandes
+de données, mais j'ai privilégié la lisibilité à la performance**
 
-### Data
+### Données
 
-First of all, for each file, I created a small *sed* script to
-convert the file in Redis operations. These three scripts
-replace the `null` value with an empty string, remove the
-escaped double quotes. The script for the routes also creates an
-unique id for each route (*airline/departure/destination*).
+En premier lieu, pour chaque fichier, je crée un petit script *sed* pour
+convertir le fichier en opérations Redis. Ces trois scripts remplacent la valeur
+`null` par une chaîne vide, retirent les double apostrophes protégées. Le script
+pour les routes crée aussi un identifiant unique pour chaque route
+(*airline/departure/destination*).
 
 **airlines.sed**
 
@@ -95,7 +88,7 @@ s/","/" COUNTRY "/
 s/","/" ACTIVE "/
 ```
 
-`sed -f airlines.sed airlines.dat  | head` generates:
+`sed -f airlines.sed airlines.dat  | head` genère:
 
 ```
 HMSET "airlines:-1" NAME "Unknown" ALIAS "" IATA "-" ICAO "N/A" CALLSIGN "" COUNTRY "" ACTIVE "Y"
@@ -136,7 +129,7 @@ s/","/" TYPE "/
 s/","/" SOURCE "/
 ```
 
-`sed -f airports.sed airports-extended.dat | head` generates:
+`sed -f airports.sed airports-extended.dat | head` genère:
 
 ```
 HMSET "airports:1" NAME "Goroka Airport" CITY "Goroka" COUNTRY "Papua New Guinea" IATA "GKA" ICAO "AYGA" LATITUDE "-6.081689834590001" LONGITUDE "145.391998291" ALTITUDE "5282,10" TIMEZONE "U" DST "Pacific/Port_Moresby" TZDB "airport" TYPE "OurAirports"
@@ -179,7 +172,7 @@ s/,/" EQUIPEMENT "/
 s/\r/"&/
 ```
 
-`sed -f routes.sed routes.dat | head` generates:
+`sed -f routes.sed routes.dat | head` genère:
 
 ```
 HMSET "routes:2BAERKZN" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "AER" SRCAIRPORTID "2965" DSTAIRPORT "KZN" DSTAIRPORTID "2990" CODESHARE "" STOPS "0" EQUIPEMENT "CR2"
@@ -194,19 +187,19 @@ HMSET "routes:2BDMEUUA" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "DME" SRCAIRPORT
 HMSET "routes:2BEGOKGD" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "EGO" SRCAIRPORTID "6156" DSTAIRPORT "KGD" DSTAIRPORTID "2952" CODESHARE "" STOPS "0" EQUIPEMENT "CR2"
 ```
 
-### Primary indices
+### Index primaires
 
-Having data is fine, but I want to wuery the data, and to search
-them for a flight or an airport. So, I need some indices. Even
-if it would be possible to use the (evil) `key` command to
-get all the airport, airlines or route keys, I preferred to
-create a primary index, using a simple `set` data type, for each
-file. You can notice than Iused `{` and `}` to store all the
-indices in the same redis shard. Thus, I'll be able to execute
-some commands such as `*DIFF` between indexes. It is a case by
-case design choice.
+Disposer des données, c'est bien, mais j'aimerai pouvoir les requêter et y
+chercher un vol ou un aéroport. J'ai donc besoin d'index. Même s'il est possible
+d'utiliser la commande `key` (diabolique et interdite en production) pour
+récupérer la liste des aéroports, des lignes ou des routes, je préfère créer un
+index primaire en utilisant un ensemble Redis (`set`) pour chaque fichier. Vous
+pouvez remarquer que j'ai utilisé `{` et `}` pour enregistrer tous les index
+dans la même instance Redis. Ainsi, je serai en mesure d'exécuter certaines
+commandes telles que la famille des `*DIFF` entre les index. C'est une
+conception propre à mon cas d'utilisation.
 
-I used the following *sed* scripts:
+J'ai utilisé les scripts *sed* suivants :
 
 **airlines_idx.sed**
 
@@ -215,7 +208,7 @@ I used the following *sed* scripts:
 s/^\([^,]*\).*/SADD "{idx}airlines_Id" "\1"/
 ```
 
-`sed -f airlines_idx.sed airlines.dat | head` generates:
+`sed -f airlines_idx.sed airlines.dat | head` produit :
 
 ```
 SADD "{idx}airlines_Id" "-1"
@@ -237,7 +230,7 @@ SADD "{idx}airlines_Id" "9"
 s/^\([^,]*\).*/SADD "{idx}airports_Id" "\1"/
 ```
 
-`sed -f airports_idx.sed airports-extended.dat | head` generates:
+`sed -f airports_idx.sed airports-extended.dat | head` produit :
 
 ```
 SADD "{idx}airports_Id" "1"
@@ -267,7 +260,7 @@ s/\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\
 s/^\([^,]*\).*/SADD "{idx}routes_Id" "\1"/
 ```
 
-`sed -f routes.sed routes.dat | head` generates:
+`sed -f routes.sed routes.dat | head` génère :
 
 ```
 HMSET "routes:2BAERKZN" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "AER" SRCAIRPORTID "2965" DSTAIRPORT "KZN" DSTAIRPORTID "2990" CODESHARE "" STOPS "0" EQUIPEMENT "CR2"
@@ -282,33 +275,31 @@ HMSET "routes:2BDMEUUA" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "DME" SRCAIRPORT
 HMSET "routes:2BEGOKGD" AIRLINE "2B" AIRLINEID "410" SRCAIRPORT "EGO" SRCAIRPORTID "6156" DSTAIRPORT "KGD" DSTAIRPORTID "2952" CODESHARE "" STOPS "0" EQUIPEMENT "CR2"
 ```
 
-### Secondary indices
+### Index secondaires
 
-Primary indices are perfect to get the list of specific keys,
-but it is quite useless. I'd like to find specific values
-depending on fun fields. Here come the secondary indices.
+Les index primaires sont parfait pour obtenir la liste de certaines clés, mais
+c'est relativement inutile. J'aimerais pouvoir trouver des valeurs spécifiques
+en fonction de certain champs. D'où les index secondaires.
 
-Given that the airports have geographic location data, I wanted
-to play with these. I don't want to learn and remember the
-airport's technical ids, but I am quite used to use IATA and
-ICAO (OACI here, in France) codes.
+Étant donné que les aéroports disposent de données de localisation
+géographiques, j'ai voulu jouer avec. Je ne souhaite pas apprendre et retenir
+les identifiants techniques des aéroports, mais je suis relativement habitué aux
+codes IATA et OACI.
 
-So, I made *sed* scripts to index the IATA codes with their GPS
-position and the ICAO codes with their GPS position. I naturally
-chose a GeoIndex (which is internally a `set`). Note that the
-provided latitude and longitude values are not in the expected
-order.
+J'ai donc écrit un script *sed* pour indexer les codes IATA avec leur position
+GPS et les codes OACI avec leur position GPS. J'ai naturellement choisi la
+structure `GeoIndex` (qui est un `set` en interne). Remarquez que la latitude et
+la longitude ne sont pas dans l'ordre attendu.
 
-So, I should be able to query the distance between two
-airports... Not exactly, I can only run this query if both
-airports have an IATA code or if both have an ICAO code, but
-some of them have only one and an ICAO-only airport will not be
-in the GeoByIATA index. I also created a Geo index by airport
-technical ID, which will be a fallback. And I need to create
-also two more indices to find technical IDs by IATA or by ICAO
-code.
+Je devrais être capable de requêter la distance entre deux aéroports... Pas
+exactement, je ne peux exécuter cette requête qu'entre deux aéroports avec un
+code IATA ou entre deux aéroports avec un code OACI, mais certains n'en ont
+qu'un seul et un aéroport avec uniquement un code OACI ne se trouvera pas dans
+l'index GeoByIATA. J'ai créé un index par identifiant technique des aéroports,
+ce qui sera une solution de repli. J'ai aussi besoin de créer deux index
+supplémentaires pour trouver les identifiants techniques par IATA et par OACI.
 
-Here are the scripts:
+Voici les scripts :
 
 **airports_GeoByIATA.sed**
 
@@ -323,7 +314,7 @@ s/^.*-90,0.*$//g
 s/^\([^,]*\),"\([^"]*\)","\([^"]*\)","\([^"]*\)","\([^"]*\)","\([^"]*\)",\([^,]*\),\([^,]*\),\([^,]*\),.*/GEOADD "{idx}airports_GeoByIATA" "\8" "\7" "\5"/
 ```
 
-`sed -f airports_GeoByIATA.sed airports-extended.dat | head` generates:
+`sed -f airports_GeoByIATA.sed airports-extended.dat | head` génère :
 
 ```
 GEOADD "{idx}airports_GeoByIATA" "145.391998291" "-6.081689834590001" "GKA"
@@ -351,7 +342,7 @@ s/^.*-90,0.*$//g
 s/^\([^,]*\),"\([^"]*\)","\([^"]*\)","\([^"]*\)","\([^"]*\)","\([^"]*\)",\([^,]*\),\([^,]*\),\([^,]*\),.*/GEOADD "{idx}airports_GeoByICAO" "\8" "\7" "\6"/
 ```
 
-`sed -f airports_GeoByICAO.sed airports-extended.dat | head` generates:
+`sed -f airports_GeoByICAO.sed airports-extended.dat | head` génère :
 
 ```
 GEOADD "{idx}airports_GeoByICAO" "145.391998291" "-6.081689834590001" "AYGA"
@@ -379,7 +370,7 @@ s/^.*-90,0.*$//g
 s/^\([^,]*\),"\([^"]*\)","\([^"]*\)","\([^"]*\)","\([^"]*\)","\([^"]*\)",\([^,]*\),\([^,]*\),\([^,]*\),.*/GEOADD "{idx}airports_GeoById" "\8" "\7" "\1"/
 ```
 
-`sed -f airports_GeoById.sed airports-extended.dat | head` generates:
+`sed -f airports_GeoById.sed airports-extended.dat | head` génère :
 
 ```
 GEOADD "{idx}airports_GeoById" "145.391998291" "-6.081689834590001" "1"
@@ -405,7 +396,7 @@ s/\\"/'/g
 s/^\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),.*/HSET "{idx}airports_IdByIATA" \5 "\1"/
 ```
 
-`sed -f airports_IdByIATA.sed airports-extended.dat | head` generates:
+`sed -f airports_IdByIATA.sed airports-extended.dat | head` génère :
 
 ```
 HSET "{idx}airports_IdByIATA" "GKA" "1"
@@ -431,7 +422,7 @@ s/\\"/'/g
 s/^\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),.*/HSET "{idx}airports_IdByICAO" \6 "\1"/
 ```
 
-`sed -f airports_IdByICAO.sed airports-extended.dat | head` generates:
+`sed -f airports_IdByICAO.sed airports-extended.dat | head` génère :
 
 ```
 HSET "{idx}airports_IdByICAO" "AYGA" "1"
@@ -445,12 +436,12 @@ HSET "{idx}airports_IdByICAO" "BGGH" "8"
 HSET "{idx}airports_IdByICAO" "BGSF" "9"
 HSET "{idx}airports_IdByICAO" "BGTL" "10"
 ```
-## Actual load
 
-I use `redis-cli` to load my data, but I'd like to be more
-efficient and to pipeline the data and I use the `--pipe`
-argument to do that. I grouped the following commands in a bash
-script:
+## Chargement réel
+
+J'utilise l'outil en ligne de commande `redis-cli` pour charger mes données,
+mais j'aimerais être plus performant et les traiter par lot, j'utilise donc
+l'option `--pipe` pour cela. J'ai regroupé les commandes dans un script *bash* :
 
 {% highlight bash %}
 #!/bin/bash -x
@@ -484,36 +475,41 @@ echo "FLUSHDB" | $REDISCLI > $LOGFILE
 cat $DATAFILE | unix2dos | $REDISCLI --pipe 2>&1 | grep -v "^OK"  | grep -v '^1' > $LOGFILE
 {% endhighlight %}
 
-# Time to play and query
+# L'heure de jouer et de requêter
 
-First of all, I'll start `redis-cli` to connect to my Redis database.  As I
-use the enterprise edition, I'll use the endpoint provided by it for my
-database.
+En premier lieu, je lance la commande `redis-cli` pour me connecter à
+la base Redis. Comme j'utilise l'édition entreprise, j'utilise le
+point d'entrée fourni pour ma base de données.
 
-How to get the distance in KM between Paris Charles de Gaulle (IATA:CDG)and
-San Francisco International (IATA:SFO) airports ? Given that both are
-commercial and internationals, thay have both an IATA code, thus I'll use tha
-geo index by IATA :
+Comment obtenir la distance en kilomètres entre Paris Charles de
+Gaulle (IATA:CDG) et San Francisco International (IATA:SFO) ? Comme
+tous les deux sont commerciaux et internationaux, ils disposent tous
+les deux d'un code IATA, j'utilise donc l'index par IATA :
 
 ```
 192.168.56.101:12928> GEODIST {idx}airports_GeoByIATA CDG SFO km
 "8964.7389"
 ```
-So easy. Now, I would like to distance between my local airport (ICAO:LFFE) and another
-local airport near Paris (ICAO:LFPM). Both are non-commercial and have no IATA
-code, only an ICAO code. Thus, I'll use the geoindex by ICAO :
+
+Tellement simple. Maintenant, j'aimerais la distance entre mon
+aéroport local (OACI:LFFE) et un autre aéroport local proche de Paris
+(OACI:LFPM). Tous les deux sont non-commerciaux et ne disposent pas de
+code IATA, seulement de code OACI. J'utilise donc l'index par code
+OACI :
 
 ```
 192.168.56.101:12928> GEODIST {idx}airports_GeoByICAO LFFE LFPM km
 "54.3693"
 ```
 
-Let's ask for the distance between my local airport (ICAO:LFFE) and Paris
-Charles de Gaulle (IATA:CDG). Despite Charles de Gaulle has an ICAO code, I
-want to use the IATA code. Unfortunately, the first one is only indexed in the
-geoindex by ICAO and the second one by an IATA code... Thus, I'll use the Id
-index by ICAO and by IATA to find the technical internal airports ids and then
-use the geoindex by id:
+Maintenant, demandons la distance entre mon aéroport local (OACI:LFFE)
+et Paris Charles de Gaulles (IATA:CDG). Malgré que Charles de Gaulle
+dispose d'un code OACI également, je souhaite utiliser le code IATA.
+Malheureusement, le premier aéroport n'est indexé que par son code
+OACI et le second par son code IATA... Je vais donc utiliser une
+requête pour retrouver les identifiants techniques des deux aéroports
+par leur code OACI et IATA, puis requêter l'index géographique par
+identifiant technique :
 
 ```
 192.168.56.101:12928> HGET {idx}airports_IdByICAO LFFE
@@ -524,8 +520,9 @@ use the geoindex by id:
 "14.8405"
 ```
 
-I would like to flight from my local airport to somewhere else, but I don't
-know where. I am limited to 50 km around my takeoff airport. Let's ask Redis:
+J'aimerais prendre un vol depuis mon aéroport local pour partir
+ailleurs, mais je ne sais pas où. Je limite la recherche à 50 km
+autour de mon aéroport de départ. Demandons à Redis :
 
 ```
 192.168.56.101:12928> GEORADIUSBYMEMBER {idx}airports_GeoById 4303 50 km WITHDIST
@@ -553,9 +550,10 @@ know where. I am limited to 50 km around my takeoff airport. Let's ask Redis:
     2) "37.5877"
 ```
 
-Ok, now, I'm searching for vacation place, but I don't like to spend too much
-time in a place and I want to limit my search to 300 km, and only commercial
-airports (those with an IATA code):
+Ok, maintenant, je recherche un lieu de vacances, mais je n'aime pas
+perdre trop de temps dans l'avion et je limite ma recherche à 300 km,
+et uniquement dans les aéroports commerciaux (ceux disposant d'un code
+IATA) :
 
 ```
 192.168.56.101:12928> GEORADIUSBYMEMBER {idx}airports_GeoByIATA CDG 300 km WITHDIST asc
@@ -581,9 +579,10 @@ airports (those with an IATA code):
     2) "299.8636"
 ```
 
-Ok, I choose to go to Luxembourg (LUX), which is only 273 km far away, now I
-need to find a flight and I love to fly with AirFrance (AF). Is there a direct
-flight ?
+Ok, j'ai choisi d'aller à Luxembourg (LUX), qui se trouve uniquement à
+273 km de distance. Maintenant, je dois trouver un vol et j'aime voler
+avec Air France (AF). Y-a-t-il un vol direct ? Une fois de plus, Redis
+est mon ami...
 
 ```
 192.168.56.101:12928> HGETALL routes:AFCDGLUX
@@ -607,18 +606,9 @@ flight ?
 18) "ER4 DH4"
 ```
 
-Sorry, guys, I need to pack my stuff, I'll send you a postcard...
+Désolé les gars, maintenant, je dois préparer ma valise, je vous
+enverrai une carte postale...
 
-# Materials and Links
-
-| Link | Description |
-|---|---|
-| [Video] | Demonstration screencast recording |
-
-# Footnotes
-
-[Video]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
-[^1]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
 [OpenFlights]: http://openflights.org/
 [Redis community edition]: http://redis.io
 [Redis enterprise edition]: http://redislabs.com
