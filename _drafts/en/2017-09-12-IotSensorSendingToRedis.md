@@ -206,20 +206,21 @@ Now, it is time to start coding!
 
 You should have an empty application skeleton in your IDE when you start it.
 Basically, there are two mandatory functions : `void setup()` and `void loop()`.
-When you reset it (either hard reset with the button or from the USB connection,
-or soft reset from the application), it executes the Arduino *bootloader*. if
-data is available on the serial link (bridged with the USB), it stores the data
-in the flash memory and execute the program from flash. If there is no data, the
-bootloader directly executes the program from flash memory. 
+When you reset it (either hard reset with the button, from the USB connection,
+by powering it or soft reset from the application), it executes the
+Arduino *bootloader*. if data is available on the serial link (bridged
+with the USB connector), it stores the data in the flash memory and
+execute the program from flash. If there is no data, the bootloader
+directly executes the program from flash memory. 
 
 At each power cycle or reset, the program executes once the `setup` function and
-then loops on the `loop` one.
+then iterate on the `loop` one, endless.
 
 So, you need to initialize the serial console (for debugging) and open a Wifi
 connection from the `setup` function. Then, at each loop iteration, you will
-check if you need to send the sensor's value to Redis, if yes, you will check
-that you have an active connection to Redis and open it if needed, and you'll
-send your data.
+check if you need to read the sensor's value and send it to Redis, if
+yes, you will check that you have an active connection to Redis and
+open it if needed, and you'll send your data.
 
 ### Check sensors values
 
@@ -227,7 +228,8 @@ First, initialize the feedback with the serial console and read the sensor's
 values.
 
 In the `setup` function, initialize the serial console, wait for its
-initialization.
+initialization (only useful for some Arduino such as the Yun, but
+without drawback on others).
 
 ``` c
 void setup() {
@@ -262,9 +264,9 @@ Choose the same baud rate as in the sketch (115200) and observe.
 
 You can see the speed of the loop function. Despite you could introduce a
 `void delay(long ms)` call in the loop, it would be a bad practice, the loop
-function needs to be executed as fast as possible, without blocking. It is
-better to initialize a millisecond timestamp at each print and to only send a
-new value after a timeout :
+function needs to be executed as fast as possible, without blocking,
+this is the main event loop. It is better to initialize a millisecond
+timestamp at each print and to only read a new value after a timeout :
 
 ``` c
 //  your network SSID (name)
@@ -291,9 +293,13 @@ Compile, upload and observe... It is better, one value every 5 seconds.
 ### WIFI network connection
 
 Lets begin with the `setup` function. You need at least a Wifi network name and
-password to connect to. Add the ESP simple Wifi header, define your Wifi
-credentials and add the following at the end of the `setup` function. I also
-included a LED blinking during the WIFI connection.
+password to connect to. 
+
+Add the ESP simple Wifi header, define your Wifi credentials and add
+the following at the end of the `setup` function. I also included a LED
+blinking during the WIFI connection, to have an hardware status
+feedback, and resetting lines (commented) in case of unexplainable
+issue.
 
 ``` c
 //  your network SSID (name)
@@ -343,11 +349,13 @@ void setup() {
 Compile, upload and watch. 
 
 ### TCP Redis connection
+
 Now, it is time to check that you have an opened Redis connection. For that, we
 use a `WiFiClient` object. It can open a TCP connection to an IP or an hostname
 and a port number. It will take care of the DNS resolution, but might keep the
-IP in cache. The SSL support is quite limited in the ESP, but we wont use it in
-this post.
+IP in cache (this could be an issue if the DNS are involved in the
+high-availability architecture). The SSL encryption support is quite
+limited in the ESP, but we wont use it in this post.
 
 The idea is to check that we have an opened redis connection at each sensor
 read, if not we open it.
@@ -391,11 +399,11 @@ void loop() {
 }
 ```
 
-### Redis commands
+### Send Redis commands
 
-Now, it is time to actually send commands to Redis to send the value at the
-begining of a Redis list using `LPUSH`. The list is named from the device's MAC
-address prefixed by "v:".
+Now, it is time to actually send commands to Redis to insert the value at the
+begining of a Redis list using `LPUSH`. The list key is built from the
+concatenation of the string "v:" and the the device's MAC address.
 
 Add this code immediately after the connection test.
 
@@ -435,11 +443,12 @@ Compile, upload and observe
 
 ### Push notification with a PUBLISH
 
-As an exercice, you can send another command using the [REdis Serialization Protocol][RESP] protocol to Redis, so that it will notify all listening
-(SUBSCRIBEd) application that you updated your value list. The idea is to send
-`PUBLISH chan:<MACAddr> <lastValue>`. With such a message, the other application
-won't have to get the value from the list, as the value is already part of the
-message.
+As an exercice, you can send another command using the [REdis
+Serialization Protocol][RESP] protocol to Redis, so that it will notify
+all listening (SUBSCRIBEd) application that you updated your value
+list. The idea is to send `PUBLISH chan:<MACAddr> <lastValue>`. With
+such a message, the other application won't have to get the value from
+the list, as the value is already part of the message.
 
 You will be able to observe the results if you connect to your Redis server with
 the `src/redis-cli -h <IP> -p <PORT>` tool and if you type `SUBSCRIBE
@@ -447,7 +456,7 @@ chan:<MACAddr>`...
 
 # Troubleshooting
 
-If your ESP throw an ugly stack strace on your serial console, you can debug
+If your ESP throw an ugly stack trace on your serial console, you can debug
 using a lot of `Serial.print`, but you can also install [The ESP Exception
 decoder plugin][EspExceptionDecoder] in the IDE.
 

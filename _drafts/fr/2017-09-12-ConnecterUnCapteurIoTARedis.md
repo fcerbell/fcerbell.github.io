@@ -154,7 +154,7 @@ externes. Comme indiqué précédemment, la chaîne de compilation doit être
 installes. Comme les binaires dépendent de votre ordinateur et de votre système
 d'exploitation, je ne peux que préconfigurer le dépôt à partir duquel vous
 devrez les télécharger et les installer par vous-même. Une bibliothèque de
-connection à Redis et un modèle de code sont également inclus dans le fichier de
+connexion à Redis et un modèle de code sont également inclus dans le fichier de
 configuration.
 
 Le fichier ajoutera aussi le code source complet de cet article de blog.
@@ -219,30 +219,36 @@ Il est désormais temps de commencer à coder !
 
 ### Création d'une nouvelle application
 
-You should have an empty application skeleton in your IDE when you start it.
-Basically, there are two mandatory functions : `void setup()` and `void loop()`.
-When you reset it (either hard reset with the button or from the USB connection,
-or soft reset from the application), it executes the Arduino *bootloader*. if
-data is available on the serial link (bridged with the USB), it stores the data
-in the flash memory and execute the program from flash. If there is no data, the
-bootloader directly executes the program from flash memory. 
+Vous devriez avoir un squelette d'application dans votre interface
+lorsque vous la démarrez. Il y a deux functions obligatoires : `void
+setup()` et `void loop()`. Lorsque vous réinitialisez le périphérique
+(que ce soit matériellement avec le bouton, depuis le port USB, en
+l'alimentant ou par logiciel), il exécute le micro-programme de
+démarrage (*bootloader*). Si des données sont présentes sur le port
+série (ponté sur le connecteur USB), il les enregistre en mémoire
+flash puis exécute le contenu de la mémoire flash. S'il n'y a pas de
+données, il passe directement à l'exécution du programme en mémoire
+flash.
 
-At each power cycle or reset, the program executes once the `setup` function and
-then loops on the `loop` one.
+À chaque cycle d'alimentation ou de réinitialisation, le programme
+exécute la fonction `setup` une fois, puis itère sur la fonction
+`loop` sans fin.
 
-So, you need to initialize the serial console (for debugging) and open a Wifi
-connection from the `setup` function. Then, at each loop iteration, you will
-check if you need to send the sensor's value to Redis, if yes, you will check
-that you have an active connection to Redis and open it if needed, and you'll
-send your data.
+Donc, il faut initialiser la console série (pour le deboggage) et
+ourir la connexion Wifi depuis la fonction `setup`. Ensuite, à chaque
+itération de la fonction `loop`, il faut vérifier si l'on doit lire et
+envoyer une valeur dans Redis. Si oui, il faut vérifier que nous disposons
+d'une connexion TCP ouverte vers le serveur Redis, éventuellement en
+ouvrir une et envoyer la valeur.
 
-### Check sensors values
+### Lecture de la mesure
 
-First, initialize the feedback with the serial console and read the sensor's
-values.
+Premièrement, initialiser le retour sur la console série et lire la
+mesure du capteur.
 
-In the `setup` function, initialize the serial console, wait for its
-initialization.
+Dans la fonction `setup`, initialiser la console série et attendre que
+ce soit fait (uniquement utile pour certains modèles d'Arduino, tels
+que le Yun, mais sans incidence pour les autres).
 
 ``` c
 void setup() {
@@ -264,30 +270,30 @@ void loop() {
 }
 ```
 
-Test your sketch with the *tick* icon in the toolbar, or from the menu *Sketch >
-Verify/Compile* or with the keyboard shortcut *Ctrl+R*. 
+Tester le code avec l'icone *Vérifier* dans la barre d'outils, depuis
+le menu *Sketch > Verify/Compile* ou avec le raccourcis clavier
+*Ctrl+R*.
 
-If you have no error, upload it to the device using the *arrow* icon, the menu
-*Sketch > Upload* or the shortcut *Ctrl+U*. As soon as it is uploaded, it is
-executed.
+Si vous n'avez pas d'erreur, téléverser le binaire vers le
+périphérique en utilisant l'icone *flèche*, le menu *Sketch > Upload*
+ou le raccourcis clavier *Ctrl+U*. L'exécution commence dès le
+téléversement terminé.
 
-Start the serial monitor with the right *magnification glass* icon, from the
-menu *Tools > Serial Monitor* or with the keyboard shortcut *Ctrl+Shift+M*.
-Choose the same baud rate as in the sketch (115200) and observe.
+Ouvrir la console série à l'aide de l'icone *loupe* (à droite de la
+barre d'outils), le menu *Tools > Serial Monitor* ou avec le
+raccourcis clavier *Shift+Ctrl+M*. Ajuster la vitesse de communication
+en fonction de celle définie dans le code (115200) et observer.
 
-You can see the speed of the loop function. Despite you could introduce a
-`void delay(long ms)` call in the loop, it would be a bad practice, the loop
-function needs to be executed as fast as possible, without blocking. It is
-better to initialize a millisecond timestamp at each print and to only send a
-new value after a timeout :
+Vous pouvez constater la vitesse d'exécution de la fonction `loop`.
+Même s'il serait possible d'introduire un appel à la fonction `void
+delay(long ms)` dans la function `loop`, ce serait une mauvaise
+pratique, la fonction `loop` a besoin de s'exécuter aussi rapidement
+que possible, sans blocage, c'est la boucle principale de gestion des
+événements. Il est préférable d'initialiser une variable retenant
+l'heure de la dernière lecture à chaque affichage et de ne lire une
+nouvelle valeur qu'après un certain délai.
 
 ``` c
-//  your network SSID (name)
-#define WIFI_SSID "YourWifiNetwork"
-#define WIFI_PASS "YourWifiNetworkPassword"
-
-#include <ESP8266WiFi.h>
-
 unsigned long lastSensorRead=0;
 ```
 
@@ -301,14 +307,18 @@ void loop() {
 }
 ```
 
-Compile, upload and observe... It is better, one value every 5 seconds.
+Compiler, téléverser et observer... C'est mieux, seulement une valeur
+toutes les 5 secondes.
 
-### WIFI network connection
+### Connexion au réseau Wifi
 
-Lets begin with the `setup` function. You need at least a Wifi network name and
-password to connect to. Add the ESP simple Wifi header, define your Wifi
-credentials and add the following at the end of the `setup` function. I also
-included a LED blinking during the WIFI connection.
+Commençons par la fonction `setup`. il faut définir le nom du réseau
+Wifi et son mot de passe pour s'y connecter. Ajouter l'en-tête ESP,
+définir les informations de connexion au Wifi et ajouter les lignes
+suivantes dans la fonction `setup`. J'ai également inclus un
+clignotement de la LED pendant la phase de connexion pour avoir un
+retour d'état matériel, ainsi que des lignes de réinitialisation
+commentées en cas de problème inexplicable.
 
 ``` c
 //  your network SSID (name)
@@ -355,20 +365,24 @@ void setup() {
 }
 ```
 
-Compile, upload and watch. 
+Compiler, Téléverser et observer...
 
-### TCP Redis connection
-Now, it is time to check that you have an opened Redis connection. For that, we
-use a `WiFiClient` object. It can open a TCP connection to an IP or an hostname
-and a port number. It will take care of the DNS resolution, but might keep the
-IP in cache. The SSL support is quite limited in the ESP, but we wont use it in
-this post.
+### Connexion TCP à Redis
 
-The idea is to check that we have an opened redis connection at each sensor
-read, if not we open it.
+Il est maintenant temps de vérifier si la connexion à Redis est
+ouverte. Nous pouvons utiliser l'objet `WiFiClient`. Il peut ouvrir
+une connexion vers une adresse IP ou un nom DNS et un numéro de port.
+Il s'occupera de la résolution d'adresse DNS, mais aussi
+éventuellement conserver cette résolution en cache (ce qui peut poser
+problème si les DNS sont utilisés dans l'architecture pour la
+haute-disponibilité). Le support de l'encryption SSL est limité dans
+l'ESP, mais nous ne l'utiliserons pas dans cet article.
 
-Define your Redis connection, add a `WiFiClient` object and change your `loop`
-function :
+L'idée est de vérifier que nous disposons d'une connexion ouverte à
+chaque lecture de la mesure. Si nous ne l'avons pas, nous l'ouvrons.
+
+Définir la connexion Redis, ajouter un objet `WiFiClient` et modifier
+la fonction `loop` :
 
 ``` c
 //  your network SSID (name)
@@ -406,13 +420,14 @@ void loop() {
 }
 ```
 
-### Redis commands
+### Envoi de commandes à Redis
 
-Now, it is time to actually send commands to Redis to send the value at the
-begining of a Redis list using `LPUSH`. The list is named from the device's MAC
-address prefixed by "v:".
+Il est temps d'envoyer réellement des commandes à Redis pour insérer
+les valeurs au début d'une list en utilisant `LPUSH`. La clé de la
+liste est construite par concaténation de la chaîne « v: » et de
+l'adresse MAC du périphérique.
 
-Add this code immediately after the connection test.
+Ajouter ce code immédiatement après le test de connexion.
 
 ``` c
     // 10 is the base
@@ -425,16 +440,19 @@ Add this code immediately after the connection test.
     );
 ```
 
-I used a C++ `String` to make the code shorter. 
+J'ai utilisé une `String` C++ pour rendre le code plus compact.
 
-Redis server send back a reply to every Redis command, even when there is an
-error. These replies are stored in buffers on the device. When all the buffer
-are full, the device can not send new commands anymore, until one of the buffer
-expires and become available (every second). Thus, I could wait synchroneously
-for the reply, but it would be a busy loop, even if it is usually fine because
-Redis server replies very fast, it is a bad practice. I chose to test for a
-reply at each loop iteration and to consume it. Just before the end of the
-`loop`.
+Redis envoie une réponse à chaque commande, y compris lorsqu'il se
+produit une erreur. Ces réponses sont enregistrées dans des tampons du
+périphérique. Lorsque tous les tampons sont pleins, le périphérique
+ne peut plus émettre de nouvelle commande jusqu'à ce qu'un des tampons
+se libère suite à une expiration (chaque seconde). Je pourrais
+attendre la réponse de manière synchrone, mais ce serait une boucle
+bloquante. Même si ce serait acceptable car Redis répond
+habituellement très rapidement, ce serait également une mauvaise
+pratique. J'ai choisi de tester la présence d'une éventuelle réponse à
+chaque tour de boucle et de la consommer, juste avant la fin de la
+fonction `loop`.
 
 ``` c
   // If there is an answer from the Redis server available
@@ -443,64 +461,77 @@ reply at each loop iteration and to consume it. Just before the end of the
     Serial.print((char)redis.read());
 ```
 
-Compile, upload and observe
+Compiler, téléverser et observer le résultat.
 
-![Result in Arduino console][serial-monitor.png]
+![Résultats dans la console Arduino][serial-monitor.png]
 [Pleine taille][serial-monitor.png]
 
-### Push notification with a PUBLISH
+### Envoi de notification *Push* grâce à la commande PUBLISH
 
-As an exercice, you can send another command using the [REdis Serialization Protocol][RESP] protocol to Redis, so that it will notify all listening
-(SUBSCRIBEd) application that you updated your value list. The idea is to send
-`PUBLISH chan:<MACAddr> <lastValue>`. With such a message, the other application
-won't have to get the value from the list, as the value is already part of the
-message.
+En tant qu'exercice, vous pouvez envoyer une autre commande à Redis en
+utilisant le protocole [REdis Serialization Protocol][RESP] pour
+notifier toutes les autres applications ayant souscrit (SUBSCRIBE) au
+canal que votre périphérique vient de mettre la liste à jour. L'idée
+est d'envoyer `PUBLISH chan:<MACAddr> <lastValue>`. Grâce à un tel
+message, les autres applications n'auront même pas à récupérer la
+mesure depuis la liste puisqu'elle sera transmise à l'intérieur même
+du message.
 
-You will be able to observe the results if you connect to your Redis server with
-the `src/redis-cli -h <IP> -p <PORT>` tool and if you type `SUBSCRIBE
-chan:<MACAddr>`...
+Vous serez en mesure d'observer les résultats si vous ouvez une
+connexion à Redis avec l'outil `src/redis-cli -h <IP> -p <PORT>` et si
+vous saisissez `SUBSCRIBE chan:<MACAddr>`...
 
-# Troubleshooting
+# Résolution de problèmes
 
-If your ESP throw an ugly stack strace on your serial console, you can debug
-using a lot of `Serial.print`, but you can also install [The ESP Exception
-decoder plugin][EspExceptionDecoder] in the IDE.
+Si votre ESP lance une moche trace de crash sur la console série, il
+est possible de la comprendre en utilisant des `Serial.print`, mais
+vous pouvez également installer le [greffon ESP Exception
+decoder][EspExceptionDecoder] dans l'interface.
 
-If you want to see what happens on your Redis server, you can monitor it using
-the `src/redis-cli -h <IP> -p <PORT>` tool and typing `MONITOR`.
-![Result in Redis monitor][redis-monitor.png]
+Si vous voulez regarder ce qui se passe dans votre serveur Redis, vous
+pouvez le surveiller avec l'outil `src/redis-cli -h <IP> -p <PORT>` et
+la commande `MONITOR`.
+![Commande Monitor][redis-monitor.png]
 [Pleine taille][redis-monitor.png]
 
-# Improvements
+# Améliorations
 
-You can connect the LDR to a digital pin instead of 3.3V. So, you can choose to
-give power only when you read the value, to save energy.
+Vous pouvez connecter la LDR à une sortie numérique à la place du
+3.3V. Il sera ainsi possible de l'alimenter uniquement au moment de
+lire les mesures pour économiser de l'énergie.
 
-Another solution is to use the internal pull-up resistor to remove the external
-pull-down one and connect the LDR between AD0 and GND. The values will be
-inverted, but you save 0.02€. Then, you can disable the pull-up resistor between
-readings to save energy.
+Une autre solution est d'utiliser une résistance interne de tirage
+pour retirer celle externe et de connecter la LDR directement entre
+AD0 et GND. Les valeurs seront inversées mais vous économiserez 0.02€.
+Ensuite, il sera possible de couper la résistance de tirage interne
+entre deux lectures pour économiser de l'énergie.
 
-You can also use sleep commands to put your device in sleep mode between
-reading/sending values, to save energy. This is more complex, but can lower down
-the current to few µA most of the time !!! Useful for battery powered devices
-that should last a long time without maintenance.
+Vous pouvez utiliser les commandes de mise en veille du
+micro-controlleur pour l'endormir entre deux mesures, pour économiser
+de l'energie. C'est un peu plus complex, mais peut faire chuter le
+courant consmmé à quelques µA la plupart du temps !!! Pratique pour
+les périphériques sur batterie difficile d'accès pour la maintenance.
 
-If you want high-availability, either you need to implement parts of the
-sentinel protocol, or parts of the cluster protocol or to use a proxi such as
-the one provided in the enterprise edition.
+Si vous souhaitez avoir de la haute-disponibilité, vous pouvez soit
+implémenter le protocol des `sentinelles` Redis, soit une partie du
+protocole du `cluster` Redis, soit utiliser un proxy tel que celui
+fourni dans l'édition entreprise.
 
-Add SSL between the device and Redis server, then, you can also use the `AUTH`
-redis command to add some security to your database.
+En ajoutant une encryption SSL entre le périphérique et le serveur,
+vous pourrez utiliser une authentification par mot de passe (command
+`AUTH`) pour améliorer le niveau de sécurité des accès à votre base de
+données.
 
-You can implement a library to encode commands in the [REdis Serialization
-Protocol][RESP] and another one to manage the redis connection, with pipelining.
+Vous pouvez implémenter une bibliothèque pour encoder plus facilement
+les commandes Redis dans le protocol [REdis Serialization
+Protocol][RESP] et une seconde pour gérer la connexion avec Redis
+(expirations, pertes de connexion, pipelining).
 
 # Supports et liens
 
 | Lien | Description |
 |---|---|
-| [Full source][Sketch] | Full source code without the publish |
+| [Full source][Sketch] | Code source complet isans la notification |
 | [Video] | Enregistrement vidéo de la démonstration |
 | [06/09/2017: Meetup Redis IOT à Tel Aviv, Israël][MeetupTLV] | chez [RedisLabs Tel Aviv][RedisLabsTLV] |
 | [10/10/2017: Meetup Redis IOT à Paris, France][MeetupParis] | chez [SOAT] |
@@ -553,5 +584,7 @@ Protocol][RESP] and another one to manage the redis connection, with pipelining.
 [EspExceptionDecoder]: https://github.com/me-no-dev/EspExceptionDecoder "Arduino IDE ESP stack dump decoder"
 [RESP]: https://redis.io/topics/protocol "REdis Serialization Protocol"
 
-[^1]: Windows users : choose the ZIP file, not the installer nor the app from the store. We want to create a portable install without admin permissions, with everything in one singe folder that can be moved.
-
+[^1]: Utilisateurs de Windows : Choisir le fichier ZIP, pas
+l'installeur MSI ou l'application du *store*. Nous voulons créer une
+installation portable sans requerir les droits d'administration, avec
+tous les fichiers dans un seul et unique dossier pouvant être déplacé.
