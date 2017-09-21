@@ -19,15 +19,11 @@ key-value store with persistency to disk, high-availability and clustering. It
 is so easy to use that a simple micro-controller, such as an Arduino or an
 ESP8266, with a TCP/IP stack can connect and use it.
 
-You can find links to the related video recordings and printable materials at
-the <a href="#materials-and-links">end of this post</a>.
+You can find links to the related materials at the <a
+href="#materials-and-links">end of this post</a>.
 
 * TOC
 {:toc}
-
-# Video
-
-<center><iframe width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></center>
 
 # Prerequisites
 
@@ -495,7 +491,6 @@ Protocol][RESP] and another one to manage the redis connection, with pipelining.
 | Link | Description |
 |---|---|
 | [Full source][Sketch] | Full source code without the publish |
-| [Video] | Demonstration screencast recording |
 | [06/09/2017: Redis IOT meetup in Tel Aviv, Israël][MeetupTLV] | at [RedisLabs Tel Aviv][RedisLabsTLV] |
 | [10/10/2017: Redis IOT meetup in Paris, France][MeetupParis] | at [SOAT] |
 | [17/10/2017: Redis IOT meetup in Toulouse, France][MeetupToulouse] | at [Étincelle coworking Toulouse][EtincelleTLS] |
@@ -506,7 +501,6 @@ Protocol][RESP] and another one to manage the redis connection, with pipelining.
 
 # Footnotes
 
-[Video]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
 [MeetupParis]: https://www.meetup.com/fr-FR/Paris-Redis-Meetup/events/242249391/ "Meetup on this topic in Paris,France"
 [MeetupLille]: https://www.meetup.com/fr-FR/Redis-Lille/events/242029096/ "Meetup on this topic in Lille,France"
 [MeetupToulouse]: https://www.meetup.com/fr-FR/Redis-Toulouse/events/242029119/ "Meetup on this topic in Toulouse,France"

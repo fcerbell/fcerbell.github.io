@@ -21,15 +21,11 @@ en cluster. Il est tellement facile à utiliser qu'un simple micro-controleur,
 tel qu'un Arduino ou un ESP8266, avec une pile TCP/IP peut s'y connecter et
 l'utiliser.
 
-Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
-imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
+Vous pouvez trouver des liens vers les supports associés à la <a
+href="#supports-et-liens">fin de cet article</a>.
 
 * TOC
 {:toc}
-
-# Video
-
-<center><iframe width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></center>
 
 # Pré-requis
 
@@ -532,7 +528,6 @@ Protocol][RESP] et une seconde pour gérer la connexion avec Redis
 | Lien | Description |
 |---|---|
 | [Full source][Sketch] | Code source complet isans la notification |
-| [Video] | Enregistrement vidéo de la démonstration |
 | [06/09/2017: Meetup Redis IOT à Tel Aviv, Israël][MeetupTLV] | chez [RedisLabs Tel Aviv][RedisLabsTLV] |
 | [10/10/2017: Meetup Redis IOT à Paris, France][MeetupParis] | chez [SOAT] |
 | [17/10/2017: Meetup Redis IOT à Toulouse, France][MeetupToulouse] | chez [Étincelle coworking Toulouse][EtincelleTLS] |
@@ -543,7 +538,6 @@ Protocol][RESP] et une seconde pour gérer la connexion avec Redis
 
 # Notes de bas de page
 
-[Video]: https://youtu.be/kK4GxAwJKD0 "Enregistrement vidéo de la démonstration"
 [MeetupParis]: https://www.meetup.com/fr-FR/Paris-Redis-Meetup/events/242249391/ "Meetup sur le sujet à Paris, France"
 [MeetupLille]: https://www.meetup.com/fr-FR/Redis-Lille/events/242029096/ "Meetup sur le sujet à Lille, France"
 [MeetupToulouse]: https://www.meetup.com/fr-FR/Redis-Toulouse/events/242029119/ "Meetup sur le sujet à Toulouse, France"
