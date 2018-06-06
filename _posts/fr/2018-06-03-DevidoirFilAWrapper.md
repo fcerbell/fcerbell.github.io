@@ -5,7 +5,7 @@ author: fcerbell
 layout: post
 lang: fr
 #description:
-#category: Test
+category: Impression3D
 tags: [ Wrapping, Wire, Dispenser, 3D, Printing, Creality, CR-10, OpenSCAD, Design, PLA ]
 #date: 9999-01-01
 published: true
