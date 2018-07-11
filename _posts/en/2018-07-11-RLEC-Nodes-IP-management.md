@@ -23,10 +23,6 @@ the <a href="#materials-and-links">end of this post</a>.
 * TOC
 {:toc}
 
-# Video
-
-<center><iframe width="420" height="315" src="https://www.youtube.com/embed/kK4GxAwJKD0" frameborder="0" allowfullscreen></iframe></center>
-
 # Prerequisites
 
 You have a RedisLabs Enterprise Cluster up and running. Either you added/removed
@@ -539,4 +535,3 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 [webnodeconfiguration.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/webnodeconfiguration.png "Node configuration web UI"
 [RedisLabs.com]: https://redislabs.com "RedisLabs, Home of Redis"
 [Redis.io]: http://redis.io "Redis project web site"
-[Video]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
