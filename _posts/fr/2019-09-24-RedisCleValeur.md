@@ -75,7 +75,7 @@ Je parlerai plus en détail des structures de données disponibles dans la proch
 
 | Liens | Description |
 |---|---|
-| [Video] | Présentation vidéoo |
+| [Video] | Présentation vidéo |
 
 # Notes de bas de page
 
