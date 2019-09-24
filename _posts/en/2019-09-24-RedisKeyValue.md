@@ -41,7 +41,7 @@ Let's take a very simple usecase with a list of customers, a list of products an
 
 In a key-value datastore, despite there are technical options to browse and query the key dictionnary, this is an anti-pattern. If you store customers, orders and products, this would mean a full table scan on three tables, only to filter some identifiers. Thus, either the application knows the identifier to get the value from or it cannot get the value. Either the identifier is known (a fixed value, for example), or it can be calculated/guessed from already known information or it can be fetched from another known key's value such as a customer identifier list stored in a key.
 
-As an example, if the application stores customers using the customer id as the key, it can create one key-value pair per customer and one special key "customers" with the list of the identifiers. Thus either the application knows the identifier of the wanted customer to get the details or the application can get the list of all the customer identifiers from the "customer" key and go through the customers (and only the customers, not the other records). This is a primary key index implementation.
+As an example, if the application stores "customers" using the customer id as the key, it can create one key-value pair per customer and one special key "customers" with the list of the identifiers. Thus either the application knows the identifier of the wanted customer to get the details or the application can get the list of all the customer identifiers from the "customer" key and go through the customers (and only the customers, not the other records). This is a primary key index implementation.
 
 ![Example dataset key-value schema][KeyvalueSchema.png]
 
