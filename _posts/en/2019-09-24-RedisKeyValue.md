@@ -11,9 +11,7 @@ tags: [ redis, introduction, key-value, data-structures ]
 #published: false
 ---
 
-I try to present an overview of Redis, its history, what it can do, how it
-works, in a very short introduction. I present briefly the performances, the
-optimizations, the savings.
+In this content, I explain the differences between relational schema, a key-value schema and a key-datastructure schema. 
 
 You can find links to the related video recordings and printable materials at
 the <a href="#materials-and-links">end of this post</a>.

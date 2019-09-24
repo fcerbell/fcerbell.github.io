@@ -11,9 +11,7 @@ tags: [ redis, introduction, key-value, data-structures ]
 #published: false
 ---
 
-J'essaye de présenter un aperçu de Redis, son histoire, ce qu'il peut faire,
-comment il travaille, au cours d'une introduction rapide. J'en présente
-brièvement les performances, optimisations et les avantages.
+Dans ce contenu, j'explique les différences entre un schéma relationel, un schéma clé-valeur et un schéma clé-structure de données.
 
 Vous pouvez retrouver le lien de l'enregistrement vidéo et des autres supports à la
  <a href="#materials-and-links">fin de cet article</a>.
@@ -41,19 +39,19 @@ Prenons un cas d'usage simple avec une liste de clients, une liste de produits e
 
 # Modèle d'accès aux données
 
-Dans un entrepôt clé-valeur, même s'il existe des possibilités techniques pour parcourir et requêter le dictionnaire des clés, cela est contraire à son but. Si vous enregistrez des clients, commandes et produits, cela signifierait effectuer un parcours complet des trois tables,juste pour retenir quelques identifiants. Ainsi, soit l'application connait l'identifiant dont elle veut la valeur, soit elle ne peut pas récupérer la valeur. Soit l'idenntifiant et connu, un valeur constante par exemple, soit il peut être calculé/deviné à partir d'informations déjà connues, soit il peut être retrouvé à partir de la valeur d'une autre clé connue,tel que les identifiants clients à partir de la liste des identifiants stockée dans une clé.
+Dans un entrepôt clé-valeur, même s'il existe des possibilités techniques pour parcourir et requêter le dictionnaire des clés, cela est contraire à son but. Si vous enregistrez des clients, commandes et produits, cela signifierait effectuer un parcours complet des trois tables,juste pour retenir quelques identifiants. Ainsi, soit l'application connait l'identifiant dont elle veut la valeur, soit elle ne peut pas récupérer la valeur. Soit l'identifiant est connu, une valeur constante par exemple, soit il peut être calculé/deviné à partir d'informations déjà connues, soit il peut être retrouvé à partir de la valeur d'une autre clé connue,tel que les identifiants clients à partir de la liste des identifiants stockée dans une clé.
 
 Par exemple, si l'application enregistre des clients en utilisant un identifiant client comme clé, elle peut créer un enregistrement par client et une clé spéciale "clients" contenant la liste des identifiants. Ainsi, soit l'application connait l'identifiant du client souhaité pour en obtenir les informations, soit elle peut lire la liste de tous les identifiants clients depuis la clé "clients" et parcourir les enregistrement clients, uniquement ceux-là, en ignorant les autres. Cela correspond à l'implémentation d'un index primaire.
 
 ![Schéma clé-valeur][KeyvalueSchema.png]
 
-Cette approche peut sembler plus complexe car l'application doit exécuter deux requêtes. Lorsque cette application exécute une seule requête dans une base de données indexée, le moteur de cette base exécute ces deux requêtes pour vous également. Il a ce comportement car il implémente une logique génériquee qui n'est pas optimisée pour votre besoin spécifique. Avec Redis, vous pouvez implémenter le niveau exact d'optimisation souhaité.
+Cette approche peut sembler plus complexe car l'application doit exécuter deux requêtes. Lorsque cette application exécute une seule requête dans une base de données indexée, le moteur de cette base exécute ces deux requêtes pour vous également. Il a ce comportement car il implémente une logique générique qui n'est pas optimisée pour votre besoin spécifique. Avec Redis, vous pouvez implémenter le niveau exact d'optimisation souhaité.
 
 Si ce sujet vous intéresse, vous pouvez souscriree car j'ai prévu de détailler la conception de modèle de données clé-valeur dans une autre vidéo.
 
 # Stockage de données structurées
 
-Dans notre exemple, nous utilisons des enregistrements clients avec un prénom, une civilité, ... des fiches produits avec une description, un prix, ... et des commandes avec une date. Nous avons également enregistré la liste des iddentifiants clients, la liste des commandes et la liste des produits dans trois clés. Plus simplement, nous avons besoin de stocker des enregistrements et des listes d'identifiants uniques.
+Dans notre exemple, nous utilisons des enregistrements clients avec un prénom, une civilité, ... des fiches produits avec une description, un prix, ... et des commandes avec une date. Nous avons également enregistré la liste des identifiants clients, la liste des commandes et la liste des produits dans trois clés. Plus simplement, nous avons besoin de stocker des enregistrements et des listes d'identifiants uniques.
 
 Il serait possible de stocker toutes ces informations dans un bloc sérialisé. Mais certaines requêtes ne seraient pas très efficaces. Si l'application souhaite savoir "la référence XXX existe-t-elle dans le catalogue ?", elle aurait à télécharger l'intégralité du catalogue, la liste des identifiants produits, la désérialiser et la parcourir. Cela peut être très consommateur en bande passante réseau, charge CPU et mémoire.
 
