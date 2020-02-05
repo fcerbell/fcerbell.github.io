@@ -26,7 +26,7 @@ imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 
 <center><iframe width="420" height="315" src="https://www.youtube.com/embed/Ikz8eXF1XVc" frameborder="0" allowfullscreen></iframe></center>
 
-# Index geo-spaciaux : Geo-index
+# Index geo-spatiaux : Geo-index
 
 En interne, cette structure utilise un ensemble trié, un sorted set, pour
 enregistrer les éléments et utilise un geo-hash calculé à partir des coordonnées
