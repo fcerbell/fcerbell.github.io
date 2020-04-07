@@ -155,7 +155,7 @@ y ont attaché des routines qui consomment du temps et de l'énergie (pour gére
 les fonctions delay et milli) et surtout car ces interruption réveilleraient le
 MCU trop tôt pendant les cycles de sommeil.
 
-```
+``` c
 // PWM Carrier
 // FastPWM-Compare mode, no prescale (to support 1MHz internal clock)
 // Disable interruptions (Arduino libs have ISR for delay and millis)
@@ -178,7 +178,7 @@ utilisable car j'ai modifié la fréquence. J'ai réutilisé l'approche du proje
 *TV B Gone* : une boucle active sur des instructions NOP, calibrée sur la
 fréquence interne de mon ATTiny85 (1Mhz) à l'oscilloscope.
 
-```
+``` c
 // Busy loop to manage very small delays (<16ms) that
 // can not be managed by wdtSleep timer
 // Inspired by TV B Gone project
@@ -228,7 +228,7 @@ Je désactive également le Timer0, car il n'y a pas besoin de générer une
 porteuse 38kHz pendant le sommeil et que cela consommerait du courant. Tout le
 reste est déjà aussi désactivé (ADC, Timer1).
 
-```
+``` c
 // watchdog interrupt
 ISR (WDT_vect) {
   wdt_disable();
@@ -283,7 +283,7 @@ Pour cela, j'ai réutilisé la fonction  `ReadVcc` du projet
 au début et une désactivation à la fin, ainsi, l'ADC ne consomme du courant
 qu'au cours des mesures.
 
-```
+``` c
 long readVcc() {
   power_adc_enable();
   // Read 1.1V reference against AVcc
@@ -321,7 +321,7 @@ long readVcc() {
 J'ai ré-écrit la fonction `roomba_send` pour la rendre plus compacte et plus
 spécialisée.
 
-```
+``` c
 void roomba_send(char code) {
   for (char i = 7; i >= 0; i--) {
     if (code & (1 << i)) {
@@ -411,7 +411,7 @@ le document [iRobot Roomba 500 Open Interface Specs, page
 
 Enfin, les fonctions `setup` et `loop` restent relativement simples !
 
-```
+``` c
 void setup() {
   noInterrupts();  // no need to interrupt when not sleeping
   LED_SETUP;
@@ -427,7 +427,7 @@ Tout comme le mur virtuel iRobot d'origine, j'ai ajouté un délai d'expiration
 lorsque l'on oublie de l'éteindre. Il entrera dans un sommeil profond infini
 après 150 minutes d'activité.
 
-```
+``` c
 void loop() {
   iter++;
   timeout++;

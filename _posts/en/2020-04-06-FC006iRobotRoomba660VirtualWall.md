@@ -142,7 +142,7 @@ ATTiny's PB0 pin (pin 6). I had to disable Timer0's generated interrupts because
 Arduino libs have an interrupt handler (to manage the milli and delay functions)
 connected to it and it would also wake up the MCU too early during sleep cycles.
 
-```
+``` c
 // PWM Carrier
 // FastPWM-Compare mode, no prescale (to support 1MHz internal clock)
 // Disable interruptions (Arduino libs have ISR for delay and millis)
@@ -165,7 +165,7 @@ because I changed its frequency. I reused the *TV B Gone* approach : a busy loop
 on NOP instruction. I tuned it with my oscilloscope, it depends on the internal
 ATTiny85 clock (set to 1 Mhz).  
 
-```
+``` c
 // Busy loop to manage very small delays (<16ms) that
 // can not be managed by wdtSleep timer
 // Inspired by TV B Gone project
@@ -214,7 +214,7 @@ I need to disable Timer0, because it is useless to generate the 38kHz carrier
 during sleep and would consume some current. Everything else is already disabled
 (ADC, Timer1).
 
-```
+``` c
 // watchdog interrupt
 ISR (WDT_vect) {
   wdt_disable();
@@ -267,7 +267,7 @@ For this, I reused the smart `ReadVcc` function from the
 [MySensors][MySensors][^3] project, I only disable the ADC after reading and
 enable it before. Thus, the ADC is disabled most of the time.
 
-```
+``` c
 long readVcc() {
   power_adc_enable();
   // Read 1.1V reference against AVcc
@@ -304,7 +304,7 @@ long readVcc() {
 
 I rewrote the `roomba_send` function to make it more compact and specialized.
 
-```
+``` c
 void roomba_send(char code) {
   for (char i = 7; i >= 0; i--) {
     if (code & (1 << i)) {
@@ -393,7 +393,7 @@ Interface Specs, page 22][iRobotRoomba500OpenInterfaceSpecs][^2]
 
 At the end, the `setup` and `loop` functions are quite simple :
 
-```
+``` c
 void setup() {
   noInterrupts();  // no need to interrupt when not sleeping
   LED_SETUP;
@@ -408,7 +408,7 @@ void setup() {
 Similarly to iRobot's original wall, I had to put a timeout when you forget to
 switch it off. It will go to an endless deepsleep after 150 minutes.
 
-```
+``` c
 void loop() {
   iter++;
   timeout++;
