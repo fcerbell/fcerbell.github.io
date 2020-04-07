@@ -63,6 +63,7 @@ power and lower the voltage requirements.
 | TP4056 Micro USB LiPo Charging Protection Board TE585 | 1 | 1.27 € |
  
 Alternative A : with AA batteries
+
 | Item | Qty | Cost |
 |---|---:|---:|
 | 2X 1.5V AA Battery Holder | 1 | 3.61 € |
