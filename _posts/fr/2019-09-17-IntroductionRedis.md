@@ -1,11 +1,11 @@
 ---
 uid: RedisIntro
-title: Introduction à Redis
+title: Redis 01 - Introduction
 author: fcerbell
 layout: post
 lang: fr
 #description:
-category: Redis
+category: RedisIn5min
 tags: [ redis, introduction, key-value, data-structures ]
 #date: 9999-01-01
 #published: false

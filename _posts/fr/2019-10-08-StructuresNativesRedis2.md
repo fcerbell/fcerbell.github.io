@@ -1,11 +1,11 @@
 ---
 uid: RedisNativeStructures2
-title: Redis 03b- Structures de données natives (2nde partie)
+title: Redis 03b - Structures de données natives (2nde partie)
 author: fcerbell
 layout: post
 lang: fr
 #description:
-#category: Test
+category: RedisIn5min
 tags: [ Redis, RedisLabs, Data-structures, Data, Structures, key-value, key, value, strings, limits, sets, sorted, sorted sets, list, hash, geo, geo index, bitmap, bitfield, hyperloglog, usecase, stream, ttl, time-to-live, expiration, full text search, full text, search engine, graph database, graph, cypher, opencypher, concurrency, atomic counter, atomic, counter, lock, index, indices, stack, queue, joe queue, task queue, task ]
 #date: 9999-01-01
 published: true

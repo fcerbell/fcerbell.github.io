@@ -5,7 +5,7 @@ author: fcerbell
 layout: post
 lang: en
 #description:
-#category: Test
+category: RedisIn5min
 tags: [Redis,  Redislabs, index, indices, nosql, scalability, high, availability, high-availability, consistency, performances, sql, relational, normalization, normalize, deduplicate]
 #date: 9999-01-01
 published: true

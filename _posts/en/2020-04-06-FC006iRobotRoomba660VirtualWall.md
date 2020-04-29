@@ -1,12 +1,12 @@
 ---
 uid: irobotroomba660virtualwall
-title: FC006-iRobot Roomba Virtual Wall
+title: FC006 - iRobot Roomba Virtual Wall
 author: fcerbell
 layout: post
 lang: en
 #description:
-#category: Test
-#tags: [ tag1, tag2 ]
+category: Electronic
+tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
 #date: 9999-01-01
 #published: false
 ---
@@ -41,8 +41,8 @@ and save the battery.
 
 The ATTiny13 would be a good candidate, but the Flash size would require strong
 code optimizations. I chose an ATTINY85 despite it is oversized, because I
-ordered 5 of them (I can frie one during the dev and tests) and it is quite
-versatile to be reused in other projects. I chose the "ATTiny85V-10" because "V"
+ordered 5 of them (I can frie one during the dev and tests) and it is versatile
+enough to be reused in other projects. I chose the "ATTiny85V-10" because "V"
 means that it can work with lower voltage, down to 1.8V (last longer when the
 batteries are low and when there is no voltage booster) ; only 10Mhz because my
 provider did not have 20Mhz anymore and this project will run at 1Mhz to save
@@ -71,7 +71,7 @@ Alternative A : with AA batteries
 Alternative B : with CR123A 3V battery
 
 I chose to use the 1S/850mAh LiPo with the charging PCB because I had it in my
-drawers, thus, the enclosure and the source code (voltage thresholds) are
+drawers, thus the enclosure and the source code (voltage thresholds) are
 designed for the LiPo.
 
 # Software
@@ -323,8 +323,9 @@ void roomba_send(char code) {
 }
 ```
 
-I found in [Probonopd's gist][ProbonopdGist][^1] and in [iRobot Roomba 500 Open
-Interface Specs, page 22][iRobotRoomba500OpenInterfaceSpecs][^2]
+I found the list of commands in [Probonopd's gist][ProbonopdGist][^1] and in
+[iRobot Roomba 500 Open Interface Specs, page
+22][iRobotRoomba500OpenInterfaceSpecs][^2]
 
 [ProbonopdGist]: https://gist.github.com/probonopd/5181021
 [iRobotRoomba500OpenInterfaceSpecs]: https://www.irobot.lv/uploaded_files/File/iRobot_Roomba_500_Open_Interface_Spec.pdf

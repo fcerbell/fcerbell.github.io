@@ -5,7 +5,7 @@ author: fcerbell
 layout: post
 lang: fr
 #description:
-#category: Test
+category: Tutos
 #categories
 #tags
 #date: 9999-01-01

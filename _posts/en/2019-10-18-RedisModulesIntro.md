@@ -5,7 +5,7 @@ author: fcerbell
 layout: post
 lang: en
 #description:
-#category: Test
+category: RedisIn5min
 tags: [ Redis,  Redislabs, full text search, full text, search engine, graph database, graph, cypher, opencypher, index, indices, modules ]
 #date: 9999-01-01
 published: true

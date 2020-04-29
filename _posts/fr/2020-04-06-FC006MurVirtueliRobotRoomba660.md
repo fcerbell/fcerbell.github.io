@@ -1,33 +1,34 @@
 ---
 uid: irobotroomba660virtualwall
-title: FC006-Mur virtuel pour iRobot Roomba
+title: FC006 - Mur virtuel pour iRobot Roomba
 author: fcerbell
 layout: post
 lang: fr
 #description:
-#category: Test
-#tags: [ tag1, tag2 ]
+category: Electronic
+tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
 #date: 9999-01-01
 #published: false
 ---
 
 iRobot vend des robot autonomes aspirateurs *Roomba*. Ils disposent de
-recepteurs IR pour détecter les obstables et pour reçevoir des commandes d'une
-télécommande. iRobot vend  un *mur virtuel* à 40€ pour créer une frontière et
+recepteurs IR pour détecter les obstacles et pour reçevoir des commandes d'une
+télécommande. iRobot vend un *mur virtuel* à 40€ pour créer une frontière et
 contraindre le robot dans une partie de la pièce à nettoyer. Les composants
 coûtent moins de 10€ ! J'ai décidé de créer le mien, basé sur un microcontroleur
 AVR ATTiny.
 
-Vous pouvez trouver des liens vers les enregistrements vidéo et les supports imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
+Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
+imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 
 * TOC
 {:toc}
 
 # Vidéo
 
-<center><iframe width="420" height="315" src="https://www.youtube.com/embed/2QJ_tI8vHBU" frameborder="0" allowfullscreen></iframe></center>
-
-
+<center><iframe width="420" height="315"
+src="https://www.youtube.com/embed/2QJ_tI8vHBU" frameborder="0"
+allowfullscreen></iframe></center>
 
 # Matériel
 
@@ -47,7 +48,7 @@ surdimensionnement, car j'en ai acheté 5 (je peux en griller un lors du
 développement et des tests) et il est suffisament versatile pour être réutilisé
 dans d'autres projets. J'ai choisi le "ATTiny85V" car "V" signifie qu'il peut
 continuer à fonctionner avec des voltages bas, jusqu'à 1.8V (et fonctionnera
-plus longtemps lorsque la batterie est faible et sans booster de tension) ; la
+plus longtemps lorsque la batterie est faible et sans élévateur de tension) ; la
 version 10 Mhz car mon fournisseur n'avait que celle-la en stock et que ce
 projet fonctionnera à 1Mhz pour économiser de l'énergie et diminuer la tension
 minimale.
@@ -74,7 +75,7 @@ Alternative A : avec des piles AA
 
 Alternative B : avec une pile 3V CR123A
 
-J'ai choisi d'utiliser une batterie LiPo 1S/850mAh avec ne carte de chargement
+J'ai choisi d'utiliser une batterie LiPo 1S/850mAh avec une carte de chargement
 car j'en avais en stock. Donc, le boitier et le code source (les seuils de
 tension) sont adapté pour cette configuration.
 
@@ -93,7 +94,7 @@ http://drazzy.com/package_drazzy.com_index.json
 ![1380a757a5d48aea3045c8a6bcd074ce.png]
 
 Ensuite, j'ai pu ajouter le `ATTinyCore` de *Spence Konde* dans le gestionnaire
-de cartes. Ce coeur peut configurer les fusibles pour changer la fréquence et
+de cartes. Ce cœur peut configurer les fusibles pour changer la fréquence et
 les autres réglages.
 
 ![fdce2d0d0490d3a4051874a1018bd841.png]
@@ -126,7 +127,7 @@ quoi vous aller briquer votre MCU**
 
 Ces réglages peuvent désormais être programmés dans les fusibles en utilisant le
 menu *Outils/Burn bootloader*. Mais je n'ai pas besoin de le faire car ils
-seront automatiquement mis à jours à chaque fois que je téléverserai mon
+seront automatiquement mis à jour à chaque fois que je téléverserai mon
 programme dans le MCU en utilisant l'USBasp avec le paquet ATTinyCore de Spence.
 
 ## Protocole de transmission
@@ -143,11 +144,11 @@ commande dure environ
 $$3 * ( 32ms + 100 ms) + 50 ms = 450 ms$$
 
 ![aad6704814837057484eb1d66efe564c.png]
-Sortie PB0/Pin6 ien jaune, signal reçu par un VS1838 en violet
+Sortie PB0/Pin6 en jaune, signal reçu par un VS1838 en violet
 
 ## Programmation du Timer0
 
-J'ai utiliser une programmation bas-niveau pour générer une modulation PWM de
+J'ai utilisé une programmation bas-niveau pour générer une modulation PWM de
 38kHz à 50% à partir du timer 0. Cette porteuse encodera le signal en la
 connectant/déconnectant à la broche PB0 de l'ATTiny85 (broche 6). J'ai du
 désactiver les interruptions générées par le timer car les bibliothèques Arduino
@@ -278,7 +279,7 @@ fréquence du MCU.
 - piles (2xAA, CR123A, CR2032) : 2V/1.8V pour un ATTiny85
 - LiPo avec BMS (coupant à 2.5V) : 3V/2.8V 
 
-Pour cela, j'ai réutilisé la fonction  `ReadVcc` du projet
+Pour cela, j'ai réutilisé la fonction `ReadVcc` du projet
 [MySensors][MySensors][^3]. J'ai uniquement ajouté une activation du circuit ADC
 au début et une désactivation à la fin, ainsi, l'ADC ne consomme du courant
 qu'au cours des mesures.
@@ -339,8 +340,8 @@ void roomba_send(char code) {
 }
 ```
 
-J'ai trouvé les commandes sur le [gist de Probonopd][ProbonopdGist][^1] et dans
-le document [iRobot Roomba 500 Open Interface Specs, page
+J'ai trouvé la liste des commandes sur le [gist de Probonopd][ProbonopdGist][^1]
+et dans le document [iRobot Roomba 500 Open Interface Specs, page
 22][iRobotRoomba500OpenInterfaceSpecs][^2]
 
 [ProbonopdGist]: https://gist.github.com/probonopd/5181021

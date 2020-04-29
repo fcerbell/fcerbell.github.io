@@ -1,11 +1,11 @@
 ---
 uid: RedisKeyValue
-title: Redis, un entrepôt clé-structure
+title: Redis 02 - un entrepôt clé-structure
 author: fcerbell
 layout: post
 lang: fr
 #description:
-category: Redis
+category: RedisIn5min
 tags: [ redis, introduction, key-value, data-structures ]
 #date: 9999-01-01
 #published: false

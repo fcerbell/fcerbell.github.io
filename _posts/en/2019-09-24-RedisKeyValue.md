@@ -1,11 +1,11 @@
 ---
 uid: RedisKeyValue
-title: Redis a key-structure store
+title: Redis 02 - a key-structure store
 author: fcerbell
 layout: post
 lang: en
 #description:
-category: Redis
+category: RedisIn5min
 tags: [ redis, introduction, key-value, data-structures ]
 #date: 9999-01-01
 #published: false
