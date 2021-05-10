@@ -22,6 +22,28 @@ author: François Cerbelle
 disqus:
     shortname: "surledivan"
 
+# Social share links
+pinterest_sharing: true
+#instagram_sharing: true
+twitter_sharing: true
+facebook_sharing: true
+#youtube_sharing: true
+#vimeo_sharing: true
+#soundcloud_sharing: true
+#github_sharing: true
+tumblr_sharing: true
+linkedin_sharing: true
+googleplus_sharing: true
+reddit_sharing: true
+#digg_sharing: true
+#stumbleupon_sharing: true
+#weibo_sharing: true
+#dounban_sharing: true
+#hackernews_sharing: true
+vk_sharing: true
+viadeo_sharing: true
+
+
 # Build settings
 #permalink: pretty
 permalink: /:title/
