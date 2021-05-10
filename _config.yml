@@ -1,83 +1,54 @@
 # Site settings
-host: 0.0.0.0
 title: "Sur le divan..."
-description: "Le blog qui raconte tout !"
 email: francois@cerbelle.net
-#url: 
-url: http://fcerbell.github.io
-#url: http://www.cerbelle.net
-baseurl: 
-#baseurl: /_site
-
-# Social follow links
-#pinterest_username: "#"
-#instagram_username: "#"
-twitter_username: "fcerbelle"
-facebook_username: "francois.cerbelle"
-youtube_username: "FrancoisCerbelle"
-#vimeo_username: "#"
-#soundcloud_username: "#"
-github_username: "fcerbell"
-#tumblr_username: "#"
-linkedin_username: "fcerbell"
-#googleplus_username: "#"
-#reddit_username: "#"
-#digg_username: "#"
-#stumbleupon_username: "#"
-#weibo_username: "#"
-#hackernews_username: "#"
-#vk_username: "#"
-
-# Social share links
-pinterest_sharing: true
-#instagram_sharing: true
-twitter_sharing: true
-facebook_sharing: true
-#youtube_sharing: true
-#vimeo_sharing: true
-#soundcloud_sharing: true
-#github_sharing: true
-tumblr_sharing: true
-linkedin_sharing: true
-googleplus_sharing: true
-reddit_sharing: true
-#digg_sharing: true
-#stumbleupon_sharing: true
-#weibo_sharing: true
-#dounban_sharing: true
-#hackernews_sharing: true
-vk_sharing: true
-viadeo_sharing: true
+description: >-
+  Le blog qui raconte tout ! Des articles de blog, des vidéos et des 
+  pages de tutoriels sur Debian GNU/Linux, les drones, la photo, la 
+  vidéo, l'audio, l'électronique, 
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+lang: "fr"
+show_excerpts: true
+date_format: "%d/%m/%Y"
+twitter_username: fcerbelle
+github_username:  fcerbell
+facebook_username: FrancoisCerbelle
+instagram_username: francoiscerbelle
+linkedin_username: fcerbell
+youtube: FrancoisCerbelle
+google_analytics: UA-67233700-1
+rss: RSS/Atom
+author: François Cerbelle
+disqus:
+    shortname: "surledivan"
 
 # Build settings
 #permalink: pretty
 permalink: /:title/
 #permalink: :year/:month/:day/:title.html
-
 encoding: utf-8
 defaults:
   -
     scope:
       path: ""
     values:
-      layout: "default"
       lang: "fr"
+      author: "François Cerbelle"
   -
     scope:
-      path: "pages/fr"
+      path: "pages"
     values:
-      description: "Site personnel de François Cerbelle"
-  -
-    scope:
-      path: "pages/en"
-    values:
-      lang: "en"
-      description: "François Cerbelle's web site"
+      layout: "page"
   -
     scope:
       path: "_posts"
     values:
       layout: "post"
+  -
+    scope:
+      path: "pages/en"
+    values:
+      lang: "en"
   -
     scope:
       path: "_posts/en"
@@ -94,16 +65,36 @@ defaults:
     values:
       lang: "en"
 
-disqus:
-    shortname: "surledivan"
-
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
   hard_wrap: false
 relative_permalinks: false
-exclude: [.git, .gitignore, sass, .sass-cache, package.json, gruntfile.js, node_modules, README.md, documentation]
 sass:
     style: compressed
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-archives
+feed:
+    posts_limit: 20
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .git
+  - .gitignore
+  - sass
+  - .sass-cache
+  - package.json
+  - gruntfile.js
+  - node_modules
+  - README.md
+  - documentation
+
 

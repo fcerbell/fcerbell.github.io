@@ -1,14 +1,9 @@
 ---
 uid: IotSensorSendingToRedis
 title: Envoyer des valeurs dans Redis depuis un capteur IoT sur ESP8266
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
 tags: [iot, embedded, esp8266, arduino, redis, home automation]
-#date: 9999-01-01
-#published: true
 ---
 
 Créer un capteur de luminosité en utilisant un ESP8266 et une photoresistance

@@ -1,14 +1,9 @@
 ---
 uid: HomeAutomationCenterPrintedBox
 title: Home automation center printed box
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Home Automation
 tags: [ Creality, CR-10, Blender, Slic3r, Domoticz, RFXCom, RFX433trs, MySensors, Z-Wave.me, Z-Wave, Razberry ]
-#date: 9999-01-01
-published: false
 ---
 
 I used Domoticz on a Raspberry PI 1 model B, with the z-wave.me

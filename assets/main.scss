@@ -1,0 +1,63 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+/*
+html {
+    background-color: black;
+    header {
+        background-color: red;
+    }
+    main {
+        background-color: green;
+        article {
+            background-color: #373737;
+            header {
+                background-color: #FF3737;
+            }
+            main {
+                background-color: #37FF37;
+            }
+            footer {
+                background-color: #3737FF;
+            }
+        }
+    }
+    footer {
+        background-color: blue;
+    }
+}
+*/
+article .externalLink,
+footer .externalLink {
+    background: url(/assets/external.png) center right no-repeat;
+    padding-right: 13px;
+}
+
+.languages {
+  max-width: 800px;
+  padding: 0 30px;
+  margin: 0 auto;
+  zoom: 1;
+  text-align: center;
+}
+img.lang-flag {
+    padding: 5px;
+    max-width: 30px;
+}
+
+@import "minima";
+
+.footer-col-1 {
+  width: -webkit-calc(30% - (#{$spacing-unit} / 2));
+  width:         calc(30% - (#{$spacing-unit} / 2));
+}
+
+.footer-col-2 {
+  width: -webkit-calc(25% - (#{$spacing-unit} / 2));
+  width:         calc(25% - (#{$spacing-unit} / 2));
+}
+
+.footer-col-3 {
+  width: -webkit-calc(45% - (#{$spacing-unit} / 2));
+  width:         calc(45% - (#{$spacing-unit} / 2));
+}

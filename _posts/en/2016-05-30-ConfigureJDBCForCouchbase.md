@@ -1,14 +1,9 @@
 ---
 uid: ConfigureJDBCForCouchbase
 title: Configure JDBC for Couchbase
-author: fcerbell
-layout: post
-lang: en
-#description:
-#category: Test
+description:
+category: Tutos
 tags: [ JDBC, Couchbase ]
-#date: 2016-05-27
-published: true
 ---
 
 Here, we will see how to download, install, configure and use Simba's JDBC

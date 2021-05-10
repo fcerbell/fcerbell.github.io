@@ -1,14 +1,9 @@
 ---
 uid: multiprotocoliotinfra
 title: Multiprotocol IoT infrastructure
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Domotique
 tags: [ ZWave, MySensors, MQTT, Mosquitto, NodeRED, Domoticz, NodeJS, IoT, Raspberry, home automation ]
-#date: 9999-01-01
-#published: false
 ---
 
 I made my first home automation system 6 years ago, in 2014 and had

@@ -6,3 +6,4 @@ github
 .sass-cache
 /_site/
 .jekyll-metadata
+vendor

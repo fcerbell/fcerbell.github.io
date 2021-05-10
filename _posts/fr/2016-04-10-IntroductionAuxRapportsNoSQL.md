@@ -1,14 +1,9 @@
 ---
 uid: NoSQLReportingIntroduction
-author: fcerbell
 title: Introduction aux rapports NoSQL
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
 tags: [ NoSQL, Reporting ]
-#date
-published: true
 ---
 
 Quelque soit la technologie de base de données, il y a une application métier

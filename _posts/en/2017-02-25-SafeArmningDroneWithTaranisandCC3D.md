@@ -1,14 +1,9 @@
 ---
 uid: DroneSafeArmingWithTaranis
 title: Drone safe arming with Taranis (OpenTX)
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Drone
 tags: [ CC3D, Taranis, Drone, Multi-copter, Quadcopter ]
-#date: 9999-01-01
-published: true
 ---
 
 Zero throttle and yaw right is the standard for arming a drone. It is fine, but I wanted to add security with a switch, without wasting an extra channel or introducing a

@@ -1,13 +1,9 @@
 ---
 uid: ConnecterJasperACouchbase
 title: JDBC connection from JasperReports Server to Couchbase
-author: fcerbell
-layout: post
-lang: en
 description:
 category: Tutos
 tags: [ Couchbase, Jaspersoft, Reporting, JDBC, N1QL ]
-#published: false
 ---
 
 [Couchbase], a NOSQL BigData database, now offers a new language, N1QL, to write queries. This article will show you how to use the new [Couchbase] JDBC driver in [JasperReports Server][jrs] (I will use tje JRS acronym from now), in order to execute SQL(92) queries on the [Couchbase] database.

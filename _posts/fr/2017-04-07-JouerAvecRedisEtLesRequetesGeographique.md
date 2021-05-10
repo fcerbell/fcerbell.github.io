@@ -1,15 +1,9 @@
 ---
 uid: PlayingWithRedisAndGeoQueries
 title: Jouer avec Redis et les requêtes géographiques
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
-#categories
-#tags
-#date: 9999-01-01
-published: true
+tags: []
 ---
 
 Alors que je recherchair un jeu de données pour jouer avec Redis, j'ai non-seulement découvert un bon jeu de données mais aussi une

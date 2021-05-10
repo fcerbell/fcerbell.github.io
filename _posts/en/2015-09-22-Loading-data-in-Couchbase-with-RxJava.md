@@ -1,13 +1,9 @@
 ---
 uid: DataLoading
 title: Loading data in Couchbase with RxJava
-author: fcerbell
-layout: post
-lang: en
 description:
 category: Tutos
 tags: [ Java, ReactiveX, RxJava, Couchbase, Data ]
-#published: false
 ---
 
 This short tutorial explains how to find an interesting data set (quantitatively

@@ -1,7 +1,6 @@
 ---
-layout: page
-title: À propos de moi
 uid: about
+title: À propos de moi
 description: Qui suis-je
 ---
 

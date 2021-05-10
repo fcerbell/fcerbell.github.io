@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html{%if page.lang%} lang="{{page.lang}}"{%endif%}>
-
-  {% include head.html %}
-
-    <body onLoad="changeexternallinks()">
-
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {%- include head.html -%}
+  <body onLoad="changeexternallinks()">
     {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrap">
-      {{content}}
+    <main class="page-content" aria-label="Content">
+      {% include languages.html %}
+      <div class="wrapper">
+        {{ content }}
       </div>
-    </div>
-
-    {% include footer.html %}
-    {% include googleanalytics.html %}
-
-    </body>
+    </main>
+    {% include footer.html -%}
+  </body>
 </html>

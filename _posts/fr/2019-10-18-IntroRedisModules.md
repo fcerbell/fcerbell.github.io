@@ -1,14 +1,9 @@
 ---
 uid: RedisModulesIntro
 title: Redis 04 - Introduction aux modules Redis
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: RedisIn5min
 tags: [ Redis,  Redislabs, full text search, full text, search engine, graph database, graph, cypher, opencypher, index, indices, modules ]
-#date: 9999-01-01
-published: true
 ---
 
 J'ai déjà listé les structures de données natives de Redis. Redis peut charger

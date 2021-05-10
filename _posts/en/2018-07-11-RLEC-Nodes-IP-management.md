@@ -1,14 +1,9 @@
 ---
 uid: RLECNodesIPManagement
 title: RedisLabs Enterprise Cluster Nodes IP management
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Tutos
 tags: [ Redis, RedisLabs, RLEC, Cluster ]
-#date: 9999-01-01
-published: true
 ---
 
 RedisLabs Enterprise Cluster (RLEC[^1]) nodes can split network traffic in two

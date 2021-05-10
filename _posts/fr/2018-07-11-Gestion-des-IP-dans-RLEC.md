@@ -1,14 +1,9 @@
 ---
 uid: RLECNodesIPManagement
 title: Gestion des IPs d'un cluster Redis Enterprise
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
 tags: [ Redis, RedisLabs, RLEC, Cluster ]
-#date: 9999-01-01
-published: true
 ---
 
 Les nœuds d'un cluster RedisLabs (RLEC[^1]) peuvent séparer les traffic réseau

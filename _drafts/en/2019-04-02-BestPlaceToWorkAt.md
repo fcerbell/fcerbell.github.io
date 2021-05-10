@@ -1,14 +1,9 @@
 ---
 uid: BestPlaceToWorkAt
 title: Best place to work at... RedisLabs
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Work
 tags: [ RedisLabs, Redis ]
-#date: 9999-01-01
-#published: false
 ---
 
 

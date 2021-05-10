@@ -1,14 +1,9 @@
 ---
 uid: DataLoading
 title: Charger des données dans Couchbase avec RxJava
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
 tags: [ Java, ReactiveX, RxJava, Couchbase, Data ]
-#date
-#published: false
 ---
 
 Ce petit tutoriel explique comment trouver un jeu de données intéressant

@@ -1,14 +1,9 @@
 ---
 uid: RedisIntro
 title: Redis 01 - Introduction
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: RedisIn5min
 tags: [ redis, introduction, key-value, data-structures ]
-#date: 9999-01-01
-#published: false
 ---
 
 I try to present an overview of Redis, its history, what it can do, how it

@@ -1,14 +1,9 @@
 ---
 uid: PlayingWithRedisAndGeoQueries
 title: Playing with Redis and Geo queries
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Tutos
 tags: [ Redis, GeoHash, Queries ]
-#date: 9999-01-01
-published: true
 ---
 
 While I was searching for sample data to play with in Redis, I

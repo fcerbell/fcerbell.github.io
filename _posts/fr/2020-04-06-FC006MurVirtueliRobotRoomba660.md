@@ -1,14 +1,9 @@
 ---
 uid: irobotroomba660virtualwall
 title: FC006 - Mur virtuel pour iRobot Roomba
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Electronic
 tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
-#date: 9999-01-01
-#published: false
 ---
 
 iRobot vend des robot autonomes aspirateurs *Roomba*. Ils disposent de

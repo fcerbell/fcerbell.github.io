@@ -1,40 +1,28 @@
-<footer class="site-footer">
-  <div class="wrap">
-    <h2 class="footer-heading">{{site.title}}</h2>
-    <div class="footer-col-1 column">
-      <ul>
-        <li>{{site.title}}</li>
-        <li><a href="mailto:{{site.email}}"><span class="socicon-mail"></span><span>{{site.email}}</span></a></li>
-        <li><p class="text">{{site.description}}</p></li>
-      </ul>
-    </div>
-    <div class="footer-col-2 column">
-      <ul>
-        {% if site.pinterest_username %}<li><a target="_blank" href="http://www.pinterest.com/{{site.pinterest_username}}"><span class="socicon-pinterest"></span><span class="username">{{site.pinterest_username}}</span></a></li>{% endif %}
-        {% if site.instagram_username %}<li><a target="_blank" href="http://www.instagram.com/{{site.instagram_username}}"><span class="socicon-instagram"></span><span class="username">{{site.instagram_username}}</span></a></li>{% endif %}
-        {% if site.twitter_username %}<li><a target="_blank" href="http://www.twitter.com/{{site.twitter_username}}"><span class="socicon-twitter"></span><span class="username">{{site.twitter_username}}</span></a></li>{% endif %}
-        {% if site.facebook_username %}<li><a target="_blank" href="http://www.facebook.com/{{site.facebook_username}}"><span class="socicon-facebook"></span><span class="username">{{site.facebook_username}}</span></a></li>{% endif %}
-        {% if site.youtube_username %}<li><a target="_blank" href="http://www.youtube.com/{{site.youtube_username}}"><span class="socicon-youtube"></span><span class="username">{{site.youtube_username}}</span></a></li>{% endif %}
-        {% if site.vimeo_username %}<li><a target="_blank" href="http://www.vimeo.com/{{site.vimeo_username}}"><span class="socicon-vimeo"></span><span class="username">{{site.vimeo_username}}</span></a></li>{% endif %}
-        {% if site.soundcloud_username %}<li><a target="_blank" href="http://www.soundcloud.com/{{site.soundcloud_username}}"><span class="socicon-soundcloud"></span><span class="username">{{site.soundcloud_username}}</span></a></li>{% endif %}
-        {% if site.github_username %}<li><a target="_blank" href="http://www.github.com/{{site.github_username}}"><span class="socicon-github"></span><span class="username">{{site.github_username}}</span></a></li>{% endif %}
-        {% if site.tumblr_username %}<li><a target="_blank" href="http://www.tumblr.com/{{site.tumblr_username}}"><span class="socicon-tumblr"></span><span class="username">{{site.tumblr_username}}</span></a></li>{% endif %}
-        {% if site.linkedin_username %}<li><a target="_blank" href="http://www.linkedin.com/in/{{site.linkedin_username}}"><span class="socicon-linkedin"></span><span class="username">{{site.linkedin_username}}</span></a></li>{% endif %}
-        {% if site.googleplus_username %}<li><a target="_blank" href="http://www.googleplus.com/in/{{site.googleplus_username}}"><span class="socicon-google"></span><span class="username">{{site.googleplus_username}}</span></a></li>{% endif %}
-        {% if site.reddit_username %}<li><a target="_blank" href="http://www.reddit.com/in/{{site.reddit_username}}"><span class="socicon-reddit"></span><span class="username">{{site.reddit_username}}</span></a></li>{% endif %}
-        {% if site.digg_username %}<li><a target="_blank" href="http://www.digg.com/in/{{site.digg_username}}"><span class="socicon-digg"></span><span class="username">{{site.digg_username}}</span></a></li>{% endif %}
-        {% if site.stumbleupon_username %}<li><a target="_blank" href="http://www.stumbleupon.com/in/{{site.stumbleupon_username}}"><span class="socicon-stumbleupon"></span><span class="username">{{site.stumbleupon_username}}</span></a></li>{% endif %}
-        {% if site.weibo_username %}<li><a target="_blank" href="http://www.weibo.com/in/{{site.weibo_username}}"><span class="socicon-weibo"></span><span class="username">{{site.weibo_username}}</span></a></li>{% endif %}
-        {% if site.hacker-news_username %}<li><a target="_blank" href="http://www.hacker-news.com/in/{{site.hacker-news_username}}"><span class="socicon-hacker-news"></span><span class="username">{{site.hacker-news_username}}</span></a></li>{% endif %}
-        {% if site.vk_username %}<li><a target="_blank" href="http://www.vk.com/in/{{site.vk_username}}"><span class="socicon-vkontakte"></span><span class="username">{{site.vk_username}}</span></a></li>{% endif %}
-        <li><a target="_blank" href="{{site.url}}{{site.baseurl}}/feed.xml"><span class="socicon-rss"></span><span class="username">RSS</a></span></li>
-      </ul>
-    </div>
-    <div class="footer-col-3 column">
-        <p>Credits :</p>
-        <ul>
-            <li><a href="http://www.socicon.com" target="_blank" alt="Free social icons font" title="the social icons font">socicon</a></p></li>
+<footer class="site-footer h-card">
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+  <div class="wrapper">
+    <h2 class="footer-heading">{{ site.title | escape }}</h2>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">
+            {%- if site.author -%}
+              {{ site.author | escape }}
+            {%- else -%}
+              {{ site.title | escape }}
+            {%- endif -%}
+            </li>
+            {%- if site.email -%}
+            <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+            {%- endif -%}
         </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        {%- include social.html -%}
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>{{- site.description | escape -}}</p>
+      </div>
     </div>
   </div>
 </footer>

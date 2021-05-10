@@ -1,14 +1,9 @@
 ---
 uid: LinearBenchPowerSupply30V3A
 title: FC007 - Linear bench power supply
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Electronic
 tags: [ PSU, Bench, Labo, Power supply, LM723, 2n3055, BD139 ]
-#date: 9999-01-01
-published: true
 ---
 
 Here is the design, build and test of a simple fanless 30V-3A(100VA) linear

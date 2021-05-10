@@ -1,14 +1,9 @@
 ---
 uid: LinearBenchPowerSupply30V3A
 title: FC007 - Alimentation de labo linéaire 30V 3A
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Electronic
 tags: [ PSU, Bench, Labo, Power supply, LM723, 2n3055, BD139 ]
-#date: 9999-01-01
-published: true
 ---
 
 Voici la conception, réalisation et test d'une alimentation linéaire de

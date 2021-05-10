@@ -1,14 +1,9 @@
 ---
 uid: ConfigureJDBCForCouchbase
 title: Configurer JDBC pour Couchbase
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
 tags: [ JDBC, Couchbase ]
-#date: 2016-05-27
-published: true
 ---
 
 Nous allons voir comment télécharger, installer, configurer et utiliser le

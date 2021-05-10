@@ -1,14 +1,9 @@
 ---
 uid: USBPSU
 title: USB Powersupply
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Tuto
 tags: [ USB, Electronic ]
-#date: 9999-01-01
-#published: false
 ---
 
 More and more devices are powered with an USB plug. They require more and more

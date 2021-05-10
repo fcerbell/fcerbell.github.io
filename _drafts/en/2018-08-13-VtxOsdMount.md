@@ -1,14 +1,9 @@
 ---
 uid: VtxOsdMount
 title: VTX and OSD mount for FPV
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: 3DPrinting
 tags: [ VTX, OSD, RC, FPV ]
-#date: 9999-01-01
-published: false
 ---
 
 I bought a mini camera, an OSD (On Screen Display) and a VTX

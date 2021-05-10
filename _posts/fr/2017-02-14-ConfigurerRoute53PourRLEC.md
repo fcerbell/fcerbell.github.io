@@ -1,14 +1,9 @@
 ---
 uid: ConfigureRoute53ForRLEC
 title: Comment configurer le DNS Route53 d'Amazon pour RedisLabs Enterprise Cluster
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: Tutos
 tags: [ DNS, Route53, AWS, Amazon, Redis ]
-#date: 9999-01-01
-published: true
 ---
 
 RedisLabs Enterprise Cluster (RLEC[^1]) nécessite une configuration DNS particulière pour offrir la haute-disponibilité (HA). Cet article décrit comment configurer le DNS *Route53* d'*Amazon Web Services* (AWS) correctement.

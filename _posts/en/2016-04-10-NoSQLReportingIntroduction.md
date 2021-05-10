@@ -1,14 +1,9 @@
 ---
 uid: NoSQLReportingIntroduction
-author: fcerbell
 title: Introduction to NoSQL reporting
-layout: post
-lang: en
-#description:
+description:
 category: Tutos
 tags: [ NoSQL, Database, Architecture ]
-#date
-published: true
 ---
 
 Whatever the database technology is, there is a business application using it

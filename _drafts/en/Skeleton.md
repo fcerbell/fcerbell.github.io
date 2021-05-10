@@ -1,14 +1,9 @@
 ---
 uid: skel
 title: English Skeleton
-author: fcerbell
-layout: post
-lang: en
-#description:
-#category: Test
-#tags: [ tag1, tag2 ]
-#date: 9999-01-01
-published: false
+description:
+category: Test
+tags: [ tag1, tag2 ]
 ---
 
 Abstract/Excerpt/Intro

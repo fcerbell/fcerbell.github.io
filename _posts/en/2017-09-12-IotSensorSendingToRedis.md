@@ -1,14 +1,9 @@
 ---
 uid: IotSensorSendingToRedis
 title: Iot sensor on ESP8266 sending values to Redis
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Tutos
 tags: [iot, embedded, esp8266, arduino, redis, home automation]
-#date: 9999-01-01
-#published: true
 ---
 
 Create a light sensor using an ESP8266 and an LDR for 5€, directly send the

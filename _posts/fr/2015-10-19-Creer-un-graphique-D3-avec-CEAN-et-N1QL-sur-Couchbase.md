@@ -1,13 +1,9 @@
 ---
 uid: CeanAndD3
 title: Créer un graphique D3 avec CEAN et N1QL sur Couchbase
-author: fcerbell
-layout: post
-lang: fr
 description: Comment créer un graphique D3 sur Couchbase en utilisant la pile CEAN
 category: Tutos
 tags: [ CEAN, Couchbase, D3, NodeJS, ExpressJS, AngularJS, Reporting, N1QL]
-#published: false
 ---
 
 [Couchbase], dispose d'une pile complète CEAN(Couchbase Express Angular NodeJS)

@@ -1,14 +1,9 @@
 ---
 uid: irobotroomba660virtualwall
 title: FC006 - iRobot Roomba Virtual Wall
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: Electronic
 tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
-#date: 9999-01-01
-#published: false
 ---
 
 iRobot sells autonomous Vacuum cleaners Roomba. They have IR receiver to detect

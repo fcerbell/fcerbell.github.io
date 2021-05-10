@@ -1,14 +1,9 @@
 ---
 uid: redisdatascalabilityanddistribution
 title: Redis 06 - Data scalability and distribution
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: RedisIn5min
 tags: [ Redis,  Redislabs, scalability, data, cluster, distribution, sharding, resharding, shard, reshard, performances, linear, linear performances, predictable, predictable performances, query, querie, hash, hashslots, hashtags, hash-slot, hash-tags, enterprise, redis enterprise, community, redis community ]
-#date: 9999-01-01
-#published: false
 ---
 
 This part describes how to distribute data to achieve horizontal scalability

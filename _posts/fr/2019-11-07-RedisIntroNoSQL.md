@@ -1,14 +1,9 @@
 ---
 uid: RedisNoSQLIntro
 title: Redis 05 - Origines, buts et défis du NoSQL
-author: fcerbell
-layout: post
-lang: fr
-#description:
+description:
 category: RedisIn5min
 tags: [Redis,  Redislabs, index, indices, nosql, scalabilité, haute, disponibilité, haute-disponibilité, cohérence, performances, sql, relationel, normalisation, normaliser, dédupliquer]
-#date: 9999-01-01
-published: true
 ---
 
 Cette partie décrit quelques concepts généraux et défis du NoSQL : scalabilité,

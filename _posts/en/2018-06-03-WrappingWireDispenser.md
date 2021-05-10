@@ -1,14 +1,9 @@
 ---
 uid: WrappingWireDispenser
 title: 3D printed wrapping wire dispenser
-author: fcerbell
-layout: post
-lang: en
-#description:
+description:
 category: 3DPrinting
 tags: [ Wrapping, Wire, Dispenser, 3D, Printing, Creality, CR-10, OpenSCAD, Design, PLA ]
-#date: 9999-01-01
-published: true
 ---
 
 I often use wrapping wire for my electronic projects. Either I wrap the wires for quick prototyping, and
