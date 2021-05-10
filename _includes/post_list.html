@@ -11,7 +11,7 @@
         {%- assign main_post=posts | where:"lang",page.lang | first | default: main_post -%}
         <li>
           {%- assign date_format = site.date_format | default: "%-d %b %Y" %}
-          <span class="post-meta">{{ main_post.date | date: date_format }}</span> {% for p in posts %}<a href="{{p.url | prepend: site.baseurl | prepend: site.url}}"><img src="{{site.url}}/{{site.baseurl}}/assets/FlagpediaNet/{{p.lang}}.svg" class="lang-flag"/></a>{% endfor %}
+          <span class="post-meta">{{ main_post.date | date: date_format }}</span> {% for p in posts %}<a href="{{p.url | relative_url}}"><img src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="lang-flag"/></a>{% endfor %}
           <h3><a class="post-link" href="{{ main_post.url | relative_url }}">{{ main_post.title | escape }}</a></h3>
           {%- if site.show_excerpts -%}
             {{ main_post.excerpt }}
