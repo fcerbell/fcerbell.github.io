@@ -1,0 +1,137 @@
+/* from https://mycyberuniverse.com/social-media-share-bar-jekyll-blog-website.html */
+
+/* Share Bar */
+#share-bar {
+    font-size: 20px;
+    background-color: #ffffcf;
+
+    /* Title */
+    h4 {
+        margin-bottom: 10px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    /* All buttons */
+    .share-buttons {
+
+        /* Each button */
+        .share-button {
+            margin: 0px;
+            margin-bottom: 10px;
+            margin-right: 3px;
+            border: 1px solid #D3D6D2;
+            padding: 5px 10px 5px 10px;
+        }
+        .share-button:hover {
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        /* Facebook button */
+        .fa-facebook-official {
+            color: #3b5998;
+        }
+        .fa-facebook-official:hover {
+            background-color: #3b5998;
+        }
+
+        /* Twitter button */
+        .fa-twitter {
+            color: #55acee;
+        }
+        .fa-twitter:hover {
+            background-color: #55acee;
+        }
+
+        /* Pinterest button */
+        .fa-pinterest-p {
+            color: #cb2027;
+        }
+        .fa-pinterest-p:hover {
+            background-color: #cb2027;
+        }
+
+        /* Tumblr button */
+        .fa-tumblr {
+            color: #32506d;
+        }
+        .fa-tumblr:hover {
+            background-color: #32506d;
+        }
+
+        /* Reddit button */
+        .fa-reddit-alien {
+            color: #ff4500;
+        }
+        .fa-reddit-alien:hover {
+            background-color: #ff4500;
+        }
+
+        /* LinkedIn button */
+        .fa-linkedin {
+            color: #007bb5;
+        }
+        .fa-linkedin:hover {
+            background-color: #007bb5;
+        }
+
+        /* Email button */
+        .fa-envelope {
+            color: #444444;
+        }
+        .fa-envelope:hover {
+            background-color: #444444;
+        }
+
+        /* VKontakte button */
+        .fa-vk {
+            color: #2787f5;
+        }
+        .fa-vk:hover {
+            background-color: #2787f5;
+        }
+
+        /* Whatsapp button */
+        .fa-whatsapp {
+            color: #1ebea5;
+        }
+        .fa-whatsapp:hover {
+            background-color: #1ebea5;
+        }
+
+        /* Evernote button */
+        .fa-evernote {
+            color: #00a82d;
+        }
+        .fa-evernote:hover {
+            background-color: #00a82d;
+        }
+
+        /* Youtube button */
+        .fa-youtube {
+            color: #ff0101;
+        }
+        .fa-youtube:hover {
+            background-color: #ff0101;
+        }
+
+        /* Patreon button */
+        .fa-patreon {
+            color: #ff424d;
+        }
+        .fa-patreon:hover {
+            background-color: #ff424d;
+        }
+
+        /* Tipeee button */
+        .fa-tipeee {
+            color: #d64758;
+        }
+        .fa-tipeee:hover {
+            background-color: #d64758;
+        }
+
+    }
+
+}

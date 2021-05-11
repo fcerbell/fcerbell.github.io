@@ -7,3 +7,5 @@ layout: default
   {%- endif -%}
   {{ content }}
 </div>
+{%- assign posts=site.posts | sort: "date" | reverse -%}
+{%- include posts_list.html -%}

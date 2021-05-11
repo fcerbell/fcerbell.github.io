@@ -1,5 +1,0 @@
-      <div class="languages">
-        {% if page.uid %}
-        {% assign list=site.posts | concat: site.pages | where:"uid", page.uid | sort: 'path' %}{% for p in list %}<a href="{{p.url | relative_url}}"><img src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="lang-flag"/></a>{% endfor %}
-        {% endif %}
-      </div>

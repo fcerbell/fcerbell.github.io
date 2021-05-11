@@ -8,41 +8,20 @@ description: >-
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 lang: "fr"
-show_excerpts: true
 date_format: "%d/%m/%Y"
 twitter_username: fcerbelle
 github_username:  fcerbell
 facebook_username: FrancoisCerbelle
+youtube_username: FrancoisCerbelle
 instagram_username: francoiscerbelle
 linkedin_username: fcerbell
-youtube: FrancoisCerbelle
+youtube_username: FrancoisCerbelle
+meetup_username: "130641882"
 google_analytics: UA-67233700-1
 rss: RSS/Atom
 author: François Cerbelle
 disqus:
     shortname: "surledivan"
-
-# Social share links
-pinterest_sharing: true
-#instagram_sharing: true
-twitter_sharing: true
-facebook_sharing: true
-#youtube_sharing: true
-#vimeo_sharing: true
-#soundcloud_sharing: true
-#github_sharing: true
-tumblr_sharing: true
-linkedin_sharing: true
-googleplus_sharing: true
-reddit_sharing: true
-#digg_sharing: true
-#stumbleupon_sharing: true
-#weibo_sharing: true
-#dounban_sharing: true
-#hackernews_sharing: true
-vk_sharing: true
-viadeo_sharing: true
-
 
 # Build settings
 #permalink: pretty
@@ -118,5 +97,4 @@ exclude:
   - node_modules
   - README.md
   - documentation
-
 
