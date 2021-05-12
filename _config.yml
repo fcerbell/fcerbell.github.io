@@ -1,5 +1,5 @@
 # Site settings
-title: "Sur le divan..."
+title: "François Cerbelle"
 email: francois@cerbelle.net
 description: >-
   Le blog qui raconte tout ! Des articles de blog, des vidéos et des 
@@ -77,6 +77,7 @@ sass:
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
   - jekyll-archives
 feed:
     posts_limit: 20

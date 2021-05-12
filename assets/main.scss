@@ -1,6 +1,11 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
+@import "minima";
+@import "share-bar";
+@import "pagenav";
+@import "taglist";
+
 article .externalLink,
 footer .externalLink {
     background: url(/assets/external.png) center right no-repeat;
@@ -8,10 +13,6 @@ footer .externalLink {
 }
 
 .languages {
-  max-width: 800px;
-  padding: 0 30px;
-  margin: 0 auto;
-  zoom: 1;
   text-align: center;
 }
 img.lang-flag {
@@ -19,23 +20,9 @@ img.lang-flag {
     max-width: 30px;
 }
 
-@import "minima";
-
-.footer-col-1 {
-  width: -webkit-calc(30% - (#{$spacing-unit} / 2));
-  width:         calc(30% - (#{$spacing-unit} / 2));
+div.post-content img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.3);
 }
-
-.footer-col-2 {
-  width: -webkit-calc(25% - (#{$spacing-unit} / 2));
-  width:         calc(25% - (#{$spacing-unit} / 2));
-}
-
-.footer-col-3 {
-  width: -webkit-calc(45% - (#{$spacing-unit} / 2));
-  width:         calc(45% - (#{$spacing-unit} / 2));
-}
-
-@import "share-bar";
-@import "pagenav";
-@import "taglist";
