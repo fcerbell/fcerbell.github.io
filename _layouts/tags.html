@@ -1,0 +1,101 @@
+---
+layout: page
+---
+{% comment %}
+=======================
+The following part extracts all the tags from your posts and sort tags, so that you do not need to manually collect your tags to a place.
+=======================
+{% endcomment %}
+{% assign rawtags = "" %}
+{% for post in site.posts %}
+	{% assign ttags = post.tags | join:'|' | append:'|' %}
+	{% assign rawtags = rawtags | append:ttags %}
+{% endfor %}
+{% assign rawtags = rawtags | split:'|' | sort %}
+
+{% comment %}
+=======================
+The following part removes dulpicated tags and invalid tags like blank tag.
+=======================
+{% endcomment %}
+{% assign tags = "" %}
+{% for tag in rawtags %}
+	{% if tag != "" %}
+		{% if tags == "" %}
+			{% assign tags = tag | split:'|' %}
+		{% endif %}
+		{% unless tags contains tag %}
+			{% assign tags = tags | join:'|' | append:'|' | append:tag | split:'|' %}
+		{% endunless %}
+	{% endif %}
+{% endfor %}
+
+
+{% comment %}
+=======================
+case insensitive sorting (prepend each value with lcase value, sort, remove the lcase value)
+=======================
+{% endcomment %}
+{%- assign tmptags = '' -%}
+{%- for tag in tags -%}
+{%- assign lctag = tag | downcase -%}
+{%- assign tmptags = tmptags | append:',' | append: lctag | append:'|' | append: tag -%}
+{%- endfor -%}
+{%- assign tmptags = tmptags | split:',' | sort  -%}
+
+{%- assign tags = '' -%}
+{%- for tmptag in tmptags -%}
+{%- assign ttag = tmptag | split:'|' -%}
+{%- assign tags = tags | append:',' | append: ttag[1] -%}
+{%- endfor -%}
+{%- assign tags = tags | split:',' -%}
+
+{% comment %}
+=======================
+The purpose of this snippet is to list all the tags you have in your site.
+=======================
+{% endcomment %}
+{%- assign initials = "" -%}
+{%- for tag in tags -%}
+{%- assign initial = tag | slice:0 | upcase -%}
+{%- unless initials contains initial -%}
+{%- assign initials = initials | append: "," | append: initial -%}
+{%- endunless -%}
+{%- endfor %}
+{%- assign initials = initials | remove_first: ',' | split: ',' | sort -%}
+
+<ul class="tags-dictionnary">
+{%- for initial in initials %}
+<li><span class="tags-initial">{{initial}}</span>
+{%- for tag in tags -%}
+{%- assign taginitial = tag | slice:0 | upcase -%}
+{%- if taginitial == initial %} •<a href="#{{ tag | slugify }}"> {{ tag }} </a>{%- endif -%}
+{%- endfor -%}
+</li>
+{%- endfor %}
+</ul>
+
+{% comment %}
+=======================
+The purpose of this snippet is to list all your posts posted with a certain tag.
+=======================
+{% endcomment %}
+{%- assign posts = site.posts -%}
+{% for tag in tags %}
+{%- if tag == empty -%}
+{%- continue -%}
+{%- endif -%}
+	<h2 id="{{ tag | slugify }}">{{ tag }}</h2>
+	<ul>
+{%- assign uids=posts | map:"uid" | uniq -%}
+{%- for uid in uids -%}
+{%- assign post = posts | where: "uid",uid | first -%}
+{%- if post.tags contains tag %}
+{% include post_link.html %}
+{% for tag in post.tags -%}
+ • <a class="tag" href="/blog/tag/#{{ tag | slugify }}">{{ tag }}</a>
+{% endfor %}
+{%- endif -%}
+{%- endfor %}
+	</ul>
+{% endfor -%}

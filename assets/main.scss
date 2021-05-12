@@ -46,7 +46,6 @@ img.lang-flag {
 }
 
 @import "minima";
-@import "share-bar";
 
 .footer-col-1 {
   width: -webkit-calc(30% - (#{$spacing-unit} / 2));
@@ -62,3 +61,22 @@ img.lang-flag {
   width: -webkit-calc(45% - (#{$spacing-unit} / 2));
   width:         calc(45% - (#{$spacing-unit} / 2));
 }
+
+@import "share-bar";
+
+
+
+.tags-dictionnary {
+    li {
+        width:100%;
+    }
+    list-style: none; /* Remove default bullets */
+    .tags-initial {
+        font-weight: bold;
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 2px;
+        background-color: #ffff7f;
+    }
+}
+
