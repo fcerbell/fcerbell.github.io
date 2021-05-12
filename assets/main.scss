@@ -1,32 +1,6 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
-/*
-html {
-    background-color: black;
-    header {
-        background-color: red;
-    }
-    main {
-        background-color: green;
-        article {
-            background-color: #373737;
-            header {
-                background-color: #FF3737;
-            }
-            main {
-                background-color: #37FF37;
-            }
-            footer {
-                background-color: #3737FF;
-            }
-        }
-    }
-    footer {
-        background-color: blue;
-    }
-}
-*/
 article .externalLink,
 footer .externalLink {
     background: url(/assets/external.png) center right no-repeat;
@@ -63,20 +37,5 @@ img.lang-flag {
 }
 
 @import "share-bar";
-
-
-
-.tags-dictionnary {
-    li {
-        width:100%;
-    }
-    list-style: none; /* Remove default bullets */
-    .tags-initial {
-        font-weight: bold;
-        border: 2px solid black;
-        border-radius: 5px;
-        padding: 2px;
-        background-color: #ffff7f;
-    }
-}
-
+@import "pagenav";
+@import "taglist";

@@ -1,0 +1,14 @@
+.tags-dictionnary {
+    li {
+        width:100%;
+    }
+    list-style: none; /* Remove default bullets */
+    .tags-initial {
+        font-weight: bold;
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 2px;
+        background-color: #ffff7f;
+    }
+}
+
