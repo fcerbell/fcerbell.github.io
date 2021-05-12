@@ -527,6 +527,6 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 
 [^1]: RLEC, RedisLabs Enterprise Cluster, is now known as Redis^e for Redis Enterprise.
 
-[webnodeconfiguration.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/webnodeconfiguration.png "Node configuration web UI"
+[webnodeconfiguration.png]: {{ "/assets/posts/" | append: page.uid | append:"/webnodeconfiguration.png" | relative_url }} "Node configuration web UI"
 [RedisLabs.com]: https://redislabs.com "RedisLabs, Home of Redis"
 [Redis.io]: http://redis.io "Redis project web site"

@@ -353,6 +353,6 @@ spécifiques, plus tard.
 # Notes de bas de page
 [Video]: https://youtu.be/HTLQ5QorOCs "Enregistrement vidéo de la démonstration"
 [RedisIoModules]: https://redis.io/modules "Hub desmodules communautaires"
-[RedisIoModuleHub.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/RedisIoModuleHub.png "Page des modules communautaires"
+[RedisIoModuleHub.png]: {{ "/assets/posts/" | append: page.uid | append:"/RedisIoModuleHub.png" | relative_url }} "Page des modules communautaires"
 [RedislabsModules]: https://redislabs.com/redis-enterprise/modules/ "Hub des modules entreprise"
-[RedislabsModules.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/RedislabsModules.png "Page des modules entreprise"
+[RedislabsModules.png]: {{ "/assets/posts/" | append: page.uid | append:"/RedislabsModules.png" | relative_url }} "Page des modules entreprise"

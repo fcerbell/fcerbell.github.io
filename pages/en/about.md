@@ -19,4 +19,4 @@ I will probably also share on other topics such as cooking, photo or quadcopters
 
 My [CV].
 
-[CV]: {{site.url}}{{site.baseurl}}/assets/pages/CV-Anglais.pdf
+[CV]: {{ "/assets/pages/CV-Anglais.pdf" | relative_url }}

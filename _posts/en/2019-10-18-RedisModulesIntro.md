@@ -347,7 +347,7 @@ I'll focus on module development and on specific modules later.
 
 [Video]: https://youtu.be/P2d5P8DQFYM "Video presentation with pictures"
 [RedisIoModules]: https://redis.io/modules "Community module hub"
-[RedisIoModuleHub.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/RedisIoModuleHub.png "Community modules page"
+[RedisIoModuleHub.png]: {{ "/assets/posts/" | append: page.uid | append:"/RedisIoModuleHub.png" | relative_url }} "Community modules page"
 [RedislabsModules]: https://redislabs.com/redis-enterprise/modules/ "Enterprise modules"
-[RedislabsModules.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/RedislabsModules.png "Enterprise modules page"
+[RedislabsModules.png]: {{ "/assets/posts/" | append: page.uid | append:"/RedislabsModules.png" | relative_url }} "Enterprise modules page"
 

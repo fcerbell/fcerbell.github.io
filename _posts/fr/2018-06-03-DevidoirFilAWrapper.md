@@ -158,9 +158,9 @@ l'éditer dans OpenSCAD.
 
 # Footnotes
 
-[spools.jpg]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/spools.jpg "Wrapping wire spools"
-[firstdesign.jpg]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/firstdesign.jpg "First design"
-[result.jpg]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/result.jpg "Result"
+[spools.jpg]: {{ "/assets/posts/" | append: page.uid | append:"/spools.jpg" | relative_url }} "Wrapping wire spools"
+[firstdesign.jpg]: {{ "/assets/posts/" | append: page.uid | append:"/firstdesign.jpg" | relative_url }} "First design"
+[result.jpg]: {{ "/assets/posts/" | append: page.uid | append:"/result.jpg" | relative_url }} "Result"
 [Banggood]: https://www.banggood.com/0_55mm-Circuit-Board-Single-Core-Tinned-Copper-Wire-Wrap-Electronic-Wire-Fly-Wire-Dupont-Cable-Jumper-Cable-8-Color-Available-p-1121767.html
 [CyrobOrg]: http://philippe.demerliac.free.fr/Misc.htm
 [CyrobChan]:https://www.youtube.com/channel/UC5QPFDZ3Y4ylkkGJc6Y1OOA
@@ -169,9 +169,9 @@ l'éditer dans OpenSCAD.
 [OpenSCADOrg]: http://www.openscad.org/ "OpenSCAD website"
 [FcerbellThingiverse]: https://www.thingiverse.com/fcerbell/designs "My space on Thingiverse"
 [UltimakerCura]: https://ultimaker.com/en/products/ultimaker-cura-software "Cura slicer homepage"
-[MyWrappingWireHolder.scad]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/MyWrappingWireHolder.scad "MyWrappingWireHolder.scad"
-[MyWrappingWireDispenser.curaprofile]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/MyWrappingWireDispenser.curaprofile "MyWrappingWireDispenser.curaprofile"
-[MyWrappingWireHolder.stl]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/MyWrappingWireHolder.stl "MyWrappingWireHolder.stl"
+[MyWrappingWireHolder.scad]: {{ "/assets/posts/" | append: page.uid | append:"/MyWrappingWireHolder.scad" | relative_url }} "MyWrappingWireHolder.scad"
+[MyWrappingWireDispenser.curaprofile]: {{ "/assets/posts/" | append: page.uid | append:"/MyWrappingWireDispenser.curaprofile" | relative_url }} "MyWrappingWireDispenser.curaprofile"
+[MyWrappingWireHolder.stl]: {{ "/assets/posts/" | append: page.uid | append:"/MyWrappingWireHolder.stl" | relative_url }} "MyWrappingWireHolder.stl"
 [Thing]: https://www.thingiverse.com/thing:2942689
 [Customizer]: https://www.thingiverse.com/apps/customizer/run?thing_id=2942689
 [^1]: slicer

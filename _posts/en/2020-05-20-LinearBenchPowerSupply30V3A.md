@@ -278,12 +278,12 @@ shorting:
 [banana]: https://www.banggood.com/50-Pairs-3_5mm-Gold-Bullet-Banana-Connector-Plug-Male-Female-For-ESC-Battery-Motor-p-996353.html
 [TME]: https://www.tme.eu/fr/
 
-[4f9ed70ddbeac416efd9cdd8332ef83d.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/6c8af79c25694315a48e339dd09a2ffd.png
-[99f2890d5f280443078ffa07d741c451.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/85540f3733564585b3b51f658793b9a2.png
-[cd5ab2532d452407c4025a3ddbdd3ee6.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/f70576f67fc94587b3dff3c7e29643d8.png
-[3d4579092e76f4699fc4e029bb70f3bf.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/fe55a9c6a5834f0e8ab85cd9410ec237.png
-[bef4802abed42b8674431fa79cd42688.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/c8286368da6a461daef70923b3982ce0.png
-[SDS00028.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/f1b4caec56ad4f68abc87e8fbcee2d27.png
-[SDS00029.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/c8aeab09b1644206a9dc9f5d5c2ba633.png
+[4f9ed70ddbeac416efd9cdd8332ef83d.png]: {{ "/assets/posts/" | append: page.uid | append:"/6c8af79c25694315a48e339dd09a2ffd.png" | relative_url }}
+[99f2890d5f280443078ffa07d741c451.png]: {{ "/assets/posts/" | append: page.uid | append:"/85540f3733564585b3b51f658793b9a2.png" | relative_url }}
+[cd5ab2532d452407c4025a3ddbdd3ee6.png]: {{ "/assets/posts/" | append: page.uid | append:"/f70576f67fc94587b3dff3c7e29643d8.png" | relative_url }}
+[3d4579092e76f4699fc4e029bb70f3bf.png]: {{ "/assets/posts/" | append: page.uid | append:"/fe55a9c6a5834f0e8ab85cd9410ec237.png" | relative_url }}
+[bef4802abed42b8674431fa79cd42688.png]: {{ "/assets/posts/" | append: page.uid | append:"/c8286368da6a461daef70923b3982ce0.png" | relative_url }}
+[SDS00028.png]: {{ "/assets/posts/" | append: page.uid | append:"/f1b4caec56ad4f68abc87e8fbcee2d27.png" | relative_url }}
+[SDS00029.png]: {{ "/assets/posts/" | append: page.uid | append:"/c8aeab09b1644206a9dc9f5d5c2ba633.png" | relative_url }}
 
-[kicadfiles]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/FC007-BenchPowerSupply.zip "kicad project"
+[kicadfiles]: {{ "/assets/posts/" | append: page.uid | append:"/FC007-BenchPowerSupply.zip" | relative_url }} "kicad project"

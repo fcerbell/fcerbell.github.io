@@ -20,4 +20,4 @@ J'en profiterai certainement aussi pour partager sur d'autres sujets tels que la
 
 Mon [CV].
 
-[CV]: {{site.url}}{{site.baseurl}}/assets/pages/CV.pdf
+[CV]: {{ "/assets/pages/CV.pdf" | relative_url }}

@@ -76,6 +76,6 @@ I'll tell you more about available datastructures in the next video and about da
 # Footnotes
 
 [Video]: https://youtu.be/6uzBC39dvAs "Related youtube video"
-[RelationalSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/RelationalSchema.png "Sample dataset relational schema"
-[KeyvalueSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/KeyvalueSchema.png "Sample dataset key-value schema"
-[KeystructureSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/KeystructureSchema.png "Sample dataset key-structure schema"
+[RelationalSchema.png]: {{ "/assets/posts/" | append: page.uid | append:"/RelationalSchema.png" | relative_url }} "Sample dataset relational schema"
+[KeyvalueSchema.png]: {{ "/assets/posts/" | append: page.uid | append:"/KeyvalueSchema.png" | relative_url }} "Sample dataset key-value schema"
+[KeystructureSchema.png]: {{ "/assets/posts/" | append: page.uid | append:"/KeystructureSchema.png" | relative_url }} "Sample dataset key-structure schema"

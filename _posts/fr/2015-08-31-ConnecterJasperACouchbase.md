@@ -40,31 +40,31 @@ Lorsqu'un utilisateur se connecte à JRS, il accède au référentiel de son org
 
 Il faut commencer par aller dans le référentiel en ouvrant le menu *Afficher*, puis en sélectionnant *Référentiel* :
 
-![Menu Afficher/Référentiel]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-01.png)
+![Menu Afficher/Référentiel]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-01.png" | relative_url }})
 
 Une instance de JRS peut être disponible en mode SaaS. Cela signifie qu'elle peut accepter les connections de *Jean Dupont* de la société *JoliesFleurs* et celles de *Jean Dupont* de la société *Fleurs pour tous*, chacun ne pourra accéder qu'aux données de sa société, à travers de modèles de rapports propres à sa société ou partagés, le tout dans une interface aux couleurs de sa société. Il y a donc des emplacements privés par organisation et d'autres communs. Dans le cadre de notre tutoriel, nous allons placer les éléments de connexion dans la zone commune pour que toutes les organisations puissent utiliser cette connexion. Ce sera donc un répertoire projet dans le répertoire commun : */Public/WorldDevelopment*. Commençons par faire un clic droit sur le répertoire *Public* pour créer un nouveau dossier :
 
-![Menu Nouveau/Dossier]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-02.png)
+![Menu Nouveau/Dossier]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-02.png" | relative_url }})
 
 Saisissons ensuite son nom *WorldDevelopment* :
 
-![Création du dossier du projet]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-03.png)
+![Création du dossier du projet]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-03.png" | relative_url }})
 
 Parmi les éléments que nous allons créer, il y a des éléments techniques (les sources de données, les requêtes, les logos, les invites, ...) et les éléments métier (modèles de rapports, rapports, affichages à la demande, tableaux de bord, ...). Les éléments métier dépendent des éléments techniques pour pouvoir fonctionner. En revanche, autant l'utilisateur métier final souhaite voir les éléments métiers, autant il n'est pas intéressé par leurs dépendances techniques. Il est donc utile de les rendre utilisables par l'utilisateur final, sans lui laisser les voir pour ne pas polluer son interface. Nous allons donc créer un sous-répertoire technique dans lequel nous rangerons tous les éléments pour lesquels l'utilisateur final doit avoir les permissions d'utilisation, sans les permissions de listage : */Public/WorldDevelopment/Resources*.
 
-![Création du dossier des ressources techniques]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-04.png)
+![Création du dossier des ressources techniques]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-04.png" | relative_url }})
 
 Nous allons continuer à suivre les bonnes pratiques. Il n'est pas question de mettre en vrac tous les objets techniques, nous allons donc les ranger dans des sous-répertoires techniques. Dans ce tutoriel, nous voyons comment créer une source de données, nous allons donc ranger cette source de données avec toutes les autres sources de données du projet *WorldDevelopment* dans un sous-répertoire : */Public/WorldDevelopment/Resources/DataSources*.
 
-![Création du dossier des sources de données]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-05.png)
+![Création du dossier des sources de données]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-05.png" | relative_url }})
 
 Nous allons donc utiliser le sous-répertoire *Resources* pour ranger tous les éléments techniques pour lesquels les utilisateurs auront les permissions d'utilisation sans pour autant avoir les permissions d'affichage. Pour cela, nous allons changer les permissions sur le dossier *Resources*. Il faut faire un clic droit sur le dossier Resources et choisir *Autorisations* :
 
-![Menu contextuel des autorisations]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-06.png)
+![Menu contextuel des autorisations]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-06.png" | relative_url }})
 
 Donnons la permission *Exécuter seulement* au rôle *ROLE_USER* et refermons la boîte de dialogue :
 
-![Permissions sur les ressources techniques]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-07.png)
+![Permissions sur les ressources techniques]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-07.png" | relative_url }})
 
 Nous disposons maintenant d'une structure de répertoires commune à toutes les organisations (il n'y en a qu'une seule par défaut à l'installation) et dont les éléments techniques seront cachés aux utilisateurs métiers.
 
@@ -114,15 +114,15 @@ Nous pouvons maintenant créer la source de données JDBC utilisant le pilote Co
 
 Il faut commencer par se reconnecter à JRS en tant que *jasperadmin* avec le mot de passe *jasperadmin*. Puis, il faut aller dans le répertoire */Public/WorldDevelopment/Resources/DataSources*, faire un clic droit et choisir *Nouveau/Source de données* :
 
-![Menu Ajouter une source de données]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-08.png)
+![Menu Ajouter une source de données]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-08.png" | relative_url }})
 
 Sélectionner *Source de données JDBC*, puis choisir *Couchbase*. Grâce à la modification des fichiers de configuration que nous avons effectuée plus tôt, le pilote est connu de JRS et il nous suffit de le choisir. JRS connaît déjà le nom de la classe JAVA à charger et les valeurs par défaut pour les différents champs. Il suffit just de remplacer *localhost* dans l'URL de connexion pour indiquer un des nœeuds du cluster Couchbase et de valider les informations en cliquant sur le bouton *Test* :
 
-![Propriétés de la source de données]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-09.png)
+![Propriétés de la source de données]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-09.png" | relative_url }})
 
 La dernière étape consiste à choisir un nom pour cette nouvelle source de données, j'ai choisi de l'appeler *Couchbase_DS* :
 
-![Enregistrer la source de données]({{site.url}}{{site.baseurl}}/assets/posts/ConnecterJasperACouchbase/JRS_fr-10.png)
+![Enregistrer la source de données]({{ "/assets/posts/ConnecterJasperACouchbase/JRS_fr-10.png" | relative_url }})
 
 Voila
 =====

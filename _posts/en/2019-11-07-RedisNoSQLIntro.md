@@ -107,8 +107,8 @@ addressed, specifically in Redis and Redis enterprise.
 # Footnotes
 
 [Video]: https://youtu.be/OG0TZ0n_0nc "Video presentation with pictures"
-[relational.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/relational.png "i"
-[table.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/table.png "i"
-[column.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/column.png "i"
-[nodes.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/nodes.png "i"
-[replication.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/replication.png "i"
+[relational.png]: {{ "/assets/posts/" | append: page.uid | append:"/relational.png" | relative_url }} "i"
+[table.png]: {{ "/assets/posts/" | append: page.uid | append:"/table.png" | relative_url }} "i"
+[column.png]: {{ "/assets/posts/" | append: page.uid | append:"/column.png" | relative_url }} "i"
+[nodes.png]: {{ "/assets/posts/" | append: page.uid | append:"/nodes.png" | relative_url }} "i"
+[replication.png]: {{ "/assets/posts/" | append: page.uid | append:"/replication.png" | relative_url }} "i"

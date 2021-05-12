@@ -138,12 +138,12 @@ Now you can either install and configure your nodes, if not already made, or con
 # Footnotes
 
 [Video]: https://youtu.be/Dp5xAGhy4ng "Demonstration video recording"
-[01-ServicesRoute53.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/01-ServicesRoute53-en.png "Route53 in the Services menu"
-[02-Route53HostedZones.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/02-Route53HostedZones-en.png "Route53 Hosted zones"
-[03-HostedZoneSelection.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/03-HostedZoneSelection-en.png "Route53 Hosted zone selection"
-[04-CreateRecordSet.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/04-CreateRecordSet-en.png "Create a new record set"
-[05-NS1Configuration.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/05-NS1Configuration-en.png "First nameserver configuration"
-[06-NSList.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/06-NSList-en.png "Nameservers list"
-[07-NSRecord.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/07-NSRecord-en.png "Nameservers record"
-[08-FinalConfig.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/08-FinalConfig-en.png "Final configuration"
+[01-ServicesRoute53.png]: {{ "/assets/posts/" | append: page.uid | append:"/01-ServicesRoute53-en.png" | relative_url }} "Route53 in the Services menu"
+[02-Route53HostedZones.png]: {{ "/assets/posts/" | append: page.uid | append:"/02-Route53HostedZones-en.png" | relative_url }} "Route53 Hosted zones"
+[03-HostedZoneSelection.png]: {{ "/assets/posts/" | append: page.uid | append:"/03-HostedZoneSelection-en.png" | relative_url }} "Route53 Hosted zone selection"
+[04-CreateRecordSet.png]: {{ "/assets/posts/" | append: page.uid | append:"/04-CreateRecordSet-en.png" | relative_url }} "Create a new record set"
+[05-NS1Configuration.png]: {{ "/assets/posts/" | append: page.uid | append:"/05-NS1Configuration-en.png" | relative_url }} "First nameserver configuration"
+[06-NSList.png]: {{ "/assets/posts/" | append: page.uid | append:"/06-NSList-en.png" | relative_url }} "Nameservers list"
+[07-NSRecord.png]: {{ "/assets/posts/" | append: page.uid | append:"/07-NSRecord-en.png" | relative_url }} "Nameservers record"
+[08-FinalConfig.png]: {{ "/assets/posts/" | append: page.uid | append:"/08-FinalConfig-en.png" | relative_url }} "Final configuration"
 [^1]: RedisLabs Enterprise Cluster

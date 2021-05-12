@@ -17,14 +17,14 @@ Here are the different options</p>
 
 <p>Here is the single file to add to your browser <em>with the ability to
 certify every kind of service</em> (user, email, websites, ...) : <a
-href="{{site.url}}{{site.baseurl}}/assets/pages/CERBELLE_SSL-cachain.pem">CERBELLE_SSL-cachain.pem</a></p>
+href="{{ "/assets/pages/CERBELLE_SSL-cachain.pem" | relative_url }}">CERBELLE_SSL-cachain.pem</a></p>
 
 <h3>Import the two CA certificates</h3>
 
 <p>You can also import each of the two certificates contained in the chain,
 either in the DER or PEM format depending on your browser.<br/>
     <ul>
-        <li>CERBELLE_ROOT in <a href="{{site.url}}{{site.baseurl}}/assets/pages/CERBELLE_ROOT-cacert.pem">PEM</a> or in <a href="{{site.url}}{{site.baseurl}}/assets/pages/CERBELLE_ROOT-cacert.der">DER</a> 
-        <li>CERBELLE_SSL in <a href="{{site.url}}{{site.baseurl}}/assets/pages/CERBELLE_SSL-cacert.pem">PEM</a> or in <a href="{{site.url}}{{site.baseurl}}/assets/pages/CERBELLE_SSL-cacert.der">DER</a> 
+        <li>CERBELLE_ROOT in <a href="{{ "/assets/pages/CERBELLE_ROOT-cacert.pem" | relative_url }}">PEM</a> or in <a href="{{ "/assets/pages/CERBELLE_ROOT-cacert.der" | relative_url }}">DER</a></li>
+        <li>CERBELLE_SSL in <a href="{{ "/assets/pages/CERBELLE_SSL-cacert.pem" | relative_url }}">PEM</a> or in <a href="{{ "/assets/pages/CERBELLE_SSL-cacert.der" | relative_url }}">DER</a></li>
     </ul>
 </p>

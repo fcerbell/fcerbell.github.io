@@ -125,7 +125,7 @@ then page until seeing the channelbars and play to see which values will be sent
 You can add other logical switches, daisy chained to the last one, to check the flight mode or something else. You can also play sound to tell the user that he should remove
 the security switch once flying (when it is still active) and to tell him that the security is actived when he tries to arm.
 
-[01-CustomFunctionCompanion.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/01-CustomFunctionCompanion-en.png "Custom function in Companion"
-[02-CustomFunctionRadio.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/02-CustomFunctionRadio-en.png "Custom function on the radio"
-[03-LogicalSwitchesCompanion.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/03-LogicalSwitchesCompanion-en.png "Logical switches in Companion"
-[04-LogicalSwitchesRadio.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/04-LogicalSwitchesRadio-en.png "Logical switches on the radio"
+[01-CustomFunctionCompanion.png]: {{ "/assets/posts/" | append: page.uid | append:"/01-CustomFunctionCompanion-en.png" | relative_url }} "Custom function in Companion"
+[02-CustomFunctionRadio.png]: {{ "/assets/posts/" | append: page.uid | append:"/02-CustomFunctionRadio-en.png" | relative_url }} "Custom function on the radio"
+[03-LogicalSwitchesCompanion.png]: {{ "/assets/posts/" | append: page.uid | append:"/03-LogicalSwitchesCompanion-en.png" | relative_url }} "Logical switches in Companion"
+[04-LogicalSwitchesRadio.png]: {{ "/assets/posts/" | append: page.uid | append:"/04-LogicalSwitchesRadio-en.png" | relative_url }} "Logical switches on the radio"

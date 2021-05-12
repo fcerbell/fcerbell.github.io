@@ -899,5 +899,5 @@ Now, everything is installed, The next steps are to configure *nodered* :
 [MyWeather]: https://www.thingiverse.com/thing:2936265 "My weather station"
 [^4]: [https://www.thingiverse.com/thing:2936265/][MyWeather]
 
-[exercicesdeck_slidesonly]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/exercicesdeck_slidesonly.pdf "Exercices slidedeck without notes"
+[exercicesdeck_slidesonly]: {{ "/assets/posts/" | append: page.uid | append:"/exercicesdeck_slidesonly.pdf" | relative_url }} "Exercices slidedeck without notes"
 [Video]: https://youtu.be/xZhq5jgKFmQ "Demonstration video recording"

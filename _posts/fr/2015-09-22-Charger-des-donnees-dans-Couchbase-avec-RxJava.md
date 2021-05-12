@@ -568,7 +568,7 @@ commencer à l'explorer avec un outil d'analyse ou de rapports, par exemple, mai
 ceci est le sujet d'un prochain article...
 
 [WorldDataBank]: http://databank.worldbank.org/data/reports.aspx?source=world-development-indicators#
-[all.csv]: {{site.url}}{{site.baseurl}}/assets/posts/DataLoading/all.csv.zip
+[all.csv]: {{ "/assets/posts/DataLoading/all.csv.zip" | relative_url }}
 [IntelliJ IDEA]: https://www.jetbrains.com/idea/
 [SDK JAVA Couchbase]: http://developer.couchbase.com/documentation/server/4.0/sdks/java-2.2/download-links.html
 [Apache Commons CSV]: https://commons.apache.org/proper/commons-csv/

@@ -54,8 +54,8 @@ Content
 
 # Footnotes
 
-[freecad_enclosurebox]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/USBCharger.FCStd " "
-[stl_enclosurebox]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/USBCharger_Body.stl " "
-[stl_enclosurecover]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/USBCharger_Cover.stl " "
+[freecad_enclosurebox]: {{ "/assets/posts/" | append: page.uid | append:"/USBCharger.FCStd" | relative_url }} " "
+[stl_enclosurebox]: {{ "/assets/posts/" | append: page.uid | append:"/USBCharger_Body.stl" | relative_url }} " "
+[stl_enclosurecover]: {{ "/assets/posts/" | append: page.uid | append:"/USBCharger_Cover.stl" | relative_url }} " "
 [Video]: https://youtu.be/JUCJF3AiknI "Demonstration video recording"
 

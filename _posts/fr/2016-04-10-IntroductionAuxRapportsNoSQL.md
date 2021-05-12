@@ -273,7 +273,7 @@ FROM Sales
 WHERE ( [Store].[USA].[CA] )
 ~~~
 
-[BI Architecture]:{{site.url}}{{site.baseurl}}/assets/posts/NoSQLReportingIntroduction/BIArch_fr.png "Architecture décisionnelle"
+[BI Architecture]:{{ "/assets/posts/NoSQLReportingIntroduction/BIArch_fr.png" | relative_url }} "Architecture décisionnelle"
 [Couchbase]: http://www.couchbase.com "Site internet de Couchbase"
 [JasperReports]: http://community.jaspersoft.com/project/jasperreports-library "Page internet de JasperReports"
 [Pentaho]: https://www.pentaho.com "Site internet de Pentaho"

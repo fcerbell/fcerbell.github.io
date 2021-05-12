@@ -76,6 +76,6 @@ Je parlerai plus en détail des structures de données disponibles dans la proch
 
 [Video]: https://youtu.be/5STePF4dc2U "Related youtube video"
 
-[RelationalSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/RelationalSchema.png "Exemple de schéma relationel"
-[KeyvalueSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/KeyvalueSchema.png "Exemple de schéma clé-valeur"
-[KeystructureSchema.png]: {{site.url}}{{site.baseurl}}/assets/posts/{{page.uid}}/KeystructureSchema.png "Exemple de schéma clé-structure"
+[RelationalSchema.png]: {{ "/assets/posts/" | append: page.uid | append:"/RelationalSchema.png" | relative_url }} "Exemple de schéma relationel"
+[KeyvalueSchema.png]: {{ "/assets/posts/" | append: page.uid | append:"/KeyvalueSchema.png" | relative_url }} "Exemple de schéma clé-valeur"
+[KeystructureSchema.png]: {{ "/assets/posts/" | append: page.uid | append:"/KeystructureSchema.png" | relative_url }} "Exemple de schéma clé-structure"
