@@ -2,7 +2,7 @@
 layout: page
 ---
 <div class="tags-expo">
-  {{ content }}
+{{ content }}
   <div class="tags-expo-list">
     {% for tag in site.categories -%}
     <a href="#{{ tag[0] | slugify }}" class="post-tag">{{ tag[0] }}</a>
@@ -13,7 +13,7 @@ layout: page
     {%- for tag in site.categories -%}
     <h2 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h2>
     {%- assign posts = tag[1] -%}
-    {%- include posts_list.html -%}
+{%- include posts_list.html -%}
     {% endfor %}
   </div>
 </div>

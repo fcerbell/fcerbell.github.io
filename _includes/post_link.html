@@ -5,9 +5,12 @@
 {%- assign main_post=translations | where:"lang",page.lang | first | default: main_post -%}
 <li>
     {%- assign date_format = site.date_format | default: "%-d %b %Y" %}
-    <span class="post-meta">{{ main_post.date | date: date_format }}, {{ main_post.author }}</span> {% for p in translations %}<a href="{{p.url | relative_url}}"><img src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="lang-flag"/></a>{% endfor %}
+    <span class="post-meta">{{ main_post.date | date: date_format }}, {{ main_post.author }}</span>
+    {%- for p in translations %}
+    <a href="{{p.url | relative_url}}"><img src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="lang-flag"/></a>
+    {%- endfor %}
     <a class="post-link" href="{{ main_post.url | relative_url }}">{{ main_post.title | escape }}</a>
-    {%- if page.show_excerpts -%}
+    {% if page.show_excerpts -%}
     {{ main_post.excerpt }}
-    {% endif %}
+    {%- endif -%}
 </li>
