@@ -1,8 +1,9 @@
 {%- assign translations=posts | where:"uid",post.uid | sort: 'lang' -%}
-{%- assign main_post=translations | first | default: main_post -%}
-{%- assign main_post=translations | where:"lang","en" | first | default: main_post -%}
-{%- assign main_post=translations | where:"lang",site.lang | first | default: main_post -%}
-{%- assign main_post=translations | where:"lang",page.lang | first | default: main_post -%}
+{%- assign main_post=translations -%}
+{%- assign main_post=translations | where:"lang","en" | default: main_post -%}
+{%- assign main_post=translations | where:"lang",site.lang | default: main_post -%}
+{%- assign main_post=translations | where:"lang",page.lang | default: main_post -%}
+{%- assign main_post=main_post | first -%}
       <li>
 {%- assign date_format = site.date_format | default: "%-d %b %Y" %}
         <span class="post-meta">{{ main_post.date | date: date_format }}, {{ main_post.author }}</span>
