@@ -62,7 +62,7 @@ some of them, later.
 The sourcecode is usually very small, once we fetch it, compiling is only one
 command away : make, and the module is ready to be loaded.
 
-```
+```sh
 ~/a $ git clone https://github.com/antirez/neural-redis.git
 Clonage dans 'neural-redis'...
 remote: Enumerating objects: 2838, done.
@@ -200,7 +200,7 @@ def process_tweets(tweets_queue):
 Let's query about the "nosql" word. We have one result. RedisSearch also has
 aggregation, autocompletion and a lot of other very powerful features.
 
-```
+```sh
 ~ $ redis-cli -h redis-16753.demo.francois.demo-rlec.redislabs.com -p 16753 ft.search myIndex nosql
 1) (integer) 1
 2) "1185100822243397632"

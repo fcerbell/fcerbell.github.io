@@ -66,14 +66,14 @@ You can open a terminal window on any of the cluster nodes and login using a
 interactively, with a comand prompt or ask it to execute a single specific
 command passed in arguments. The two following are strictly similar.
 
-```
+```sh
 root@ip-172-31-56-5:~# rladmin status endpoints
 ENDPOINTS:
 DB:ID      NAME     ID                       NODE         ROLE         SSL      
 db:1       IoT      endpoint:1:1             node:3       single       No       
 ```
 
-```
+```sh
 root@ip-172-31-56-5:~# rladmin 
 RedisLabs Admin CLI
 Version 5.0.2-15
@@ -127,7 +127,7 @@ node:3
 
 If I try to resolve one of my endpoints, I get only one IP address :
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -168,7 +168,7 @@ node:3
 If I request a resolution for the endpoint that is currently attached to the
 third node's proxy, I can see the 2 external addresses. 
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -228,7 +228,7 @@ that we also expect the answers to be formatted in JSON: `-H
 "Accept:application/json"`
 
 Thus, the curl commands will start with:
-```
+```sh
 curl "https://localhost:9443/v1/nodes/1" \
         --insecure \
         -u "francois@redislabs.com:password" \
@@ -238,7 +238,7 @@ curl "https://localhost:9443/v1/nodes/1" \
 
 Let's start with this initial configuration:
 
-```
+```sh
 root@ip-172-31-56-5:~# rladmin info node
 node:1
     address: 172.31.56.5
@@ -265,7 +265,7 @@ You can either request the configuration for all the nodes or you can specify
 one specific node to get the external addresses :
 
 For the first node:
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/1" \
 --insecure \
 -X "GET" \
@@ -314,7 +314,7 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/1" \
 ```
 
 For all nodes:
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes" \
 --insecure \
 -X "GET" \
@@ -325,7 +325,7 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes" \
 
 If I try to resolve one of my endpoints, I get only one IP address :
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -350,7 +350,7 @@ only used for internal traffic) to the external list.
 When using the REST API, you need to specify the whole external addresses list,
 you can not add or remove a single address.
 
-```
+```sh
 curl "https://localhost:9443/v1/nodes/3" \
         --insecure \
         -X "PUT" \
@@ -376,7 +376,7 @@ node:3
 If I request a resolution for the endpoint that is currently attached to the
 third node's proxy, I can see the 2 external addresses. 
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -395,7 +395,7 @@ My clients will have the choice to connect.
 With the REST API, you have to specify the whole external addresses list. The
 first step is to get the list :
 
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 --insecure \
 -X "GET" \
@@ -450,7 +450,7 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 Then, you can update the whole external addresses list of node 3, without the
 address to remove:
 
-```
+```sh
 curl "https://localhost:9443/v1/nodes/3" \
         --insecure \
         -X "PUT" \
@@ -464,7 +464,7 @@ curl "https://localhost:9443/v1/nodes/3" \
 
 Then, I can check using the command described earlier:
 
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 --insecure \
 -X "GET" \

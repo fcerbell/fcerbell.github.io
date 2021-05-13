@@ -75,7 +75,7 @@ By default, *Tibco* does not provide the Couchbase JDBC driver with JRS. Thus, w
 
 We have to copy all the JDBC driver files (except the PDF one) in the shared libraries folder :
 
-```bash
+```sh
 cp SimbaCouchbaseJDBC41_Beta_Update3/*.{jar,lic} /opt/jasperreports-server-6.1.0/apache-tomcat/lib/
 ```
 
@@ -101,7 +101,7 @@ Once that the driver's files are installed, we could directly connect to the web
 Then, we need to restart Tomcat. Even if it would be possible to restart tomcat only, we will use the bundled global script to restart both
 Tomcat and PostGreSQL within an evaluation installation :
 
-```
+```sh
 cd jasperreports-server-6.1.0
 ./ctlscript.sh restart
 ```

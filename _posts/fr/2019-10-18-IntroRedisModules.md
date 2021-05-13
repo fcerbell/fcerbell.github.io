@@ -65,7 +65,7 @@ certains d'entre-eux.
 Le code source est habituellement très court, une fois récupéré, la compilation
 n'est plus qu'à une commande : make, et le module est prêt à être chargé.
 
-```
+```sh
 ~/a $ git clone https://github.com/antirez/neural-redis.git
 Clonage dans 'neural-redis'...
 remote: Enumerating objects: 2838, done.

@@ -118,7 +118,7 @@ disposer d'un enregistrement *NS* qui liste tous les DNS de la zone (cluster):
 Si les nœuds du cluster sont en bonne santé et fonctionnels, avec les ports réseau DNS ouverts, vous pouvez tester la configuration. Qui sont les serveurs de noms en carge de
 la résolution dans le cluster:
 
-```
+```sh
 dig ns demo.francois.demo-rlec.redislabs.com
 
 ; <<>> DiG 9.9.5-9+deb8u9-Debian <<>> ns demo.francois.demo-rlec.redislabs.com

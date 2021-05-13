@@ -105,7 +105,7 @@ I copied it on an sdcard as root. I double checked the exact name of my
 SD card device, if you make any error here, you will destroy and loose
 data.
 
-```
+```sh
 xzcat /home/fcerbell/Téléchargements/raspbian-ua-netinst-v1.1.2.img.xz > /dev/sdh
 ```
 
@@ -120,7 +120,7 @@ create him later, so I created him at installation, without any
 privileges. I also customized the boot parameters to have a better fsck
 (this will be an headless appliance).
 
-```
+```sh
 mount /dev/sdh1 /mnt
 cat <<EOF >> /mnt/installer-config.txt
 hostname=raspbian10-base
@@ -142,7 +142,7 @@ should not blink anymore neither, and power cycle it.
 Now, I can connect with SSH on the Raspberry Pi, with the "pi" user and
 "pi" password !  I can switch to root with "su" (password: "raspbian"):
 
-```
+```sh
 ssh pi@192.168.1.5
 su -
 ```
@@ -171,16 +171,16 @@ You need to `ssh` into your machine and `su -` yourself to `root`. If you
 don't know what it means, you can still read, bookmark this page and come
 back later, but please do not try to apply on public servers
 
-```
+```sh
 read -p "Public IP address: " IP
 ```
-```
+```sh
 read -p "Hostname: " HOSTNAME
 ```
-```
+```sh
 USERNAME=pi
 ```
-```
+```sh
 cat << EOF > /root/variables.env
 export IP=$IP
 export HOSTNAME=$HOSTNAME
@@ -192,7 +192,7 @@ EOF
 I manually updated the Raspberry *BIOS* settings in the
 `/boot/config.txt` file to use less shared memory for the graphic card.
 This server is headless.
-```
+```sh
 echo '[all]' >> /boot/config.txt
 echo '#arm_freq=1000' >> /boot/config.txt
 echo '#core_freq=500' >> /boot/config.txt
@@ -213,7 +213,7 @@ I configured the wifi network to auto connect on boot. I installed the
 required softwares and firmwares and generated a hashed copy of my wifi
 password :
 
-```
+```sh
 apt-get install -y firmware-brcm80211 wpasupplicant iw wireless-tools
 echo 'UltraSecretPassword' | wpa_passphrase Freebox-AEA6A1
 ```
@@ -221,7 +221,7 @@ echo 'UltraSecretPassword' | wpa_passphrase Freebox-AEA6A1
 Then, I added the Wifi interface and its configuration in the network
 configuration file, with the hashed password :
 
-```
+```sh
 cat >> /etc/network/interfaces << EOF
 auto wlan0
 allow-hotplug wlan0
@@ -242,13 +242,13 @@ First, I reload the saved installation variables, maybe I just rebooted,
 or I just reconnected to a fresh shell. I'll need these variables to
 configure `sudo`.
 
-```
+```sh
 source /root/variables.env
 ```
 
 I chose a generic hostname during the unatended installation to customize
 it now in the relevant files :
-```
+```sh
 sed -i 's/raspbian10-base/'${HOSTNAME}'/g' \
 /etc/ssh/ssh_host_ed25519_key.pub \
 /etc/ssh/ssh_host_ecdsa_key.pub \
@@ -264,7 +264,7 @@ begins to swap, it is not good and it will probably be so busy that I'll
 have to hard reboot it, even more when the system has very low resources
 such as a Raspberry.
 
-```
+```sh
 sed -i 's/UUID.*swap/#&/' /etc/fstab 
 swapoff -a
 ```
@@ -274,7 +274,7 @@ swapoff -a
 Ok, now, it is time to update the packages lists, and to apply all the
 available upgrades.
 
-```
+```sh
 apt-get update && apt-get upgrade -y 
 ```
 
@@ -287,7 +287,7 @@ hostname, configured the network, configured the *BIOS*, ... I'll
 continue that way and will configure manually the locales and the
 timezone.
 
-```
+```sh
 dpkg-reconfigure locales
 dpkg-reconfigure tzdata
 apt-get install -y raspi-config raspi-copies-and-fills sudo curl pi-bluetooth
@@ -299,7 +299,7 @@ I like `aptitude` on my servers. I am used to it, mainly *search*,
 *show*, *why* commands. Then, I don't like the blinky and verbose `apt`
 output.
 
-```
+```sh
 apt-get -y update
 apt-get -y install aptitude
 ```
@@ -309,7 +309,7 @@ apt-get -y install aptitude
 Ok, fine, now, it is time to apply my repositories preferences and to
 upgrade the system accordingly.
 
-```
+```sh
 apt-get -y update &&
 apt-get -y upgrade &&
 apt-get -y dist-upgrade &&
@@ -329,13 +329,13 @@ First, I reload the saved installation variables, maybe I just rebooted,
 or I just reconnected to a fresh shell. I'll need these variables to
 configure `sudo`.
 
-```
+```sh
 source /root/variables.env
 ```
 
 Let's install `sudo`.
 
-```
+```sh
 apt-get install -y sudo
 ```
 
@@ -343,14 +343,14 @@ Allow the unprivileged user to run any command, with password. At this
 stage, the user still has a password-protected account. Password login
 will be disabled after the SSH configuration.
 
-```
+```sh
 adduser ${USERNAME} sudo
 ```
 
 Allow user to run any command without password (he will have password
 disabled later)
 
-```
+```sh
 echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USERNAME}
 ```
 
@@ -363,7 +363,7 @@ easier, and keep hostnames clear in the `known_hosts` file (do not hash).
 Hashing the hostnames is probably more secure in case of intrusion, but
 it is a pain when you change your other machines IP addresses.
 
-```
+```sh
 # Disable SSHv1
 echo "" >> /etc/ssh/sshd_config
 echo "Protocol 2" >> /etc/ssh/sshd_config
@@ -388,7 +388,7 @@ regenerate it.
 Root do not have a key-pair yet. I create one, which will probably never
 be used, and it also initialize the `/root/.ssh` folder structure.
 
-```
+```sh
 ssh-keygen -q -f "/etc/ssh/ssh_host_dsa_key" -t dsa -N ''
 ssh-keygen -f /root/.ssh/id_rsa -q -N ""
 ```
@@ -400,7 +400,7 @@ from the filesystems.
 **This key is specific for my backup server. Don't use it or you'll give
 me full access to your machine**
 
-```
+```sh
 echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDX94WcZhrCjWXffCckgeEROTB0PnvpOxlFm/scvxTfTlh0sNV4KTrfHWrClDdBus6e7JL2VIltJBDdDHgetTaOK6HnHkmwoHFq+xm8TYqHQc3dzD8YMhjmFLRwHNDMadvy/oLrcae+e/moGUVdfsnjNbX2tjGMlld8ZwGUXPysvB70S+VpKgZ2e24xTvFNdPaTIDGky3EOeCI54iRXyAsHvKV0xFQJQf+FiiUQYoo2wCNsCgIqXD1ue0mpId8vjD7OCBBQE/T5sl+PWOUYxMEjVt9QmtLxunjC948c5RJLo96Gjg5bhwRJD7bHAKvgH984AeNnKuHMhN9P8f8bantP OMV' >> /root/.ssh/authorized_keys
 ```
 
@@ -411,7 +411,7 @@ authorized keys file.
 **This key is specific for my backup server. Don't use it or you'll give
 me full access to your machine**
 
-```
+```sh
 mkdir /home/${USERNAME}/.ssh
 echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAtM8LzekUr46wvVNWoYzxPuKVTv7yFp+Aa/a1vKAendFa3xsMZz6Pp0Xn8U5ZYbTpqqVeM8O+ETqjtpBVk+7+C516DwB+R/cKulTjy061fBPZvTp5pIKm4+NQXNBhwjmQs//nWJ54PlDS5mHuj9NalX07b2OBztrvLjPzf/m4sB0= Francois Cerbelle' >> /home/${USERNAME}/.ssh/authorized_keys
 chown -R ${USERNAME}.${USERNAME} /home/${USERNAME}
@@ -422,7 +422,7 @@ with my private key. This is a bad practice, but I'm the only admin.
 
 **This key is specific for me. Don't use it or you'll give me full access to your machine**
 
-```
+```sh
 echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAtM8LzekUr46wvVNWoYzxPuKVTv7yFp+Aa/a1vKAendFa3xsMZz6Pp0Xn8U5ZYbTpqqVeM8O+ETqjtpBVk+7+C516DwB+R/cKulTjy061fBPZvTp5pIKm4+NQXNBhwjmQs//nWJ54PlDS5mHuj9NalX07b2OBztrvLjPzf/m4sB0= Francois Cerbelle' >> /root/.ssh/authorized_keys
 ```
 
@@ -439,14 +439,14 @@ I like these useless banners, there are a lot of choices : `figlet`,
 `toilet`, `cowsay` ... and the old `banner`. I will also need `lsb`-tools
 to fetch the linux distribution details.
 
-```
+```sh
 apt-get install -y figlet toilet lsb-release
 ```
 
 First part is to generate a banner with the hostname to avoid any mistake
 on the server, and to display the current Linux distribution details.
 
-```
+```sh
 cat << EOF > /etc/update-motd.d/00-header
 #!/bin/sh
 [ -r /etc/lsb-release ] && . /etc/lsb-release
@@ -467,7 +467,7 @@ rm /etc/update-motd.d/10-uname
 Then, I like to have the date and time, the load average, the memory and
 swap usage and a summary of the running processes.
 
-```
+```sh
 cat << EOF > /etc/update-motd.d/10-sysinfo
 #!/bin/sh
 date=\`date\`
@@ -494,7 +494,7 @@ Finally, I generate a list of the packages that need to be upgraded and I
 empty the default `/etc/motd` static file. I'll populate it later with
 the list of installed services.
 
-```
+```sh
 cat << EOF > /etc/update-motd.d/20-upgrades
 #!/bin/sh
 number=\`apt list --upgradable 2> /dev/null | grep 'upgradable'  | wc -l\`
@@ -522,7 +522,7 @@ minimal configuration.
 belonging to an installed package. Useless to find files that do not
 belong to a `.deb` package. `locate` fills this gap.
 
-```
+```sh
 apt-get install -y mlocate
 updatedb
 ```
@@ -532,7 +532,7 @@ with very weak and unstable network connection. `screen` is my favorite
 tool to manage and keep my command line sessions open, even when I'm
 disconnected. I could use `tmux` but I'm less used to it.
 
-```
+```sh
 apt-get install -y screen
 ```
 
@@ -542,7 +542,7 @@ had to find which package provides the command, to install it. With
 to fix any posible typo in my command and to suggest packages that
 provide these commands. This saves time.
 
-```
+```sh
 apt-get install -y command-not-found apt-file
 apt-file update
 update-command-not-found
@@ -563,7 +563,7 @@ Thus, as soon as you type a command in a shell, it is available in the
 history of all the other opened shells without relogin. Basically, I have
 nearly one single real-time cross-session history.
 
-```
+```sh
 cat << EOF >> ~/.bashrc
 
 export PS1='[ \[\033[1;36m\]\u@\h\[\033[0m\]\[\033[1;31m\] ShLvl:$SHLVL\[\033[0m\] \[\033[1;35m\]Cmd:\!\[\033[0m\]\[\033[1;34m\] Ret:$?\[\033[0m\] \[\033[1;33m\]\d \t\[\033[0m\] ]\n\[\033[1;32m\]\w\[\033[0m\] # '
@@ -579,7 +579,7 @@ from the history. If I want to reuse one of my very old previous `ssh`
 commands, I can type `ssh` and navigate with the up/down keys only in the
 lines begining with `ssh`. Try it, you'll keep it, for sure.
 
-```
+```sh
 cat << EOF >> ~/.inputrc
 "\e[A": history-search-backward
 "\e[B": history-search-forward
@@ -591,7 +591,7 @@ have color, line numbers, syntax hilighting, custom status bar, search
 highlight... Here is my configuration, too long to describe in detail,
 but it is commented in-line.
 
-```
+```sh
 apt-get install -y vim-nox vim-addon-manager vim-scripts
 mkdir -p ~/.vim/backup
 cat << EOF >> ~/.vimrc
@@ -731,7 +731,7 @@ them at install time, later in this script, to have recent versions.
 Thus, I directly install recent versions, with the basic development
 tools to compile some code.
 
-```
+```sh
 curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt-get install -y nodejs gcc g++ make build-essential git lsb-release pkg-config
 ```
@@ -747,7 +747,7 @@ commandline for test and debug, and to/from *Domoticz*). I can not lock
 the process and listen only on *localhost* because I'll have the
 *MySensors* meshed network connected through the IP network.
 
-```
+```sh
 sudo apt-get install -y mosquitto mosquitto-clients
 sudo touch /etc/mosquitto/passwd
 sudo mosquitto_passwd -b /etc/mosquitto/passwd zwave zwave2020
@@ -773,7 +773,7 @@ I can now install the latest OpenZWave release from source. It is
 sometimes difficult to find the very last stable release of a software,
 compiled for ARM, from a reliable and trustable source... 
 
-```
+```sh
 git clone https://github.com/OpenZWave/open-zwave.git
 cd open-zwave/
 make
@@ -791,7 +791,7 @@ I can factory reset the ZWave chip (list of devices is stored in the
 proprietary chip), set a network security key, add/remove some nodes for
 testing... This is only for testing.
 
-```
+```sh
 sudo apt-get install -y libmicrohttpd-dev libudev-dev
 git clone --depth 1 https://github.com/OpenZWave/open-zwave-control-panel
 cd open-zwave-control-panel/
@@ -811,7 +811,7 @@ the nodes, ...) and can make a bridge between the ZWave meshed network
 and the MQTT broker ! I include a default configuration for me, you can
 adapt it for your need in the Web UI, once installed.
 
-```
+```sh
 git clone https://github.com/OpenZWave/Zwave2Mqtt
 cd Zwave2Mqtt
 npm install
@@ -831,7 +831,7 @@ If you followed the previous steps, everything is prepared and the
 installation script should be executed smoothly without any warning or
 question.
 
-```
+```sh
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
 sudo systemctl enable nodered.service
 sudo systemctl start nodered.service
@@ -845,7 +845,7 @@ Node-Red can send commands and receive messages.
 
 https://www.sigmdel.ca/michel/ha/domo/domo_03_fr.html
 
-```
+```sh
 curl -sSL install.domoticz.com | sudo bash
 sudo sed -i 's%#\(DAEMON_ARGS="$DAEMON_ARGS -log /tmp/domoticz.txt"\)%\1%' /etc/init.d/domoticz.sh
 sudo systemctl daemon-reload
@@ -858,13 +858,13 @@ sudo systemctl restart domoticz
 I chose to install the community edition, I don't need high-availability,
 scalability, ... And I chose the packaged version :
 
-```
+```sh
 sudo apt-get install -y redis-server
 ```
 
 Then, I updated some settings in the configuration file :
 
-```
+```sh
 echo 'bind 0.0.0.0' | sudo tee -a /etc/redis/redis.conf
 echo 'protected-mode no' | sudo tee -a /etc/redis/redis.conf
 ```

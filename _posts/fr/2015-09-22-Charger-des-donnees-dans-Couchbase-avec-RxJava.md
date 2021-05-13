@@ -391,7 +391,7 @@ de caractères manuellement à partir des méthodes de la classe `CSVRecord`. Ce
 pourrait être amélioré pour gérer un nombre arbitraire de colonnes, mais je n'en
 ai pas besoin :
 
-```
+```java
                 .flatMap(
                         r -> Observable.from(new String[][]{
                                 {"1960", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1960")},

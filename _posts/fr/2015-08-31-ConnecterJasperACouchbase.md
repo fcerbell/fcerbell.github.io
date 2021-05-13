@@ -100,7 +100,7 @@ Une fois les fichiers du pilote installés, nous pourrions nous connecter à l'i
 
 Puis, il faut redémarrer Tomcat. Bien qu'il soit possible de redémarrer uniquement Tomcat, nous allons utiliser le script global qui va redémarrer à la fois Tomcat et PostgreSQL dans le cas d'une installation d'évaluation :
 
-```
+```bash
 cd jasperreports-server-6.1.0
 ./ctlscript.sh restart
 ```

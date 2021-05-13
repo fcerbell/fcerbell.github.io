@@ -61,7 +61,7 @@ export WAN_GW="`ip route | grep default | sed 's/[^0-9]*\([0-9]\+.[0-9]\+.[0-9]\
 EOF
 vi /root/config.env
 ```
-```
+```sh
 source /root/config.env
 ```
 

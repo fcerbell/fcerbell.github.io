@@ -100,7 +100,7 @@ You should end with several name server *A* record (one for each cluster node) t
 
 If your cluster nodes are healthy, up and running, with DNS network ports unfiltered, you can test the configuration. Who are the nameservers in charge of the resolution in the cluster:
 
-```
+```sh
 dig ns demo.francois.demo-rlec.redislabs.com
 
 ; <<>> DiG 9.9.5-9+deb8u9-Debian <<>> ns demo.francois.demo-rlec.redislabs.com

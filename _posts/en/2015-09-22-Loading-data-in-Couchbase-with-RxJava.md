@@ -373,7 +373,7 @@ change the `Observer` to accept `CSVRecords` and to process them. I quickly
 build q string array by using the `CSVRecords` methods manually, it could be
 improved to deal with an arbitrary number of columns but I dont need this :
 
-```
+```java
                 .flatMap(
                         r -> Observable.from(new String[][]{
                                 {"1960", r.get("CountryCode"), r.get("CountryName"), r.get("SerieCode"), r.get("SerieName"), r.get("1960")},

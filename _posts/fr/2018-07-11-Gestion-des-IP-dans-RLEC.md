@@ -134,7 +134,7 @@ node:3
 Si je tente de résoudre l'un de mes points d'entrée, j'obtiens une seule adresse
 IP :
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -177,7 +177,7 @@ node:3
 Si je demande une résolution pour le point d'entrée actuellement attaché au
 proxy du troisième nœud, je peux voir les deux adresses externes.
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -237,8 +237,8 @@ l'informer qu'il envoit bien du JSON : `-H "Content-Type:application/json"` et
 qu'il accepte des réponse au format JSON en retour : `-H
 "Accept:application/json"`
 
-Ainsi, les commands curl commenceront par :
-```
+Ainsi, les commandes curl commenceront par :
+```sh
 curl "https://localhost:9443/v1/nodes/1" \
         --insecure \
         -u "francois@redislabs.com:password" \
@@ -275,7 +275,7 @@ Vous pouvez soit demander la configuration de tous les nœuds ou vous pouvez
 indiquer un nœud particulier :
 
 Pour le premier nœud :
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/1" \
 --insecure \
 -X "GET" \
@@ -324,7 +324,7 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/1" \
 ```
 
 Pour tous les nœuds :
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes" \
 --insecure \
 -X "GET" \
@@ -336,7 +336,7 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes" \
 Si je tente de résoudre un de mes points d'entrée, j'obtiens uniquement une
 seule adresse IP :
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -362,7 +362,7 @@ liste des adresses externes.
 Lorsque l'on utilise l'API REST, il faut indiquer la liste complète des adresses
 externes, il n'est pas possible de d'ajouter ou de supprimer une adresse seule.
 
-```
+```sh
 curl "https://localhost:9443/v1/nodes/3" \
         --insecure \
         -X "PUT" \
@@ -389,7 +389,7 @@ node:3
 Si je demande la résolution du point d'entrée actuellement attaché au proxy du
 troisième nœud, je peux voir les deux adresses externes.
 
-```
+```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
 Server:		172.31.0.2
 Address:	172.31.0.2#53
@@ -408,7 +408,7 @@ Mes clients auront donc le choix pour se connecter.
 Avec l'API REST, il faut indiquer la liste complète d'adresse. La première étape
 est donc de récupérer cette liste :
 
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 --insecure \
 -X "GET" \
@@ -463,7 +463,7 @@ root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 Ensuite, il est possible de mettre à jour la liste du nœud 3, en retirant
 l'adresse voulue :
 
-```
+```sh
 curl "https://localhost:9443/v1/nodes/3" \
         --insecure \
         -X "PUT" \
@@ -477,7 +477,7 @@ curl "https://localhost:9443/v1/nodes/3" \
 
 Enfin, je peux vérifier en utilisant la commande vue précédemment :
 
-```
+```sh
 root@ip-172-31-56-5:~# curl "https://localhost:9443/v1/nodes/3" \
 --insecure \
 -X "GET" \
