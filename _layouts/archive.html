@@ -23,11 +23,13 @@ layout: page
           <ul>
         {% endif %}
       {% endunless %}
+      {%- if post.lang == page.lang -%}
         <li><time>{{ post.date | date:"%d %b" }} - </time>
           <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
             {{ post.title }}
           </a>
         </li>
+      {%- endif -%}
     {% endfor %}
     </ul>
 

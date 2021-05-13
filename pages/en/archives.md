@@ -1,7 +1,7 @@
 ---
 uid: archives
 title: Archives
-description: Post list by date
+description: List of all English posts by date
 thisyear: This year's posts
 layout: archive
 comments: false
