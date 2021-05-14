@@ -10,5 +10,5 @@ layout: default
 {%- endif %}
 {{ content }}
 {%- assign posts=site.posts | sort: "date" | reverse -%}
-{% include posts_list.html %}
+{% include posts_list.html limit=5 %}
         </div>

@@ -1,7 +1,7 @@
 {%- if posts.size > 0 %}
           <ul class="post-list">
 {%- assign uids=posts | map:"uid" | uniq -%}
-{%- for uid in uids %}
+{%- for uid in uids limit:include.limit%}
 {%- assign post = posts | where: "uid",uid | first -%}
 {%- include post_link.html -%}
 {%- endfor %}
