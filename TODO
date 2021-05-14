@@ -29,24 +29,3 @@ Failsafe (receiver and flight controler)
 Calibration (Accel, Gyros, Magneto, Level)
 Tip : resurect firmware
 
-
-
-
-
-Couchbase sizing
-- CPU/core per node
-- RAM size (global)
-- Disk size (global)
-- Disk IO (global)
-- Network IO (global)
-- Extra (XDCR, backup, ...)
-- Number of nodes depending on the sizing values
-
-Couchbase tuning and optimizations
-
-Couchbase monitoring
-
-Usecase theorique IoT Robotique
-Usecase theorique IoT Beacons supermarché
-Usecase mobile Liste de courses
-
