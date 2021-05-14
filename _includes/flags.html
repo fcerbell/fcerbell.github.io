@@ -2,7 +2,7 @@
 {%- assign list=site.posts | concat: site.pages | where:"uid", include.uid | sort: 'lang' %}
               <span class="flags">
               {%- for p in list %}
-                <a href="{{p.url | relative_url}}" title="{{p.lang}}"><img alt="{{p.lang}}" src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="flag"/></a>
+                <a href="{{p.url | relative_url}}" title="{{p.title}}"><img alt="{{p.lang}}" src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="flag"/></a>
               {%- endfor %}
               </span>
 {%- endif %}
