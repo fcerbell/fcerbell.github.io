@@ -3,15 +3,13 @@
 {%- assign main_post=translations | where:"lang","en" | default: main_post -%}
 {%- assign main_post=translations | where:"lang",site.lang | default: main_post -%}
 {%- assign main_post=translations | where:"lang",page.lang | default: main_post -%}
-{%- assign main_post=main_post | first -%}
-      <li>
+{%- assign main_post=main_post | first %}
+            <li>
 {%- assign date_format = site.date_format | default: "%-d %b %Y" %}
-        <span class="post-meta">{{ main_post.date | date: date_format }}, {{ main_post.author }}</span>
-{%- for p in translations %}
-        <a href="{{p.url | relative_url}}"><img src="{{ "/assets/FlagpediaNet/" | relative_url }}{{p.lang}}.svg" class="lang-flag"/></a>
-{%- endfor %}
-        <a class="post-link" href="{{ main_post.url | relative_url }}">{{ main_post.title | escape }}</a>
-{% if page.show_excerpts -%}
+              <span class="post-meta">{{ main_post.date | date: date_format }}, {{ main_post.author }}</span>
+{%- include flags.html uid=main_post.uid %}
+              <a class="post-link" href="{{ main_post.url | relative_url }}">{{ main_post.title | escape }}</a>
+{%- if page.show_excerpts %}
 {{ main_post.excerpt }}
-{%- endif -%}
-      </li>
+{%- endif %}
+            </li>

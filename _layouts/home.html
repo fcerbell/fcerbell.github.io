@@ -1,11 +1,14 @@
 ---
 layout: default
 ---
-<div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title | escape }}</h1>
-  {%- endif -%}
+        <div class="home">
+{%- if page.title %}
+          <h1 class="page-heading">
+            {{ page.title | escape }}
+            {%- include flags.html uid=page.uid %}
+          </h1>
+{%- endif %}
 {{ content }}
-</div>
 {%- assign posts=site.posts | sort: "date" | reverse -%}
-{%- include posts_list.html -%}
+{% include posts_list.html %}
+        </div>
