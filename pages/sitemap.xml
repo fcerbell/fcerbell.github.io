@@ -7,10 +7,10 @@ permalink: /sitemap.xml
   {% for post in site.posts %}
     {% if post.id contains "404" %}{% else %}
       <url>
-        <loc>{{site.url}}{{site.baseurl}}{{post.url}}</loc>
+        <loc>{{post.url | absolute_url}}</loc>
         {% assign versions=site.posts | where:"date", post.date %}
         {% for version in versions %}
-          <xhtml:link rel="alternate" hreflang="{{version.lang}}" href="{{site.url}}{{site.baseurl}}{{version.url}}" />
+          <xhtml:link rel="alternate" hreflang="{{version.lang}}" href="{{version.url | absolute_url}}" />
         {% endfor %}
         <lastmod>{{post.date | date_to_xmlschema}}</lastmod>
         <changefreq>weekly</changefreq>
