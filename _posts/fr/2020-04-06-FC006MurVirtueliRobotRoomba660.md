@@ -4,6 +4,7 @@ title: FC006 - Mur virtuel pour iRobot Roomba
 description:
 category: Electronic
 tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
+mathjax: true
 ---
 
 iRobot vend des robot autonomes aspirateurs *Roomba*. Ils disposent de

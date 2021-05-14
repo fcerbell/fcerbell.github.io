@@ -4,6 +4,7 @@ title: FC006 - iRobot Roomba Virtual Wall
 description:
 category: Electronic
 tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
+mathjax: true
 ---
 
 iRobot sells autonomous Vacuum cleaners Roomba. They have IR receiver to detect

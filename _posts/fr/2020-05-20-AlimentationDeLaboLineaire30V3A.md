@@ -4,6 +4,7 @@ title: FC007 - Alimentation de labo linéaire 30V 3A
 description:
 category: Electronic
 tags: [ PSU, Bench, Labo, Power supply, LM723, 2n3055, BD139 ]
+mathjax: true
 ---
 
 Voici la conception, réalisation et test d'une alimentation linéaire de
@@ -154,9 +155,8 @@ tension supérieurs à sa tension de seuil (environ 0,6V).
 
 J'ai utilisé une résistance 0,33R5W (R33) en tant que shunt pour récupérer une
 différence de tension proportionelle au courant qui la traverse (0-3A). Selon la
-loi d'Ohm, $U=R.I$, j'ai :
-$$0.33*0 <= U <= 0.33*3$$, soit
-$$0 <= U <= 1$$.
+loi d'Ohm, $U=R.I$, j'ai : $$0.33*0 <= U <= 0.33*3$$, soit $$0 <= U <= 1$$.
+
 Super, mais j'ai besoin que le minimum soit supérieur à la tension de seuil de
 la jonction interne, j'ai donc besoin d'une diode acceptant 3A : la [1N5408]
 supporte 3A et je préfère la doubler pourdistribuer le courant. Même si la

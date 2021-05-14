@@ -4,6 +4,7 @@ title: FC007 - Linear bench power supply
 description:
 category: Electronic
 tags: [ PSU, Bench, Labo, Power supply, LM723, 2n3055, BD139 ]
+mathjax: true
 ---
 
 Here is the design, build and test of a simple fanless 30V-3A(100VA) linear
