@@ -238,13 +238,15 @@ transmitted over the network using XMLA protocol.
 
 MDX sample :
 
-~~~
+```sql
 SELECT
    { [Measures].[Store Sales] } ON COLUMNS,
    { [Date].[2002], [Date].[2003] } ON ROWS
 FROM Sales
 WHERE ( [Store].[USA].[CA] )
-~~~
+```
+
+# Footnotes
 
 [BI Architecture]:{{ "/assets/posts/NoSQLReportingIntroduction/BIArch_en.png" | relative_url }} "Business Intelligence Architecture"
 [Couchbase]: http://www.couchbase.com "Couchbase website"

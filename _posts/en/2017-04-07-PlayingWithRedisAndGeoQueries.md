@@ -444,7 +444,7 @@ efficient and to pipeline the data and I use the `--pipe`
 argument to do that. I grouped the following commands in a bash
 script:
 
-{% highlight bash %}
+```bash
 #!/bin/bash -x
 
 ENDPOINT="redis-13402.demo.francois.demo-rlec.redislabs.com:13402"
@@ -474,7 +474,7 @@ sed -f routes_idx.sed routes.dat >> $DATAFILE
 
 echo "FLUSHDB" | $REDISCLI > $LOGFILE
 cat $DATAFILE | unix2dos | $REDISCLI --pipe 2>&1 | grep -v "^OK"  | grep -v '^1' > $LOGFILE
-{% endhighlight %}
+```
 
 # Time to play and query
 

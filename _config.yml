@@ -17,16 +17,14 @@ instagram_username: francoiscerbelle
 linkedin_username: fcerbell
 youtube_username: FrancoisCerbelle
 meetup_username: "130641882"
+skype_username: "fanfan75010"
 google_analytics: UA-67233700-1
-rss: RSS/Atom
 author: François Cerbelle
 disqus:
     shortname: "surledivan"
 
 # Build settings
-#permalink: pretty
 permalink: /:title/
-#permalink: :year/:month/:day/:title.html
 encoding: utf-8
 defaults:
   -
@@ -72,6 +70,16 @@ kramdown:
   syntax_highlighter: rouge
   hard_wrap: false
   math_engine: mathjax
+#  syntax_highlighter_opts:
+#    # Rouge Options › https://github.com/jneen/rouge#full-options
+#    css_class: 'highlight'
+#    #line_numbers: true # bad idea, spans don't need linenos and would inherit this option
+#    span:
+#      line_numbers: false
+#    block:
+#      line_numbers: true
+#      start_line: 1
+
 relative_permalinks: false
 sass:
     style: compressed

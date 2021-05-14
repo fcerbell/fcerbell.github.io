@@ -265,13 +265,15 @@ sont souvent transportées grâce au protocole XMLA.
 
 Exemple de requête MDX :
 
-~~~
+```sql
 SELECT
    { [Measures].[Store Sales] } ON COLUMNS,
    { [Date].[2002], [Date].[2003] } ON ROWS
 FROM Sales
 WHERE ( [Store].[USA].[CA] )
-~~~
+```
+
+# Notes de bas de page
 
 [BI Architecture]:{{ "/assets/posts/NoSQLReportingIntroduction/BIArch_fr.png" | relative_url }} "Architecture décisionnelle"
 [Couchbase]: http://www.couchbase.com "Site internet de Couchbase"

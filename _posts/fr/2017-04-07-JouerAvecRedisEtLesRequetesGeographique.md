@@ -437,7 +437,7 @@ J'utilise l'outil en ligne de commande `redis-cli` pour charger mes données,
 mais j'aimerais être plus performant et les traiter par lot, j'utilise donc
 l'option `--pipe` pour cela. J'ai regroupé les commandes dans un script *bash* :
 
-{% highlight bash %}
+```bash
 #!/bin/bash -x
 
 ENDPOINT="redis-13402.demo.francois.demo-rlec.redislabs.com:13402"
@@ -467,7 +467,7 @@ sed -f routes_idx.sed routes.dat >> $DATAFILE
 
 echo "FLUSHDB" | $REDISCLI > $LOGFILE
 cat $DATAFILE | unix2dos | $REDISCLI --pipe 2>&1 | grep -v "^OK"  | grep -v '^1' > $LOGFILE
-{% endhighlight %}
+```
 
 # L'heure de jouer et de requêter
 

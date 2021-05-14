@@ -6,10 +6,24 @@
 @import "pagenav";
 @import "taglist";
 
+// Compact the title
+.site-title {
+    letter-spacing: -2px;
+}
+
+// First line indentation
+p {
+    text-indent: 30px;
+}
+
 article .externalLink,
 footer .externalLink {
-    background: url(/assets/external.png) center right no-repeat;
-    padding-right: 13px;
+    &::after {
+      padding-left: 3px;
+      font-family: "FontAwesome";
+      font-size: 10px;
+      content: "\f08e";
+    }
 }
 
 .flags {
@@ -34,3 +48,28 @@ div.post-content img {
   padding: 5px;
   box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.3);
 }
+
+.contact-list {
+  a[href^="mailto"]::before {
+    padding-right: 10px;
+    font-family: "FontAwesome";
+    content: "\f0e0";
+  }
+  a[href^="tel"]::before {
+    padding-right: 10px;
+    font-family: "FontAwesome";
+    content: "\f095";
+  }
+  a[href^="sms"]::before {
+    padding-right: 10px;
+    font-family: "FontAwesome";
+    content: "\f7cd";
+  }
+  a[href^="skype"]::before {
+    padding-right: 10px;
+    font-family: "FontAwesome";
+    color: #1686d9;
+    content: "\f17e";
+  }
+}
+

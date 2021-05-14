@@ -4,17 +4,17 @@ permalink: /sitemap.xml
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  {% for post in site.posts %}
-    {% if post.id contains "404" %}{% else %}
+  {%- for post in site.posts -%}
+    {%- if post.id contains "404" %}{% else %}
       <url>
         <loc>{{post.url | absolute_url}}</loc>
-        {% assign versions=site.posts | where:"date", post.date %}
-        {% for version in versions %}
+        {%- assign versions=site.posts | where:"uid", post.uid -%}
+        {%- for version in versions %}
           <xhtml:link rel="alternate" hreflang="{{version.lang}}" href="{{version.url | absolute_url}}" />
-        {% endfor %}
+        {%- endfor %}
         <lastmod>{{post.date | date_to_xmlschema}}</lastmod>
         <changefreq>weekly</changefreq>
       </url>
-    {% endif %}
-  {% endfor %}
+    {%- endif %}
+  {%- endfor %}
 </urlset>
