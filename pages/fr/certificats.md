@@ -1,8 +1,9 @@
 ---
 uid: certificats
-title: SSL/TLS/GPG
+title: Certificats
 layout: page
 description: Mes certificats, avec leur chaine de certification.
+mainmenu: true
 category: Securité
 tags: [pki]
 ---

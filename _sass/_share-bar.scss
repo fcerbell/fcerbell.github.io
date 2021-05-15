@@ -29,10 +29,10 @@
         }
 
         /* Facebook button */
-        .fa-facebook-official {
+        .fa-facebook-square {
             color: #3b5998;
         }
-        .fa-facebook-official:hover {
+        .fa-facebook-square:hover {
             background-color: #3b5998;
         }
 
@@ -82,6 +82,14 @@
         }
         .fa-envelope:hover {
             background-color: #444444;
+        }
+
+        /* RSS/Atom button */
+        .fa-rss {
+            color: #f98f01;
+        }
+        .fa-rss:hover {
+            background-color: #f98f01;
         }
 
         /* VKontakte button */

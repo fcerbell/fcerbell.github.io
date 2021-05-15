@@ -2,6 +2,7 @@
 uid: about
 title: À propos de moi
 description: Qui suis-je
+mainmenu: true
 ---
 
 <center><iframe width="560" height="315" src="https://www.youtube.com/embed/WP_Sk290vn4" frameborder="0" allowfullscreen></iframe></center>

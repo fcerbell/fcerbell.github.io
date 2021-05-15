@@ -2,6 +2,7 @@
 uid: about
 title: About me
 description: Who am I
+mainmenu: true
 ---
 
 <center><iframe width="560" height="315" src="https://www.youtube.com/embed/GEBSU4NzjwM" frameborder="0" allowfullscreen></iframe></center>
