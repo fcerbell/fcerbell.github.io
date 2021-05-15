@@ -24,6 +24,7 @@ disqus:
     shortname: "surledivan"
 
 # Build settings
+incremental: true
 permalink: /:title/
 encoding: utf-8
 defaults:
@@ -107,4 +108,9 @@ exclude:
   - node_modules
   - README.md
   - documentation
+
+# Serve settings
+host: 0.0.0.0
+livereload: true
+
 
