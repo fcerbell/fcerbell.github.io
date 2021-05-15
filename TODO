@@ -1,9 +1,11 @@
 Archive (by date, by category, by tag) with limit by number
-Category widget (min-width: 1440), menu (min-width: 800)
-Tag widget (min-width: 1440), menu (min-width: 800)
 CSS img text-indent:0 !!
 CSS img responsive size (width:auto)
-
+responsive share-bar (side/bottom)
+responsive follow-bar (side/bottom)
+responsive support-bar (side/bottom)
+responsive category widget (side/body)
+responsive tag widget (side/body)
 
 Quadcopter
 
