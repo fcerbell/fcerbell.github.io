@@ -16,7 +16,12 @@
 .post-content p,
 .front-matter p {
     text-indent: 20px;
+    // auto responsive width
+    img {
+        width: 90%;
+    }
 }
+
 
 article .externalLink,
 footer .externalLink {
