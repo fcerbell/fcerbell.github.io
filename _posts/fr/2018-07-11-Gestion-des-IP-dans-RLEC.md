@@ -136,11 +136,11 @@ IP :
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
 ```
 
@@ -179,13 +179,13 @@ proxy du troisième nœud, je peux voir les deux adresses externes.
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 172.31.50.67
 ```
 
@@ -338,11 +338,11 @@ seule adresse IP :
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
 ```
 
@@ -391,13 +391,13 @@ troisième nœud, je peux voir les deux adresses externes.
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 172.31.50.67
 ```
 

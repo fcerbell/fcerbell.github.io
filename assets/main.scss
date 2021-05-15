@@ -12,8 +12,10 @@
 }
 
 // First line indentation
-p {
-    text-indent: 30px;
+.post-list p,
+.post-content p,
+.front-matter p {
+    text-indent: 20px;
 }
 
 article .externalLink,
@@ -90,3 +92,18 @@ ul#markdown-toc {
     margin-left: 400px;
   }
 }
+
+/* Fixed page header */
+.site-header {
+    border-top: 5px solid #424242;
+    border-bottom: 1px solid #e8e8e8;
+    min-height: 55.95px;
+    position: fixed;
+    width: 100%;
+    background-color: white;
+}
+
+.page-content {
+    padding: 60px 0;
+}
+

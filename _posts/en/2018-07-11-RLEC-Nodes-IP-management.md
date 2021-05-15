@@ -129,11 +129,11 @@ If I try to resolve one of my endpoints, I get only one IP address :
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
 ```
 
@@ -170,13 +170,13 @@ third node's proxy, I can see the 2 external addresses.
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:        172.31.0.2
+Address:    172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:    redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:    redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 172.31.50.67
 ```
 
@@ -327,11 +327,11 @@ If I try to resolve one of my endpoints, I get only one IP address :
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
 ```
 
@@ -378,13 +378,13 @@ third node's proxy, I can see the 2 external addresses.
 
 ```sh
 root@ip-172-31-56-5:~# nslookup redis-14658.demo.francois.demo-rlec.redislabs.com
-Server:		172.31.0.2
-Address:	172.31.0.2#53
+Server:         172.31.0.2
+Address:        172.31.0.2#53
 
 Non-authoritative answer:
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 34.195.100.46
-Name:	redis-14658.demo.francois.demo-rlec.redislabs.com
+Name:   redis-14658.demo.francois.demo-rlec.redislabs.com
 Address: 172.31.50.67
 ```
 
