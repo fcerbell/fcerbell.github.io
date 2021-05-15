@@ -4,6 +4,7 @@ responsive follow-bar (side/bottom)
 responsive support-bar (side/bottom)
 responsive category widget (side/body)
 responsive tag widget (side/body)
+Use filenames instead of uids without altering the permalinks
 
 Quadcopter
 
