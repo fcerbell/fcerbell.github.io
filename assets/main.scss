@@ -37,15 +37,16 @@ footer .externalLink {
     margin: 0px;
     border: 0px;
     padding: 0px;
-}
-img.flag {
-    margin: 0px;
-    border: solid 1px white;
-    padding: 2px;
-    max-width: 30px;
-    max-height: 20px;
-    &:hover {
-        border: solid 1px black;
+    img.flag {
+        margin: 0px;
+        border: solid 1px white;
+        padding: 2px;
+        max-width: 25px;
+        max-height: 15px;
+        &:hover {
+            border: solid 1px black;
+        }
+        box-shadow: none;
     }
 }
 
