@@ -1,6 +1,6 @@
 ---
 uid: USBPSU
-title: USB Powersupply
+title: Desktop USB charger 10A
 description:
 category: Electronic
 tags: [ USB, Electronic ]
@@ -40,8 +40,6 @@ I used my Creality CR-10 4D printer for the enclosure and needed :
 - 250g [PLA](https://www.banggood.com/fr/CCTREE-1_75mm-1KG-or-Roll-3D-Printer-ST-PLA-Filament-For-Ender-3-Pro-or-Ender-3-V2-or-Sidewinder-3D-Printer-p-1379089.html?p=74090529739222015113&custlinkid=1310600)
 - 2 x [M3 inserts](https://www.banggood.com/fr/100pcs-M3x5x5mm-Metric-Threaded-Brass-Knurl-Round-Insert-Nuts-p-1050182.html?p=74090529739222015113&custlinkid=1310602)
 - [zip ties](https://www.banggood.com/fr/50Pcs-RJXHOBBY-RJX29-3x150mm-Black-White-Color-Nylon-Cable-Zip-Tie-p-1430664.html?p=74090529739222015113&custlinkid=1310604)
-
-Content
 
 # Materials and Links
 
