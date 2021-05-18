@@ -5,11 +5,11 @@ layout: page
 {%- assign categories = posts | map: "category" | uniq | sort -%}
 <div class="tags-expo">
 {{ content }}
-  <div class="tags-expo-list">
+  <ul class="toc">
     {% for cat in categories -%}
-    <a href="#{{ cat | slugify }}" class="post-tag">{{ cat }}</a>
+    <li><a href="#{{ cat | slugify }}" class="post-tag">{{ cat }}</a></li>
     {% endfor -%}
-  </div>
+  </ul>
   <hr/>
   <div class="tags-expo-section">
     {%- for category in categories -%}
@@ -17,7 +17,7 @@ layout: page
     {%- assign cposts = posts | where: "category",category -%}
     <ul>
       {%- for post in cposts %}
-      <li><time>{{ post.date | date:"%d %b" }} - </time>
+      <li><time>{{ post.date | date:"%d %b %Y" }} - </time>
         <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
           {{- post.title -}}
         </a>

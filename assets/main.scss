@@ -81,7 +81,8 @@ div.post-content img {
   }
 }
 
-ul#markdown-toc {
+ul#markdown-toc,
+ul.toc {
     background-color: #ffcfcf;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -91,7 +92,8 @@ ul#markdown-toc {
 }
 
 @media screen and (min-width: 1440px) {
-ul#markdown-toc {
+ul#markdown-toc,
+ul.toc{
     position: fixed;
     top: 70px;
     left: 50%;
