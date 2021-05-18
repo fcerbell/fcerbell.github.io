@@ -2,7 +2,7 @@
 uid: RedisModulesIntro
 title: Redis 04 - Introduction aux modules Redis
 description:
-category: RedisIn5min
+category: Redis en 5 minutes
 tags: [ Redis,  Redislabs, full text search, full text, search engine, graph database, graph, cypher, opencypher, index, indices, modules ]
 ---
 

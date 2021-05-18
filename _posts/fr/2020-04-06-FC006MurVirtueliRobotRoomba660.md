@@ -2,7 +2,7 @@
 uid: irobotroomba660virtualwall
 title: FC006 - Mur virtuel pour iRobot Roomba
 description:
-category: Electronic
+category: Electronique
 tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
 mathjax: true
 ---

@@ -2,7 +2,7 @@
 uid: USBPSU
 title: USB Powersupply
 description:
-category: Tutos
+category: Electronic
 tags: [ USB, Electronic ]
 ---
 

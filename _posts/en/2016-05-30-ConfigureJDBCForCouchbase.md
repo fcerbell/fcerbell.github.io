@@ -2,7 +2,7 @@
 uid: ConfigureJDBCForCouchbase
 title: Configure JDBC for Couchbase
 description:
-category: Tutos
+category: Computers
 tags: [ JDBC, Couchbase ]
 ---
 

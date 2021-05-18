@@ -2,7 +2,7 @@
 uid: NoSQLReportingIntroduction
 title: Introduction to NoSQL reporting
 description:
-category: Tutos
+category: Computers
 tags: [ NoSQL, Database, Architecture ]
 ---
 

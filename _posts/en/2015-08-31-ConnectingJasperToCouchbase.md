@@ -2,7 +2,7 @@
 uid: ConnecterJasperACouchbase
 title: JDBC connection from JasperReports Server to Couchbase
 description:
-category: Tutos
+category: Computers
 tags: [ Couchbase, Jaspersoft, Reporting, JDBC, N1QL ]
 ---
 

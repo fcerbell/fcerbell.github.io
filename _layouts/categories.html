@@ -1,22 +1,31 @@
 ---
-layout: default
+layout: page
 ---
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title | escape }}{%- include flags.html uid=page.uid -%}</h1>
-  </header>
+{%- include i18n.html -%}
+{%- assign categories = posts | map: "category" | uniq | sort -%}
 <div class="tags-expo">
 {{ content }}
   <div class="tags-expo-list">
-    {% for tag in site.categories -%}
-    <a href="#{{ tag[0] | slugify }}" class="post-tag">{{ tag[0] }}</a>
+    {% for cat in categories -%}
+    <a href="#{{ cat | slugify }}" class="post-tag">{{ cat }}</a>
     {% endfor -%}
   </div>
   <hr/>
   <div class="tags-expo-section">
-    {%- for tag in site.categories -%}
-    <h2 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h2>
-    {%- assign posts = tag[1] -%}
-{%- include posts_list.html -%}
+    {%- for category in categories -%}
+    <h2 id="{{ category | slugify }}">{{ category }}</h2>
+    {%- assign cposts = posts | where: "category",category -%}
+    <ul>
+      {%- for post in cposts %}
+      <li><time>{{ post.date | date:"%d %b" }} - </time>
+        <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+          {{- post.title -}}
+        </a>
+        {%- include flags.html uid=post.uid %}
+      </li>
+      {%- endfor %}
+    </ul>
     {% endfor %}
   </div>
 </div>
+

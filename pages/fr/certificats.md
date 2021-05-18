@@ -4,8 +4,6 @@ title: Certificats
 layout: page
 description: Mes certificats, avec leur chaine de certification.
 mainmenu: true
-category: Securité
-tags: [pki]
 ---
 <p>Tous mes sites et services utilisent des certificats SSL/TLS pour protéger
 notre sécurité à vous et moi. Tous ces certificats sont signés par ma propre

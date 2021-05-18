@@ -2,7 +2,7 @@
 uid: PlayingWithRedisAndGeoQueries
 title: Playing with Redis and Geo queries
 description:
-category: Tutos
+category: Computers
 tags: [ Redis, GeoHash, Queries ]
 ---
 

@@ -2,7 +2,7 @@
 uid: redisdatascalabilityanddistribution
 title: Redis 06 - Distribution et flexibilité du stockage des données
 description:
-category: RedisIn5min
+category: Redis en 5 minutes
 tags: [ Redis,  Redislabs, scalabilité, données, cluster, distribution, sharding, resharding, shard, reshard, performances, linéaire, performances linéaires, prédictible, performances prédictibles, requêtes, hash, hashslots, hashtags, hash-slot, hash-tags, entreprise, redis entreprise, communautaire, redis communautaire, redimmensionnement, redimensionner ]
 ---
 

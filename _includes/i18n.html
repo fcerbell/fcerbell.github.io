@@ -1,0 +1,9 @@
+{%- assign uids = site.posts | sort: "date" | reverse | map: "uid" | uniq -%}
+{%- for uid in uids -%}
+  {%- assign post = site.posts | where: "uid",uid | sort: "lang" -%}
+  {%- assign post = site.posts | where: "uid",uid | where: "lang", "en" | default: post -%}
+  {%- assign post = site.posts | where: "uid",uid | where: "lang", site.lang | default: post -%}
+  {%- assign post = site.posts | where: "uid",uid | where: "lang", page.lang | default: post -%}
+  {%- assign posts = posts | concat: post -%}
+{%- endfor -%}
+{%- assign posts = posts | sort: "date" | reverse -%}

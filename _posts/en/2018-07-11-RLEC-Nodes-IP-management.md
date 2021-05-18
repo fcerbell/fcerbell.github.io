@@ -2,7 +2,7 @@
 uid: RLECNodesIPManagement
 title: RedisLabs Enterprise Cluster Nodes IP management
 description:
-category: Tutos
+category: Computers
 tags: [ Redis, RedisLabs, RLEC, Cluster ]
 ---
 

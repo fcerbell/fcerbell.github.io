@@ -9,6 +9,6 @@ layout: default
           </h1>
 {%- endif %}
 {{ content }}
-{%- assign posts=site.posts | sort: "date" | reverse -%}
-{% include posts_list.html limit=5 %}
+{%- include i18n.html -%}
+{% include posts_list.html posts=posts limit=5 show_excerpts=true %}
         </div>

@@ -2,7 +2,7 @@
 uid: redisdatascalabilityanddistribution
 title: Redis 06 - Data scalability and distribution
 description:
-category: RedisIn5min
+category: Redis in 5 minutes
 tags: [ Redis,  Redislabs, scalability, data, cluster, distribution, sharding, resharding, shard, reshard, performances, linear, linear performances, predictable, predictable performances, query, querie, hash, hashslots, hashtags, hash-slot, hash-tags, enterprise, redis enterprise, community, redis community ]
 ---
 

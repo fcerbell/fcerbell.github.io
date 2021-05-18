@@ -2,7 +2,7 @@
 uid: PlayingWithRedisAndGeoQueries
 title: Jouer avec Redis et les requêtes géographiques
 description:
-category: Tutos
+category: Informatique
 tags: []
 ---
 

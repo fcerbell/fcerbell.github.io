@@ -2,7 +2,7 @@
 uid: DataLoading
 title: Loading data in Couchbase with RxJava
 description:
-category: Tutos
+category: Computers
 tags: [ Java, ReactiveX, RxJava, Couchbase, Data ]
 ---
 

@@ -2,7 +2,7 @@
 uid: RLECNodesIPManagement
 title: Gestion des IPs d'un cluster Redis Enterprise
 description:
-category: Tutos
+category: Informatique
 tags: [ Redis, RedisLabs, RLEC, Cluster ]
 ---
 

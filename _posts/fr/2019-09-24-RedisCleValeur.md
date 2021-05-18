@@ -2,7 +2,7 @@
 uid: RedisKeyValue
 title: Redis 02 - un entrepôt clé-structure
 description:
-category: RedisIn5min
+category: Redis en 5 minutes
 tags: [ redis, introduction, key-value, data-structures ]
 ---
 

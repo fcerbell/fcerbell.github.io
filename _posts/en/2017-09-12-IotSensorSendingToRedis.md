@@ -2,7 +2,7 @@
 uid: IotSensorSendingToRedis
 title: Iot sensor on ESP8266 sending values to Redis
 description:
-category: Tutos
+category: Home automation
 tags: [iot, embedded, esp8266, arduino, redis, home automation]
 ---
 

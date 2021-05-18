@@ -4,8 +4,6 @@ title: Certificats
 layout: page
 description: My SSL/TLS certificate, with the certification authority chain. 
 mainmenu: true
-category: Security
-tags: [ pki ]
 ---
 <p>All my websites and services are using SSL/TLS certificates to protect our
 security of you and me.  All these certificates are signed by my own

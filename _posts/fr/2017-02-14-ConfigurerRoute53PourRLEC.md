@@ -2,7 +2,7 @@
 uid: ConfigureRoute53ForRLEC
 title: Comment configurer le DNS Route53 d'Amazon pour RedisLabs Enterprise Cluster
 description:
-category: Tutos
+category: Informatique
 tags: [ DNS, Route53, AWS, Amazon, Redis ]
 ---
 

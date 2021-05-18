@@ -2,7 +2,7 @@
 uid: RedisIntro
 title: Redis 01 - Introduction
 description:
-category: RedisIn5min
+category: Redis in 5 minutes
 tags: [ redis, introduction, key-value, data-structures ]
 ---
 

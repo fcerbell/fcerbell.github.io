@@ -2,7 +2,7 @@
 uid: multiprotocoliotinfra
 title: Multiprotocol IoT infrastructure
 description:
-category: Domotique
+category: Home automation
 tags: [ ZWave, MySensors, MQTT, Mosquitto, NodeRED, Domoticz, NodeJS, IoT, Raspberry, home automation ]
 ---
 

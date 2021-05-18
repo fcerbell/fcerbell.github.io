@@ -2,7 +2,7 @@
 uid: RedisNoSQLIntro
 title: Redis 05 - NoSQL Origins, goals and challenges
 description:
-category: RedisIn5min
+category: Redis in 5 minutes
 tags: [Redis,  Redislabs, index, indices, nosql, scalability, high, availability, high-availability, consistency, performances, sql, relational, normalization, normalize, deduplicate]
 ---
 

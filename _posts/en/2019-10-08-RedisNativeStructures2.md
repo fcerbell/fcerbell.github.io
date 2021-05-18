@@ -2,7 +2,7 @@
 uid: RedisNativeStructures2
 title: Redis 03b - Native datastructures (part 2)
 description:
-category: RedisIn5min
+category: Redis in 5 minutes
 tags: [ Redis, RedisLabs, Data-structures, Data, Structures, key-value, key, value, strings, limits, sets, sorted, sorted sets, list, hash, geo, geo index, bitmap, bitfield, hyperloglog, usecase, stream, ttl, time-to-live, expiration, full text search, full text, search engine, graph database, graph, cypher, opencypher, concurrency, atomic counter, atomic, counter, lock, index, indices, stack, queue, joe queue, task queue, task ]
 ---
 

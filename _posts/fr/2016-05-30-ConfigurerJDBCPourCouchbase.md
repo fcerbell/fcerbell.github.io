@@ -2,7 +2,7 @@
 uid: ConfigureJDBCForCouchbase
 title: Configurer JDBC pour Couchbase
 description:
-category: Tutos
+category: Informatique
 tags: [ JDBC, Couchbase ]
 ---
 
