@@ -3,16 +3,31 @@
   display: block;
   width: auto;
   overflow: hidden;
-}
-
-.PageNavigation a {
-  display: block;
-  width: 50%;
-  float: left;
-  margin: 1em 0;
   background-color: #cfffcf;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  .prev {
+    width: 50%;
+    float: left;
+    &::before {
+        padding-left: 3px;
+        font-family: "FontAwesome";
+        font-size: 20px;
+        content: "\f048";
+    }
+  }
+  
+  .next {
+    width: 50%;
+    float: left;
+    text-align: right;
+    &::before {
+        padding-right: 3px;
+        font-family: "FontAwesome";
+        font-size: 20px;
+        content: "\f051";
+    }
+  }
 }
 
-.PageNavigation .next {
-  text-align: right;
-}
