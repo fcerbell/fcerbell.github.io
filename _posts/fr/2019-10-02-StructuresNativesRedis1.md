@@ -3,7 +3,7 @@ uid: RedisNativeStructures1
 title: Redis 03a - Structures de données natives (1ère partie)
 description:
 category: Redis en 5 minutes
-tags: [ Redis, RedisLabs, Data-structures, Data, Structures, key-value, key, value, strings, limits, sets, sorted, list, hash, ttl, time-to-live, expiration, full text search, full text, search engine, graph database, graph, cypher, opencypher, concurrency, atomic counter, atomic, counter, lock, index, indices, stack, queue, joe queue, task queue, task ]
+tags: [ Redis, RedisLabs, Structures de données, Donnée, Structures, Clé-valeur, strings, limits, sets, sorted, list, hash, TTL, time-to-live, expiration, Recherche, full text, Moteur de recherche, Base graphe, Graphe, Cypher, OpenCypher, Concurrence, Compteur atomiquer, Atomic, Compteur, Verrou, Index, Pile, File, Queue, Traitements, Tâches ]
 ---
 
 Dans cette première partie, je vais faire un court survol des structures de

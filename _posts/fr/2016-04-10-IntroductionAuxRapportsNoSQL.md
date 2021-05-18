@@ -3,7 +3,7 @@ uid: NoSQLReportingIntroduction
 title: Introduction aux rapports NoSQL
 description:
 category: Informatique
-tags: [ NoSQL, Reporting ]
+tags: [ NoSQL, Rapports, Décisionnel, Architecture ]
 ---
 
 Quelque soit la technologie de base de données, il y a une application métier

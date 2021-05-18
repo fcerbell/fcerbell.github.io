@@ -3,7 +3,7 @@ uid: USBPSU
 title: Chargeur USB de bureau 10A
 description:
 category: Electronique
-tags: [ USB, Electronique ]
+tags: [ USB, Electronique, Téléphone mobile, Mobile, LEDs, Smartphone, Tablette ]
 ---
 
 De plus en plus de périphériques sont alimentés avec une prise USB. Ils

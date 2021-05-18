@@ -3,7 +3,7 @@ uid: RedisKeyValue
 title: Redis 02 - un entrepôt clé-structure
 description:
 category: Redis en 5 minutes
-tags: [ redis, introduction, key-value, data-structures ]
+tags: [ Redis, Introduction, Clé-valeur, Structures de données ]
 ---
 
 Dans ce contenu, j'explique les différences entre un schéma relationel, un schéma clé-valeur et un schéma clé-structure de données.

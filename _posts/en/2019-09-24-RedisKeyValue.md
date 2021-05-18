@@ -3,7 +3,7 @@ uid: RedisKeyValue
 title: Redis 02 - a key-structure store
 description:
 category: Redis in 5 minutes
-tags: [ redis, introduction, key-value, data-structures ]
+tags: [ Redis, Introduction, Key-value, Data-structures ]
 ---
 
 In this content, I explain the differences between relational schema, a key-value schema and a key-datastructure schema. 

@@ -3,7 +3,7 @@ uid: RedisNativeStructures2
 title: Redis 03b - Native datastructures (part 2)
 description:
 category: Redis in 5 minutes
-tags: [ Redis, RedisLabs, Data-structures, Data, Structures, key-value, key, value, strings, limits, sets, sorted, sorted sets, list, hash, geo, geo index, bitmap, bitfield, hyperloglog, usecase, stream, ttl, time-to-live, expiration, full text search, full text, search engine, graph database, graph, cypher, opencypher, concurrency, atomic counter, atomic, counter, lock, index, indices, stack, queue, joe queue, task queue, task ]
+tags: [ Redis, RedisLabs, Data-structures, Data, Structures, Key-value, Key, Value, strings, limits, sets, sorted, sorted sets, list, hash, Geo, geo index, bitmap, bitfield, hyperloglog, usecase, stream, TTL, time-to-live, Expiration, Full text search, Full text, Search engine, Graph database, Graph, Cypher, OpenCypher, Concurrency, Atomic counter, Atomic, Counter, Lock, Index, Stack, Queue, Job queue, Task queue, Task ]
 ---
 
 I'll give a short overview of Redis native datastructures, what can they be

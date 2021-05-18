@@ -3,7 +3,7 @@ uid: irobotroomba660virtualwall
 title: FC006 - iRobot Roomba Virtual Wall
 description:
 category: Electronic
-tags: [ iRobot, Roomba, Infra-red, attiny85, avr ]
+tags: [ iRobot, Roomba, Infra-red, IR, ATTiny85, AVR, LED, Robot, Vaccum cleaner, Cleaner ]
 mathjax: true
 ---
 

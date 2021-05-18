@@ -3,7 +3,7 @@ uid: WrappingWireDispenser
 title: Distributeur de fil à wrapper imprimé en 3D
 description:
 category: Impression 3D
-tags: [ Wrapping, Wire, Dispenser, 3D, Printing, Creality, CR-10, OpenSCAD, Design, PLA ]
+tags: [ Wrapping, Cable, Distributeur, 3D, Impression, Creality, CR-10, OpenSCAD, Conception ]
 ---
 
 J'utilise souvent du fil à wrapper pour mes projets électoniques. Soit

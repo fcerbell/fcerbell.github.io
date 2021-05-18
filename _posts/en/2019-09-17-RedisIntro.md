@@ -3,7 +3,7 @@ uid: RedisIntro
 title: Redis 01 - Introduction
 description:
 category: Redis in 5 minutes
-tags: [ redis, introduction, key-value, data-structures ]
+tags: [ Redis, Introduction, Key-value, Data-structures ]
 ---
 
 I try to present an overview of Redis, its history, what it can do, how it

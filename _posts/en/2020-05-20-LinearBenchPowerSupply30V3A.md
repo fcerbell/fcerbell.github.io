@@ -3,7 +3,7 @@ uid: LinearBenchPowerSupply30V3A
 title: FC007 - Linear bench power supply
 description:
 category: Electronic
-tags: [ PSU, Bench, Labo, Power supply, LM723, 2n3055, BD139 ]
+tags: [ PSU, Bench, Labo, Power supply, LM723, 2N3055, BD139 ]
 mathjax: true
 ---
 

@@ -3,7 +3,7 @@ uid: USBPSU
 title: Desktop USB charger 10A
 description:
 category: Electronic
-tags: [ USB, Electronic ]
+tags: [ USB, Electronic, Charger, Phone, Mobile phone, Smart phone, LED, Tablet ]
 ---
 
 More and more devices are powered with an USB plug. They require more and more

@@ -3,7 +3,7 @@ uid: RedisModulesIntro
 title: Redis 04 - Redis modules introduction
 description:
 category: Redis in 5 minutes
-tags: [ Redis,  Redislabs, full text search, full text, search engine, graph database, graph, cypher, opencypher, index, indices, modules ]
+tags: [ Redis,  Redislabs, Full text search, Full text, Search engine, Graph database, Graph, Cypher, OpenCypher, Index, Modules ]
 ---
 
 I already listed the native Redis data-structures. Redis can dynamically load
