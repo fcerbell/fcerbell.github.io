@@ -63,10 +63,20 @@ case insensitive sorting (prepend each value with lcase value, sort, remove the 
     {%- endif -%}
     {%- assign post = posts | where: "uid",uid | first -%}
     {%- if post.tags contains tag %}
+{% comment %}
 {% include post_link.html post=post %}
+{% endcomment %}
+      <li><time>{{ post.date | date:"%d %b %Y" }} - </time>
+        <a href="{{ post.url | relative_url }}">
+          {{- post.title -}}
+        </a>
+        {%- include flags.html uid=post.uid %}
+        <div class="tag-list">
       {%- for tag in post.tags %}
-      <a class="fas fa-tag tag" href="{{ page.url | relative_url }}/#{{ tag | slugify }}">{{ tag }}</a>
+          <a class="fas fa-tag tag" href="{{ page.url | relative_url }}/#{{ tag | slugify }}">{{ tag }}</a>
       {%- endfor -%}
+        </div>
+      </li>
     {%- endif -%}
   {%- endfor -%}
             </ul>

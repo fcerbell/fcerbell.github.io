@@ -18,7 +18,7 @@ layout: page
     <ul>
       {%- for post in cposts %}
       <li><time>{{ post.date | date:"%d %b %Y" }} - </time>
-        <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+        <a href="{{ post.url | relative_url }}">
           {{- post.title -}}
         </a>
         {%- include flags.html uid=post.uid %}

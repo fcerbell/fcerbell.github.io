@@ -11,13 +11,17 @@ layout: default
                 {{- page.date | date: date_format -}}
               </time>
               {%- if page.author %}
-                • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span> • 
+               • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span> • 
               {%- endif -%}
 {% include flags.html uid=page.uid %}
-              {%- for t in page.tags -%}
-                {%- assign tag = t | downcase -%}
-              • <a class="fas fa-tag" title="Tag {{t}}" href="{{ "/pages/" | append: page.lang | append:"/tags#" | append: tag | relative_url }}">{{t}}</a>
-              {%- endfor %}
+              {%- if page.tags -%}
+              <div class="tag-list">
+                {%- for t in page.tags -%}
+                  {%- assign tag = t | downcase %}
+                <a title="Tag {{t}}" href="{{ "/pages/" | append: page.lang | append:"/tags#" | append: tag | relative_url }}">{{t}}</a>
+                {%- endfor %}
+              </div>
+              {%- endif -%}
             </p>
           </header>
           <div class="post-content e-content" itemprop="articleBody">

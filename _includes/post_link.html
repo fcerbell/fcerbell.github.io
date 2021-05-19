@@ -1,9 +1,23 @@
+{%- assign date_format = site.date_format | default: page.date_format | default: "%-d %b %Y" %}
             <li>
-{%- assign date_format = site.date_format | default: "%-d %b %Y" %}
               <a class="post-link" href="{{ include.post.url | relative_url }}">{{ include.post.title | escape }}</a>
-              <span class="post-meta">{{ include.post.date | date: date_format }}, {{ include.post.author }}</span>
-{%- include flags.html uid=include.post.uid -%}
+              <span class="post-meta">
+                <time>{{ include.post.date | date: date_format }}</time>, 
+                {{ include.post.author }}
+{%- if include.show_flags -%}
+  {%- include flags.html uid=include.post.uid -%}
+{%- endif -%}
+{%- if include.show_tags -%}
+                <span class="tag-list">
+  {%- for tag in include.post.tags %}
+                  <a class="tag" href="{{ page.url | relative_url }}/#{{ tag | slugify }}">{{ tag }}</a>
+  {%- endfor -%}
+                </span>
+{%- endif -%}
+              </span>
 {%- if include.show_excerpts -%}
+              <div class="post-excerpt">
 {{- include.post.excerpt -}}
+              </div>
 {%- endif %}
             </li>
