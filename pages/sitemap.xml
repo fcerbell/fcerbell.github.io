@@ -10,12 +10,6 @@ https://jekyllrb.com/tutorials/convert-site-to-jekyll/
     {%- for page in site.pages %}
     <url>
         <loc>{{page.url|absolute_url}}</loc>
-        {%- if page.uid %}
-          {%- assign translations = site.pages | where: "uid",page.uid -%}
-          {%- for t in translations %}
-        <xhtml:link rel="alternate" hreflang="{{t.lang}}" href="{{t.url | absolute_url}}" />
-          {%- endfor %}
-        {%- endif %}
         <lastmod>{{site.time | date: '%Y-%m-%d' }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.5</priority>
@@ -24,12 +18,6 @@ https://jekyllrb.com/tutorials/convert-site-to-jekyll/
     {%- for post in site.posts %}
     <url>
         <loc>{{post.url|absolute_url}}</loc>
-        {%- if post.uid %}
-          {%- assign translations = site.posts | where: "uid",post.uid -%}
-          {%- for t in translations %}
-        <xhtml:link rel="alternate" hreflang="{{t.lang}}" href="{{t.url | absolute_url}}" />
-          {%- endfor %}
-        {%- endif %}
         <lastmod>{{site.time | date: '%Y-%m-%d' }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.5</priority>
