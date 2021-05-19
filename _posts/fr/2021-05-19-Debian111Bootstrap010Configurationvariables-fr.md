@@ -1,29 +1,39 @@
 ---
 uid: Debian111Bootstrap010Configurationvariables
-title: Debian11 Bootstrap Configuration variables
-description: All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. 
+title: Debian11 Bootstrap Variables de configuration
+description: Toutes les étapes d'installation et de configuration auront besoin d'informations encore et encore. La première fois que des informations sont nécessaires, je les enregistre dans un fichier de configuration et je le charge dans l'environnement courant. Ainsi, je n'ai pas besoin de les saisir une fois de plus et je ne risque pas d'incohérence.
 category: Informatique
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Configuration variables, Variables ]
-published: false
+tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Variables de configuration, Configuration ]
 ---
 
-All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. You'll need this information several times. Instead to change the code, I want to cut-and-paste it, I parametrized the code blocks. I ask questions at the begining of the installation and save the answers in environment variables. Given that I need to reboot several times, I save these variables in a file. This file will be sourced by the other steps to avoid asking again and again the same information and avoid mistakes.
+Toutes les étapes d'installation et de configuration auront besoin des mêmes informations encore et encore. La toute première fois
+qu'une information est nécessaire, je la stocke dans un fichier de configuration et je le charge dans l'environnement courant.
+Ansi, je n'ai pas besoin de la resaisir et je n'ai pas de risque d'incohérence. Vous aurez besoin de ces informations plusieurs
+fois. Au lieu de changer le code, je souhaite uniquement faire des copier-coller, je le variabilise. Je pose les questions au
+début d'une étape et sauvegarde les réponses dans des variables d'environnement. Comme je suis ammené à redémarrer plusieurs fois,
+je sauvegarde ces variables dans un fichier. Ce fichier sera chargé par les autres étapes par la suite, pour éviter de reposer les
+mêmes questions et de risquer des erreurs.
 
-You can find links to the related video recordings and printable materials at the [end of this post](#materials-and-links).
+Vous pouvez trouver des liens vers les enregistrements vidéo et les supports imprimables associés à la
+[fin de cet article](#supports-et-liens).
 
 * TOC
 {:toc}
 
-# Configuration variables
-Whatever you choose to install, a VM or a bare-metal machine, you have to choose at least:
-- the hostname
-- the unprivileged username
-- a static IP address (mandatory for servers, optional for workstations/laptops)
+# Variables de configuration
 
-The unprivileged user is the same, if a step needs a system account or if one of the applications needs an application account. Basically, this user should be YOU.
+Quelque soit la machine à installer, une VM ou un serveur physique, vous aurez besoin au minimum :
+- du nom de machine, le hostname
+- d'un compte utilisateur
+- d'une adresse IP statique (obligatoire pour les serveurs, facultative pour les stations de travail)
 
-## Create the variables
-I first add the variables in the file with default values. I split this in two steps because the second part needs the first part to be executed, in order to fill the default values.
+L'utilisateur est le même, que l'étape concernée ait besoin d'un compte système ou d'un compte applicatif. En fait, pour faire
+simple, ce compte utilisateur, c'est vous.
+
+## Creer les variables
+
+Je commence par ajouter les variables avec des valeurs par défaut. Je découpe cette phase en deux car la seconde phase a besoin
+que les variables déclarées dans la première soient chargées dans l'environnement.
 ``` bash
 cat << EOF > /root/config.env
 export HN="`hostname`" # Host name
@@ -38,16 +48,19 @@ export WAN_GW="`ip route | grep default | sed 's/[^0-9]*\([0-9]\+.[0-9]\+.[0-9]\
 EOF
 ```
 
-## Tune the default values
-The variables are initialized with default values. You need to read them, check them, fix them, tune them, with your prefered text editor (`vi`, isn't it ?)
-```
+## Ajustement des valeurs
+
+Les variables sont initialisées avec des valeurs par défaut. Vous devez les lire, les vérifier, les corriger, les ajuster avec
+votre éditeur de texte préféré. `vi`, n'est-ce pas ?
+```bash
 vi /root/config.env
 ```
 
 ![2021-05-19_10-53.png]({{ "/assets/posts/en/Debian111Bootstrap010Configurationvariables/f94e4b1f592240cd9d9755da4286a778.png" | relative_url }})
 
 
-## Load the variables in the environment
+## Chargement des variables dans l'environnement
+
 ```bash
 source /root/config.env
 ```

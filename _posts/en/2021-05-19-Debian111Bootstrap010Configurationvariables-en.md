@@ -4,7 +4,6 @@ title: Debian11 Bootstrap Configuration variables
 description: All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. 
 category: Computers
 tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Configuration variables, Variables ]
-published: false
 ---
 
 All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. You'll need this information several times. Instead to change the code, I want to cut-and-paste it, I parametrized the code blocks. I ask questions at the begining of the installation and save the answers in environment variables. Given that I need to reboot several times, I save these variables in a file. This file will be sourced by the other steps to avoid asking again and again the same information and avoid mistakes.
@@ -40,7 +39,7 @@ EOF
 
 ## Tune the default values
 The variables are initialized with default values. You need to read them, check them, fix them, tune them, with your prefered text editor (`vi`, isn't it ?)
-```
+```bash
 vi /root/config.env
 ```
 
