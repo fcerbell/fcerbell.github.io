@@ -19,7 +19,9 @@
     <script src="{{ "/js/extlinks.js" | relative_url }}" type="text/javascript"></script>
 {%- if site.google_analytics -%}
 {%- unless site.url contains "localhost" %}
+{%- unless site.url contains "0.0.0.0" %}
 {% include google-analytics.html %}
+{% endunless -%}
 {% endunless -%}
 {%- endif -%}
 {%- if page.mathjax %}
