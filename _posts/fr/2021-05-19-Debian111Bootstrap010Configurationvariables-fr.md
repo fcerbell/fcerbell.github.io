@@ -34,7 +34,7 @@ simple, ce compte utilisateur, c'est vous.
 
 Je commence par ajouter les variables avec des valeurs par défaut. Je découpe cette phase en deux car la seconde phase a besoin
 que les variables déclarées dans la première soient chargées dans l'environnement.
-``` bash
+```bash
 cat << EOF > /root/config.env
 export HN="`hostname`" # Host name
 export DN="`domainname -d`" # Domain name

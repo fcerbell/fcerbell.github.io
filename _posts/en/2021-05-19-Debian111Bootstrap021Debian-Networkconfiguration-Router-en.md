@@ -3,9 +3,7 @@ uid: Debian111Bootstrap021Debian-Networkconfiguration-Router
 title: Debian11 Bootstrap Debian Network configuration Router
 description: Configure a second network interface, which is useful if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.
 category: Computers
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Router,
-Gateway, Parental control, Control, Internet sharing ]
-published: false
+tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Router, Gateway, Parental control, Control, Internet sharing ]
 ---
 
 I describe here how to configure a second network interface, which is useful if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.
@@ -19,7 +17,7 @@ You can find links to the related video recordings and printable materials at th
 
 ## Previous steps
 
-The network configuration file should have been initialized with the [010 - Debian - Base](../../Installation/1-Bootstrap/020%20-%20Debian%20-%20Network%20configuration.md) post.
+The network configuration file should have been initialized with the [Debian11 Bootstrap Debian Network configuration](/Debian111Bootstrap020Debian-Networkconfiguration-en/) post.
 
 ## Create new variables
 
@@ -35,17 +33,20 @@ EOF
 ```
 
 ## Tune the default values
+
 The variables are initialized with default values. You need to read them, check them, fix them, tune them, with your prefered text editor (`vi`, isn't it ?)
-```
+```bash
 vi /root/config.env
 ```
 
 # Load the variables in the environment
+
 ```bash
 source /root/config.env
 ```
 
 ## Assign static IP address
+
 ```bash
 cat >> /etc/network/interfaces << EOF
 # LAN
@@ -56,6 +57,7 @@ EOF
 ```
 
 # Test network new configuration
+
 ```bash
 reboot
 ```

@@ -14,6 +14,7 @@ You can find links to the related video recordings and printable materials at th
 {:toc}
 
 # Configuration variables
+
 Whatever you choose to install, a VM or a bare-metal machine, you have to choose at least:
 - the hostname
 - the unprivileged username
@@ -22,8 +23,9 @@ Whatever you choose to install, a VM or a bare-metal machine, you have to choose
 The unprivileged user is the same, if a step needs a system account or if one of the applications needs an application account. Basically, this user should be YOU.
 
 ## Create the variables
+
 I first add the variables in the file with default values. I split this in two steps because the second part needs the first part to be executed, in order to fill the default values.
-``` bash
+```bash
 cat << EOF > /root/config.env
 export HN="`hostname`" # Host name
 export DN="`domainname -d`" # Domain name
@@ -38,6 +40,7 @@ EOF
 ```
 
 ## Tune the default values
+
 The variables are initialized with default values. You need to read them, check them, fix them, tune them, with your prefered text editor (`vi`, isn't it ?)
 ```bash
 vi /root/config.env
@@ -47,6 +50,7 @@ vi /root/config.env
 
 
 ## Load the variables in the environment
+
 ```bash
 source /root/config.env
 ```

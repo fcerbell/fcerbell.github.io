@@ -1,29 +1,32 @@
 ---
 uid: Debian111Bootstrap021Debian-Networkconfiguration-Router
-title: Debian11 Bootstrap Debian Network configuration Router
-description: Configure a second network interface, which is useful if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.
+title: Debian11 Bootstrap Configuration réseau routeur
+description: Configuration d'une seconde interface réseau, ce qui est utile si cette série d'articles est déroulée dans le but de construire un router entre deux réseaus, de distribuer un accès internet à la maison ou au travail, de protéger votre réseau privé contre internet ou de créer un proxy transparent avec contrôle parental pour vos ados adorés.
 category: Informatique
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Router,
-Gateway, Parental control, Control, Internet sharing ]
-published: false
+tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Routeur,
+Passerelle, Contrôle parental, Parental, Partage d'internet, Internet ]
 ---
 
-I describe here how to configure a second network interface, which is useful if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.
+Je décris comment configurer une seconde interface réseau, ce qui est bien pratique si ce tutorial sert à construire un routeur
+entre deux réseaux, à distribuer un accès internet à la maison ou au travail, à protéger un réseau privé contre internet ou à
+créer un proxy transparent avec contrôle parental pour vos ados adorés.
 
-You can find links to the related video recordings and printable materials at the [end of this post](#materials-and-links).
+Vous pouvez trouver des liens vers les enregistrements vidéo et les supports imprimables associés à la
+[fin de cet article](#supports-et-liens).
 
 * TOC
 {:toc}
 
-# Prerequisites
+# Pré-requis
 
-## Previous steps
+## Étapes précedentes
 
-The network configuration file should have been initialized with the [010 - Debian - Base](../../Installation/1-Bootstrap/020%20-%20Debian%20-%20Network%20configuration.md) post.
+Le fichier de configuration du réseau a déjà dû être initialisé lors de l'article [Debian11 Bootstrap Configuration réseau](/Debian111Bootstrap020Debian-Networkconfiguration-fr/).
 
-## Create new variables
+## Création de nouvelles variables
 
-This step needs to have information about the second interface configuration. This second interface will be considered as secured and will expose internal services, if any, such as a proxy, a DNS or an NTP server.
+Cet article nécessite de disposer d'informations à propos de la configuration de la seconde interface. Cette dernière sera
+considérée comme sécurisée et exposera les services internes, s'il y en a, tels que proxy, DNS, ou serveur de temps NTP.
 
 ```bash
 cat << EOF >> /root/config.env
@@ -34,18 +37,22 @@ export LAN_GW="${LAN_IP}" # Internal private network gateway/router
 EOF
 ```
 
-## Tune the default values
-The variables are initialized with default values. You need to read them, check them, fix them, tune them, with your prefered text editor (`vi`, isn't it ?)
-```
+## Ajustement des valeurs par défaut
+
+Les variables sont initialisées avec des valeurs par défaut. Vous devez les lire, les vérifier, les corriger, les ajuster avec
+votre éditeur de texte préféré. C'est bien `vi`, non ?
+```bash
 vi /root/config.env
 ```
 
-# Load the variables in the environment
+# Chargement des variables dans l'environnement
+
 ```bash
 source /root/config.env
 ```
 
-## Assign static IP address
+## Affectation de l'adresse IP statique
+
 ```bash
 cat >> /etc/network/interfaces << EOF
 # LAN
@@ -55,7 +62,8 @@ iface ${LAN_IF} inet static
 EOF
 ```
 
-# Test network new configuration
+# Test de la nouvelle configuration réseau
+
 ```bash
 reboot
 ```

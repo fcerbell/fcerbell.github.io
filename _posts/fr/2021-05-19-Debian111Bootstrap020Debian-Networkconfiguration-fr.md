@@ -1,34 +1,42 @@
 ---
 uid: Debian111Bootstrap020Debian-Networkconfiguration
-title: Debian11 Bootstrap Debian Network configuration
-description: Here is how to assign a static IP address and a different hostname to an existing Debian 10 Buster minimal installation. I also include how to disable the swap, when the server has enough memory for its purpose.
+title: Debian11 Bootstrap Configuration réseau
+description: Voici comment j'affecte une adresse IP statique et un nom de machine différent à une installation Debian 10 Buster minimale. J'inclue aussi la suppression du swap, l'espace d'échange, lorsque le serveur dispose de suffisament de mémoire.
 category: Informatique
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Swap ]
-published: false
+tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Swap, Fichier d'échange Échange ]
 ---
 
-Here is how to assign a static IP address and a different hostname to an existing Debian 10 Buster minimal installation. I also include how to disable the swap, when the server has enough memory for its purpose.
+Voici comment affecter une adresse IP statique et changer le nom de machine (hostname) d'une installation Debian 10 Buster
+minimale. Nous allons également voir comment désactiver le swap (espace d'échange), lorsque le serveur n'en a pas besoin et a
+suffisament de mémoire pour ses tâches.
 
-You can find links to the related video recordings and printable materials at the [end of this post](#materials-and-links).
+Vous pouvez trouver des liens vers les enregistrements vidéo et les supports imprimables associés à la
+[fin de cet article](#supports-et-liens).
 
 * TOC
 {:toc}
 
-# Prerequisites
+#Pré-requis
 
-## Load the variables in the environment
-This post requires the WAN_IF, WAN_IP, WAN_GW, HN and DN environment variables to be loaded in your environment. They were initialized in the [000 - Configuration variables](../../Installation/1-Bootstrap/000%20-%20Introduction.md) post and you only need to ensure that they are loaded :
+## Charger les variables dans l'environnement
+
+Cet article nécessite que les variables WAN_IF, WAN_IP, WAN_GW, HN et DN soient chargées dans l'environnement. Elles ont été
+initialisées dans l'article [Debian11 Bootstrap Variables de configuration](/Debian111Bootstrap010Configurationvariables-fr/) et vous devez juste vous assurer qu'elles soient bien chargées :
 ```bash
 source /root/config.env
 ```
 
 # Preparation
 
-As of today, Debian 11 Bullseye is still in testing. Despite it will soon enter in *Hard freeze* status, the last one before the release, it is not available everywhere. Thus, I'll assume that you'll start from a stable Debian 10 Buster minimal installation, available *everywhere* (AWS, Azure, GCP, Scaleway/Dedibox, ISO, ...) and upgrade it to a Debian 11 Bullseye minimal. 
+À ce jour, Debian 11 Bullseye est toujours en « testing ». Bien qu'elle entre prochainement dans l'état *Hard freeze*, le dernier
+avant la sortie officielle, elle n'est pas disponible partout. Je vais donc partir du principe que nous démarrons à partir d'une
+Debian 10 Buster, disponible *partout* (AWS, Azure, GCP, Scaleway/Dedibox, ISO, ...) et que nous la mettons à jour en Debian 11
+Bulseye minimale.
 
-Thus, I assume that you already have a Debian 10 Buster minimal installation deployed on your server.
+Ainsi, je suppose que l'on dispose déjà d'une installation Debian 10 Buster minimale déployée sur la machine.
 
-## Assign static IP address
+## Affectation d'une IP statique
+
 ```bash
 cat > /etc/network/interfaces << EOF
 # This file describes the network interfaces available on your system
@@ -49,7 +57,8 @@ iface ${WAN_IF} inet static
 EOF
 ```
 
-## Update hostname
+## Changement de nom de machine
+
 ``` bash
 sed -i 's/root@[-0-9a-zA-Z_.]\+$/root@'${HN}'/g' \
 /etc/ssh/ssh_host_ed25519_key.pub \
@@ -60,13 +69,15 @@ sed -i "s/^127.0.1.1.*/127.0.1.1 ${HN}.${DN} ${HN}/" /etc/hosts
 echo "${HN}" > /etc/hostname
 ```
 
-## Disable swap
+## Désactivation du swap
+
 ``` bash
 sed -i 's/UUID.*swap/#&/' /etc/fstab 
 swapoff -a
 ```
 
-# Test network new configuration
+# Test de la nouvelle configuration réseau
+
 ``` bash
 reboot
 ```
