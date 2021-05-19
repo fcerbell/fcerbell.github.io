@@ -9,6 +9,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+    {%- if page.uid %}
+      {%- assign translations = site.pages | where: "uid",page.uid -%}
+      {%- for t in translations %}
+    <link rel="alternate" hreflang="{{t.lang}}" href="{{t.url | absolute_url}}" />
+      {%- endfor %}
+    {%- endif %}
     {% feed_meta %}
     <script src="{{ "/js/extlinks.js" | relative_url }}" type="text/javascript"></script>
 {%- if site.google_analytics -%}
