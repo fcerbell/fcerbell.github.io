@@ -6,10 +6,10 @@ permalink: /sitemap.xml
 https://jekyllrb.com/tutorials/convert-site-to-jekyll/
 {%- endcomment -%}
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     {%- for page in site.pages %}
     <url>
-        <loc>{{page.url}}</loc>
+        <loc>{{page.url|absolute_url}}</loc>
         {%- if page.uid %}
           {%- assign translations = site.pages | where: "uid",page.uid -%}
           {%- for t in translations %}
@@ -23,7 +23,7 @@ https://jekyllrb.com/tutorials/convert-site-to-jekyll/
     {%- endfor -%}
     {%- for post in site.posts %}
     <url>
-        <loc>{{post.url}}</loc>
+        <loc>{{post.url|absolute_url}}</loc>
         {%- if post.uid %}
           {%- assign translations = site.posts | where: "uid",post.uid -%}
           {%- for t in translations %}
