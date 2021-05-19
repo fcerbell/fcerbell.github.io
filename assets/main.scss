@@ -27,7 +27,8 @@
     }
 }
 
-.externalLink {
+.externalLink:not([title^="Share"]):not([title^="Follow"]):not([title^="Support"])
+{
     &::after {
         padding-left: 3px;
         font-family: "FontAwesome";
@@ -95,3 +96,12 @@ ul.toc {
     padding: 80px 0;
 }
 
+.signature {
+    width: 100%;
+    background-color: #cfcfcf;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: #7f7f7f;
+    text-align: center;
+    font-weight: bold;
+}

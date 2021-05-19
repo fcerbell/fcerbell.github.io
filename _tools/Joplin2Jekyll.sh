@@ -73,7 +73,7 @@ fi
 echo ${JEKYLLPATH}
 
 echo -n "Jekyll post filename generation... "
-JEKYLLFILE="`date +"%Y-%m-%d"`-${JEKYLLUID}.md"
+JEKYLLFILE="`date +"%Y-%m-%d"`-${JEKYLLUID}-en.md"
 echo "${JEKYLLFILE}"
 
 echo -n "Jekyll assets dirname generation... "
@@ -87,7 +87,7 @@ cat << EOF > "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
 uid: ${JEKYLLUID}
 title: ${JEKYLLTITLE}
 description: 
-category: Debian
+category: Computers
 tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
 published: false
 ---
