@@ -88,7 +88,7 @@ uid: ${JEKYLLUID}
 title: ${JEKYLLTITLE}
 description: 
 category: Computers
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
+tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
 published: false
 ---
 EOF

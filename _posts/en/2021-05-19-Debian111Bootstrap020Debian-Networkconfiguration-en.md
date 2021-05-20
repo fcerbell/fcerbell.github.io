@@ -3,7 +3,7 @@ uid: Debian111Bootstrap020Debian-Networkconfiguration
 title: Debian11 Bootstrap Debian Network configuration
 description: Here is how to assign a static IP address and a different hostname to an existing Debian 10 Buster minimal installation. I also include how to disable the swap, when the server has enough memory for its purpose.
 category: Computers
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Swap ]
+tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Swap ]
 ---
 
 Here is how to assign a static IP address and a different hostname to an existing Debian 10 Buster minimal installation. I also include how to disable the swap, when the server has enough memory for its purpose.

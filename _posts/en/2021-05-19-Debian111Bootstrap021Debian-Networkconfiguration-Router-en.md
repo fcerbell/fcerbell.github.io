@@ -3,7 +3,7 @@ uid: Debian111Bootstrap021Debian-Networkconfiguration-Router
 title: Debian11 Bootstrap Debian Network configuration Router
 description: Configure a second network interface, which is useful if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.
 category: Computers
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Router, Gateway, Parental control, Control, Internet sharing ]
+tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Router, Gateway, Parental control, Control, Internet sharing ]
 ---
 
 I describe here how to configure a second network interface, which is useful if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.

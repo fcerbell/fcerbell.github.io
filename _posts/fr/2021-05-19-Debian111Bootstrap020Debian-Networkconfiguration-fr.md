@@ -3,7 +3,7 @@ uid: Debian111Bootstrap020Debian-Networkconfiguration
 title: Debian11 Bootstrap Configuration réseau
 description: Voici comment j'affecte une adresse IP statique et un nom de machine différent à une installation Debian 10 Buster minimale. J'inclue aussi la suppression du swap, l'espace d'échange, lorsque le serveur dispose de suffisament de mémoire.
 category: Informatique
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Swap, Fichier d'échange, Échange ]
+tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Swap, Fichier d'échange, Échange ]
 ---
 
 Voici comment affecter une adresse IP statique et changer le nom de machine (hostname) d'une installation Debian 10 Buster
