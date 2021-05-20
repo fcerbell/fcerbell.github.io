@@ -221,9 +221,11 @@ autocmd BufEnter *.todo set filetype=todo " chargement du type de fichier pour l
 EOF
 ```
 
-# SMART monitoring
+# Supervision des disques durs SMART
 
-To be honest, I install this disk monitoring, but do not tune it or set alerts. It is completely useless in my tutorial, but I strongly suggest to install and invest time to configure it.
+Pour être complètement honête, J'installe la supervision SMART des disques, mais je ne la configure pas et je ne mets pas
+d'alertes. Ce paragraphe est complètement inutile dans cette série d'article, mais je recommande fortement d'installer cet outil
+et d'investir du temps dans sa configuration.
 ```bash
 apt-get install -y smartmontools
 sed -i 's/^#\(.*start_smartd.*\)/\1/' /etc/default/smartmontools
