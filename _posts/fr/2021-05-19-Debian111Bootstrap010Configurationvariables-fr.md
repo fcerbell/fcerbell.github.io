@@ -1,6 +1,6 @@
 ---
 uid: Debian111Bootstrap010Configurationvariables
-title: Debian11 Bootstrap Variables de configuration
+title: Debian11, Bootstrap, Variables de configuration
 description: Toutes les étapes d'installation et de configuration auront besoin d'informations encore et encore. La première fois que des informations sont nécessaires, je les enregistre dans un fichier de configuration et je le charge dans l'environnement courant. Ainsi, je n'ai pas besoin de les saisir une fois de plus et je ne risque pas d'incohérence.
 category: Informatique
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Variables de configuration, Configuration ]
@@ -27,8 +27,8 @@ Quelque soit la machine à installer, une VM ou un serveur physique, vous aurez 
 - d'un compte utilisateur
 - d'une adresse IP statique (obligatoire pour les serveurs, facultative pour les stations de travail)
 
-L'utilisateur est le même, que l'étape concernée ait besoin d'un compte système ou d'un compte applicatif. En fait, pour faire
-simple, ce compte utilisateur, c'est vous.
+L'utilisateur est le même, que l'étape concernée ait besoin d'un compte système ou d'un compte utilisateur pour une application.
+En fait, pour faire simple, ce compte utilisateur, c'est vous.
 
 ## Creer les variables
 

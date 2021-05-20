@@ -1,6 +1,6 @@
 ---
 uid: Debian111Bootstrap010Configurationvariables
-title: Debian11 Bootstrap Configuration variables
+title: Debian11, Bootstrap, Configuration variables
 description: All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. 
 category: Computers
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Configuration variables, Variables ]
@@ -17,10 +17,10 @@ You can find links to the related video recordings and printable materials at th
 
 Whatever you choose to install, a VM or a bare-metal machine, you have to choose at least:
 - the hostname
-- the unprivileged username
+- the named username
 - a static IP address (mandatory for servers, optional for workstations/laptops)
 
-The unprivileged user is the same, if a step needs a system account or if one of the applications needs an application account. Basically, this user should be YOU.
+The named user is the same, if a step needs a system account or if one of the applications needs a user account. Basically, this user should be YOU.
 
 ## Create the variables
 

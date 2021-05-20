@@ -43,7 +43,7 @@ JEKYLLUID=`echo "${JEKYLLUID}" | sed 's~^Installation~Debian11~'`
 echo "${JEKYLLUID}"
 
 echo -n "Page title generation (Francois specific)..."
-JEKYLLTITLE=`echo "${JOPLINPATH} ${JOPLINFILE}" | sed 's~[-/ [:digit:]]]*~ ~g;s~^\([- [:alnum:]]\+\).*~\1~;s~^ *~~;s~ \+~ ~g'`
+JEKYLLTITLE=`echo "${JOPLINPATH} ${JOPLINFILE}" | sed 's~[-/ [:digit:]]]*~, ~g;s~^\([- [:alnum:]]\+\).*~\1~;s~^ *~~;s~ \+~ ~g'`
 JEKYLLTITLE=`echo "${JEKYLLTITLE}" | sed 's~^Installation~Debian11~'`
 echo "${JEKYLLTITLE}"
 
