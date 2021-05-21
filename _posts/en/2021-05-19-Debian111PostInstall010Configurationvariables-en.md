@@ -1,6 +1,6 @@
 ---
 uid: Debian111PostInstall010Configurationvariables
-title: Debian11, PostInstall, Configuration variables
+title: Debian11, PostInstallation, Configuration variables
 description: All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. 
 category: Computers
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Configuration variables, Variables ]

@@ -1,6 +1,6 @@
 ---
-uid: Debian112Base020SSHinstallationandconfiguration
-title: Debian11, Base, Installation et configuration de SSH
+uid: Debian112Common020SSHinstallationandconfiguration
+title: Debian11, Commun, Installation et configuration de SSH
 description: Assurons nous que `ssh` est bien configuré. Sécurisons-le pour interdire toute connexion directe basée sur un mot de passe. Seule une authentification par défi de clé privée/publique est autorisée
 category: Informatique
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, SSH, Mot de passe, Clé, Authentification, Prohibit-password ]
@@ -16,7 +16,7 @@ Assurons nous que `ssh` est bien configuré. Sécurisons-le pour interdire toute
 ## Chargement des variables dans l'environnement
 
 Nous avons besoin du nom d'utilisateur nommé, enregistré dans le fichier de configuration par l'article [Installation et
-configuration de Sudo](/Debian112Base010Sudoinstallationandconfiguration-fr/). Assurons-nous que les variables d'environnement
+configuration de Sudo](/Debian112Common010Sudoinstallationandconfiguration-fr/). Assurons-nous que les variables d'environnement
 soient bien chargées :
 ```bash
 source /root/config.env
@@ -78,7 +78,7 @@ De mon point de vue, comme il n'est pas possible de se connecter à root anonyme
 autorisée), je considère cette méthode plus sûr, je peux me tromper. Au final, que je passe en direct ou à travers un utilisateur
 nommé, l'authentification se fait sur une clé SSH.
 
-![sshroot.gif]({{ "/assets/posts/en/Debian112Base020SSHinstallationandconfiguration/4cf189e22d33461c9840d9931d7e85a8.gif" | relative_url }})
+![sshroot.gif]({{ "/assets/posts/en/Debian112Common020SSHinstallationandconfiguration/4cf189e22d33461c9840d9931d7e85a8.gif" | relative_url }})
 
 **Cette clé est spécifique à mes serveurs de sauvegarde. Ne l'utilisez par à moins que vous ne souhaitiez me donner les pleins
 pouvoir sur votre nouvelle machine !**
@@ -93,7 +93,7 @@ Je vais bientôt verrouiller le mot de passe du compte utilisateur, j'aurai donc
 l'aide de ma clé privée. Je l'ajoute donc aux clés autorisées.
 Ceci n'est nécessaire que si vous conservez un compte utilisateur nommé dans le système.
 
-![sshuser.gif]({{ "/assets/posts/en/Debian112Base020SSHinstallationandconfiguration/3e5241515925425a8591419eda31e0b1.gif" | relative_url }})
+![sshuser.gif]({{ "/assets/posts/en/Debian112Common020SSHinstallationandconfiguration/3e5241515925425a8591419eda31e0b1.gif" | relative_url }})
 
 **Cette clé est spécifique à mes serveurs de sauvegarde. Ne l'utilisez par à moins que vous ne souhaitiez me donner les pleins
 pouvoir sur votre nouvelle machine !**

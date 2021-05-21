@@ -1,6 +1,6 @@
 ---
-uid: Debian112Base010Sudoinstallationandconfiguration
-title: Debian11, Base, Installation et configuration de Sudo
+uid: Debian112Common010Sudoinstallationandconfiguration
+title: Debian11, Commun, Installation et configuration de Sudo
 description: Comment éviter et interdire les connexions directes sur le compte root en bloquant le mot de passe et obliger les utilisateurs spécifiés à obtenir l'accès grâce à `sudo`. La première étape est d'installer sudo et d'en autoriser l'usage à l'utilisateur nommé. Étant donné que toutes les connexions se feront obligatoirement à travers le réseau par SSH, sans mot de passe, avec une authentification par clé privée, le compte utilisateur n'aura pas de mot de passe non plus et devra dont avoir un acces sans mot de passe au compte root.
 category: Informatique
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Sudo, Sécurité, Mot de passe, Password ]
@@ -51,7 +51,7 @@ Il faut permettre à l'utilisateur nommé d'exécuter n'importe quelle commande,
 passe personnel. À ce stade, l'utilisateur dispoe encore d'un compte protégé par mot de passe. La connexion avec authentification
 par mot de passe sera désactivée après la configuration de SSH, dans un prochain article.
 
-![sudo.gif]({{ "/assets/posts/en/Debian112Base010Sudoinstallationandconfiguration/0cbff73d73be46b1bfd356df50b216dc.gif" | relative_url }})
+![sudo.gif]({{ "/assets/posts/en/Debian112Common010Sudoinstallationandconfiguration/0cbff73d73be46b1bfd356df50b216dc.gif" | relative_url }})
 
 ```bash
 adduser ${UN} sudo

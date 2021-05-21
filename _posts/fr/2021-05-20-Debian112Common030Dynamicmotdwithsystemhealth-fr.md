@@ -1,6 +1,6 @@
 ---
-uid: Debian112Base030Dynamicmotdwithsystemhealth
-title: Debian11, Base, Santé du système dans un message d'accueil dynamique
+uid: Debian112Common030Dynamicmotdwithsystemhealth
+title: Debian11, Commun, Santé du système dans un message d'accueil dynamique
 description: Il est maintenant temps d'ajouter des paillettes, mais utiles ! Un message de bienvenue dynamique avec l'état de santé du serveur.  J'aime avoir un résumé de la santé du server lorsque je m'y connecte, ce qui doit être fait, les mise à jour disponibles... De plus, c'est très pratique si on doit faire une capture d'écran pour se vanter de son uptime. Tout se fait dans le fichier `motd` qui peut être généré dynamiquement.
 category: Informatique
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Outil, Ligne de commande, Commande, Bannière, Figlet, Toilet, Cowsay, Hostname, Santé système, Système, CPU, RAM, Stats, Swap, Uptime, Mises à jour, Pending upgrades, Upgrades, Motd ]
@@ -25,7 +25,7 @@ apt-get install -y figlet toilet lsb-release
 La première partie génère une bannière avec le nom d'hôte pour éviter toute erreur de serveur et affiche également les détails de
 la distribution.
 
-![e107a95e5127814353389c579d0c0e39.png]({{ "/assets/posts/en/Debian112Base030Dynamicmotdwithsystemhealth/a49adf07aac643a08ca0805bd3e46afe.png" | relative_url }})
+![e107a95e5127814353389c579d0c0e39.png]({{ "/assets/posts/en/Debian112Common030Dynamicmotdwithsystemhealth/a49adf07aac643a08ca0805bd3e46afe.png" | relative_url }})
 
 ```bash
 cat << EOF > /etc/update-motd.d/00-header
@@ -50,7 +50,7 @@ rm /etc/update-motd.d/10-uname
 Ensuite, j'aime connaître la date, l'heure, la charge du système (uptime), l'utilisation de la mémoire et du swap (fichier
 d'échange) et un résumé des processus en coure.
 
-![8d4bd5941bd8028a64a69d5c3f01710f.png]({{ "/assets/posts/en/Debian112Base030Dynamicmotdwithsystemhealth/2d741400c5f3490a87e8f3c988e3ba33.png" | relative_url }})
+![8d4bd5941bd8028a64a69d5c3f01710f.png]({{ "/assets/posts/en/Debian112Common030Dynamicmotdwithsystemhealth/2d741400c5f3490a87e8f3c988e3ba33.png" | relative_url }})
 
 ```bash
 cat << EOF > /etc/update-motd.d/10-sysinfo
@@ -81,7 +81,7 @@ Enfin, je génère une liste des paquetages pour lesquels une mise à jour est d
 `/etc/motd`. Il y a un effet secondaire : cette partie introduit quelques secondes de latence à la connexion, à cause de
 l'invocation de `apt`.
 
-![628ab45e850f21d64f6aa2b798508d0a.png]({{ "/assets/posts/en/Debian112Base030Dynamicmotdwithsystemhealth/e215f2c54fba4655bfd0a35b3971c2dd.png" | relative_url }})
+![628ab45e850f21d64f6aa2b798508d0a.png]({{ "/assets/posts/en/Debian112Common030Dynamicmotdwithsystemhealth/e215f2c54fba4655bfd0a35b3971c2dd.png" | relative_url }})
 
 ```bash
 cat << EOF > /etc/update-motd.d/20-upgrades
