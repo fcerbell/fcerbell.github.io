@@ -159,7 +159,7 @@ the performances of the applications, the consistency and safety of the data.
 
 # Footnotes
 
-[Video]: https://youtu.be/wwDaJsTusAlFs "Related youtube video"
+[Video]: https://youtu.be/DaJsTusAlFs "Related youtube video"
 [redisio_home.png]: {{ "/assets/posts/" | append: page.uid | append:"/redisio_home.png" | relative_url }} "Redis home page"
 [redisio]: http://redis.io "Redis project page"
 [redisio_documentation.png]: {{ "/assets/posts/" | append: page.uid | append:"/redisio_documentation.png" | relative_url }} "Redis home page"
