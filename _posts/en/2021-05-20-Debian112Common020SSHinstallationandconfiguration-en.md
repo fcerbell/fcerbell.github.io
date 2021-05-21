@@ -15,7 +15,7 @@ Ensure that `ssh` is configured. Secure it to forbid any direct password-based c
 
 ## Load the variables in the environment
 
-We need to load the named username defined in the configuration file during the [010 - Sudo](../../Installation/2-Common/010%20-%20Sudo%20installation%20and%20configuration.md) post. Ensure that the configuration variables are loaded in the environment.
+We need to load the named username defined in the configuration file during the [Sudo installation and configuration](/Debian112Common010Sudoinstallationandconfiguration-en/) post. Ensure that the configuration variables are loaded in the environment.
 ```bash
 source /root/config.env
 ```
