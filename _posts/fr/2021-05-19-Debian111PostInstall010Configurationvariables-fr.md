@@ -1,6 +1,6 @@
 ---
-uid: Debian111Bootstrap010Configurationvariables
-title: Debian11, Bootstrap, Variables de configuration
+uid: Debian111PostInstall010Configurationvariables
+title: Debian11, PostInstall, Variables de configuration
 description: Toutes les étapes d'installation et de configuration auront besoin d'informations encore et encore. La première fois que des informations sont nécessaires, je les enregistre dans un fichier de configuration et je le charge dans l'environnement courant. Ainsi, je n'ai pas besoin de les saisir une fois de plus et je ne risque pas d'incohérence.
 category: Informatique
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Variables de configuration, Configuration ]
@@ -56,7 +56,7 @@ votre éditeur de texte préféré. `vi`, n'est-ce pas ?
 vi /root/config.env
 ```
 
-![2021-05-19_10-53.png]({{ "/assets/posts/en/Debian111Bootstrap010Configurationvariables/f94e4b1f592240cd9d9755da4286a778.png" | relative_url }})
+![2021-05-19_10-53.png]({{ "/assets/posts/en/Debian111PostInstall010Configurationvariables/f94e4b1f592240cd9d9755da4286a778.png" | relative_url }})
 
 
 ## Chargement des variables dans l'environnement

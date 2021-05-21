@@ -1,6 +1,6 @@
 ---
-uid: Debian111Bootstrap020Debian-Networkconfiguration
-title: Debian11, Bootstrap, Configuration réseau
+uid: Debian111PostInstall020Debian-Networkconfiguration
+title: Debian11, PostInstall, Configuration réseau
 description: Voici comment j'affecte une adresse IP statique et un nom de machine différent à une installation Debian 10 Buster minimale. J'inclue aussi la suppression du swap, l'espace d'échange, lorsque le serveur dispose de suffisament de mémoire.
 category: Informatique
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Swap, Fichier d'échange, Échange ]
@@ -21,7 +21,7 @@ Vous pouvez trouver des liens vers les enregistrements vidéo et les supports im
 ## Charger les variables dans l'environnement
 
 Cet article nécessite que les variables WAN_IF, WAN_IP, WAN_GW, HN et DN soient chargées dans l'environnement. Elles ont été
-initialisées dans l'article [Debian11 Bootstrap Variables de configuration](/Debian111Bootstrap010Configurationvariables-fr/) et vous devez juste vous assurer qu'elles soient bien chargées :
+initialisées dans l'article [Debian11 PostInstall Variables de configuration](/Debian111PostInstall010Configurationvariables-fr/) et vous devez juste vous assurer qu'elles soient bien chargées :
 ```bash
 source /root/config.env
 ```

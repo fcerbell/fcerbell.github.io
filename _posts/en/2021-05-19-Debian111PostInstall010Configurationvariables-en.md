@@ -1,6 +1,6 @@
 ---
-uid: Debian111Bootstrap010Configurationvariables
-title: Debian11, Bootstrap, Configuration variables
+uid: Debian111PostInstall010Configurationvariables
+title: Debian11, PostInstall, Configuration variables
 description: All the installation and configurations steps will need some information again and again. The very first time these information are needed, I store them in a configuration file and I source it. Thus, I do not have to enter them again and I have no risk of inconsistency. 
 category: Computers
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Configuration variables, Variables ]
@@ -46,7 +46,7 @@ The variables are initialized with default values. You need to read them, check 
 vi /root/config.env
 ```
 
-![2021-05-19_10-53.png]({{ "/assets/posts/en/Debian111Bootstrap010Configurationvariables/f94e4b1f592240cd9d9755da4286a778.png" | relative_url }})
+![2021-05-19_10-53.png]({{ "/assets/posts/en/Debian111PostInstall010Configurationvariables/f94e4b1f592240cd9d9755da4286a778.png" | relative_url }})
 
 
 ## Load the variables in the environment
