@@ -9,8 +9,9 @@
 {%- endif -%}
 {%- if include.show_tags -%}
                 <span class="tag-list">
-  {%- for tag in include.post.tags %}
-                  <a class="tag" href="{{ page.url | relative_url }}/#{{ tag | slugify }}">{{ tag }}</a>
+  {%- for t in include.post.tags %}
+    {%- assign tag = t | downcase %}
+                  <a title="Tag {{t}}" href="{{ "/pages/" | append: page.lang | append:"/tags#" | append: tag | relative_url }}">{{t}}</a>
   {%- endfor -%}
                 </span>
 {%- endif -%}
