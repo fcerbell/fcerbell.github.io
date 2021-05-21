@@ -255,7 +255,7 @@ Or view the virtual RDBMS meta data:
 # Footnotes
 
 [SQuirreLSQLWebSite]: http://squirrel-sql.sourceforge.net "Link to SQuirreLSQL's website"
-[SimbaWebSite]: http://www.simba.com/drivers/couchbase-odbc-jdbc/ "Link to Simba's website"
+[SimbaWebSite]: https://www.magnitude.com/drivers/couchbase-odbc-jdbc "Link to Simba's website"
 [01-SimbaLicenseEmail.png]: {{ "/assets/posts/" | append: page.uid | append:"/01-SimbaLicenseEmail.png" | relative_url }} "Simba's email with license file"
 [02-SimbaDownloadEmail.png]: {{ "/assets/posts/" | append: page.uid | append:"/02-SimbaDownloadEmail.png" | relative_url }} "Simba's email with download link"
 [03-FolderStructure.png]: {{ "/assets/posts/" | append: page.uid | append:"/03-FolderStructure.png" | relative_url }} "Driver's folder structure"
@@ -272,4 +272,4 @@ Or view the virtual RDBMS meta data:
 [13-SquirrelQuery.png]: {{ "/assets/posts/" | append: page.uid | append:"/13-SquirrelQuery.png" | relative_url }} "Executing a SQL query from Squirrel"
 [14-SquirrelMeta.png]: {{ "/assets/posts/" | append: page.uid | append:"/14-SquirrelMeta.png" | relative_url }} "Database Metadata from Squirrel"
 [Video]: https://youtu.be/kK4GxAwJKD0 "Demonstration video recording"
-[^1]: [http://www.simba.com/drivers/couchbase-odbc-jdbc/][SimbaWebSite]
+[^1]: [https://www.magnitude.com/drivers/couchbase-odbc-jdbc][SimbaWebSite]

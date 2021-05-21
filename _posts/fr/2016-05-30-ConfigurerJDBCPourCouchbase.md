@@ -276,7 +276,7 @@ Ou encore consulter les meta-données de ce SGBDR virtuel :
 # Notes de bas de page
 
 [SQuirreLSQLWebSite]: http://squirrel-sql.sourceforge.net "Link to SQuirreLSQL's website"
-[SimbaWebSite]: http://www.simba.com/drivers/couchbase-odbc-jdbc/ "Link to Simba's website"
+[SimbaWebSite]: https://www.magnitude.com/drivers/couchbase-odbc-jdbc "Link to Simba's website"
 [01-SimbaLicenseEmail.png]: {{ "/assets/posts/" | append: page.uid | append:"/01-SimbaLicenseEmail.png" | relative_url }} "Simba's email with license file"
 [02-SimbaDownloadEmail.png]: {{ "/assets/posts/" | append: page.uid | append:"/02-SimbaDownloadEmail.png" | relative_url }} "Simba's email with download link"
 [03-FolderStructure.png]: {{ "/assets/posts/" | append: page.uid | append:"/03-FolderStructure.png" | relative_url }} "Driver's folder structure"
@@ -292,5 +292,5 @@ Ou encore consulter les meta-données de ce SGBDR virtuel :
 [12-SquirrelConnected.png]: {{ "/assets/posts/" | append: page.uid | append:"/12-SquirrelConnected.png" | relative_url }} "Connected using Squirrel"
 [13-SquirrelQuery.png]: {{ "/assets/posts/" | append: page.uid | append:"/13-SquirrelQuery.png" | relative_url }} "Executing a SQL query from Squirrel"
 [14-SquirrelMeta.png]: {{ "/assets/posts/" | append: page.uid | append:"/14-SquirrelMeta.png" | relative_url }} "Database Metadata from Squirrel"
-[^1]: [http://www.simba.com/drivers/couchbase-odbc-jdbc/][SimbaWebSite]
+[^1]: [https://www.magnitude.com/drivers/couchbase-odbc-jdbc][SimbaWebSite]
 [Video]: https://youtu.be/FH0nBiCX2cw "Enregistrement vidéo de la démonstration"
