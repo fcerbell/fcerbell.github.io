@@ -3,7 +3,6 @@ uid: home
 title: Welcome on François' Blog
 layout: home
 description:
-list_title: 5 last posts
 show_excerpts: true
 comments: false
 ---
@@ -12,4 +11,6 @@ comments: false
             <p class="front-matter">The pages, tags, categories, screenshots and videos are really made in several languages by
             myself.</p>
           </div>
-          <h2 class="post-list-heading">{{ page.list_title | default: "Last posts" }}</h2>
+          <h2 class="post-list-heading">10 last posts</h2>
+{%- include i18n.html -%}
+{% include posts_list.html posts=posts limit=10 show_excerpts=true show_flags=true show_tags=true %}

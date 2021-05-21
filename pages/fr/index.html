@@ -3,7 +3,6 @@ uid: home
 title: Bienvenue sur le blog de François
 layout: home
 description:
-list_title: 5 derniers articles
 show_excerpts: true
 comments: false
 permalink: /index.html
@@ -13,4 +12,6 @@ permalink: /index.html
             <p class="front-matter">Les pages, étiquettes, catégories, captures d'écran et vidéos sont réellement faite en
             plusieurs langues par moi-même.</p>
           </div>
-          <h2 class="post-list-heading">{{ page.list_title | default: "5 last posts" }}</h2>
+          <h2 class="post-list-heading">10 derniers articles</h2>
+{%- include i18n.html -%}
+{% include posts_list.html posts=posts limit=10 show_excerpts=true show_flags=true show_tags=true %}
