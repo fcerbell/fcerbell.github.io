@@ -10,7 +10,7 @@
 {%- if include.show_tags -%}
                 <span class="tag-list">
   {%- for t in include.post.tags %}
-    {%- assign tag = t | downcase %}
+    {%- assign tag = t | slugify %}
                   <a title="Tag {{t}}" href="{{ "/pages/" | append: page.lang | append:"/tags#" | append: tag | relative_url }}">{{t}}</a>
   {%- endfor -%}
                 </span>

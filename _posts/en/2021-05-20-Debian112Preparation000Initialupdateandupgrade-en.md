@@ -1,6 +1,6 @@
 ---
-uid: Debian112Common000Initialupdateandupgrade
-title: Debian11, Common, Debian 10 Buster update and upgrade to Debian 11 Bullseye
+uid: Debian112Preparation000Initialupdateandupgrade
+title: Debian11, Preparation, Debian 10 Buster update and upgrade to Debian 11 Bullseye
 description: How to configure the binary packages repositories on a Linux Debian 10 Buster to upgrade the whole system to a Debian 11 Bullseye (testing at the time of writing), install `aptitude` and make the boot process faster.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Upgrade ]

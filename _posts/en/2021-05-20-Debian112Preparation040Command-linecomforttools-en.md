@@ -1,6 +1,6 @@
 ---
-uid: Debian112Common040Command-linecomforttools
-title: Debian11, Common, Command line comfort tools
+uid: Debian112Preparation040Command-linecomforttools
+title: Debian11, Preparation, Command line comfort tools
 description: Working from command line is not a pain... as soon as it is configured to fit your needs. This is my minimal console setup with file search, history search with arrows, connection multiplexing, missing packages help, powerfull prompt and `vim` minimal configuration.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Mlocate, Screen, AptFile, CommandNotFound, Enhanced prompt, Prompt, Cross history, History, Readline, Auto logout, Lougout, Timeout, Session timeout, History search, Search, Vim ]
@@ -32,7 +32,7 @@ apt-get install -y screen
 
 Who never typed `netstat` and got the *command not found* error. Then, I had to find which package provides the command, to install it. With `command-not-found`, if the command is missing, the error message tries to fix any posible typo in my command and to suggest packages that provide these commands. This saves time.
 
-![netstat.gif]({{ "/assets/posts/en/Debian112Common040Command-linecomforttools/3aab67ea9ed8426cbff8a9ec31ff9d20.gif" | relative_url }})
+![netstat.gif]({{ "/assets/posts/en/Debian112Preparation040Command-linecomforttools/3aab67ea9ed8426cbff8a9ec31ff9d20.gif" | relative_url }})
 
 ```bash
 apt-get install -y command-not-found apt-file
@@ -66,7 +66,7 @@ EOF
 
 `Readline`'s history is wonderfull, used everywhere in every interractive tool, including the shells. Despite the search feature with `Ctrl-R` is very good, readline can search in the history to auto-complete a command from the history. If I want to reuse one of my very old previous `ssh` commands, I can type `ssh` and navigate with the up/down keys only in the lines begining with `ssh`. Try it, you'll keep it, for sure.
 
-![readline.gif]({{ "/assets/posts/en/Debian112Common040Command-linecomforttools/0ae2e83f456a4bd69fa8d5c93f906cbd.gif" | relative_url }})
+![readline.gif]({{ "/assets/posts/en/Debian112Preparation040Command-linecomforttools/0ae2e83f456a4bd69fa8d5c93f906cbd.gif" | relative_url }})
 
 ```bash
 cat << EOF >> ~/.inputrc

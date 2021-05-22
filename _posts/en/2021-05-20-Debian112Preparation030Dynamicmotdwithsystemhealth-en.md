@@ -1,6 +1,6 @@
 ---
-uid: Debian112Common030Dynamicmotdwithsystemhealth
-title: Debian11, Common, Dynamic motd with system health
+uid: Debian112Preparation030Dynamicmotdwithsystemhealth
+title: Debian11, Preparation, Dynamic motd with system health
 description: Now, it is time to have some blinking lights and fun settings, but useful nevertheless ! A dynamic status message of the day with server health information. I like to have a summary of what is the health of the server, what needs to be done, pending upgrades... immediately when I connect. Furthermore, it is very useful if you need to share a screenshot with someone else.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Commandline tools, Tools, Banner, Figlet, Toilet, Cowsay, Hostname, System health, Health, CPU, RAM, Stats, Swap, Uptime, Pending upgrades, Upgrades, Motd ]
@@ -22,7 +22,7 @@ apt-get install -y figlet toilet lsb-release
 
 First part is to generate a banner with the hostname to avoid any mistake on the server, and to display the current Linux distribution details.
 
-![e107a95e5127814353389c579d0c0e39.png]({{ "/assets/posts/en/Debian112Common030Dynamicmotdwithsystemhealth/a49adf07aac643a08ca0805bd3e46afe.png" | relative_url }})
+![e107a95e5127814353389c579d0c0e39.png]({{ "/assets/posts/en/Debian112Preparation030Dynamicmotdwithsystemhealth/a49adf07aac643a08ca0805bd3e46afe.png" | relative_url }})
 
 ```bash
 cat << EOF > /etc/update-motd.d/00-header
@@ -46,7 +46,7 @@ rm /etc/update-motd.d/10-uname
 
 Then, I like to have the date and time, the load average, the memory and swap usage and a summary of the running processes.
 
-![8d4bd5941bd8028a64a69d5c3f01710f.png]({{ "/assets/posts/en/Debian112Common030Dynamicmotdwithsystemhealth/2d741400c5f3490a87e8f3c988e3ba33.png" | relative_url }})
+![8d4bd5941bd8028a64a69d5c3f01710f.png]({{ "/assets/posts/en/Debian112Preparation030Dynamicmotdwithsystemhealth/2d741400c5f3490a87e8f3c988e3ba33.png" | relative_url }})
 
 ```bash
 cat << EOF > /etc/update-motd.d/10-sysinfo
@@ -75,7 +75,7 @@ chmod +x /etc/update-motd.d/10-sysinfo
 
 Finally, I generate a list of the packages that need to be upgraded and I empty the default `/etc/motd` static file. Side effect : this part introduce a few seconds latency at each connection. This is mostly due to the apt invocation. 
 
-![628ab45e850f21d64f6aa2b798508d0a.png]({{ "/assets/posts/en/Debian112Common030Dynamicmotdwithsystemhealth/e215f2c54fba4655bfd0a35b3971c2dd.png" | relative_url }})
+![628ab45e850f21d64f6aa2b798508d0a.png]({{ "/assets/posts/en/Debian112Preparation030Dynamicmotdwithsystemhealth/e215f2c54fba4655bfd0a35b3971c2dd.png" | relative_url }})
 
 ```bash
 cat << EOF > /etc/update-motd.d/20-upgrades

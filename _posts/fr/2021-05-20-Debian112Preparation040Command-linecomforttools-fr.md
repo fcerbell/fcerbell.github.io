@@ -1,9 +1,9 @@
 ---
-uid: Debian112Common040Command-linecomforttools
-title: Debian11, Commun, Outils de confort en ligne de commande
+uid: Debian112Preparation040Command-linecomforttools
+title: Debian11, Préparation, Outils de confort en ligne de commande
 description: Travailler en ligne de commande, ou terminal, n'est pas pénible... Dès lors qu'il est configuré pour répondre à vos besoins. Je décris ici ma configuration minimale pour la console sur tous les types de machine, recherche de fichiers, recherche dans l'historique à l'aide des flèches, multiplexage de session, assistance aux paquetages manquants, invite de commande puissante et configuration minimale de `vim`.
 category: Informatique
-tags: [ Preparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Mlocate, Screen, AptFile, CommandNotFound, Prompt, Invite de commande, Historique croisé, History, Readline, Auto logout, Lougout, Timeout, Session timeout, Déconnexion automatique, Recherche historique, Vim ]
+tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Mlocate, Screen, AptFile, CommandNotFound, Prompt, Invite de commande, Historique croisé, History, Readline, Auto logout, Lougout, Timeout, Session timeout, Déconnexion automatique, Recherche historique, Vim ]
 ---
 
 Travailler en ligne de commande, ou terminal, n'est pas pénible... Dès lors qu'il est configuré pour répondre à vos besoins. Je décris ici ma configuration minimale pour la console sur tous les types de machine :  recherche de fichiers, recherche dans l'historique à l'aide des flèches, multiplexage de session, assistance aux paquetages manquants, invite de commande puissante et configuration minimale de `vim`.
@@ -39,7 +39,7 @@ contenant la commande et l'installer. Avec `command-not-found`, si la commande n
 corriger les éventuelles fautes de frappe et de suggérer les paquetages qui pourraient fournir cette commande. Un gain de temps
 pour éviter de rompre un flux de pensée.
 
-![netstat.gif]({{ "/assets/posts/en/Debian112Common040Command-linecomforttools/3aab67ea9ed8426cbff8a9ec31ff9d20.gif" | relative_url }})
+![netstat.gif]({{ "/assets/posts/en/Debian112Preparation040Command-linecomforttools/3aab67ea9ed8426cbff8a9ec31ff9d20.gif" | relative_url }})
 
 ```bash
 apt-get install -y command-not-found apt-file
@@ -82,7 +82,7 @@ de sa fonction de recherche à l'aide de `Ctrl-R`, readline peut aussi recherche
 une commande. Si je souhaite réutiliser une de anciennes commandes `ssh`, je peux juste saisir `ssh` et naviguer parmis uniquement les
 commandes commençant par `ssh` dans l'historique. À essayer et adopter !
 
-![readline.gif]({{ "/assets/posts/en/Debian112Common040Command-linecomforttools/0ae2e83f456a4bd69fa8d5c93f906cbd.gif" | relative_url }})
+![readline.gif]({{ "/assets/posts/en/Debian112Preparation040Command-linecomforttools/0ae2e83f456a4bd69fa8d5c93f906cbd.gif" | relative_url }})
 
 ```bash
 cat << EOF >> ~/.inputrc

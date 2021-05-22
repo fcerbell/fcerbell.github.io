@@ -1,6 +1,6 @@
 ---
-uid: Debian112Common020SSHinstallationandconfiguration
-title: Debian11, Common, SSH installation and configuration
+uid: Debian112Preparation020SSHinstallationandconfiguration
+title: Debian11, Preparation, SSH installation and configuration
 description: Ensure that `ssh` is configured. Secure it to forbid any direct password-based connection. Only key-challenge authentication is allowed.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, SSH, Password, Passwordless, Key-pair, Authentication, Prohibit-password ]
@@ -15,7 +15,7 @@ Ensure that `ssh` is configured. Secure it to forbid any direct password-based c
 
 ## Load the variables in the environment
 
-We need to load the named username defined in the configuration file during the [Sudo installation and configuration](/Debian112Common010Sudoinstallationandconfiguration-en/) post. Ensure that the configuration variables are loaded in the environment.
+We need to load the named username defined in the configuration file during the [Sudo installation and configuration](/Debian112Preparation010Sudoinstallationandconfiguration-en/) post. Ensure that the configuration variables are loaded in the environment.
 ```bash
 source /root/config.env
 ```
@@ -60,7 +60,7 @@ echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDX94WcZhrCjWXffCckgeEROTB0PnvpOxlFm/
 
 I also want to be able to open a direct *root* connection passwordless with my private key. This can be seen as a bad practice, but I'm the only admin. It would be stupid to force me to connect to an named account before switching to root and it would increase the attacking surface with an extra user account. From my point of view, given that no anonymous root connection will be possible (only with SSH keys), and it reduces the attack surface, thus I consider this is more secure. I might be wrong.
 
-![sshroot.gif]({{ "/assets/posts/en/Debian112Common020SSHinstallationandconfiguration/4cf189e22d33461c9840d9931d7e85a8.gif" | relative_url }})
+![sshroot.gif]({{ "/assets/posts/en/Debian112Preparation020SSHinstallationandconfiguration/4cf189e22d33461c9840d9931d7e85a8.gif" | relative_url }})
 
 **This key is specific for me. Don't use it unless you want to give me full access to your machine**
 
@@ -73,7 +73,7 @@ echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAtM8LzekUr46wvVNWoYzxPuKVTv7yFp+Aa/a1vK
 I will soon lock the named user's password, I need to be able to connect passwordless with my private key. I add my public key to the authorized keys file.
 This is only needed if you need to keep named user's system account.
 
-![sshuser.gif]({{ "/assets/posts/en/Debian112Common020SSHinstallationandconfiguration/3e5241515925425a8591419eda31e0b1.gif" | relative_url }})
+![sshuser.gif]({{ "/assets/posts/en/Debian112Preparation020SSHinstallationandconfiguration/3e5241515925425a8591419eda31e0b1.gif" | relative_url }})
 
 **This key is specific for me. Don't use it unless you want to give me full access to your machine**
 

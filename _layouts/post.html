@@ -17,7 +17,7 @@ layout: default
               {%- if page.tags -%}
               <div class="tag-list">
                 {%- for t in page.tags -%}
-                  {%- assign tag = t | downcase %}
+                  {%- assign tag = t | slugify %}
                 <a title="Tag {{t}}" href="{{ "/pages/" | append: page.lang | append:"/tags#" | append: tag | relative_url }}">{{t}}</a>
                 {%- endfor %}
               </div>

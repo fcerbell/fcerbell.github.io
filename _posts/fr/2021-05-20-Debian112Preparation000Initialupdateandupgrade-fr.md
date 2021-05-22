@@ -1,9 +1,9 @@
 ---
-uid: Debian112Common000Initialupdateandupgrade
-title: Debian11, Commun, Mise à jour Debian 10 Buster vers Debian 11 Bullseye
+uid: Debian112Preparation000Initialupdateandupgrade
+title: Debian11, Préparation, Mise à jour Debian 10 Buster vers Debian 11 Bullseye
 description: Comment configurer les dépôts de paquetages binaires sur une distribution GNU Linux Debian 10 Buster pour mettre tout le système à jour vers une Debian 11 Bullseye (« testing » actuellement), installer `aptitude` et accélérer le démarrage de la machine.
 category: Informatique
-tags: [ Preparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Upgrade, Mise à jour ]
+tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Upgrade, Mise à jour ]
 ---
 
 Comment configurer les dépôts de paquetages binaires sur une distribution GNU Linux Debian 10 Buster pour mettre tout le système à jour vers une Debian 11 Bullseye (« testing » actuellement), installer `aptitude` et accélérer le démarrage de la machine.
