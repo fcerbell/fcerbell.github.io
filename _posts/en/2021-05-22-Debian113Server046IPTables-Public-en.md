@@ -14,7 +14,7 @@ After a generic IPTables configuration, I apply some public server specific rule
 # Prerequisites
 
 ## Previous steps
-The generic [IPTables](/Debian113Server046IPTables-en/) configuration, should be applied.
+The generic [IPTables](/Debian113Server045IPTables-en/) configuration, should be applied.
 
 ## Create new variables
 We need the MY_IP and MY_GW variable which can whitelist a single IP address with a /32 netmask or a whole class.
