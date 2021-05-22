@@ -71,7 +71,7 @@ I bought and installed :
 As the time went, I discovered Arduinos and the [MySensors
 open-source/open-hardware project][MySensors][^3]. I built a LAN gateway
 and some devices such as [my weather and swimming pool
-station][MyWeather][^4]. I ended by designing [My iown PCB design of a tiny
+station][MyWeather][^4]. I ended by designing [My own PCB design of a tiny
 MySensors node][MySNode][^2]. 
 
 ### RFXCOM RFX433trx and Chacon devices
