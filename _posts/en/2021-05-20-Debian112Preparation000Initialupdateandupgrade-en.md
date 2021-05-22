@@ -11,6 +11,11 @@ How to configure the binary packages repositories on a Linux Debian 10 Buster to
 * TOC
 {:toc}
 
+# Prerequisites
+
+Before starting this post serie to prepare a generic Debian 11 machine, I expect to have a clean Debian 10 Buster machine with the [Debian 11 Postinstall](/pages/en/tags/#debian11-postinstall) steps executed. If not, read the blog archives.
+
+
 # Login as root
 
 All the commands will be executed as *root*. On a fresh *Debian* installation, `sudo` is not installed. We'll take care of that very soon. You can either connect directly as *root*, if allowed, or connect as a user and use the `su -` command to become root.

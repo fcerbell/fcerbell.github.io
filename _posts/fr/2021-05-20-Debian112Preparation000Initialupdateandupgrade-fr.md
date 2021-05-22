@@ -11,6 +11,12 @@ Comment configurer les dépôts de paquetages binaires sur une distribution GNU 
 * TOC
 {:toc}
 
+# Pré requis
+
+Avant de commencer cette série d'articles pour préparer une machine Debian 11 générique, je m'attends à avoir une machine propre
+Debian 10 Buster avec les étapes de la série [Postinstallation Debian 11](/pages/fr/tags/#postinstallation-debian11) steps executed. If not, read the blog archives.
+
+
 # Connection en tant que root
 
 Toutes les commandes seront exécutées en tant que *root*. Dans une installation *Debian* fraîche, `sudo` n'est pas installé par
