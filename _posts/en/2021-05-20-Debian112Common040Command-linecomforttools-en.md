@@ -3,7 +3,7 @@ uid: Debian112Common040Command-linecomforttools
 title: Debian11, Common, Command line comfort tools
 description: Working from command line is not a pain... as soon as it is configured to fit your needs. This is my minimal console setup with file search, history search with arrows, connection multiplexing, missing packages help, powerfull prompt and `vim` minimal configuration.
 category: Computers
-tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Mlocate, Screen, AptFile, CommandNotFound, Enhanced prompt, Prompt, Cross history, History, Readline, Auto logout, Lougout, Timeout, Session timeout, History search, Search, Vim ]
+tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Mlocate, Screen, AptFile, CommandNotFound, Enhanced prompt, Prompt, Cross history, History, Readline, Auto logout, Lougout, Timeout, Session timeout, History search, Search, Vim ]
 ---
 
 Working from command line is not a pain... as soon as it is configured to fit your needs. This is my minimal console setup : file search, history search with arrows, connection multiplexing, missing packages help, powerfull prompt and `vim` minimal configuration.

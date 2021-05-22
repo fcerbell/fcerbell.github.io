@@ -3,7 +3,7 @@ uid: Debian112Common020SSHinstallationandconfiguration
 title: Debian11, Common, SSH installation and configuration
 description: Ensure that `ssh` is configured. Secure it to forbid any direct password-based connection. Only key-challenge authentication is allowed.
 category: Computers
-tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, SSH, Password, Passwordless, Key-pair, Authentication, Prohibit-password ]
+tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, SSH, Password, Passwordless, Key-pair, Authentication, Prohibit-password ]
 ---
 
 Ensure that `ssh` is configured. Secure it to forbid any direct password-based connection. Only key-challenge authentication is allowed.

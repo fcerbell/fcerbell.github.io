@@ -3,7 +3,7 @@ uid: Debian111PostInstall021Debian-Networkconfiguration-Router
 title: Debian11, PostInstallation, Configuration réseau routeur
 description: Configuration d'une seconde interface réseau, ce qui est utile si cette série d'articles est déroulée dans le but de construire un router entre deux réseaus, de distribuer un accès internet à la maison ou au travail, de protéger votre réseau privé contre internet ou de créer un proxy transparent avec contrôle parental pour vos ados adorés.
 category: Informatique
-tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Routeur, Passerelle, Contrôle parental, Parental, Partage d'internet, Internet ]
+tags: [ Postinstallation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Routeur, Passerelle, Contrôle parental, Parental, Partage d'internet, Internet ]
 ---
 
 Je décris comment configurer une seconde interface réseau, ce qui est bien pratique si ce tutorial sert à construire un routeur
