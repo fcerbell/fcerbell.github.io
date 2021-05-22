@@ -4,7 +4,6 @@ title: Debian11, Server, TCPIP tuning
 description: How to activate some basic attack protections in the linux kernel network stack, against spoofind, flooding, smurfing, Man in the middle (MITM) or ICMP attacks.
 category: Computers
 tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
-published: false
 ---
 
 How to activate some basic attack protections in the linux kernel network stack, against spoofind, flooding, smurfing, Man in the middle (MITM) or ICMP attacks.

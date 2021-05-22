@@ -4,7 +4,6 @@ title: Debian11, Server, SSH and Sudo root lock
 description: I'll never have to connect to my servers from the console, and I'll never need a password authenticated sudo command, thus I don't need any password based authtication. I'll always connect through ssh with keys, thus I can lock the passwords for both the root account and the named account.
 category: Computers
 tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
-published: false
 ---
 
 I'll never have to connect to my servers from the console, and I'll never need a password authenticated sudo command, thus I don't need any password based authtication. I'll always connect through ssh with keys, thus I can lock the passwords for both the root account and the named account.
