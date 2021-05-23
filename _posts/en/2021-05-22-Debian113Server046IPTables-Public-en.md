@@ -3,7 +3,7 @@ uid: Debian113Server046IPTables-Public
 title: Debian11, Server, IPTables - Public
 description: After a generic IPTables configuration, I apply some public server specific rules, to whitelist my IP addresses. In normal situations, I should never be blocked, but I can also do mistakes, forget something, ... and become blacklisted.
 category: Computers
-tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
+tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, IPTables, Security, Filtering, Network, Firewall, Rules, Chains, Cracker, SSH, TCP, IP, ICMP, Loopback, IPv6, Public server, Internet ]
 ---
 
 After a generic IPTables configuration, I apply some public server specific rules, to whitelist my IP addresses. In normal situations, I should never be blocked, but I can also do mistakes, forget something, ... and become blacklisted.

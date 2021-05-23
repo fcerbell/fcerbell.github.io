@@ -3,7 +3,7 @@ uid: Debian113Server047IPTables-Router
 title: Debian11, Server, IPTables - Router
 description: IPTable configuration for a two legs server, on on internet, one in a private network. This will grant access to the private network to basic services such as email, time and SSH, without filtering or blocking. The other protocols will be managed later with a proxy and a parental control system.
 category: Computers
-tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
+tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, IPTables, Security, Filtering, Network, Firewall, Rules, Chains, Cracker, SSH, TCP, IP, ICMP, Loopback, IPv6, Router server, Gateway ]
 ---
 
 IPTable configuration for a two legs server, on on internet, one in a private network. This will grant access to the private network to basic services such as email, time and SSH, without filtering or blocking. The other protocols will be managed later with a proxy and a parental control system.

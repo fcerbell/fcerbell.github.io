@@ -3,7 +3,7 @@ uid: Debian113Server045IPTables
 title: Debian11, Server, IPTables
 description: The Linux iptables firewall feature is already included in the kernel and the client application is already installed. I will install a wrapper to persist the firewall rules on the disk and to automatically reload them at reboot. I also prepare a default evolutive ruleset with one specificity, it forbids also OUTPUT connections by default. If someone gain access to my server an can execute a script, the script will probably be blocked to send the feedbacks to the attacker. I use CHAOS and TARPIT rules against obvious attacker and ratelimiting rules, as passive replies to attacks.
 category: Computers
-tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
+tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, IPTables, Security, Filtering, Network, Firewall, Rules, Chains, Cracker, SSH, TCP, IP, ICMP, Loopback, IPv6 ]
 ---
 
 The Linux iptables firewall feature is already included in the kernel and the client application is already installed. I will install a wrapper to persist the firewall rules on the disk and to automatically reload them at reboot. I also prepare a default evolutive ruleset with one specificity : it forbids also OUTPUT connections by default. If someone gain access to my server an can execute a script, the script will probably be blocked to send the feedbacks to the attacker. I use CHAOS and TARPIT rules against obvious attacker and ratelimiting rules, as passive replies to attacks.
