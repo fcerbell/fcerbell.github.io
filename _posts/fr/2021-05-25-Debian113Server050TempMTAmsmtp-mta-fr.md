@@ -8,7 +8,7 @@ tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster
 Chaque serveur n'est pas un serveur de messagerie. Il n'y a pas besoin d'un agent de transport de messages complet partout. Un
 simple relais comme `msmtp` est lagement suffisant pour que le serveur puisse envoyer des courriels à un serveur de messagerie. Je
 l'utilise en remplacement de `exim` pour fournir des fonctionnalités de messagerie simple, sans distribution locale, sur tous mes
-serveurs et stations de travail. Cette documentation est partiellement inspirée de [yakati][yakati] [^1].
+serveurs et stations de travail.
 
 * TOC
 {:toc}
@@ -70,6 +70,9 @@ sed -i 's/^-N WAN_input$/-N SMTP\n-A SMTP -p tcp --dport 25 -j ACCEPT\n\n&/' /et
 sed -i 's/^-N WAN_output$/&\n-A WAN_output -j SMTP/' /etc/iptables/rules.v4
 systemctl restart netfilter-persistent
 ```
+
+# Supports et liens
+Cette documentation est partiellement inspirée de [yakati][yakati] [^1].
 
 # Notes de bas de page
 
