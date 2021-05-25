@@ -6,7 +6,7 @@ category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, MTA, Mail Transport Agent, mSMTP, Messagerie, Email, Courriels, Pare-feu, IPTables, Smarthost ]
 ---
 Chaque serveur n'est pas un serveur de messagerie. Il n'y a pas besoin d'un agent de transport de messages complet partout. Un
-simple relais comme `msmtp` est lagement suffisant pour que le serveur puisse envoyer des courriels à un serveur de messagerie. Je
+simple relais comme `msmtp` est largement suffisant pour que le serveur puisse envoyer des courriels à un serveur de messagerie. Je
 l'utilise en remplacement de `exim` pour fournir des fonctionnalités de messagerie simple, sans distribution locale, sur tous mes
 serveurs et stations de travail.
 
