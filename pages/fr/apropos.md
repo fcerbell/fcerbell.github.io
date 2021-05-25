@@ -1,6 +1,6 @@
 ---
 uid: about
-title: À propos de moi
+title: À propos
 description: Qui suis-je
 mainmenu: true
 ---
