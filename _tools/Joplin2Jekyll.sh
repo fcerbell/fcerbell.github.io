@@ -93,6 +93,7 @@ published: false
 ---
 EOF
 tail -n +2 "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}" | sed 's~^\[toc\]~* TOC\n{:toc}~;s~{{~{% raw %}{{{% endraw %}~g' >> "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
+rm "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}"
 echo OK
 
 echo -n "Migrating resources from ${JOPLINBASE}/_resources to ${JEKYLLBASE}${JEKYLLASSETS} and updating the post links"
@@ -100,44 +101,9 @@ mkdir -p ${JEKYLLBASE}${JEKYLLASSETS}
 for i in `grep '../../_resources/' "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"`; do
     res=`echo "$i" | sed 's~!\?\[.*\](\([^)]\+\))~\1~'`
     res=`basename "${res}"`
-    cp "${JOPLINBASE}_resources/$res" "${JEKYLLBASE}${JEKYLLASSETS}"
+    mv "${JOPLINBASE}_resources/$res" "${JEKYLLBASE}${JEKYLLASSETS}"
     sed -i "s~../../_resources/$res~{{ \"/${JEKYLLASSETS}$res\" | relative_url }}~g" "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
 done
 
 exit
-
-basepath=`dirname "$0"`
-basepath=`readlink -e $basepath`
-filepath=`dirname "$1"`
-filepath=`readlink -e "$filepath"`
-filepath=`echo "$filepath" | sed "s~$basepath~~"`
-filename=`basename "$1"`
-uid=`echo "$filepath/$filename" | sed 's~ ~~g;s~/\([[:digit:]]*\)-\?~\1~g;s~^\([-[:alnum:]]\+\).*~\1~'`
-uid=`echo "$uid" | sed 's~^Installation~Debian11~'`
-title=`echo "$filepath $filename" | sed 's~[-/ [:digit:]]]*~ ~g;s~^\([- [:alnum:]]\+\).*~\1~;s~^ *~~;s~ \+~ ~g'`
-title=`echo "$title" | sed 's~^Installation~Debian11~'`
-blogpost=$2"`date +"%Y-%m-%d"`-${uid}.md"
-#echo basepath = $basepath
-#echo filepath = $filepath
-#echo filename = $filename
-echo Converting "$1" to "$blogpost"...
-cat << EOF > $blogpost
----
-uid: $uid
-title: $title
-description: 
-category: Debian
-tags: [ Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
-published: false
----
-EOF
-tail -n +2 "$1" | sed 's~^\[toc\]~* TOC\n{:toc}~;s~{{~{% raw %}{{{% endraw %}~g' >> $blogpost
-
-for i in `grep '../../_resources/' $blogpost`; do
-    res=`echo "$i" | sed 's~!\?\[.*\](\([^)]\+\))~\1~'`
-    mkdir -p assets/posts/$uid/
-    cp "$basepath/$filepath/$res" "assets/posts/$uid/"
-    baseres=`basename "$res"`
-    sed -i "s~$res~{{ \"/assets/posts/$uid/$baseres\" | relative_url }}~g" $blogpost
-done
 
