@@ -29,7 +29,8 @@
 
 
 h1 {
-    @include relative-font-size(2.2);
+    @include relative-font-size(2.0);
+    text-align: center;
 }
 h2 {
     @include relative-font-size(2.0);
@@ -147,3 +148,9 @@ ul.toc {
     text-align: center;
     font-weight: bold;
 }
+
+.post-link {
+  display: block;
+  @include relative-font-size(1.4);
+}
+

@@ -24,7 +24,7 @@ disqus:
     shortname: "surledivan"
 
 # Build settings
-incremental: true
+#incremental: true
 permalink: /:title/
 encoding: utf-8
 defaults:
