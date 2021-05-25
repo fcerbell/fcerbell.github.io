@@ -45,7 +45,7 @@ case insensitive sorting (prepend each value with lcase value, sort, remove the 
               <li><span class="tags-initial">{{initial}}</span>
   {%- for tag in tags -%}
     {%- assign taginitial = tag | slice:0 | upcase -%}
-    {%- if taginitial == initial -%}•<a href="#{{ tag | slugify }}">{{ tag }}</a>{%- endif -%}
+    {%- if taginitial == initial %} • <a href="#{{ tag | slugify }}">{{ tag }}</a>{%- endif -%}
   {%- endfor -%}
 </li>
 {%- endfor %}

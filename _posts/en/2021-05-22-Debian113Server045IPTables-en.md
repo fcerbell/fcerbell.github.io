@@ -3,9 +3,8 @@ uid: Debian113Server045IPTables
 title: Debian11, Server, IPTables
 description: The Linux iptables firewall feature is already included in the kernel and the client application is already installed. I will install a wrapper to persist the firewall rules on the disk and to automatically reload them at reboot. I also prepare a default evolutive ruleset with one specificity, it forbids also OUTPUT connections by default. If someone gain access to my server an can execute a script, the script will probably be blocked to send the feedbacks to the attacker. I use CHAOS and TARPIT rules against obvious attacker and ratelimiting rules, as passive replies to attacks.
 category: Computers
-tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, IPTables, Security, Filtering, Network, Firewall, Rules, Chains, Cracker, SSH, TCP, IP, ICMP, Loopback, IPv6 ]
+tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, IPTables, Security, Filtering, Network, Firewall, Rules, Chains, Cracker, SSH, TCP, IP, ICMP, Loopback, IPv6, CHAOS, TARPIT, DROP ]
 ---
-
 The Linux iptables firewall feature is already included in the kernel and the client application is already installed. I will install a wrapper to persist the firewall rules on the disk and to automatically reload them at reboot. I also prepare a default evolutive ruleset with one specificity : it forbids also OUTPUT connections by default. If someone gain access to my server an can execute a script, the script will probably be blocked to send the feedbacks to the attacker. I use CHAOS and TARPIT rules against obvious attacker and ratelimiting rules, as passive replies to attacks.
 
 * TOC
@@ -14,28 +13,33 @@ The Linux iptables firewall feature is already included in the kernel and the cl
 # Prerequisites
 
 ## Existing variables
+
 We need the WAN_IF variable which is already defined in the configuration file, in [Configuration variables](/Debian111PostInstall010Configurationvariables-en/).
 
 ## Reload the variables
+
 Ensure that the WAN_IF variable is available, by loading the configuration script :
 ```bash
 source /root/config.env
 ```
 
 # Preconfigure installation
+
 ```bash
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
 ```
 
 # Installation
+
 I will use the CHAOS and TARPIT targets. They are available as a kernel module. I need to install the related package, it will install the Debian module build chain, which will recompile the modules everytime a new kernel is installed. The beauty of Debian !
 ```bash
 apt-get install -y iptables-persistent xtables-addons-dkms
 ```
 
 # Block all IPv6 traffic
-My server will not use IPv6 at all, but I prefered not to disable it. Thus I install firewall rules to block all IPv6 traffic and to outgoing IPv6 connections, as an helper to configure my applications and a reminder to disable IPv6 in their configuration.
+
+My server will not use IPv6 at all, but I prefered not to disable it. Thus I install firewall rules to block all the IPv6 traffic incoming and outgoing. I also log all the outgoing traffic as an helper to configure my applications and a reminder to disable IPv6 in their configuration.
 
 ```bash
 cat << EOF > /etc/iptables/rules.v6
@@ -47,9 +51,10 @@ cat << EOF > /etc/iptables/rules.v6
 -A OUTPUT -m limit --limit 10/min -j LOG --log-prefix "[IP6] "
 COMMIT
 EOF
-````
+```
 
 # Configure IPv4 rules
+
 First of all, I set all the default policies to DROP, when something is not allowed, it is forbidden. If, for any reason, a malicious program is executed on the server, it will probably try to send information outside, a password file, an SSH key, or something else, but it will be blocked because it was not in the allowed connections.
 
 ```bash
@@ -71,7 +76,7 @@ COMMIT
 EOF
 ```
 
-I will install `portsentry` later, but I use a set of scan protection rules at the kernel level with the psd and lscan modules. A scan is never coming from a friend, thus I chose to send the connection to the CHAOS target. The idea is to reply with random information. If I drop the packet, it is obvious that I'm here and I try to protect myself. If I reply with random data, it could be legitimate data, I'm here, and the scan will fail to get a fingerprint of my network stack to guess my OS and my weaknesses.
+I will install `portsentry` later, but I use a set of scan protection rules at the kernel level with the psd and lscan modules. A scan is never coming from a friend, thus I chose to send the connection to the CHAOS target. The idea is to reply with random information. If I drop the packet, it is obvious that I'm here and I try to protect myself. If I reply with random data, it could be legitimate data, thus I'm here, I reply, the scan will succeed, but the attacker will fail to get a fingerprint of my network stack to guess my OS and my weaknesses.
 ```bash
 cat <<EOF >> /etc/iptables/rules.v4
 -N xt_portscan
@@ -88,7 +93,7 @@ cat <<EOF >> /etc/iptables/rules.v4
 EOF
 ```
 
-Given that every outgoing connection is blocked by default, I listed the official Debian repositorY IP addresses in a specific rule, to accept them and I added this rule to the OUTPUT chain.
+Given that every outgoing connection is blocked by default, I listed the official Debian repository IP addresses in a specific chain, to accept them and I will call this chain from the OUTPUT chain. It will be easy to add or remove IP from this chain.
 
 ```bash
 cat <<EOF >> /etc/iptables/rules.v4
@@ -117,7 +122,7 @@ cat <<EOF >> /etc/iptables/rules.v4
 EOF
 ```
 
-I need to connect to this server, using SSH. SSH authentication rejects password authentication, but I will use the `limit` module to implement a rate limiter. No more than 3 packets are allowed in a 60 seconds window. Given that related and established connection packet will be allowed by another rule, this one is only for incoming connections. Simple, but efficient. I also log the blocked connection attempts, with another limiter to avoid filling the log file, no more than 10 messages are logged per minute. And finally, if someone reaches 3 packets per minute, it is not only blocked, but send to TARPIT... Basically, this target never answer to the connecion packet, no reject, no accept, it simply forget the connection status to avoid filling the internal connection table and leave the connection half open, consuming entries in the outgoing connection table of the attacker, this will fill his table and potentially freeze his computer.
+I need to connect to this server, using SSH. SSH authentication rejects password authentication, but I will use the `limit` module to implement a rate limiter. No more than 3 packets are allowed in a 60 seconds window. Given that related and established connection packet will be allowed by another rule, this one is only for incoming connections. Simple, but efficient. I also log the blocked connection attempts, with another limiter to avoid filling the log file, no more than 10 messages are logged per minute. And finally, if someone reaches 3 packets per minute, it is not only blocked, but send to TARPIT... Basically, this target never answer to the connection packet, no reject, no accept, it simply forget the connection status to avoid filling the internal connection table and leave the connection half open, consuming entries in the outgoing connection table of the attacker, this will fill his table and potentially freeze his computer.
 I also have a rule to simply accept incoming SSH connections. I will add these rules to the INPUT chain.
 ```bash
 cat <<EOF >> /etc/iptables/rules.v4
@@ -147,7 +152,8 @@ cat <<EOF >> /etc/iptables/rules.v4
 EOF
 ```
 
-I add the Debian repository access on port 80 only, the DNS queries and the NTP queries to an external output chain.
+I create a new chain to filter the outgoing paquets through the external interface. I will call it from the global output filter
+chain.  I add the Debian repository access on port 80 only, the DNS queries and the NTP queries to an external output chain.
 ```bash
 cat <<EOF >> /etc/iptables/rules.v4
 -N WAN_output
@@ -193,6 +199,7 @@ EOF
 ```
 
 # Restart to apply
+
 `systemctl restart netfilter-persistent` would freeze the current connection because it is not marked as *established* in iptables. Thus a reboot is a better solution to test the firewall.
 ```bash
 reboot

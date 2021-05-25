@@ -1,12 +1,11 @@
 ---
 uid: Debian113Server030TCPIPtuning
 title: Debian11, Server, TCPIP tuning
-description: How to activate some basic attack protections in the linux kernel network stack, against spoofind, flooding, smurfing, Man in the middle (MITM) or ICMP attacks.
+description: How to activate some basic attack protections in the linux kernel network stack, against spoofing, flooding, smurfing, Man in the middle (MITM) or ICMP attacks.
 category: Computers
 tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, TCP, IP, ICMP, Stack, Network, Tunig, Kernel parameters, Security, Spoofing, Flooding, Smurfing, MITM, Man In The Middle, Cracker, Packets ]
 ---
-
-How to activate some basic attack protections in the linux kernel network stack, against spoofind, flooding, smurfing, Man in the middle (MITM) or ICMP attacks.
+How to activate some basic attack protections in the linux kernel network stack, against spoofing, flooding, smurfing, Man in the middle (MITM) or ICMP attacks.
 
 * TOC
 {:toc}
@@ -17,7 +16,7 @@ Spoofing is identity usurpation, Flooding is when someone tries to completely co
 
 All these protections have no real side effect on your server. Most of them are described in [montuy337513]'s [^1] page, in French.
 
-```properties
+```bash
 cat > /etc/sysctl.d/00-FCSecurity << EOF
 # Spoofing
 net.ipv4.conf.default.rp_filter=1
@@ -42,6 +41,7 @@ EOF
 ```
 
 # Apply
+
 ```bash
 sysctl -n -e -q -p /etc/sysctl.conf
 ```

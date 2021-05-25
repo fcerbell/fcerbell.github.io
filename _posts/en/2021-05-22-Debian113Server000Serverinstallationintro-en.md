@@ -1,12 +1,11 @@
 ---
 uid: Debian113Server000Serverinstallationintro
 title: Debian11, Server, Server installation intro
-description: Despite Debian is the best distribution ever to run a server, It needs to be upgraded from time to time to switch to better technologies. I'm about to migrate my 8 years old server from Debian 7 technologies to Debian 11 technologies, to use better firewall protections, to use prometheus/grafana instead of munin,... Here is a list of the common base installation procedures which are executed on all my servers (security, monitoring, ....).
+description: Despite Debian is the best distribution ever to run a server, It needs to be upgraded from time to time to switch to better technologies. I'm about to migrate my 8 years old server from Debian 7 technologies to Debian 11 technologies, to use better firewall protections, to use prometheus/grafana instead of munin,... Here is a list of the common base installation procedures which are executed on all my servers (security, monitoring, ....) and which I'll describe in the next posts.
 category: Computers
 tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Introduction, Base, Generic ]
 ---
-
-Despite Debian is the best distribution ever to run a server, It needs to be upgraded from time to time to switch to better technologies. I'm about to migrate my 8 years old server from Debian 7 technologies to Debian 11 technologies, to use better firewall protections, to use prometheus/grafana instead of munin,... Here is a list of the common base installation procedures which are executed on all my servers (security, monitoring, ....).
+Despite Debian is the best distribution ever to run a server, It needs to be upgraded from time to time to switch to better technologies. I'm about to migrate my 8 years old server from Debian 7 technologies to Debian 11 technologies, to use better firewall protections, to use prometheus/grafana instead of munin,... Here is a list of the common base installation procedures which are executed on all my servers (security, monitoring, ....) and which I'll describe in the next posts.
 
 * TOC
 {:toc}
@@ -32,7 +31,7 @@ It was never hacked since I installed it and rejected all attempts. The *only* s
 
 ## New configuration
 
-This blog posts serie describes how to install and configure the following base server tools as I do on all my servers. These is my common server base, before the server is specialized on usefull business tasks. I'll describe the actual useful business services in the [Debian 11 Services]() post serie.
+This blog posts serie describes how to install and configure the following base server tools as I do on all my servers. These is my common server base, before the server is specialized on usefull business tasks. I'll describe the actual useful business services in the [Debian 11 Services](/pages/en/tags/#debian11-services) post serie.
 
 - Security
   - iptables
