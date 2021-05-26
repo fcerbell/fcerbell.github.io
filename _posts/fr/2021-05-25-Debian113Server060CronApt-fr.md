@@ -27,7 +27,7 @@ d'utiliser `cron-apt` partout.
 
 # Pré-requis
 
-Cet article ne dépend que de la [préparation d'une machine générique](/pages/en/tags/#préparation-debian11).
+Cet article ne dépend que de la [préparation d'une machine générique](/pages/fr/tags/#préparation-debian11).
 
 # Installation
 L'installation ne pose aucune question ni aucune difficulté.
