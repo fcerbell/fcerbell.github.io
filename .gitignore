@@ -1,6 +1,5 @@
 .bundle
 .DS_Store
-Gemfile*
 github
 /node_modules/
 .sass-cache
