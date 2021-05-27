@@ -4,7 +4,6 @@ title: Debian11, Server, fail2ban to ban obvious attack sources
 description: Fail2ban parses log files, looking for attack attempts and take countermeasures to ban the attacker temporarily or permanently using IPTables and TCPWrapper rules. Configuration with TARPIT IPtables targets to "punish" attackers. This post describe the basic and common installation setup, I specialize it depending on the server type (public or gateway/router) in the next posts.
 category: Computers
 tags: [ Debian 11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Fail2ban, TARPIT, Ban, Security, IPTables, TCPWrappers ]
-published: false
 ---
 
 Fail2ban parses log files, looking for attack attempts and take countermeasures to ban the attacker temporarily or permanently using IPTables and TCPWrapper rules. Configuration with TARPIT IPtables targets to "punish" attackers. This post describe the basic and common installation setup, I specialize it depending on the server type (public or gateway/router) in the next posts.
