@@ -3,22 +3,20 @@
               <a class="post-link" href="{{ include.post.url | relative_url }}">{{ include.post.title | escape }}</a>
               <span class="post-meta">
                 <time>{{ include.post.date | date: date_format }}</time>, 
-                {{ include.post.author }}
-{%- if include.show_flags -%}
-  {%- include flags.html uid=include.post.uid -%}
-{%- endif -%}
-{%- if include.show_tags -%}
+                <span class="p-name">{{ include.post.author }}</span>
+{%- if include.show_flags %}
+  {%- include flags.html uid=include.post.uid %}
+{%- endif %}
+{%- if include.show_tags %}
                 <span class="tag-list">
   {%- for t in include.post.tags %}
     {%- assign tag = t | slugify %}
                   <a title="Tag {{t}}" href="{{ "/pages/" | append: page.lang | append:"/tags#" | append: tag | relative_url }}">{{t}}</a>
-  {%- endfor -%}
+  {%- endfor %}
                 </span>
-{%- endif -%}
+{%- endif %}
               </span>
-{%- if include.show_excerpts -%}
-              <div class="post-excerpt">
-{{- include.post.excerpt -}}
-              </div>
+{%- if include.show_excerpts %}
+              <div class="post-excerpt">{{- include.post.excerpt -}}</div>
 {%- endif %}
             </li>
