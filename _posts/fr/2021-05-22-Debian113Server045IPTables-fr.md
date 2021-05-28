@@ -1,9 +1,9 @@
 ---
 uid: Debian113Server045IPTables
 title: Debian11, Serveur, Configuration évolutive d'IPTables
-description: La fonction pare-feu `iptable` du noyau Linux est déjà inclue dans le noyau et l'application cliente est déjà installée. Je vais installer un paquetage pour sauvegarder les règles de pare-feu sur le disque et les recharger automatiquement au redémarrage. Je prépare également un jeu de règles évolutif avec une spécificité, il interdit toutes les connexions sortantes par défaut. Ainsi, si quelqu'un arrive à obtenir l'accès à mon serveur et à exécuter un script, ce dernier sera probablement bloqué et ne pourra pas renvoyer des informations à l'attaquant. J'utilise les cibles non-standard TARPIT et CHAOS contre des attaquants évidents et des règles de limitation de débit, comme moyen de riposte passive.
+description: 
 category: Informatique
-tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, IPTables, Sécurité, Filtrage, Réseau, Pare-feu, Règles de pare-feu, Chaines de pare-feu, Crackeur, SSH, TCP, IP, ICMP, Loopback, IPv6, CHAOS, TARPIT, DROP ]
+tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, IPTables, Sécurité, Filtrage, Réseau, Pare-feu, Règles de pare-feu, Chaines de pare-feu, Crackeur, SSH, TCP, IP, ICMP, Loopback, IPv6, CHAOS, TARPIT, DROP, Routeur, Passerelle, Messagerie, Email, NTP, Temps, Heure, SSH, Proxy, Mandataire, Contrôle parental, Parental, SNAT, MASQUERADE, Serveur public, Internet ]
 ---
 La fonction pare-feu `iptable` du noyau Linux est déjà inclue dans le noyau et l'application cliente est déjà installée. Je vais installer un paquetage pour sauvegarder les règles de pare-feu sur le disque et les recharger automatiquement au redémarrage. Je prépare également un jeu de règles évolutif avec une spécificité, il interdit toutes les connexions sortantes par défaut. Ainsi, si quelqu'un arrive à obtenir l'accès à mon serveur et à exécuter un script, ce dernier sera probablement bloqué et ne pourra pas renvoyer des informations à l'attaquant. J'utilise les cibles non-standard TARPIT et CHAOS contre des attaquants évidents et des règles de limitation de débit, comme moyen de riposte passive.
 
@@ -14,24 +14,26 @@ La fonction pare-feu `iptable` du noyau Linux est déjà inclue dans le noyau et
 
 ## Variables existantes
 
-Le nom de l'interface réseau externe (`WAN_IF`) est déjà défini dans le fichier de configuration par l'article [Variables de configuration](/Debian111PostInstall010Configurationvariables-fr/).
+Les variables (`WAN_*` et `LAN_*`) sont déjà définies dans le fichier de configuration par l'article [Variables de configuration](/Debian111PostInstall010Configurationvariables-fr/).
 
-## Rechargement des variables dans l'environnement
+## Rechargement des variables
 
-Assurons-nous que la variable `WAN_IF` est disponible en rechargeant le fichier dans l'environnement :
+Assurons-nous que les variables soient disponibles en rechargeant le fichier dans l'environnement :
 
 ```bash
 source /root/config.env
 ```
 
-# Préconfiguration des paquetages
+# Configuration commune
+
+## Préconfiguration des paquetages
 
 ```bash
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
 ```
 
-# Installation
+## Installation
 
 Je vais utiliser les cibles `CHAOS` et `TARPIT`. Elles sont disponibles en tant que module pour le noyau. Nous devons donc
 installer aussi la chaine de construction des modules Debian. Elle compile et recompile les modules à chaque installation d'un
@@ -41,7 +43,7 @@ nouveau noyau. La beauté de Debian !!!
 apt-get install -y iptables-persistent xtables-addons-dkms
 ```
 
-# Blocage d'IPv6
+## Blocage d'IPv6
 
 Mes serveurs n'utilisent pas IPv6 du tout, mais j'ai préféré ne pas le désactiver pour autant. J'installe donc des règles de
 pare-feu pour bloquer tout le traffic IPv6 entrant et sortant. Je journalise le traffic sortant, pour penser à désactiver IPv6
@@ -59,7 +61,7 @@ COMMIT
 EOF
 ```
 
-# Règles et chaines IPv4
+## Règles et chaines IPv4
 
 D'abord, je configure toutes les politiques par défaut (celles appliquées si aucune règle de la chaîne ne s'applique) à `DROP`. La
 règle est simple : ce qui n'est pas autorisé est interdit ! Si un programme malicieux, pour une raison inconnue, était exécuté sur
@@ -234,6 +236,64 @@ cat <<EOF >> /etc/iptables/rules.v4
 -A FORWARD -m limit --limit 10\/min -j LOG --log-prefix "[FORWARD] "
 COMMIT
 EOF
+```
+
+# Ajouter une IP publique en liste blanche
+
+Après une installation et configuration générique d'IPTables, j'applique quelques règles spécifiques à un serveur public, pour inscrire mes adresses IP en liste blanche. En temps normal, je ne devrais jamais me retrouver bloqué, mais je peux commetre des erreurs, oublis, inattentions, ... et me bannir moi-même ! J'ajoute directement dans la chaine de filtrage du traffic externe entrant une règle pour accepter mon adresse personnelle.
+```bash
+sed -i 's/^-N WAN_input/&\n# Home IP\n-A WAN_input -s '${LAN_IP}'\/'${LAN_NM}' -j ACCEPT/' /etc/iptables/rules.v4
+```
+
+# Configuration pour deux interfaces (Routeur/Passerelle)
+
+Configurer IPTables pour un serveur à plusieurs interfaces externes, une sur un réseau public, une sur un réseau privé. Cela peut permettre de donner accès a certains services basiques, tels que la messagerie, l'heure et SSH, depuis le réseau privé, sans filtrage ni blocage. Les autres protocoles pourront être gérés plus tard avec un proxy mandataire ou un système de contrôle parental.
+
+
+## Ajout de chaines pour le LAN
+
+Pour plus de facilité d'administration, je crée une chaine d'entrée et une chaine de sortie spécifique pour l'interface du réseau
+privé. On peut y lister les types de paquets a accepter et elles seront appelées depuis les chaînes d'entrée et de sortie
+globales.
+```bash
+sed -i 's/^-A INPUT -i '${WAN_IF}'.*$/&\n-A INPUT -i '${LAN_IF}' -j LAN_input/' /etc/iptables/rules.v4
+sed -i 's/^-A OUTPUT -o '${WAN_IF}'.*$/&\n-A OUTPUT -o '${LAN_IF}' -j LAN_output/' /etc/iptables/rules.v4
+sed -i 's/^-N WAN_input$/-N LAN_input\n\n-N LAN_output\n\n&/' /etc/iptables/rules.v4
+```
+
+## Acceptation du traffic venant du LAN
+
+Tout d'abord, j'ajoute la chaîne des connexions SSH pour accepter les connexions SSH entrantes sur le serveur depuis le LAN, mais
+je n'appelle pas le limiteur. Je pars du principe que le LAN est sûr, on pourrait durcir ces règles, mais je n'en éprouve pas le
+besoin. Le jour où mes enfants tenteront de brute-forcer le proxy, plutôt que de les bloquer, il sera grand temps de leur
+enseigner la sécurité informatique. ;)
+```bash
+sed -i 's/^-N LAN_input$/&\n-A LAN_input -j SSH/' /etc/iptables/rules.v4
+```
+
+## Transmission depuis le LAN vers le WAN
+
+Ensuite, j'active la transmission entre les interfaces du serveur, dans le noyau et j'ajoute quelques règles de transmission pour
+accepter certaines connexions traversantes : envoi et réception de courriels (SMTP, POP, IMAP), synchronisation d'horloges, SSH.
+```bash
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/00-IPv4Forwarding.conf
+sysctl --system
+sed -i 's/^-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT$/&\n-A FORWARD -i '${LAN_IF}' -p tcp -m multiport --dports 25,465,587 -j ACCEPT/' /etc/iptables/rules.v4
+sed -i 's/^-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT$/&\n-A FORWARD -i '${LAN_IF}' -p tcp -m multiport --dports 143,993 -j ACCEPT/' /etc/iptables/rules.v4
+sed -i 's/^-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT$/&\n-A FORWARD -i '${LAN_IF}' -p tcp -m multiport --dports 110,995 -j ACCEPT/' /etc/iptables/rules.v4
+sed -i 's/^-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT$/&\n-A FORWARD -i '${LAN_IF}' -p tcp --dport 123 -j ACCEPT/' /etc/iptables/rules.v4
+sed -i 's/^-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT$/&\n-A FORWARD -i '${LAN_IF}' -p udp --dport 123 -j ACCEPT/' /etc/iptables/rules.v4
+sed -i 's/^-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT$/&\n-A FORWARD -i '${LAN_IF}' -p tcp --dport 22 -j ACCEPT/' /etc/iptables/rules.v4
+```
+
+## Traduction d'adresse pour les adresses non routables
+
+Le réseau interne privé peut envoyer des paquets à l'extérieur, avec une adresse d'expéditeur interne, aucune chance de reçevoir
+une éventuelle réponse. Activons la traduction d'adresse, Source Network Address Translation, SNAT, avec la cible MASQUERADE, pour
+tous les paquets envoyés depuis une adresse privée vers une adresse publique à travers l'interface publique.
+```bash
+sed -i 's/^:POSTROUTING.*$/&\n-A POSTROUTING -s '${LAN_IP}'\/'${LAN_NM}' ! -d '${LAN_IP}'\/'${LAN_NM}' -o '${WAN_IF}' -j MASQUERADE/' /etc/iptables/rules.v4
+systemctl restart netfilter-persistent
 ```
 
 # Redémarrage pour appliquer
