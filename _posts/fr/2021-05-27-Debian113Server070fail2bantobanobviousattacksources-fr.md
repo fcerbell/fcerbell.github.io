@@ -21,7 +21,7 @@ actives.
 Les contremesures actives ne sont pas une bonne idée, les notifications par courriel peuvent rapidement remplir une boite aux
 lettres sans valeur ajoutée, et l'ajout d'IP dans des listes noires nécessiteraient d'ouvrir des connexions réseau sortantes sur
 le pare-feu. Personnellement, je ne pense pas que les ajouts automatiques dans les blacklist soient une action fiable. Il faut
-garde en tête que ce ne sont que rarement les machines des attaquants qui exécutent les attaques, mais celles d'un réseau de
+garder en tête que ce ne sont que rarement les machines des attaquants qui exécutent les attaques, mais celles d'un réseau de
 machines inocentes infectées par un virus. Toutes ces actions punieraient d'innocentes victimes de manière bien trop sévères à mon
 sens.
 
