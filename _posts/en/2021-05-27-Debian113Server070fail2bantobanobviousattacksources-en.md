@@ -23,7 +23,7 @@ Automatic countermeasures is not a good idea, email notification can rapidly fil
 This article only depends on the [Generic machine preparation](/pages/en/tags/#debian11-preparation).
 
 ## Existing variables
-We need the `LAN_*` variable which is already defined in the configuration file, in [010 - Configuration variables](../../undefined).
+We need the `LAN_*` variable which is already defined in the configuration file, in [010 - Configuration variables](/Debian111PostInstall010Configurationvariables-en/).
 
 ## Reload the variables
 Ensure that the variables are available, by loading the configuration script :

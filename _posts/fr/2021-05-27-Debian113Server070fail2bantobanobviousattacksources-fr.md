@@ -32,7 +32,7 @@ sens.
 Cet article ne dépend que de la [Préparation d'une machine générique](/pages/fr/tags/#préparation-debian11).
 
 ## Variables existantes
-Nous avons besoin des variables `LAN_*` déjà définies dans le fichier de configuration par l'article sur les [Variables de configuration](../../undefined).
+Nous avons besoin des variables `LAN_*` déjà définies dans le fichier de configuration par l'article sur les [Variables de configuration](/Debian111PostInstall010Configurationvariables-fr/).
 
 ## Rechargement des variables
 Assurons-nous que les variables soient bien chargées dans l'environnement.
