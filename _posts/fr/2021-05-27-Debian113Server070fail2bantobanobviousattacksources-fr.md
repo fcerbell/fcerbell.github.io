@@ -3,7 +3,7 @@ uid: Debian113Server070fail2bantobanobviousattacksources
 title: Debian11, Serveur, Installation de fail2ban pour bloquer les attaquants
 description: Fail2ban parcoure les fichiers de journaux à la recherche de tentatives d'attaques et réagit pour bannir les attaquants temporairement ou définitivement en utilisant IPTables et TCPWrappers. Cette configuration utilise la cible TARPIT d'IPTables pour « punir » les attaquants. Cet article décrit l'installation d'une configuration de base, commune à tout type de serveur, je la spécialiserai en fonction du serveur souhaité (public ou routeur/passerelle) dans les articles suivants.
 category: Informatique
-tags: [ Debian 11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Fail2ban, TARPIT, Bannissement, Sécurité, IPTables, TCPWrappers ]
+tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Fail2ban, TARPIT, Bannissement, Sécurité, IPTables, TCPWrappers ]
 ---
 Fail2ban parcourt les fichiers de journaux à la recherche de tentatives d'attaques et réagit pour bannir les attaquants temporairement ou définitivement en utilisant IPTables et TCPWrappers. Cette configuration utilise la cible TARPIT d'IPTables pour « punir » les attaquants. Cet article décrit l'installation d'une configuration de base, commune à tout type de serveur, je la spécialiserai en fonction du serveur souhaité (public ou routeur/passerelle) dans les articles suivants.
 
