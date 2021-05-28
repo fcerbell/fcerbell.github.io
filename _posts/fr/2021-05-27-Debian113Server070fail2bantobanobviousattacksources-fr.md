@@ -31,13 +31,22 @@ sens.
 # Pré-requis
 Cet article ne dépend que de la [Préparation d'une machine générique](/pages/fr/tags/#préparation-debian11).
 
-# Installation
+## Variables existantes
+Nous avons besoin des variables `LAN_*` déjà définies dans le fichier de configuration par l'article sur les [Variables de configuration](../../undefined).
+
+## Rechargement des variables
+Assurons-nous que les variables soient bien chargées dans l'environnement.
+```bash
+source /root/config.env
+```
+
+# Installation commune
 Le paquetage est très petit, facile et rapide à installer, il ne pose aucune question par défaut.
 ```bash
 apt-get install -y fail2ban
 ```
 
-# Bannir les bannis récidivistes
+## Bannir les bannis récidivistes
 Lorsqu'un motif d'attaque se répète, Fail2ban déclenche une action temporaire pour bloquer les tentatives suivantes pendant un
 temps défini. Cette règle ajoute un second niveau pour appliquer une règle encore plus restrictive si les bannis continuent à
 tenter des attaques.
@@ -48,7 +57,7 @@ enabled = true
 EOF
 ```
 
-# Utilisation de la cible IPTables TARPIT
+## Utilisation de la cible IPTables TARPIT
 Au lieu de simplement ignorer les paquets réseau pour les bloquer, avec la cible DROP, j'utilise la cible TARPIT. J'ai déjà
 expliqué cette cible IPTable dans l'[article sur IPTables](/Debian113Server045IPTables-fr/), on sait déjà que le traffic est
 malicieux, cela ne fait pas de mal, ne consomme pas plus de ressources locales et devrait arrêter les tentatives d'attaque
@@ -60,7 +69,35 @@ blocktype = TARPIT
 EOF
 ```
 
-# Application de la configuration
+## Ajout d'une IP ou d'un LAN en liste blanche
+L'utilisation normale ne devrait pas poser de problème, mais il reste prudent d'ajouter en liste blanche ma propre adresse IP pour éviter d'être banni en cas de fausse manipulation. Je commence
+donc par ajouter mon adresse IP publique (ou classe) en liste blanche.
+```bash
+cat << EOF > /etc/fail2ban/jail.local
+[DEFAULT]
+ignoreip = 127.0.0.1/8 ${LAN_IP}/${LAN_NM}
+#action = %(action_mw)s
+EOF
+```
+
+## Ajutement de la durée de banissement
+J'ajuste ensuite la durée de banissement temporaire à une heure, bien plus longtemps que la durée par défaut.
+```bash
+cat << EOF >> /etc/fail2ban/jail.local
+bantime = 3600
+EOF
+```
+
+## Ajustement des seuils de détection
+Enfin, j'indique à `fail2ban` de déclencher une contre-mesure lorsqu'il trouve plus de 3 tentatives pendant les 10 dernières minutes, afin de détecter les attaques lentes.
+```bash
+cat << EOF >> /etc/fail2ban/jail.local
+findtime = 600
+maxretry = 3
+EOF
+```
+
+## Application de la configuration
 ```bash
 systemctl restart fail2ban
 ```

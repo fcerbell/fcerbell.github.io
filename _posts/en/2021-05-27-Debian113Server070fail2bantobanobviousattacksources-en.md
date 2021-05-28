@@ -22,13 +22,22 @@ Automatic countermeasures is not a good idea, email notification can rapidly fil
 # Prerequisites
 This article only depends on the [Generic machine preparation](/pages/en/tags/#debian11-preparation).
 
-# Installation
+## Existing variables
+We need the `LAN_*` variable which is already defined in the configuration file, in [010 - Configuration variables](../../undefined).
+
+## Reload the variables
+Ensure that the variables are available, by loading the configuration script :
+```bash
+source /root/config.env
+```
+
+# Common Installation
 The package is small, easy and fast to install, it asks no questions by default.
 ```bash
 apt-get install -y fail2ban
 ```
 
-# Second level ban of already banned connections
+## Second level ban of already banned connections
 When a pattern is repeated, Fail2Ban triggers a temporary action to block further attempts for a specified time. This rule acts as a second level to take more restrictive actions when the attempts are continuing while blocked.
 ```bash
 cat << EOF > /etc/fail2ban/jail.d/recidive.conf
@@ -37,8 +46,8 @@ enabled = true
 EOF
 ```
 
-# TARPIT malicious connections
-Instead of simply ignoring the incoming network paquets to block them, I chose to send them to the TARPIT target. I described this target in the [IPTable post](/Debian113Server045IPTables-en/), we already know that this trafic is malicious, it does not hurt or consume local resources and it should stop the attack attempts directly at the source.
+## TARPIT malicious connections
+Instead of simply ignoring the incoming network paquets to block them, I chose to send them to the TARPIT target. I described this target in the [IPTable post](), we already know that this trafic is malicious, it does not hurt or consume local resources and it should stop the attack attempts directly at the source.
 ```bash
 cat << EOF > /etc/fail2ban/action.d/iptables-common.local
 [Init]
@@ -46,7 +55,34 @@ blocktype = TARPIT
 EOF
 ```
 
-# Apply the configuration
+## Whitelist my IP or LAN
+Normal usage should not be impacted, but it might be advisable to whitelist our own public IP address to avoid any mistake.
+```bash
+cat << EOF > /etc/fail2ban/jail.local
+[DEFAULT]
+ignoreip = 127.0.0.1/8 ${LAN_IP}/${LAN_NM}
+#action = %(action_mw)s
+EOF
+```
+
+## Tune the ban duration
+I also adjust the temporary ban time to 1 hour, way more longer than the default. 
+```bash
+cat << EOF >> /etc/fail2ban/jail.local
+bantime = 3600
+EOF
+```
+
+## Tune the detection thresholds
+Finally, I tell `fail2ban` to trigger then ban when it finds more than 3 attempts during the last 10 minutes, in order to detect slow attacks.
+```bash
+cat << EOF >> /etc/fail2ban/jail.local
+findtime = 600
+maxretry = 3
+EOF
+```
+
+## Apply the configuration
 ```bash
 systemctl restart fail2ban
 ```
