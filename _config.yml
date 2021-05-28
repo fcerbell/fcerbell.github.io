@@ -5,7 +5,7 @@ description: >-
   Le blog qui raconte tout ! Des articles de blog, des vidéos et des 
   pages de tutoriels sur Debian GNU/Linux, les drones, la photo, la 
   vidéo, l'audio, l'électronique, 
-url: "http://fcerbell.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://fcerbell.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
 lang: "fr"
 date_format: "%d/%m/%Y"
