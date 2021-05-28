@@ -3,7 +3,7 @@ uid: RedisNativeStructures2
 title: Redis 03b - Structures de données natives (2nde partie)
 description:
 category: Redis en 5 minutes
-tags: [ Redis, RedisLabs, Structures de données, Donnée, Structures, Clé-valeur, strings, limits, sets, sorted, list, hash, TTL, time-to-live, expiration, Recherche, full text, Moteur de recherche, Base graphe, Graphe, Cypher, OpenCypher, Concurrence, Compteur atomiquer, Atomic, Compteur, Verrou, Index, Pile, File, Queue, Traitements, Tâches ]
+tags: [ Redis, RedisLabs, Structures de données, Donnée, Structures, Clé-valeur, strings, limits, sets, sorted, list, hash, TTL, time-to-live, expiration, Recherche, full text, Moteur de recherche, Base graphe, Graphe, Cypher, OpenCypher, Concurrence, Compteur atomiques, Atomic, Compteur, Verrou, Index, Pile, File, Queue, Traitements, Tâches ]
 ---
 
 Bienvenue dans cette série « 5 minutes pour apprendre Redis » Je vais faire un

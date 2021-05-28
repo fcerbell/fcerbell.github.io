@@ -3,7 +3,7 @@ uid: Debian112Preparation040Command-linecomforttools
 title: Debian11, Préparation, Outils de confort en ligne de commande
 description: Travailler en ligne de commande, ou terminal, n'est pas pénible... Dès lors qu'il est configuré pour répondre à vos besoins. Je décris ici ma configuration minimale pour la console sur tous les types de machine, recherche de fichiers, recherche dans l'historique à l'aide des flèches, multiplexage de session, assistance aux paquetages manquants, invite de commande puissante et configuration minimale de `vim`.
 category: Informatique
-tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Mlocate, Screen, AptFile, CommandNotFound, Prompt, Invite de commande, Historique croisé, History, Readline, Auto logout, Lougout, Timeout, Session timeout, Déconnexion automatique, Recherche historique, Vim ]
+tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Mlocate, Screen, AptFile, CommandNotFound, Prompt, Invite de commande, Historique croisé, History, Readline, Auto logout, Logout, Timeout, Session timeout, Déconnexion automatique, Recherche historique, Vim ]
 ---
 
 Travailler en ligne de commande, ou terminal, n'est pas pénible... Dès lors qu'il est configuré pour répondre à vos besoins. Je décris ici ma configuration minimale pour la console sur tous les types de machine :  recherche de fichiers, recherche dans l'historique à l'aide des flèches, multiplexage de session, assistance aux paquetages manquants, invite de commande puissante et configuration minimale de `vim`.
