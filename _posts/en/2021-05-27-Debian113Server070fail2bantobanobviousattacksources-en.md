@@ -1,6 +1,6 @@
 ---
 uid: Debian113Server070fail2bantobanobviousattacksources
-title: Debian11, Server, fail2ban to ban obvious attack sources
+title: Debian11, Server, Installation de fail2ban to ban attackers
 description: Fail2ban parses log files, looking for attack attempts and take countermeasures to ban the attacker temporarily or permanently using IPTables and TCPWrapper rules. Configuration with TARPIT IPtables targets to "punish" attackers. This post describe the basic and common installation setup, I specialize it depending on the server type (public or gateway/router) in the next posts.
 category: Computers
 tags: [ Debian 11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Fail2ban, TARPIT, Ban, Security, IPTables, TCPWrappers ]
@@ -14,7 +14,7 @@ Fail2Ban parses the log files and searches for typical attack patterns, when the
 
 Fail2ban can execute arbitrary commands to block the source IP for a given amount of time, it can also send email with details to the admin, add the source IP to public blacklists or trigger active countermeasures. 
 
-Automatic countermeasures is not a good idea, email notification can rapidly fil your mailbox without any great value, and adding bad ips to public blacklists would need to open outgoing network connections and I personnally do not find automatic blacklist addition as a reliable action.
+Automatic countermeasures is not a good idea, email notification can rapidly fil your mailbox without any great value, and adding bad ips to public blacklists would need to open outgoing network connections and I personnally do not find automatic blacklist addition as a reliable action. We have to keep in mind that the attacks are rarely comnig directly from the attacker machines, but from a botnet, a machine network made of innocent machines infected by a virus. All these actions would punish innocent victims way too strongly, from my point of view.
 
 * TOC
 {:toc}
@@ -38,7 +38,7 @@ EOF
 ```
 
 # TARPIT malicious connections
-Instead of simply ignoring the incoming network paquets to block them, I chose to send them to the TARPIT target. I described this target in the [IPTable post](), we already know that this trafic is malicious, it does not hurt or consume local resources and it should stop the attack attempts directly at the source.
+Instead of simply ignoring the incoming network paquets to block them, I chose to send them to the TARPIT target. I described this target in the [IPTable post](/Debian113Server045IPTables-en/), we already know that this trafic is malicious, it does not hurt or consume local resources and it should stop the attack attempts directly at the source.
 ```bash
 cat << EOF > /etc/fail2ban/action.d/iptables-common.local
 [Init]
@@ -46,7 +46,7 @@ blocktype = TARPIT
 EOF
 ```
 
-# Restart to apply
+# Apply the configuration
 ```bash
 systemctl restart fail2ban
 ```
