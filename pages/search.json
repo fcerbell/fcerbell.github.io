@@ -8,7 +8,7 @@ permalink: /search.json
       "title"    : "{{ post.title | escape }}",
       "category" : "{{ post.category }}",
       "tags"     : "{{ post.tags | join: ', ' }}",
-      "url"      : "{{ site.baseurl }}{{ post.url }}",
+      "url"      : "{{ post.url | relative_url }}",
       "date"     : "{{ post.date }}",
       "desc"     : "{{ post.description | strip_html | strip_newlines | escape }}"
     } {% unless forloop.last %},{% endunless %}
