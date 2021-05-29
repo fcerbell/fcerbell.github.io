@@ -154,3 +154,15 @@ ul.toc {
   @include relative-font-size(1.4);
 }
 
+.search-label::before {
+        padding: 0px;
+        font-family: "FontAwesome";
+        content: "\f002";
+}
+.search-results {
+    list-style: none;
+    position:absolute;
+    background-color: #efefff;
+    border: solid 1px #000000;
+    border-radius: 5px;
+}
