@@ -1,7 +1,7 @@
 ---
 uid: Debian113Server045IPTables
 title: Debian11, Serveur, Configuration évolutive d'IPTables
-description: 
+description: La fonction pare-feu `iptable` du noyau Linux est déjà inclue dans le noyau et l'application cliente est déjà installée. Je vais installer un paquetage pour sauvegarder les règles de pare-feu sur le disque et les recharger automatiquement au redémarrage. Je prépare également un jeu de règles évolutif avec une spécificité, il interdit toutes les connexions sortantes par défaut. Ainsi, si quelqu'un arrive à obtenir l'accès à mon serveur et à exécuter un script, ce dernier sera probablement bloqué et ne pourra pas renvoyer des informations à l'attaquant. J'utilise les cibles non-standard TARPIT et CHAOS contre des attaquants évidents et des règles de limitation de débit, comme moyen de riposte passive.
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, IPTables, Sécurité, Filtrage, Réseau, Pare-feu, Règles de pare-feu, Chaines de pare-feu, Crackeur, SSH, TCP, IP, ICMP, Loopback, IPv6, CHAOS, TARPIT, DROP, Routeur, Passerelle, Messagerie, Email, NTP, Temps, Heure, SSH, Proxy, Mandataire, Contrôle parental, Parental, SNAT, MASQUERADE, Serveur public, Internet ]
 ---
