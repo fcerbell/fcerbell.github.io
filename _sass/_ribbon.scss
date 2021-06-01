@@ -1,0 +1,138 @@
+// Inspired from https://csshint.com/pure-css-corner-ribbon/
+// and https://www.cssportal.com/blog/create-corner-ribbon/
+
+/* common */
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+    &::before,
+    &::after {
+        position: absolute;
+        z-index: -1;
+        content: ”;
+        display: block;
+        border: 5px solid #2980b9;
+    }
+    span {
+        position: absolute;
+        display: block;
+        width: 225px;
+        padding: 15px 0;
+        background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+        box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+        color: #fff;
+        font: 700 18px/1 ‘Lato’, sans-serif;
+        text-shadow: 0 1px 1px rgba(0,0,0,.2);
+        text-transform: uppercase;
+        text-align: center;
+    }
+}
+
+/* top left*/
+.ribbon-top-left {
+    top: -10px;
+    left: -10px;
+    &::before,
+    &::after {
+        border-top-color: transparent;
+        border-left-color: transparent;
+    }
+    &::before {
+        top: 0;
+        right: 0;
+    }
+    &::after {
+        bottom: 0;
+        left: 0;
+    }
+    span {
+        right: -25px;
+        top: 30px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg); /* Needed for Safari */
+    }
+}
+
+/* top right*/
+.ribbon-top-right {
+    top: -10px;
+    right: -10px;
+    &::before,
+    &::after {
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+    &::before {
+        top: 0;
+        left: 0;
+    }
+    &::after {
+        bottom: 0;
+        right: 0;
+    }
+    span {
+        left: -25px;
+        top: 30px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg); /* Needed for Safari */
+    }
+}
+
+/* bottom left*/
+.ribbon-bottom-left {
+    bottom: -10px;
+    left: -10px;
+    &::before,
+    &::after {
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+    &::before {
+        bottom: 0;
+        right: 0;
+    }
+    &::after {
+        top: 0;
+        left: 0;
+    }
+    span {
+        right: -25px;
+        bottom: 30px;
+        transform: rotate(225deg);
+        -webkit-transform: rotate(225deg); /* Needed for Safari */
+    }
+}
+
+/* bottom right*/
+.ribbon-bottom-right {
+    bottom: -10px;
+    right: -10px;
+    &::before,
+    &::after {
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+    }
+    &::before {
+        bottom: 0;
+        left: 0;
+    }
+    &::after {
+        top: 0;
+        right: 0;
+    }
+    span {
+        left: -25px;
+        bottom: 30px;
+        transform: rotate(-225deg);
+        -webkit-transform: rotate(-225deg); /* Needed for Safari */
+    }
+}
+
+.ribbon-red span {background: linear-gradient(#F70505 0%, #8F0808 100%);}
+
+.ribbon-blue span {background: linear-gradient(#2989d8 0%, #1e5799 100%);}
+
+.ribbon-green span {background: linear-gradient(#9BC90D 0%, #79A70A 100%);}
+
