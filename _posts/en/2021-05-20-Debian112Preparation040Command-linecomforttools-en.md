@@ -4,6 +4,7 @@ title: Debian11, Preparation, Command line comfort tools
 description: Working from command line is not a pain... as soon as it is configured to fit your needs. This is my minimal console setup with file search, history search with arrows, connection multiplexing, missing packages help, powerfull prompt and `vim` minimal configuration.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Mlocate, Screen, AptFile, CommandNotFound, Enhanced prompt, Prompt, Cross history, History, Readline, Auto logout, Logout, Timeout, Session timeout, History search, Search, Vim ]
+date: 2021-05-20 00:04:00
 ---
 
 Working from command line is not a pain... as soon as it is configured to fit your needs. This is my minimal console setup : file search, history search with arrows, connection multiplexing, missing packages help, powerfull prompt and `vim` minimal configuration.

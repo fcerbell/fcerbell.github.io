@@ -4,6 +4,7 @@ title: Debian11, Server, Server installation intro
 description: Despite Debian is the best distribution ever to run a server, It needs to be upgraded from time to time to switch to better technologies. I'm about to migrate my 8 years old server from Debian 7 technologies to Debian 11 technologies, to use better firewall protections, to use prometheus/grafana instead of munin,... Here is a list of the common base installation procedures which are executed on all my servers (security, monitoring, ....) and which I'll describe in the next posts.
 category: Computers
 tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Introduction, Base, Generic ]
+date: 2021-05-22 00:00:00
 ---
 Despite Debian is the best distribution ever to run a server, It needs to be upgraded from time to time to switch to better technologies. I'm about to migrate my 8 years old server from Debian 7 technologies to Debian 11 technologies, to use better firewall protections, to use prometheus/grafana instead of munin,... Here is a list of the common base installation procedures which are executed on all my servers (security, monitoring, ....) and which I'll describe in the next posts.
 

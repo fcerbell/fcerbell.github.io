@@ -4,6 +4,7 @@ title: Debian11, PostInstallation, Variables de configuration
 description: Toutes les étapes d'installation et de configuration auront besoin d'informations encore et encore. La première fois que des informations sont nécessaires, je les enregistre dans un fichier de configuration et je le charge dans l'environnement courant. Ainsi, je n'ai pas besoin de les saisir une fois de plus et je ne risque pas d'incohérence.
 category: Informatique
 tags: [ Postinstallation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Variables de configuration, Configuration ]
+date: 2021-05-19 00:01:00
 ---
 
 Toutes les étapes d'installation et de configuration auront besoin des mêmes informations encore et encore. La toute première fois

@@ -1,14 +1,12 @@
 ---
 uid: Debian113Server050TempMTAmsmtp-mta
-title: Debian11, Serveur, Relais de messagerie msmtp
-description: 
+title: Debian11, Serveur, mSMTP-MTA pour envoyer les courriels d'alerte
+description: Chaque serveur n'est pas un serveur de messagerie. Il n'y a pas besoin d'un agent de transport de messages complet partout. Un simple relais comme `msmtp` est largement suffisant pour que le serveur puisse envoyer des courriels à un serveur de messagerie. Je l'utilise en remplacement de `exim` pour fournir des fonctionnalités de messagerie simple, sans distribution locale, sur tous mes serveurs et stations de travail.
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, MTA, Mail Transport Agent, mSMTP, Messagerie, Email, Courriels, Pare-feu, IPTables, Smarthost ]
+date: 2021-05-25 00:00:00
 ---
-Chaque serveur n'est pas un serveur de messagerie. Il n'y a pas besoin d'un agent de transport de messages complet partout. Un
-simple relais comme `msmtp` est largement suffisant pour que le serveur puisse envoyer des courriels à un serveur de messagerie. Je
-l'utilise en remplacement de `exim` pour fournir des fonctionnalités de messagerie simple, sans distribution locale, sur tous mes
-serveurs et stations de travail.
+Chaque serveur n'est pas un serveur de messagerie. Il n'y a pas besoin d'un agent de transport de messages complet partout. Un simple relais comme `msmtp` est largement suffisant pour que le serveur puisse envoyer des courriels à un serveur de messagerie. Je l'utilise en remplacement de `exim` pour fournir des fonctionnalités de messagerie simple, sans distribution locale, sur tous mes serveurs et stations de travail.
 
 * TOC
 {:toc}

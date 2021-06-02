@@ -4,6 +4,7 @@ title: Debian11, Préparation, Installation et configuration de SSH
 description: Assurons nous que `ssh` est bien configuré. Sécurisons-le pour interdire toute connexion directe basée sur un mot de passe. Seule une authentification par défi de clé privée/publique est autorisée
 category: Informatique
 tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, SSH, Mot de passe, Clé, Authentification, Prohibit-password ]
+date: 2021-05-20 00:02:00
 ---
 
 Assurons nous que `ssh` est bien configuré. Sécurisons-le pour interdire toute connexion directe basée sur un mot de passe. Seule une authentification par défi de clé privée/publique est autorisée

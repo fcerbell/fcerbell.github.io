@@ -4,6 +4,7 @@ title: Debian11, Preparation, Sudo installation and configuration
 description: How to avoid and forbid direct root connections by locking the root password and to force specified users to gain root access with `sudo`. The first step is to install sudo and to allow its usage with the named user. Given that all connections will only be allowed by SSH, and only using a key-pair authentication (no password), the user will have no defined password and will need a passwordless access to the root account.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Sudo, Security, Passwordless, Password ]
+date: 2021-05-20 00:01:00
 ---
 
 How to avoid and forbid direct root connections by locking the root password and to force specified users to gain root access with `sudo`. The first step is to install sudo and to allow its usage with the named user. Given that all connections will only be allowed by SSH, and only using a key-pair authentication (no password), the user will have no defined password and will need a passwordless access to the root account.

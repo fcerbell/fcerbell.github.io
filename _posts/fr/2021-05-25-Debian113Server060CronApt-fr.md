@@ -4,6 +4,7 @@ title: Debian11, Serveur, CronApt pour garder le système à jour
 description: Installation et configuration de cron-apt pour un serveur Debian 11 bullseye. Il met automatiquement la liste des paquetages disponibles à jour, télécharge les mises à jour disponibles pour les paquetages installés, envoie une notification à l'admin et peut aussi automatiquement effectuer les mises à jour du système.
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Cron-apt, Update, Upgrade, Mises à jour, Téléchargements, Unattended upgrades, Notification ]
+date: 2021-05-25 00:01:00
 ---
 
 Installation et configuration de `cron-apt` pour un serveur Debian 11 bullseye. Il met automatiquement la liste des paquetages disponibles à jour, télécharge les mises à jour disponibles pour les paquetages installés, envoie une notification à l'admin et peut aussi automatiquement effectuer les mises à jour du système.

@@ -4,6 +4,7 @@ title: Debian11, Préparation, Mise à jour Debian 10 Buster vers Debian 11 Bull
 description: Comment configurer les dépôts de paquetages binaires sur une distribution GNU Linux Debian 10 Buster pour mettre tout le système à jour vers une Debian 11 Bullseye (« testing » actuellement), installer `aptitude` et accélérer le démarrage de la machine.
 category: Informatique
 tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Upgrade, Mises à jour ]
+date: 2021-05-20 00:00:00
 ---
 
 Comment configurer les dépôts de paquetages binaires sur une distribution GNU Linux Debian 10 Buster pour mettre tout le système à jour vers une Debian 11 Bullseye (« testing » actuellement), installer `aptitude` et accélérer le démarrage de la machine.

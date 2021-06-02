@@ -4,6 +4,7 @@ title: Debian11, PostInstallation, Configuration réseau
 description: Comment affecter une adresse IP statique et un nom d'hôte différent à une installation minimale Debian 10 Buster, comment désactiver le swap (espace d'échange), et comment configurer une seconde interface réseau pour un routeur ou une passerelle entre deux réseaux, pour partager un accès internet à la maison ou au bureau, pour protéger un réseau interne privé ou pour mettre un contrôle parental transparent et protéger nos ados chéris.
 category: Informatique
 tags: [ Debian11 Postinstallation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration réseau, Réseau, Swap, Routeur, Passerelle, Contrôle parental, Parental, Partage d'Internet, Internet ]
+date: 2021-05-19 00:02:00
 ---
 
 Comment affecter une adresse IP statique et un nom d'hôte différent à une installation minimale Debian 10 Buster, comment désactiver le swap (espace d'échange), et comment configurer une seconde interface réseau pour un routeur ou une passerelle entre deux réseaux, pour partager un accès internet à la maison ou au bureau, pour protéger un réseau interne privé ou pour mettre un contrôle parental transparent et protéger nos ados chéris.

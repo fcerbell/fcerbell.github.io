@@ -1,9 +1,10 @@
 ---
 uid: Debian113Server050TempMTAmsmtp-mta
-title: Debian11, Server, email relay msmtp-mta
+title: Debian11, Server, mSMTP-MTA to send emails alerts
 description: Every server is not a mail server. There is no need for a full Mail Transport Agent (MTA) on each. A simple one, such as `msmtp` is higly sufficient for the server to send email to a smart host. I use it as an `exim` replacement to provide simple email feature without local delivery on my workstations and servers.
 category: Computers
 tags: [ Debian11 Server, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, MTA, Mail Transport Agent, mSMTP, Firewall, IPTables, Smarthost ]
+date: 2021-05-25 00:00:00
 ---
 Every server is not a mail server. There is no need for a full Mail Transport Agent (MTA) on each. A simple relay, such as `msmtp` is higly sufficient for the server to send email to a smart host. I use it as an `exim` replacement to provide simple email feature without local delivery on my workstations and servers. This documentation is partially inspired by [yakati][yakati] [^1], in French.
 

@@ -4,6 +4,7 @@ title: Debian11, Serveur, Verrouilage de SSH et Sudo
 description: Je n'ai jamais besoin de me connecter à mes serveurs depuis la console et je n'ai pas besoin de reconfirmer l'identité de l'utilisateur avec un mot de passe pour utiliser la commande sudo. Du coup, je n'ai besoin d'aucune authentification par mot de passe. Il n'est possible de se connecter au serveur qu'à l'aide de ssh avec des clés, je peux donc complètement bloquer les mots de passe pour root et les utilisateurs nommés.  
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Configuration, Sudo, SSH, Verrouillage, Root, Compte, Sécurité, Clé secrete SSH ]
+date: 2021-05-22 00:01:00
 ---
 Je n'ai jamais besoin de me connecter à mes serveurs depuis la console et je n'ai pas besoin de reconfirmer l'identité de l'utilisateur avec un mot de passe pour utiliser la commande sudo. Du coup, je n'ai besoin d'aucune authentification par mot de passe. Il n'est possible de se connecter au serveur qu'à l'aide de ssh avec des clés, je peux donc complètement bloquer les mots de passe pour root et les utilisateurs nommés.  
 * TOC

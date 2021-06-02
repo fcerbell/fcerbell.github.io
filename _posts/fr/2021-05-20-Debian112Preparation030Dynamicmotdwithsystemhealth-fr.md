@@ -4,6 +4,7 @@ title: Debian11, Préparation, Message d'accueil dynamique avec la santé du sys
 description: Il est maintenant temps d'ajouter des paillettes, mais utiles ! Un message de bienvenue dynamique avec l'état de santé du serveur.  J'aime avoir un résumé de la santé du server lorsque je m'y connecte, ce qui doit être fait, les mise à jour disponibles... De plus, c'est très pratique si on doit faire une capture d'écran pour se vanter de son uptime. Tout se fait dans le fichier `motd` qui peut être généré dynamiquement.
 category: Informatique
 tags: [ Préparation Debian11, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Outil, Ligne de commande, Commande, Bannière, Figlet, Toilet, Cowsay, Hostname, Santé système, Système, CPU, RAM, Stats, Swap, Uptime, Mises à jour, Pending upgrades, Upgrades, Motd ]
+date: 2021-05-20 00:03:00
 ---
 
 Il est maintenant temps d'ajouter des paillettes, mais utiles ! Un message de bienvenue dynamique avec l'état de santé du serveur.  J'aime avoir un résumé de la santé du server lorsque je m'y connecte, ce qui doit être fait, les mise à jour disponibles... De plus, c'est très pratique si on doit faire une capture d'écran pour se vanter de son uptime. Tout se fait dans le fichier `motd` qui peut être généré dynamiquement.

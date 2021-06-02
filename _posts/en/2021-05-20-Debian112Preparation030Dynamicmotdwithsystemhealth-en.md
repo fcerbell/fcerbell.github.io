@@ -4,6 +4,7 @@ title: Debian11, Preparation, Dynamic motd with system health
 description: Now, it is time to have some blinking lights and fun settings, but useful nevertheless ! A dynamic status message of the day with server health information. I like to have a summary of what is the health of the server, what needs to be done, pending upgrades... immediately when I connect. Furthermore, it is very useful if you need to share a screenshot with someone else.
 category: Computers
 tags: [ Debian11 Preparation, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Commandline tools, Tools, Banner, Figlet, Toilet, Cowsay, Hostname, System health, Health, CPU, RAM, Stats, Swap, Uptime, Pending upgrades, Upgrades, Motd ]
+date: 2021-05-20 00:03:00
 ---
 
 Now, it is time to have some blinking lights and fun settings, but useful nevertheless ! A dynamic status message of the day with server health information. I like to have a summary of what is the health of the server, what needs to be done, pending upgrades... immediately when I connect. Furthermore, it is very useful if you need to share a screenshot with someone else.

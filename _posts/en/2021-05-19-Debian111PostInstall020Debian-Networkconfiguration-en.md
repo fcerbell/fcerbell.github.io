@@ -4,6 +4,7 @@ title: Debian11, PostInstallation, Network configuration
 description: Here is how to assign a static IP address and a different hostname to an existing Debian 10 Buster minimal installation, how to disable the swap, when the server has enough memory for its purpose, and how to configure a second network interface, if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.
 category: Computers
 tags: [ Debian11 Postinstall, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Network configuration, Configuration, Swap, Router, Gateway, Parental control, Control, Internet sharing ]
+date: 2021-05-19 00:02:00
 ---
 
 Here is how to assign a static IP address and a different hostname to an existing Debian 10 Buster minimal installation, how to disable the swap, when the server has enough memory for its purpose, and how to configure a second network interface, if this tutorial is executed to create a router between two networks, to distribute internet in your home or company, to protect your home private network against the internet, or to create a transparent parental control for your lovely teens.

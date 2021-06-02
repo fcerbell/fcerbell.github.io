@@ -4,6 +4,7 @@ title: Debian11, Serveur, Introduction
 description: Bien que Débian soit la meilleure distribution pour faire tourner un serveur, il faut la mettre à jour de temps en temps pour utiliser des technologies plus récentes. Je suis sur le point de migrer mon serveur agé de 8 ans de Debian 7 Wheezy à Debian 11 Bullseye, pour bénéficier d'un meilleur pare-feu, de Prometheus/Grafana à la place de Munin,... Voici la liste des procédures d'installations de base que j'utilise sur tous mes serveurs (sécurité, supervision, ...) et que je vais documenter dans les prochains articles.
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, Introduction, Base, Generique ]
+date: 2021-05-22 00:00:00
 ---
 Bien que Debian soit la meilleure distribution pour faire tourner un serveur, il faut la mettre à jour de temps en temps pour utiliser des technologies plus récentes. Je suis sur le point de migrer mon serveur agé de 8 ans de Debian 7 Wheezy à Debian 11 Bullseye, pour bénéficier d'un meilleur pare-feu, de Prometheus/Grafana à la place de Munin,... Voici la liste des procédures d'installations de base que j'utilise sur tous mes serveurs (sécurité, supervision, ...) et que je vais documenter dans les prochains articles.
 
