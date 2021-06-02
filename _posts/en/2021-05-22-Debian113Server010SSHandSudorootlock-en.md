@@ -44,3 +44,14 @@ Now, I can open direct passwordless connections to the named user and to the roo
 ```bash
 [ ! -z "${UN}" ] && passwd -l ${UN}
 ```
+
+# EMail alert
+I found this trick on [tutoriels-video][tutovideo] [^1], in French, and liked it. It automatically sends an email alert when someone connects to the server.
+```bash
+cat << EOF >> /etc/bash.bashrc
+echo \`who\` \`date\` | mail -s "shell connection on \`hostname\`" root
+EOF
+```
+
+[tutovideo]: https://www.tutoriels-video.fr/securiser-son-serveur-dedie-avec-iptables-fail2ban-et-rkhunter/
+[^1]: https://www.tutoriels-video.fr/securiser-son-serveur-dedie-avec-iptables-fail2ban-et-rkhunter/

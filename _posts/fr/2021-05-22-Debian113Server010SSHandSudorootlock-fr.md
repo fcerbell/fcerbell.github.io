@@ -48,3 +48,14 @@ désactiver le mot de passe de l'utilisateur et mettre les attaques par force br
 [ ! -z "${UN}" ] && passwd -l ${UN}
 ```
 **Pour les serveurs uniquement, ne surtout pas faire cela sur une station de travail, il deviendrait impossible de s'y connecter !**
+
+# Alerte par courriel
+J'ai trouvé cette astuce sur [tutoriels-video][tutovideo] [^1], en Français, et j'ai aimé. Elle envoie un courriel d'alerte lorsque quelqu'un se connecte au serveur.
+```bash
+cat << EOF >> /etc/bash.bashrc
+echo \`who\` \`date\` | mail -s "shell connection on \`hostname\`" root
+EOF
+```
+
+[tutovideo]: https://www.tutoriels-video.fr/securiser-son-serveur-dedie-avec-iptables-fail2ban-et-rkhunter/
+[^1]: https://www.tutoriels-video.fr/securiser-son-serveur-dedie-avec-iptables-fail2ban-et-rkhunter/
