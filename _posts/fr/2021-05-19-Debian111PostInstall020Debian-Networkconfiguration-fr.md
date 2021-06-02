@@ -107,9 +107,25 @@ sed -i 's/UUID.*swap/#&/' /etc/fstab
 swapoff -a
 ```
 
+
+# Désactivation d'IPv6
+Je ne désactive pas complètement IPv6, mais c'est possible, j'ai trouvé la commande sur [faqforge][faqforge] [^1]
+```bash
+echo 'net.ipv6.conf.all.disable_ipv6 = 1' > /etc/sysctl.d/90-disable-ipv6.conf
+sysctl -p -f /etc/sysctl.d/90-disable-ipv6.conf
+```
+
 # Test de la nouvelle configuration
 Vu les modifications, je préfère redémarrer le serveur pour tester la prise en compte de la configuration.
 ``` bash
 reboot
 ```
+
+# Supports et liens
+[FAQ-Forge][faqforge] [^1]
+
+# Notes de bas de page
+
+[faqforge]: https://www.faqforge.com/linux/how-to-disable-ipv6-on-debian-10/
+[^1]: https://www.faqforge.com/linux/how-to-disable-ipv6-on-debian-10/
 
