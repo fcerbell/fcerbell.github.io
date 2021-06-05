@@ -4,6 +4,7 @@ title: Debian11, Serveur, Tripwire pour détecter les compromissions
 description: Tripwire est un de mes outils de sécurité favoris, probablement un des plus efficaces. Comment l'installer et le configurer sur un serveur Linux Debian 11 Bullseye pour détecter une compromission et réagir rapidement. Il prend des empreintes sécurisées des fichiers dans le système et vérifie régulièrement qu'ils n'ont pas été modifiés.
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, HIDS, IDS, Intégrité, Intrusion, Pénétration, Sécurité, Tripwire ]
+published: false
 ---
 
 Tripwire est un de mes outils de sécurité favoris, probablement un des plus efficaces. Comment l'installer et le configurer sur un serveur Linux Debian 11 Bullseye pour détecter une compromission et réagir rapidement. Il prend des empreintes sécurisées des fichiers dans le système et vérifie régulièrement qu'ils n'ont pas été modifiés.
