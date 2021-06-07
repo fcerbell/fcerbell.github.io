@@ -4,7 +4,6 @@ title: Debian11, Serveur, Tripwire pour détecter les compromissions
 description: Tripwire est un de mes outils de sécurité favoris, probablement un des plus efficaces. Comment l'installer et le configurer sur un serveur Linux Debian 11 Bullseye pour détecter une compromission et réagir rapidement. Il prend des empreintes sécurisées des fichiers dans le système et vérifie régulièrement qu'ils n'ont pas été modifiés.
 category: Informatique
 tags: [ Debian11 Serveur, GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveur, Installation, HIDS, IDS, Intégrité, Intrusion, Pénétration, Sécurité, Tripwire ]
-published: false
 ---
 
 Tripwire est un de mes outils de sécurité favoris, probablement un des plus efficaces. Comment l'installer et le configurer sur un serveur Linux Debian 11 Bullseye pour détecter une compromission et réagir rapidement. Il prend des empreintes sécurisées des fichiers dans le système et vérifie régulièrement qu'ils n'ont pas été modifiés.
@@ -12,11 +11,17 @@ Tripwire est un de mes outils de sécurité favoris, probablement un des plus ef
 * TOC
 {:toc}
 
-# Tripwire presentation
-Tripwire is an amazing tool to check the system files against modifications. It takes a snapshot of the files, the permissions, ... and store this snapshot in a signed database. Then, it can scan the system, detect every single change occured to the monitored files and send an email report. It also protect his own configuration files, by signing them. It groups files by topic and apply check policies, depending on the file criticity. It is a real must on every server.
+# Présentation de Tripwire
+Tripwire est un outil extraordinaire pour rechercher les modifications de fichiers dans un système. Il prend
+une empreinte des fichiers, des permissions, ... et enregistre cet instantané dans une base de données signée.
+Ensuite, il peut scanner le système, détecter chaque modification intervenue sur les fichiers suivis et envoyer
+un rapport par courriel. Il protège également sa propre configuration en la signant. Il groupe les fichiers par
+sujet et applique des politiques de vérification différentes en fonction de la criticité des fichiers. C'est
+véritables un outil à installer sur chaque serveur.
 
-# Tripwire installation
-First, provide answers to the package questions to avoid interactive prompts and start the actual installation.
+# Installation
+Commençon par fournir les réponses aux questions du paquetage afin d'éviter des demandes interactives et
+demandons l'installtion de Tripwire.
 ```bash
 echo 'tripwire tripwire/installed string ""' | debconf-set-selections
 echo 'tripwire tripwire/rebuild-config boolean true' | debconf-set-selections
@@ -28,8 +33,10 @@ apt-get install -y tripwire
 
 # Configuration
 
-## Disable false positive checks
-I disable monitoring on some folder structures, including the `/root/` folder, but I force the check of some exceptions such as `/root/bashrc` and `/root/bash_history`. I also change the policy for the log files, because they can have an inode change when LogRotate rotates them.
+## Désactivation des faux positifs
+Je désactive la supervision de certaines structures de répertoires, incluant le répertoire `/root`, mais je
+force quand même quelques exceptions, telles que `/root/bashrc` ou `/root/bash_history`. Je modifie aussi la
+politique concernant les fichiers journaux car ils changent d'inode à chaque rotation faite par *logrotate*.
 ```bash
 sed -i 's~/etc/rc.boot~#&~' /etc/tripwire/twpol.txt
 sed -i 's~/root/~#&~' /etc/tripwire/twpol.txt
@@ -41,64 +48,81 @@ sed -i 's~#\(/root/.bash_history.*\)~\1~' /etc/tripwire/twpol.txt
 ```
 
 ## Notifications
-Use a mail command instead of a direct SMTP connection (there is currently no real MTA on the server)
+Configuration de la commande d'envoi de courriel à la place d'une connexion SMTP directe, car nous ne disposons
+pas d'un serveur de messagerie sur un serveur qui n'est pas supposé recevoir des courriels et les distribuer
+localement.
 ```bash
 sed -i 's~^MAILMETHOD.*=.*~MAILMETHOD =SENDMAIL~' /etc/tripwire/twcfg.txt
 echo 'MAILPROGRAM=/usr/sbin/sendmail -oi -t' >> /etc/tripwire/twcfg.txt
 echo 'GLOBALEMAIL = root' >> /etc/tripwire/twcfg.txt
 ```
 
-## Compile and sign the configuration file
-This step freezes the TripWire configuration file by compiling it and signing it with the *site-key*.
+## Compilation et signature de la configuration
+Cette étape verrouille la configuration de TripWire en la compilant et en la signant avec la clé de *site*.
+Ainsi, seul le propriétaire de cette clé peut modifier et faire appliquer une nouvelle configuration à
+TripWire.
 ```bash
 /usr/sbin/twadmin --create-cfgfile -S /etc/tripwire/site.key /etc/tripwire/twcfg.txt
 ```
 
-## Compile and sign the policies file
-This step protects the policy definition file by compiling it and signing it with the *site-key*.
+## Compilation et signature des politiques
+Comme pour la configuration, cette étape fige les politiques en les compilant et en les signant avec la clé de
+*site*. Il n'est donc pas possible de changer les politiques appliquées sans connaître cette clé.
 ```bash
 /usr/sbin/twadmin --create-polfile -S /etc/tripwire/site.key /etc/tripwire/twpol.txt
 ``` 
 
-## Initialize the database
-Let's ask TripWire to take a snapshot of the current system files status, write it in a database and sign the snapshot with the *local-key*.
+## Initialisation de la base
+Demandons à TripWire de prendre un instantané des empreintes des fichiers à superviser, puis de l'enregistrer
+dans sa base de données et de la signer avec la clé *locale*. Cette empreinte note l'état supposé normal des
+fichiers et ne peut pas être valablement modifiée sans disposer de la clé *locale*.
 ```bash
 /usr/sbin/tripwire --init
 ```
 
-# Test runs
+# Essais
 
-## Check and notify
+## Vérification et notification
 
-This asks TripWire to check that all the current system files were not changed against the defined policies. We should have very little (to no) change, as we just built the database. The results will be compiled in a report that will be written to the disk and sent by email. This is not only a check test, but also an email alert test.
+Demandons à TripWire de vérifier que tous les fichiers supervisés du système n'ont pas été modifiés selon leur
+politiques. Nous devrions avoir très peu de changements, voire aucun, car nous venons juste de prendre
+l'empreinte. Les résultats seront compilés dans un rapport qui sera écrit sur le disque et envoyé par courriel.
+Il s'agit à la fois d'un test de vérification et d'un test de notification.
 ```bash
 /usr/sbin/tripwire --check --email-report
 ```
 
 ![tripwirecheck.gif]({{ "/assets/posts/en/Debian113Server100Tripwiretodetectpenetration/6441ef38a45147cc94b30adc8601a661.gif" | relative_url }})
 
-## Update and sign the database according to the last check/report
-Once I receive an email alert from Tripwire informing me that there were unauthorized changes, I can investigate and finally *validate* the report and update the database according to the detected changes. This is also an administration command. Tripwire will ask for the *local-key* to update the database.
+## Mise à jour de la base avec le dernier rapport
+Lorsque je reçois un message d'alerte de TripWire m'informant de changements non autorisés, je peux enquêter et
+finallement *valider* le rapport en incorporant les modifications recensées dans la base de donnée. Cette
+commande est une de mes commandes d'administration. TripWire demandera la clé *locale* pour mettre a jour la
+base de données.
 ```bash
 /usr/sbin/tripwire --update -a -r /var/lib/tripwire/report/`ls -rt /var/lib/tripwire/report/ | tail -n 1`
 ```
 
-## Interactive update and sign
-
-When I make some system changes, such as an installation, a change in a configuration file, ... I already know that Tripwire will complain and I don't want to wait for the email report, thus I can acknowledge the changes immediately. This command triggers a check and opens the report in the text editor. In the report, every change is flagged as *normal* with `[x]`. I can reject some of them, and save/exit. Tripwire will ask for the *local-key* to update the database.
+## Mise à jour interactive de la base
+Suite à des changements volontaires dans le système, comme une installation ou une modification de
+configuration, je sais que TripWire va se plaindre et je n'ai pas envie d'attendre le rapport (ou de le
+forcer). Je peux donc immédiatement acquiter les modifications. Cette commande déclenche une vérification et
+ouvre le rapport dans un éditeur de texte. Chaque modification trouvée y est listée et elle est marquée d'une
+croix pour indiquer qu'il faut la valider. Je peux en rejeter certaines si je le souhaite, avant d'enregistrer
+le fichier. TripWire demandera la clé *locale* pour signer la base de données modifiée.
 ```bash
 tripwire --check --interactive --visual vi
 ```
 
 ![TripwireInteractiveUpdate.gif]({{ "/assets/posts/en/Debian113Server100Tripwiretodetectpenetration/589e99b15a494425b99d423ec9ab9974.gif" | relative_url }})
 
-# Materials and links
+# Supports et liens
 
 [zonewebmaster][zonewebmaster] [^1]
 
 [howtoforge][howtoforge] [^2]
 
-# Footnotes
+# Notes de base de page
 
 [zonewebmaster]: https://www1.zonewebmaster.eu/serveur-debian-securite:utilisation-tripwire
 [howtoforge]: https://www.howtoforge.com/tutorial/how-to-monitor-and-detect-modified-files-using-tripwire-on-ubuntu-1604/#step-configure-tripwire-policy-for-ubuntu-system
