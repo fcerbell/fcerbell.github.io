@@ -42,7 +42,7 @@ export DN="`domainname -d`" # Domain name
 export WAN_IF="`ip addr | grep 'en[po][0-9]\(s[0-9]\)\{0,1\}:.*state UP' | cut -d: -f2 | sed 's/ //' | head -n 1`" # External public network interface
 EOF
 source /root/config.env
-cat << EOF > /root/config.env
+cat << EOF >> /root/config.env
 export WAN_IP="`ip addr | grep "inet.*${WAN_IF}" | sed 's/.*inet \([0-9]\+.[0-9]\+.[0-9]\+.[0-9]\+\)\/[0-9]\+.*/\1/' | head -n 1`" # External public IP address
 export WAN_NM="`ip addr | grep "inet.*${WAN_IF}" | sed 's/.*inet [0-9]\+.[0-9]\+.[0-9]\+.[0-9]\+\/\([0-9]\+\).*/\1/' | head -n 1`" # External public netmask
 export WAN_GW="`ip route | grep default | sed 's/[^0-9]*\([0-9]\+.[0-9]\+.[0-9]\+.[0-9]\+\).*/\1/'`" # External public gateway/router
