@@ -88,7 +88,7 @@ l'invocation de `apt`.
 cat << EOF > /etc/update-motd.d/20-upgrades
 #!/bin/sh
 list=\`apt list --upgradable 2> /dev/null | grep 'upgradable'\`
-number=`echo -n $list | wc -l`
+number=\`echo -n $list | wc -l\`
 printf "Available updates : %s\\n" \$number
 if [ \$number -gt 0 ]; then
     printf "\\033[1;31mSystem needs %s updates\\033[0m\\n" \$number
