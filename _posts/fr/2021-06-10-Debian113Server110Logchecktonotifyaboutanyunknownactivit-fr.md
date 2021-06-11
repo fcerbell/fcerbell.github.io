@@ -110,20 +110,12 @@ Ces actions sont des opérations de maintenance normales automatiquement déclen
 préoccupe pas, du moment qu'elles fonctionnent ! ;)
 ```bash
 cat << EOF > /etc/logcheck/ignore.d.server/local-systemd
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: apt-daily.service: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: apt-daily-upgrade.service: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: apt-daily-upgrade.timer: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: apt-daily.timer: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: logrotate.service: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: man-db.service: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Started Daily man-db regeneration.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Started LSB: DHCP server.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Starting Daily man-db regeneration...$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Starting LSB: DHCP server...$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: systemd-tmpfiles-clean.service: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: systemd-update-utmp-runlevel.service: Succeeded.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Finished Cleanup of Temporary Directories.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Finished Online ext4 Metadata Check for All Filesystems.$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: [-/:. [:alnum:]]+: Succeeded.$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: [-/:. [:alnum:]]+: Succeeded.$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Started [-/:. [:alnum:]]+$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Created [-/:. [:alnum:]]+$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Starting [-/:. [:alnum:]]+$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ systemd\[1\]: Finished [-/:. [:alnum:]]+$
 EOF
 ```
 
