@@ -138,7 +138,8 @@ automatiquement ajustée si son appel prend trop de temps. C'est donc un message
 la période optimale soit trouvée (en fonction de la charge du système). Dans tous les cas, j'aurais bien
 d'autres problèmes si la fréquence et les valeurs de ce message étaient anormales et qu'il devienne utile. J'ai
 aussi regroupé dans ce fichier les filtrage des lignes normales concernant le démarrage de *fail2ban*, *dhcp*,
-*ntp* et *rsyslogd*.
+*ntp* et *rsyslogd*. *RKHunter* envoie déjà ses propres courriels de notification, inutile de dupliquer
+l'information.
 ```bash
 cat << EOF > /etc/logcheck/ignore.d.server/local-misc
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] perf: interrupt took too long \([[:digit:]]+ > [[:digit:]]+\), lowering kernel.perf_event_max_sample_rate to [[:digit:]]+$
@@ -146,6 +147,7 @@ cat << EOF > /etc/logcheck/ignore.d.server/local-misc
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ isc-dhcp-server\[[[:digit:]]+\]: Starting ISC DHCPv4 server: dhcpd.$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ ntpd\[[[:digit:]]+\]: configuration OK$ 
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rsyslogd:  \[origin software="rsyslogd" swVersion="8.1901.0" x-pid="[[:digit:]]+" x-info="https://www.rsyslog.com"\] rsyslogd was HUPed$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rkhunter: Please inspect this machine, because it may be infected.$ 
 EOF
 ```
 

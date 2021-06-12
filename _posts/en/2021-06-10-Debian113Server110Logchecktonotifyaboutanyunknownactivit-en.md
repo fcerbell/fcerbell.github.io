@@ -110,7 +110,7 @@ EOF
 
 ## Miscellaneous
 There is an audit procedure regularly triggered in the linux kernel to gather some metrics about performances. I has to be as transparent as possible, its trigger period is increased if the call takes too long. This is somehow a normal message, at least until the ideal period is found. Anyway, I would have other visible issues before this message could be useful.
-I also grouped here some log lines about *fail2ban*, *dhcp*, *ntpd* and *rsyslogd* normal behavior.
+I also grouped here some log lines about *fail2ban*, *dhcp*, *ntpd* and *rsyslogd* normal behavior.  *RKHunter* already sends emails by itself, no need to duplicate.
 ```bash
 cat << EOF > /etc/logcheck/ignore.d.server/local-misc
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] perf: interrupt took too long \([[:digit:]]+ > [[:digit:]]+\), lowering kernel.perf_event_max_sample_rate to [[:digit:]]+$
@@ -118,6 +118,7 @@ cat << EOF > /etc/logcheck/ignore.d.server/local-misc
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ isc-dhcp-server\[[[:digit:]]+\]: Starting ISC DHCPv4 server: dhcpd.$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ ntpd\[[[:digit:]]+\]: configuration OK$ 
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rsyslogd:  \[origin software="rsyslogd" swVersion="8.1901.0" x-pid="[[:digit:]]+" x-info="https://www.rsyslog.com"\] rsyslogd was HUPed$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rkhunter: Please inspect this machine, because it may be infected.$ 
 EOF
 ```
 
