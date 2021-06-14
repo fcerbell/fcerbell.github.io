@@ -59,9 +59,9 @@ IPTables still logs a lot of blocked connections. I don't want to be notified ab
 ```bash
 cat << EOF > /etc/logcheck/ignore.d.server/local-kernel
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[STEALTH\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[SYNSCAN\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$ 
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[CNSCAN\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$ 
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[GRSCAN\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$ 
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[SYNSCAN\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[CNSCAN\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[GRSCAN\] IN=[[:alnum:]]+ OUT= MAC=[[:alnum:]:]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:digit:]]+ PREC=0x[[:digit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ .*$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[INPUT\] IN=${WAN_IF} OUT= MAC=([[:xdigit:]]{2}:){13}[[:xdigit:]]{2} SRC=([0-9]{1,3}\.){3}[0-9]{1,3} DST=([0-9]{1,3}\.){3}255 LEN=164 TOS=0x00 PREC=0x00 TTL=64 ID=[[:digit:]]+ DF PROTO=UDP SPT=44752 DPT=6771 LEN=[[:digit:]]+$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[INPUT\] IN=${WAN_IF} OUT= MAC=([[:xdigit:]]{2}:){13}[[:xdigit:]]{2} SRC=([0-9]{1,3}\.){3}[0-9]{1,3} DST=([0-9]{1,3}\.){3}255 LEN=44 TOS=0x00 PREC=0x00 TTL=64 ID=[[:digit:]]+ DF PROTO=UDP SPT=8612 DPT=861[02] LEN=24$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] \[INPUT\] IN=${WAN_IF} OUT= MAC=([[:xdigit:]]{2}:){13}[[:xdigit:]]{2} SRC=([0-9]{1,3}\.){3}[0-9]{1,3} DST=255\.255\.255\.255 LEN=101 TOS=0x00 PREC=0x00 TTL=64 ID=[[:digit:]]+ DF PROTO=UDP SPT=[[:digit:]]+ DPT=161 LEN=81$
@@ -79,7 +79,7 @@ These lines are typical SSH connection failures. The connections were blocked, t
 ```bash
 cat << EOF > /etc/logcheck/ignore.d.server/local-ssh
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ sshd\[[[:digit:]]+\]: Received disconnect from [[:digit:].]+ port [[:digit:]]+.*\[preauth\]$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ sshd\[[[:digit:]]+\]: Disconnected from [[:digit:].]+ port [[:digit:]]+.*\[preauth\]$ 
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ sshd\[[[:digit:]]+\]: Disconnected from [[:digit:].]+ port [[:digit:]]+.*\[preauth\]$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ sshd\[[[:digit:]]+\]: Invalid user [_[:alnum:]]+ from [[:digit:].]+ port [[:digit:]]+$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ sshd\[[[:digit:]]+\]: Connection closed by [[:digit:].]+ port [[:digit:]:]+.*\[preauth\]$
 EOF
@@ -110,15 +110,15 @@ EOF
 
 ## Miscellaneous
 There is an audit procedure regularly triggered in the linux kernel to gather some metrics about performances. I has to be as transparent as possible, its trigger period is increased if the call takes too long. This is somehow a normal message, at least until the ideal period is found. Anyway, I would have other visible issues before this message could be useful.
-I also grouped here some log lines about *fail2ban*, *dhcp*, *ntpd* and *rsyslogd* normal behavior.  *RKHunter* already sends emails by itself, no need to duplicate.
+I also grouped here some log lines about *fail2ban*, *dhcp*, *ntpd*, *RKHunter* and *rsyslogd* normal behavior.  *RKHunter* already sends emails by itself, no need to duplicate.
 ```bash
 cat << EOF > /etc/logcheck/ignore.d.server/local-misc
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ kernel: \[[ [:digit:]]+\.[[:digit:]]+\] perf: interrupt took too long \([[:digit:]]+ > [[:digit:]]+\), lowering kernel.perf_event_max_sample_rate to [[:digit:]]+$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ fail2ban-server\[[[:digit:]]+\]: Server ready$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ isc-dhcp-server\[[[:digit:]]+\]: Starting ISC DHCPv4 server: dhcpd.$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ ntpd\[[[:digit:]]+\]: configuration OK$ 
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ ntpd\[[[:digit:]]+\]: configuration OK$
 ^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rsyslogd:  \[origin software="rsyslogd" swVersion="8.1901.0" x-pid="[[:digit:]]+" x-info="https://www.rsyslog.com"\] rsyslogd was HUPed$
-^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rkhunter: Please inspect this machine, because it may be infected.$ 
+^\w{3} [ :[:digit:]]{11} [-._[:alnum:]]+ rkhunter: Please inspect this machine, because it may be infected.$
 EOF
 ```
 
