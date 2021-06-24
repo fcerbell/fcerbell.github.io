@@ -4,6 +4,7 @@ title: Debian11, Serveur, LogWatch pour une analyse quotidienne des logs
 description: Alors que *LogCheck* est un outil bas-niveau d'extraction de lignes des journaux, *LogWatch* est un outil d'analyse quotidien de plus haut-niveau avec une agrégation renvoyant des statistiques comportementales et détectant des tendances, scans lents ou attaques lentes. Le courriel est plus court et consolidé. Je décris une configuration tres courte et basique dans cet article. C'est un des outils installés par défaut sur mes serveurs.
 category: Informatique
 tags: [ Debian11 Serveur, Debian GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Serveiur, Installation, Logwatch, Analyse agregée de logs, Résumé des Logs, Sécurité ]
+date: 2021-06-24 00:00:00
 ---
 Alors que *LogCheck* est un outil bas-niveau d'extraction de lignes des journaux, *LogWatch* est un outil d'analyse quotidien de plus haut-niveau avec une agrégation renvoyant des statistiques comportementales et détectant des tendances, scans lents ou attaques lentes. Le courriel est plus court et consolidé. Je décris une configuration tres courte et basique dans cet article. C'est un des outils installés par défaut sur mes serveurs.
 

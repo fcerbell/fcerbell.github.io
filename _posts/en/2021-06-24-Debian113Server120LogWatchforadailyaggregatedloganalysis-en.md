@@ -4,6 +4,7 @@ title: Debian11, Server, LogWatch for a daily aggregated log analysis
 description: Whereas LogCheck is low level and hourly log lines extractions, LogWatch is higher level daily log analysis with aggregation to have behavior statistics and detect trends, slow scans or slow attacks. The email reports are shorter and consolidated. This is a very short basic default installation documentation blog post. Part of my default server installation.
 category: Computers
 tags: [ Debian11 Server, Debian GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation, Logwatch, Analysis, Aggregated log analysis, Log Summary, Security ]
+date: 2021-06-24 00:00:00
 ---
 
 Whereas LogCheck is low level and hourly log lines extractions, LogWatch is higher level daily log analysis with aggregation to have behavior statistics and detect trends, slow scans or slow attacks. The email reports are shorter and consolidated. This is a very short basic default installation documentation blog post. Part of my default server installation.
