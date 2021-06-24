@@ -73,7 +73,7 @@ fi
 echo ${JEKYLLPATH}
 
 echo -n "Jekyll post filename generation... "
-JEKYLLFILE="`date +"%Y-%m-%d"`-${JEKYLLUID}-en.md"
+JEKYLLFILE="`date +"%F"`-${JEKYLLUID}-en.md"
 echo "${JEKYLLFILE}"
 
 echo -n "Jekyll assets dirname generation... "
@@ -89,6 +89,7 @@ title: ${JEKYLLTITLE}
 description: 
 category: Computers
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
+date: `date +"%F %T %:z"`
 published: false
 ---
 EOF
@@ -105,5 +106,7 @@ for i in `grep '../../_resources/' "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"`; d
     sed -i "s~../../_resources/$res~{{ \"/${JEKYLLASSETS}$res\" | relative_url }}~g" "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
 done
 
+# Waits 2 seconds to ensure unique date-time timestamps in case of batch processing
+sleep 2
 exit
 
