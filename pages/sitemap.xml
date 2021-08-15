@@ -24,4 +24,3 @@ https://jekyllrb.com/tutorials/convert-site-to-jekyll/
     </url>
     {%- endfor %}
 </urlset>
-
