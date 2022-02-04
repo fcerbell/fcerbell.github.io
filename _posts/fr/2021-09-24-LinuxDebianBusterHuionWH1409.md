@@ -53,7 +53,7 @@ configuration et de latence).
 
 Avec tous ces critères, il y a évidemment mon bonheur dans la marque *[Wacom][Wacom_site]*, mais je me suis fixé un
 budget de 100€ max. Il reste donc principalement les *[XP-Pen][XP-Pen_site]*, *[Huion][Huion_site]* et *[Gaomon][Gaomon_site]*. Après quelques
-recherches, lectures d'avis et d'articles. Principalement celui de [David Revoy][David Revoy_site], artiste
+recherches, lectures d'avis et d'articles. Principalement celui de [David Revoy][DavidRevoy_site], artiste
 professionel avec une configuration similaire à la mienne, je me suis orienté sur le modèle *[WH1409][WH1409_site]* de
 chez *[Huion][Huion_site]*.
 
