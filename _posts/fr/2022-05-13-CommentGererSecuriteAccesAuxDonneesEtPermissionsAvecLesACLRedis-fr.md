@@ -348,7 +348,7 @@ Redis est ajoutée pour servir de bus de message PubSub entre tous les
 microservices.... Un cauchemard à maintenir, mais Redis peut aussi gérer ce type
 de situation avec une gestion par role (RBAC) décrite dans le prochain épisode.
 
-![25.png](../{{ "/assets/posts/en/Howtomanagesecuritydataaccessandpermi/1b7c88cad8e84c62957c4d4573fe66df.png" | relative_url }})
+![25.png](../{{ "/assets/posts/en/Howtomanagesecuritydataaccessandpermi/83deb6b770204890a5a980121e3a3dfe.png" | relative_url }})
 
 # Supports et liens
 
