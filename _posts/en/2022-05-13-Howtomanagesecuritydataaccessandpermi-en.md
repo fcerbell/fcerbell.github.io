@@ -61,10 +61,11 @@ TLS, otherwise, the passwords can be intercepted.
 An ACL, for access control list, is an ordered list of rules or ACE, for access
 control entries. Each rule can grant or revoke permissions on Redis commands,
 Redis key patterns or Redis channels to a named account, potentially protected
-by a password. Let's see how to define ACLs.  ```
-
+by a password. Let's see how to define ACLs.
+```
 acl setuser <account> [rulelist]
 ```
+
 ![Capture d’écran_2022-05-11_16-59-29.png](../{{ "/assets/posts/en/Howtomanagesecuritydataaccessandpermi/663e944fc6b0482ca4000a55e5242b31.png" | relative_url }})
 
 ![Capture d’écran_2022-05-11_16-59-47.png](../{{ "/assets/posts/en/Howtomanagesecuritydataaccessandpermi/682363d73c9b4f018161ed40284a812d.png" | relative_url }})
