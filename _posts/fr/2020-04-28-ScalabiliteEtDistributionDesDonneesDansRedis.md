@@ -1,7 +1,7 @@
 ---
 uid: redisdatascalabilityanddistribution
 title: Redis 06 - Distribution et flexibilité du stockage des données
-description:
+description: Cette partie décrit comment distribuer les données pour obtenir un redimensionnement horizontal avec des performances linéaires et comment ce redimensionnement est implémenté dans Redis et Redis Entreprise. La distribution des requêtes sera traitée dans la partie suivante.
 category: Redis en 5 minutes
 tags: [ Redis,  Redislabs, Scalabilité, Données, Cluster, Distribution, Sharding, Performances, Prédictible, Requêtes, hash, hashslots, hashtags, hash-slot, hash-tags, Entreprise, Redis Entreprise, Communautaire, Redimmensionnement ]
 ---

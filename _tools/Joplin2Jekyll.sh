@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: Better UID generation
+# TODO: Postfix JekyllFile with actual language guessed from output path
+#
+
 if [ $# -lt 2 ]; then
     echo usage : $0 \<JoplinNote.md\> \<JekyllPostDir\>
     exit 1
@@ -38,7 +42,7 @@ fi
 echo ${JOPLINFILE}
 
 echo -n "Page UID generation (Francois specific)..."
-JEKYLLUID=`echo "${JOPLINPATH}${JOPLINFILE}" | sed 's~ ~~g;s~/\([[:digit:]]*\)[- ]*~\1~g;s~^\([-[:alnum:]]\+\).*~\1~'`
+JEKYLLUID=`echo "${JOPLINPATH}${JOPLINFILE}" | sed 's~[-_ ,]~~g;s~/\([[:digit:]]*\)[- ]*~\1~g;s~^\([-[:alnum:]]\+\).*~\1~'`
 JEKYLLUID=`echo "${JEKYLLUID}" | sed 's~^Installation~Debian11~'`
 echo "${JEKYLLUID}"
 
@@ -73,7 +77,8 @@ fi
 echo ${JEKYLLPATH}
 
 echo -n "Jekyll post filename generation... "
-JEKYLLFILE="`date +"%F"`-${JEKYLLUID}-en.md"
+JEKYLLLANG=`echo ${JEKYLLPATH} | sed 's~.*/\(..\)/$~\1~'`
+JEKYLLFILE="`date +"%F"`-${JEKYLLUID}-${JEKYLLLANG}.md"
 echo "${JEKYLLFILE}"
 
 echo -n "Jekyll assets dirname generation... "
@@ -90,19 +95,23 @@ description:
 category: Computers
 tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
 date: `date +"%F %T %:z"`
-published: false
+published: true
 ---
 EOF
 tail -n +2 "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}" | sed 's~^\[toc\]~* TOC\n{:toc}~;s~{{~{% raw %}{{{% endraw %}~g' >> "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
-rm "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}"
+#rm "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}"
 echo OK
 
 echo -n "Migrating resources from ${JOPLINBASE}/_resources to ${JEKYLLBASE}${JEKYLLASSETS} and updating the post links"
 mkdir -p ${JEKYLLBASE}${JEKYLLASSETS}
+IFS=$'\n'
 for i in `grep '../../_resources/' "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"`; do
+    echo $i
     res=`echo "$i" | sed 's~!\?\[.*\](\([^)]\+\))~\1~'`
+    echo $res
     res=`basename "${res}"`
-    mv "${JOPLINBASE}_resources/$res" "${JEKYLLBASE}${JEKYLLASSETS}"
+    echo $res
+    cp "${JOPLINBASE}_resources/$res" "${JEKYLLBASE}${JEKYLLASSETS}"
     sed -i "s~../../_resources/$res~{{ \"/${JEKYLLASSETS}$res\" | relative_url }}~g" "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
 done
 

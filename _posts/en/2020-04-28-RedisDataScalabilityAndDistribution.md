@@ -1,7 +1,7 @@
 ---
 uid: redisdatascalabilityanddistribution
 title: Redis 06 - Data scalability and distribution
-description:
+description: This part describes how to distribute data to achieve horizontal scalability with linear performances and how this scalability is implemented in Redis and Redis Enterprise. The query execution distribution will be explained in the next part.
 category: Redis in 5 minutes
 tags: [ Redis,  Redislabs, Scalability, Data, Cluster, Distribution, Sharding, Performances, Linear performances, Predictable performances, Query, hash, hashslots, hashtags, hash-slot, hash-tags, Enterprise, Redis Enterprise, Community, Redis community ]
 ---
