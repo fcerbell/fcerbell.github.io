@@ -7,6 +7,8 @@ tags: [ Redis, Base de données, Accès aux données, Contrôle d'accès, Authen
 date: 2022-05-13 16:58:06 +02:00
 ---
 
+Comment sécuriser Redis avec des identifiants et mots de passe pour l'authentification et avec des ACL pour l'accès aux commandes et aux données. Introduction, explication et démo des ACL de Redis.
+
 Vous pouvez trouver des liens vers les enregistrements vidéo et les supports
 imprimables associés à la <a href="#supports-et-liens">fin de cet article</a>.
 

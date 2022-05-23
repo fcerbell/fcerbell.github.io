@@ -7,6 +7,8 @@ tags: [ Redis, Database, Data-access, Access control, Authentication, Authorizat
 date: 2022-05-13 16:59:00 +02:00
 ---
 
+How to secure Redis with accounts and passwords for authentication and with access control lists for commands and data permissions. Introduction, explanation and demonstration of what are ACLs in Redis.
+
 You can find links to the related video recordings and printable materials at
 the <a href="#materials-and-links">end of this post</a>.
 
