@@ -5,7 +5,6 @@ description: How Redis Enterprise's role based access control (RBAC) works and c
 category: Redis in 5 minutes
 tags: [ Redis, Authentication, Authorizations, Permissions, Roles, ACL, RBAC, Access Control, Security, Administration, Security groups, Groups, REST API, REST, API ]
 date: 2022-05-28 16:07:52 +02:00
-published: false
 ---
 
 How Redis Enterprise's role based access control (RBAC) works and can be used to improve the security and industrialize Redis ACL for authentication and authorizations on data and commands at scale ?

@@ -5,7 +5,6 @@ description:
 category: Redis en 5 minutes
 tags: [ Redis, Authentification, Autorisations, Permissions, Rôles, ACL, RBAC, Contrôle d'accès, Accès, Sécurité, Administration, Groupes de sécurité, REST, API REST ]
 date: 2022-05-28 16:07:52 +02:00
-published: false
 ---
 
 Les ACL Redis peuvent authentifier un compte et accorder des permissions sur les données et les commandes dans une base Redis. Comment utiliser le contrôle d'accès basé sur les roles (RBAC) pour gérer des groupes avec des permissions similaires sur différentes bases. Démo incluse.
