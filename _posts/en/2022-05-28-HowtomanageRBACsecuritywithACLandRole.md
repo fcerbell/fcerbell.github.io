@@ -16,12 +16,13 @@ the <a href="#materials-and-links">end of this post</a>.
 * TOC
 {:toc}
 
-# Video with explanation and demo
+# Explanation and demo video
 
 <center><iframe width="420" height="315" src="https://www.youtube.com/embed/eeJu15azF2Y" frameborder="0" allowfullscreen></iframe></center>
 
 # Prepare the environment
-
+You can use official Redis Enterprise docker containers from docker hub to
+reproduce the demonstration or practice.
 ```bash 
 # Start Redis Enterprise
 docker run -d --cap-add sys_resource --name redisenterprise -p 8443:8443 -p 9443:9443 -p 12000:12000 -p 12001:12001 -p 12002:12002 redislabs/redis
@@ -34,19 +35,20 @@ sleep 15
 
 # Prerequisites
 This contents assume that you already know what are Redis ACL. If you did you watch it previously, I recommend that you watch the [How to manage security, data-access and permissions with Redis ACL][RedisACLs] contents before this one. If you want to reproduce the following steps by yourself, you need to install *docker*, *curl* and *jq*. The commands are not purely POSIX shell compliant and need some *bash* extensions.
+
 ![8a37ebdcb286aa6ce72cc6da0b92a6e3.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/2a2fa48640b942fe9774a5134706509b.png" | relative_url }})
 
 # A security and compliance issue
 Redis is used in nearly every company in the world. The data access control is critical to ensure the data security and to respect the compliance rules such as GDPR. Each incoming connection needs to be authenticated and potentially granted permissions on available databases, commands and data.
 
 Lets imagine that you have three databases :
-- an orders database to store orders and order lines ;
-- a products database to store the product catalog and the product availability in stocks ;
-- a messaging database used as a message bus to communicate between all microservices with PubSub.
+- an *orders* database to store orders and order lines ;
+- a *products* database to store the product catalog and the product availability in stocks ;
+- a *messaging* database used as a message bus to communicate between all microservices with Redis PubSub.
 
-Lets imagine that you have two microservices :
-- One microservice to manage orders in the orders database, with two endpoints : *orders-update* to create and update orders, and *orders-invoice* to generate invoices.
-- The other microservice to manage the product catalog with two endpoints, *products-update* to update products and *products-stocks* to check a product availability. 
+Two microservices :
+- One microservice to manage orders in the *orders* database, with two endpoints : *orders-update* to create and update orders (read-write), and *orders-invoice* to generate invoices (read-only), they also need a read-write and read-only access to the messaging database.
+- The other microservice to manage the product catalog with two endpoints, *products-update* to update products and *products-stocks* to check a product availability. They also need a read-write and a read-only access to the messaging database.
 
 There are also people :
 - one administrator, *Angélina* who should not access the data
@@ -83,6 +85,7 @@ Redis Enterprise Roles can be compared to groups or profiles. A role grants perm
 
 ## Create databases
 You can create them with the web admin interface
+
 ![63fda6e9a28eb76aa3b8e2cb10ee20cf.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/99399910140d46b9967ec98f07929790.png" | relative_url }})
 
 or with the REST API
@@ -135,6 +138,7 @@ DBCreate messaging 102400 '"port":12002'
 ![Slides - 21.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c4ccd935d0e34c77ba1a1724acb7da67.png" | relative_url }})
 
 The accounts can be created with the web interface
+
 ![042a8e64dd6614bb6e49cda533d47d3c.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/bf77c709def54075893f98fac7c9cb93.png" | relative_url }})
 
 ```bash
@@ -267,8 +271,6 @@ The Redis Enterprise cluster can grant cluster permissions to roles and each Red
 
 ![Slides - 37.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c8fcce7107544143aabe8961df5d81f2.png" | relative_url }})
 
-
-
 The cluster permissions are directly and globally assigned to the role, let's create them with the web administration interface first
 
 ![8a955640a7a961d3711421362b961106.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/4bf886dcade44b0690827960315ed156.png" | relative_url }})
@@ -318,8 +320,6 @@ RoleCreate "Products-DEV" "db_viewer"
 ## Map ACLs to roles in each database
 
 ![Slides - 46.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c803f2fbde2048a4bf8580475bb6d083.png" | relative_url }})
-
-
 
 The Web administration interface makes some convenience abstractions to map ACLs to Roles for each database under the unified *roles* page. 
 
@@ -464,6 +464,7 @@ UserSetRole "Denis" "Products-DEV"
 ```
 
 ![92f044d3fd65d8913a40db2ef937c635.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/91b2ee3c797d4955ae1fea2d7a90fa32.png" | relative_url }})
+
 ![6e3439daadf1b1b4888ce041d164ca9d.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6ba50c6b5e4541689ecc0222c03c887b.png" | relative_url }})
 
 # Permissions tests
@@ -530,9 +531,11 @@ chmod +x RBAC-tests.sh
 ```
 
 For *orders-update*
+
 ![66ed1a36882f850e4769c9c66f1e54b8.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6c237af6bc414f9fae13cea181372a4e.png" | relative_url }})
 
 For *orders-invoice*
+
 ![b16b1b38b04b311c2a79eb3b385181e8.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/66581cbe080044fda397887dc1e5ecd9.png" | relative_url }})
 
 and so on, you can execute it yourself with the code available in my blog or zoom on my results.

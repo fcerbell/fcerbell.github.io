@@ -39,7 +39,7 @@ Ce contenu suppose que vous connaissez déjà les ACLs Redis. Si vous ne l'avez 
 Redis est utilisé dans presque toutes les entreprises dans le monde. Le contrôle d'accès aux données est critique pour assurer la sécurité des données et pour respecter la conformité aux règles comme RGPD (GDPR). Chaque connexion entrante doit être authentifiée et doit potentiellement reçevoir des permissions ou privilèges sur les bases disponibles, les commandes à exécuter et les données.
 
 Imaginons que nous disposions de trois bases :
-- une base *orders* pour y enregistrer kes commandes et les lignes de commandes ;
+- une base *orders* pour y enregistrer les commandes et les lignes de commandes ;
 - une base *products* pour enregistrer le catalogue des produits et leur
   quantité restante en stocks ;
 - une base *messaging* servant de bus de communication entre les microservices à
@@ -50,11 +50,14 @@ Ajoutons à cela deux microservices, chacun ayant deux points de connexion
 - un microservice pour gérer les commandes dans la base *orders*, avec deux
   points de connexion : *orders-update* pour créer et modifier les commandes,
   nécessitant des permissions de lecture et d'écriture, et *orders-invoice*,
-  pour générer les factures, avec des permissions en lecture seule ;
+  pour générer les factures, avec des permissions en lecture seule. Ils doivent
+  aussi accéder à la base servant de bus de communication respectivement en
+  lecture-écriture et en lecture-seule ;
 - l'autre microservice se charge de la gestion du catalogue produit et des
   stocks, avec deux points de connexion : *products-update* pour mettre le
   catalogue et les quantités à jour, et *products-stocks* pour vérifier la
-  disponibilité d'un produit.
+  disponibilité d'un produit. Ils doivent aussi accéder à la base servant de bus
+  de communication respectivement en lecture-écriture et en lecture-seule.
 
 Puis, il y a les personnes :
 - un administrateur, *Angélina*, qui n'a pas besoin d'accéder aux données ;
