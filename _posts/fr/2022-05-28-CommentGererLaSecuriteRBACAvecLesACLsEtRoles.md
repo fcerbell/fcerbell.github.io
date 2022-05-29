@@ -32,64 +32,105 @@ sleep 15
 ```
 
 # Prérequis
-Ce contenu suppose que vous connaissez déjà les ACLs Redis. Si vous ne l'avez
-pas déjà vu, je vous recommende de regarder le contenu sur les
-[ACLs Redis]({% post_url 2022-05-13-CommentGererSecuriteAccesAuxDonneesEtPermissionsAvecLesACLRedis-fr %})
-avant celui-ci. Si vous voulez reproduire la démonstration, vous aurez besoin de
-*docker*, *curl* et *jq*. Les commandes ne sont pas en pur shell POSIX mais font
-aussi appel à des extensions *bash*.
-![8a37ebdcb286aa6ce72cc6da0b92a6e3.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/2a2fa48640b942fe9774a5134706509b.png" | relative_url }})
+Ce contenu suppose que vous connaissez déjà les ACLs Redis. Si vous ne l'avez pas déjà vu, je vous recommende de regarder le contenu sur [Comment gérer sécurité, accès aux données et permissions avec les ACL de Redis][RedisACLs] avant celui-ci. Si vous voulez reproduire la démonstration, vous aurez besoin de *docker*, *curl* et *jq*. Les commandes ne sont pas en pur shell POSIX mais font aussi appel à des extensions *bash*.
+![2022-05-28_20-23.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/2022-05-28_20-23.png" | relative_url }})
 
-# Problème de sécurité
-Redis is used in nearly every company in the world. The data access control is critical to ensure the data security and to respect the compliance rules such as GDPR. Each incoming connection needs to be authenticated and potentially granted permissions on available databases, commands and data.
+# Un problème de sécurité et de conformité
+Redis est utilisé dans presque toutes les entreprises dans le monde. Le contrôle d'accès aux données est critique pour assurer la sécurité des données et pour respecter la conformité aux règles comme RGPD (GDPR). Chaque connexion entrante doit être authentifiée et doit potentiellement reçevoir des permissions ou privilèges sur les bases disponibles, les commandes à exécuter et les données.
 
-Lets imagine that you have three databases :
-- an orders database to store orders and order lines ;
-- a products database to store the product catalog and the product availability in stocks ;
-- a messaging database used as a message bus to communicate between all microservices with PubSub.
+Imaginons que nous disposions de trois bases :
+- une base *orders* pour y enregistrer kes commandes et les lignes de commandes ;
+- une base *products* pour enregistrer le catalogue des produits et leur
+  quantité restante en stocks ;
+- une base *messaging* servant de bus de communication entre les microservices à
+  l'aide des fonctionalités PubSub de Redis.
 
-Lets imagine that you have two microservices :
-- One microservice to manage orders in the orders database, with two endpoints : *orders-update* to create and update orders, and *orders-invoice* to generate invoices.
-- The other microservice to manage the product catalog with two endpoints, *products-update* to update products and *products-stocks* to check a product availability. 
+Ajoutons à cela deux microservices, chacun ayant deux points de connexion
+(endpoints) :
+- un microservice pour gérer les commandes dans la base *orders*, avec deux
+  points de connexion : *orders-update* pour créer et modifier les commandes,
+  nécessitant des permissions de lecture et d'écriture, et *orders-invoice*,
+  pour générer les factures, avec des permissions en lecture seule ;
+- l'autre microservice se charge de la gestion du catalogue produit et des
+  stocks, avec deux points de connexion : *products-update* pour mettre le
+  catalogue et les quantités à jour, et *products-stocks* pour vérifier la
+  disponibilité d'un produit.
 
-There are also people :
-- one administrator, *Angélina* who should not access the data
-- two project managers, *Paul* for the orders management, and *Pierre* for the product catalog. They need to access the logs, the database configuration, the monitoring and to change their projects data.
-- one developer *David*, working both on the *orders* project microservice and on the *products* microservice, and one developer *Denis*, working on the *products* project microservice only. Each of them need a limited access to the monitoring and to read data from the database, and they both need to see the messages in the *messaging* database.
+Puis, il y a les personnes :
+- un administrateur, *Angélina*, qui n'a pas besoin d'accéder aux données ;
+- deux chefs de projet, *Paul* pour le projet *orders* et *Pierre*, pour le
+  projet *products*. Ils doivent pouvoir accéder aux données de leur projet en
+  lecture et écriture pour les modifier, ainsi qu'au bus de messages. Ils
+  doivent accéder aux journaux, à la configuration des bases et à la supervision
+  ;
+- deux développeurs, *David*, travaillant sur le projet *orders* avec un accès
+  en lecture seule sur les données, et *Denis*, travaillant sur le projet
+  *products*.  Ils doivent aussi avoir un accès en lecture seule sur le bus de
+  communication PubSub Redis. Ils doivent avoir accès à la supervision des
+  bases.
 
-This is a fairly simple example compared to real enterprise needs. The permissions are easy to implement, but not to scale if you have several projects, several profiles such as developers, managers, architects, administrators, and several databases. Security with ACL administration quickly becomes a nightmare and needs to be industrialized and automated. Lets see how Redis Enterprise manage this example.
+C'est un exemple relativement simple, comparé aux besoins des entreprises dans
+la vraie vie. Les permissions sont simples à mettre en place, mais pas à
+maintenir ou à faire passer à l'échelle si vous avez plusieurs projets, profiles
+(développeurs, managers, chefs de projets, architectes, administrateurs) et
+bases de données. L'administration de la sécurité avec les ACL Redis peut
+rapidement devenir un cauchemard et doit être industrialisée et automatisée.
+Voyons comment Redis Entreprise peut gérer cet exemple.
 
-# Simple Redis ACLs limits
-Despite Redis is widely known and used by developers as a database, the security belongs to Ops who are not always aware of the security features. Since version 6, Redis includes authentication by username and data access authorizations with Access Control Lists (ACL). 
+# Limites des ACL Redis
+Bien que Redis soit largement connu et utilisé par les développeurs comme base
+de données, la gestion de la sécurité dépend des ops qui ne sont pas toujours au
+courant des fonctionnalités de sécurité de Redis. Depuis la version 6, Redis
+inclut l'authentification par identifiant et la gestion des autorisations 
+d'accès aux données par des ACL, Access Control Lists, listes de contrôle
+d'accès.
 
-Ok, lets have a look at their needed permissions, on the cluster and databases. We potentially need to create the users in each database.
+Regardons quelles sont les permissions nécessaires, tant sur le cluster que sur
+les bases. Il faudra potentiellement créer manuellement les utilisateurs dans
+chaque base de données.
 
-| Account         | Cluster  | Orders DB                                  | Products DB                                | Messaging DB                               |
+| Compte          | Cluster  | Base "orders"                              | Base "products"                            | Base "messaging"                           |
 |:----------------|:---------|:-------------------------------------------|:-------------------------------------------|:-------------------------------------------|
-| orders-update   | None     | -@all +@hash +@list -@dangerous ~*         | None                                       | -@all +@publish +@subscribe -@dangerous ~* |
-| orders-invoice  | None     | -@all +@hash +@list -@dangerous -@write ~* | None                                       | -@all +@subscribe -@dangerous ~*           |
-| products-update | None     | None                                       | -@all +@hash +@list -@dangerous ~*         | -@all +@publish +@subscribe -@dangerous ~* |
-| products-stocks | None     | None                                       | -@all +@hash +@list -@dangerous -@write ~* | -@all +@subscribe -@dangerous ~*           |
-| Angélina        | Full     | -@all +@admin +@dangerous                  | -@all +@admin +@dangerous                  | -@all +@admin +@dangerous                  |
-| Paul            | Database | -@all +@hash +@list -@dangerous ~*         | None                                       | -@all +@publish +@subscribe -@dangerous ~* |
-| Pierre          | Database | None                                       | -@all +@hash +@list -@dangerous ~*         | -@all +@publish +@subscribe -@dangerous ~* |
-| David           | Monitor  | -@all +@hash +@list -@dangerous -@write ~* | None                                       | -@all +@subscribe -@dangerous ~*           |
-| Denis           | Monitor  | None                                       | -@all +@hash +@list -@dangerous -@write ~* | -@all +@subscribe -@dangerous ~*           |
+| orders-update   | Aucune   | -@all +@hash +@list -@dangerous ~*         | Aucune                                     | -@all +@publish +@subscribe -@dangerous ~* |
+| orders-invoice  | Aucune   | -@all +@hash +@list -@dangerous -@write ~* | Aucune                                     | -@all +@subscribe -@dangerous ~*           |
+| products-update | Aucune   | Aucune                                     | -@all +@hash +@list -@dangerous ~*         | -@all +@publish +@subscribe -@dangerous ~* |
+| products-stocks | Aucune   | Aucune                                     | -@all +@hash +@list -@dangerous -@write ~* | -@all +@subscribe -@dangerous ~*           |
+| Angélina        | Totale   | -@all +@admin +@dangerous                  | -@all +@admin +@dangerous                  | -@all +@admin +@dangerous                  |
+| Paul            | Base     | -@all +@hash +@list -@dangerous ~*         | Aucune                                     | -@all +@publish +@subscribe -@dangerous ~* |
+| Pierre          | Base     | Aucune                                     | -@all +@hash +@list -@dangerous ~*         | -@all +@publish +@subscribe -@dangerous ~* |
+| David           | Superv.  | -@all +@hash +@list -@dangerous -@write ~* | Aucune                                     | -@all +@subscribe -@dangerous ~*           |
+| Denis           | Superv.  | Aucune                                     | -@all +@hash +@list -@dangerous -@write ~* | -@all +@subscribe -@dangerous ~*           |
 
 ![Slides - 11.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/fc3c0eaa42084fcb8a56b7ff628e3cc0.png" | relative_url }})
 
-You would have to connect to each database, create all the accounts with a password, then to create the ACLs individually. a project needs to change the ACL, it needs to be changed for all the relevant users in each database, individually. What a pain to maintain when a new developer join or leave one or several projects, when new projects are created, when projects need access to different datastructures ... Let's try to factorize these. 
+Avec les ACL Redis, sans les rôles, il faut créer chaque compte dans chaque base
+de donnée, avec un mot de passe, puis créer les ACLs individuellement. Si un
+projet doit changer de permissions, elles doivent être mises à jour
+individuellement dans chaque compte de chaque base. Quelle complexité lorsque
+les les projets changent les structures de données auxquelles ils doivent
+accéder. Essayons de factoriser tout cela.
 
-# Implementing roles with Redis Enterprise
-On top of ACLs, Redis Enterprise implemented TLS mutual authentication and Roles Based Access Control (RBAC) to make the ACL management more efficient and more scalable with multiple databases. What are the best practices on how to implement authentication, ACLs and roles in Redis Enterprise, and what can be easily achieved with them ?
+# Mise en place
+Au-delà des ACLs, Redis Enterprise implémente une authentification mutuelle par
+TLS et un contrôle d'accès par role (RBAC) pour rendre la gestion des ACLs plus
+efficace et plus scalable au moment de gérer plusieurs projets avec de
+nombreuses personnes et plusieurs bases. Quelles sont les meilleurs pratiques
+pour implémenter l'authentification, les ACLs et les rôles dans Redis Enterprise
+? Que peut on attendre de Redis Enterprise ?
 
-Redis Enterprise Roles can be compared to groups or profiles. A role grants permissions globally on the Redis enterprise cluster and apply specific ACLs on each database. It creates the accounts and configure the ACL automatically in each relevant database.
+Les rôles de Redis Enterprise peuvent être comparés à des groupes ou des
+profiles. Un rôle accorde des permissions globalement sur le cluster Redis
+Enterprise et des ACLs ciblées sur chacune des bases. Il créée et configure des
+comptes et des ACLs automatiquement dans chaque base.
 
-## Create databases
-You can create them with the web admin interface
+Dans chaque base, on peut définir les ACLs à appliquer aux comptes en fonction
+de leur rôle.
+
+## Création des bases
+On peut créer des bases manuellement dans l'interface web
 ![63fda6e9a28eb76aa3b8e2cb10ee20cf.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/99399910140d46b9967ec98f07929790.png" | relative_url }})
 
-or with the REST API
+ou automatiquement, par script, grâce à l'API REST.
 
 ```bash
 function DBCreate {
@@ -134,12 +175,16 @@ DBCreate messaging 102400 '"port":12002'
 
 ![4a40e838816d27249fe710aafb86a5eb.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/deee53833c1e495298fc5b2f2573cc8d.png" | relative_url }})
 
-## Create the accounts
+## Création des comptes
 
 ![Slides - 21.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c4ccd935d0e34c77ba1a1724acb7da67.png" | relative_url }})
 
-The accounts can be created with the web interface
+Encore une fois, les comptes peuvent être créés manuellement dans l'interface
+web d'administration :
+
 ![042a8e64dd6614bb6e49cda533d47d3c.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/bf77c709def54075893f98fac7c9cb93.png" | relative_url }})
+
+ou de manière automatisée, grâce à l'API REST de gestion du cluster.
 
 ```bash
 function UserCreate {
@@ -175,7 +220,7 @@ function UserDelete {
 }
 
 
-# Users
+# Comptes
 for u in orders-update orders-invoice products-update products-stocks Angelina Paul Pierre David Denis; do
   UserCreate "${u}" "${u}@example.org" "${u}"
 done
@@ -183,12 +228,21 @@ done
 
 ![35fd63152d9c443af3f9feea097d8774.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/7f38a122aff04a848a4968501a6daf64.png" | relative_url }})
 
+Au final, le résultat est identique :
+
 ![7c54e3641f547d765a48d8a78c43132f.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/67e9b5f97c254476bdb0e756e082aa8c.png" | relative_url }})
 
-## Create the ACL
-We can easily identify five distinct ACL : read-write access or read-only access to data, publish-subscribe or subscribe-only access to channels, and database administration.
+## Création des ACLs
+On peut facilement identifier cinq ACLs distinctes :
+- Accès en lecture-écriture sur les données ;
+- Accès en lecture seule sur les données ;
+- Accès en consultation-publication sur des channels de communication ;
+- Accès en consultation seule sur les channels de communication ;
+- Accès aux commandes d'administration de la base.
 
-| ACL Name | ACL definition                             |
+![Slides - 27.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/81babc2465fb48d1b9377b28380a471a.png" | relative_url }})
+
+| Nom ACL  | Définition ACL                             |
 |:---------|:-------------------------------------------|
 | DataRW   | -@all +@hash +@list -@dangerous ~*         |
 | DataRO   | -@all +@hash +@list -@dangerous -@write ~* |
@@ -196,13 +250,12 @@ We can easily identify five distinct ACL : read-write access or read-only access
 | MsgRO    | -@all +@subscribe -@dangerous ~*           |
 | DBAdmin  | -@all +@admin +@dangerous                  |
 
-![Slides - 27.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/81babc2465fb48d1b9377b28380a471a.png" | relative_url }})
-
-The ACLs can be created with the web administration interface
+Ces ACLs peuvent être créées manuellement depuis l'interface web
+d'administration :
 
 ![39a89571a7e5ffc26f5ada0a2930b723.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/2e098537cbe0497e8477cb2f33feb662.png" | relative_url }})
 
-or with REST API calls. I wrote a bash function helper to make them more friendly.
+Ou depuis l'API REST pour automatiser et industrialiser leur gestion :
 
 ```bash
 function ACLCreate {
@@ -238,46 +291,59 @@ ACLCreate "MsgRO"   '-@all +subscribe -@dangerous ~*'
 ACLCreate "DBAdmin" '-@all +@admin +@dangerous'
 ```
 
+Dans les deux cas, le résultat est le même et les ACLs sont créées :
+
 ![809e29ae93fb9b653e80015672449324.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/42d10acfbf124e06951f4d51d4e8f1ce.png" | relative_url }})
 
-## Create the roles
-With these definitions, we can more easily see patterns :
+## Création des rôles
+Il faut maintenant disposer de rôles pour choisir quelle ACL appliquer à quel
+compte sur quelle base. On peut facilement identifier des motifs :
 
-| Account         | Cluster  | Orders DB | Products DB | Messaging DB |
+| Comptes         | Cluster  | Orders    | Products    | Messaging    |
 |:----------------|:---------|:----------|:------------|:-------------|
-| orders-update   | None     | DataRW    | None        | MsgRW        |
-| orders-invoice  | None     | DataRO    | None        | MsgRO        |
-| products-update | None     | None      | DataRW      | MsgRW        |
-| products-stocks | None     | None      | DataRO      | MsgRO        |
-| Angélina        | Full     | DBAdmin   | DBAdmin     | DBAdmin      |
-| Paul            | Database | DataRW    | None        | MsgRW        |
-| Pierre          | Database | None      | DataRW      | MsgRW        |
-| David           | Monitor  | DataRO    | None        | MsgRO        |
-| Denis           | Monitor  | None      | DataRO      | MsgRO        |
+| orders-update   | Aucune   | DataRW    | Aucune      | MsgRW        |
+| orders-invoice  | Aucune   | DataRO    | Aucune      | MsgRO        |
+| products-update | Aucune   | Aucune    | DataRW      | MsgRW        |
+| products-stocks | Aucune   | Aucune    | DataRO      | MsgRO        |
+| Angélina        | Totale   | DBAdmin   | DBAdmin     | DBAdmin      |
+| Paul            | Base     | DataRW    | Aucune      | MsgRW        |
+| Pierre          | Base     | Aucune    | DataRW      | MsgRW        |
+| David           | Superv.  | DataRO    | Aucune      | MsgRO        |
+| Denis           | Superv.  | Aucune    | DataRO      | MsgRO        |
 
-The Redis Enterprise cluster can grant cluster permissions to roles and each Redis Enterprise database can grant specific ACLs to a role. The idea is to create a distinct role per unique permission set, each unique line in the table. Thus, for our simple case, we need to create nine roles, one for each possible combination. A role is an account profile or an account group with the same permissions on the cluster and on the databases.
+Le cluster Redis Enterprise peut accorder des privilèges d'administration aux
+rôles et chaque base du cluster peut accorder les permissions spécifiques d'ACL
+prédéfinies à chaque rôle. L'idée est donc de créer un rôle distinct par jeu de
+permission (cluster+bases) unique, par ligne distincte dans le tableau. Ainsi,
+dans notre simple cas d'exemple, nous avons besoin de neuf rôles, un pour chaque
+combinaison possible. Un rôle est un profile de compte ou un groupe de comptes
+ayant les mêmes permissions et privilèges sur l'administration du cluster, sur
+les bases, sur les commandes exécutables et sur les données accessibles.
 
-| Roles        | Cluster admin. | Orders DB | Products DB | Messaging DB |
+| Roles        | Cluster admin. | Orders    | Products    | Messaging    |
 |:-------------|:---------------|:----------|:------------|:-------------|
-| Orders-RW    | None           | DataRW    | None        | MsgRW        |
-| Orders-RO    | None           | DataRO    | None        | MsgRO        |
-| Products-RW  | None           | None      | DataRW      | MsgRW        |
-| Products-RO  | None           | None      | DataRO      | MsgRO        |
+| Orders-RW    | Aucune         | DataRW    | Aucune      | MsgRW        |
+| Orders-RO    | Aucune         | DataRO    | Aucune      | MsgRO        |
+| Products-RW  | Aucune         | Aucune    | DataRW      | MsgRW        |
+| Products-RO  | Aucune         | Aucune    | DataRO      | MsgRO        |
 | Global-ADM   | Admin          | DBAdmin   | DBAdmin     | DBAdmin      |
-| Orders-PM    | DB-Member      | DataRW    | None        | MsgRW        |
-| Products-PM  | DB-Member      | None      | DataRW      | MsgRW        |
-| Orders-DEV   | DB Viewer      | DataRO    | None        | MsgRO        |
-| Products-DEV | DB-Viewer      | None      | DataRO      | MsgRO        |
+| Orders-PM    | DB-Member      | DataRW    | Aucune      | MsgRW        |
+| Products-PM  | DB-Member      | Aucune    | DataRW      | MsgRW        |
+| Orders-DEV   | DB Viewer      | DataRO    | Aucune      | MsgRO        |
+| Products-DEV | DB-Viewer      | Aucune    | DataRO      | MsgRO        |
+
+Les droits d'administration du cluster étant attachés globalement aux rôles, il
+faut donc les y inclure lors de la conception des droits d'accès et lors de la
+création des rôles.
 
 ![Slides - 37.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c8fcce7107544143aabe8961df5d81f2.png" | relative_url }})
 
-
-
-The cluster permissions are directly and globally assigned to the role, let's create them with the web administration interface first
+Créons donc les rôles, soit dans l'interface web d'administration du cluster
+Redis Enterprise...
 
 ![8a955640a7a961d3711421362b961106.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/4bf886dcade44b0690827960315ed156.png" | relative_url }})
 
-And then with the REST API and an helper function
+Soit grâce à des appels d'API REST pour automatiser leur création...
 
 ```bash
 function RoleCreate {
@@ -317,21 +383,31 @@ RoleCreate "Orders-DEV"   "db_viewer"
 RoleCreate "Products-DEV" "db_viewer"
 ```
 
+On aboutit finalement au même résultat :
+
 ![f6d0f8606349c0d0dae28e813f326d53.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/f8712f703f364c818d541bc2085b738d.png" | relative_url }})
 
-## Map ACLs to roles in each database
+## Relations Rôle-ACL dans les bases
+
+Chaque base de données peut accorder les permissions correspondantes à une ACL
+prédéfinie à chaque compte en fonction de son rôle. Un compte membre du groupe
+*Products-DEV* se verra accorder l'ACL *Msg-RO* sur la base *messaging* et l'ACL
+*Data-RO* sur la base *products*, mais aucune ACL, et donc pas de compte, sur la
+base *orders* :
 
 ![Slides - 46.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c803f2fbde2048a4bf8580475bb6d083.png" | relative_url }})
 
-
-
-The Web administration interface makes some convenience abstractions to map ACLs to Roles for each database under the unified *roles* page. 
+L'interface d'administration web effectue une abstration de confort pour
+associer les ACL à des rôles dans chaque base, à partir de la page d'édition des
+rôles :
 
 ![a45c4d53a879039697f0c106217e962a.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/7a0ab21853824a3aa94ac1fc5379a3eb.png" | relative_url }})
 
-The REST API is operating at a lower level, directly manipulating the role-acl mapping in the database definitions. Let's create the mapping for the *orders* database and remove the default anonymous account access.
+Cependant, l'API REST donne accès au véritable modèle de données interne, sans
+abstraction, et manipule directement les associations Rôle-ACL dans la
+définition des bases. Créons ces associations Rôle-ACL pour la base *orders* :
 
-| Roles        |  Orders DB |
+| Roles        | Orders ACL |
 |:-------------|:-----------|
 | Orders-RW    | DataRW     |
 | Orders-RO    | DataRO     |
@@ -339,7 +415,11 @@ The REST API is operating at a lower level, directly manipulating the role-acl m
 | Orders-PM    | DataRW     |
 | Orders-DEV   | DataRO     |
 
-I define a first bash helper function, to lookup roles and ACLs uid and build the mapping JSON objects, and a second one to apply a configuration change to a database.
+Un premier appel d'API REST permet de trouver l'identifiant interne d'un rôle,
+un autre permet de trouver l'identifiant de l'ACL à y associer, pour construire
+une association au format JSON. Ces associations sont concaténées dans un
+tableau JSON et envoyées dans la configuration de la base par un ultime appel
+d'API.
 
 ```bash
 function RoleACLMap {
@@ -359,17 +439,19 @@ mapping="${mapping},`RoleACLMap Orders-DEV DataRO`"
 DBUpdate "orders" '"roles_permissions":['"$mapping"']'
 ```
 
+On peut le constater dans l'interface web d'administration.
+
 ![0a05afe4012f0d9b0fdcfcdf1da7ff95.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c19061884ba64f80a2f5ac1e71762578.png" | relative_url }})
 
-Let's create the mapping for the *products* database.
+Configurons les associations Role-ACL pour la base *products* :
 
-| Roles        | Products DB |
-|:-------------|:------------|
-| Products-RW  | DataRW      |
-| Products-RO  | DataRO      |
-| Global-ADM   | DBAdmin     |
-| Products-PM  | DataRW      |
-| Products-DEV | DataRO      |
+| Roles        | Products ACL |
+|:-------------|:-------------|
+| Products-RW  | DataRW       |
+| Products-RO  | DataRO       |
+| Global-ADM   | DBAdmin      |
+| Products-PM  | DataRW       |
+| Products-DEV | DataRO       |
 
 ```bash
 mapping="`RoleACLMap Products-RW DataRW`"
@@ -382,19 +464,19 @@ DBUpdate "products" '"roles_permissions":['"$mapping"']'
 
 ![9d9fb4315c0981f9e33f0f499c3ed6db.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/f6da6dc537a449ad805d3bcefcf60214.png" | relative_url }})
 
-And finally, define the mappings for the messaging database.
+Et finalement pour la base *messaging* :
 
-| Roles        | Messaging DB |
-|:-------------|:-------------|
-| Orders-RW    | MsgRW        |
-| Orders-RO    | MsgRO        |
-| Products-RW  | MsgRW        |
-| Products-RO  | MsgRO        |
-| Global-ADM   | DBAdmin      |
-| Orders-PM    | MsgRW        |
-| Products-PM  | MsgRW        |
-| Orders-DEV   | MsgRO        |
-| Products-DEV | MsgRO        |
+| Roles        | Messaging ACL  |
+|:-------------|:--------------|
+| Orders-RW    | MsgRW         |
+| Orders-RO    | MsgRO         |
+| Products-RW  | MsgRW         |
+| Products-RO  | MsgRO         |
+| Global-ADM   | DBAdmin       |
+| Orders-PM    | MsgRW         |
+| Products-PM  | MsgRW         |
+| Orders-DEV   | MsgRO         |
+| Products-DEV | MsgRO         |
 
 ```bash
 mapping="`RoleACLMap Orders-RW MsgRW`"
@@ -411,10 +493,17 @@ DBUpdate "messaging" '"roles_permissions":['"$mapping"']'
 
 ![5f0c5224dd81579a23eac4c0e52d7622.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6fb6ef7283ba425d9a763c942b97fbc0.png" | relative_url }})
 
-## Disable default anonymous account
-Ok, now that we defined restricted permissions, we need to disable the default anonymous account in each database.
+## Invalidation du compte anonyme par défaut
+Ok, nous avons défini les ACLs et les rôles, nous avons accordé des permissions
+(ACL) aux différents rôles dans chaque base, il faut éviter qu'un compte
+n'appartenant pas à un rôle déclaré dans une base, un compte non créé dans la
+base par le cluster Redis Enterprise, se voit accordé les permissions du compte
+anonyme par défaut. Il faut donc désactiver ce compte anonyme dans chaque base,
+soit à travers l'interface web :
 
 ![395f482c6dcde00f8a59558589dea532.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6ed55c8bb42e47029c419b3979889745.png" | relative_url }})
+
+Soit par des appels d'API REST :
 
 ```bash
 DBUpdate "orders" '"default_user": false'
@@ -422,17 +511,14 @@ DBUpdate "products" '"default_user": false'
 DBUpdate "messaging" '"default_user": false'
 ```
 
-## Assign a roles to each account
-So, we defined 
-- a read-only application role,
-- a read-write application role,
-- a read-ony with limited admin permission developer role,
-- a read-write product manager role
-on the needed database for each microservice and a global administrator only role.
+## Affectation des rôles aux comptes
+Nous avons donc défini des ACL, des rôles, les ACLs accordées aux comptes
+appartenant aux rôles dans les bases, pour chaque cas d'utilisation possible.
 
-Lets assign roles to the accounts :
+Il nous reste à assigner un rôle à chaque compte, pour qu'il bénéficie des ACLs
+accordées à son rôle dans chaque base :
 
-| Account         | Role         |
+| Compte          | Role         |
 |:----------------|:-------------|
 | orders-update   | Orders-RW    |
 | orders-invoice  | Orders-RO    |
@@ -444,9 +530,17 @@ Lets assign roles to the accounts :
 | David           | Orders-DEV   |
 | Denis           | Products-DEV |
 
+Par exemple, le compte *Denis* dispose du rôle *Products-DEV* et aura donc l'ACL
+*DataRO* sur la base *products* et l'ACL *Msg-RO* sur la base *messaging*, ce
+qui correspond au besoin exprimé initialement.
+
 ![Slides - 55.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/1c8e390d70884e1fb797ba3da16d5b34.png" | relative_url }})
 
+On peut faire cette association compte-rôle dans l'interface web, bien sûr :
+
 ![077ef01dcf688381e38dafbb78d57c96.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/d92d6d91f6ee430bbdc64741e5741064.png" | relative_url }})
+
+Ou grâce à l'API REST, si on souhaite automatiser :
 
 ```bash
 function UserSetRole {
@@ -467,11 +561,18 @@ UserSetRole "David" "Orders-DEV"
 UserSetRole "Denis" "Products-DEV"
 ```
 
+Au final, le résultat sera identique :
+
 ![92f044d3fd65d8913a40db2ef937c635.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/91b2ee3c797d4955ae1fea2d7a90fa32.png" | relative_url }})
+
+Et les bases seront configurées correctement :
+
 ![6e3439daadf1b1b4888ce041d164ca9d.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6ba50c6b5e4541689ecc0222c03c887b.png" | relative_url }})
 
-# Permissions tests
-I wrote a script to test a set of meaningful commands with each account on each database. 
+# Test des permissions
+J'ai écrit rapidement un script pour tester automatiquement les principales
+commandes autorisables et celles supposées interdites, par chaque compte dans
+chaque base.
 
 ```bash
 cat << "EOF" > RBAC-tests.sh
@@ -533,66 +634,98 @@ chmod +x RBAC-tests.sh
 ./RBAC-tests.sh
 ```
 
-For *orders-update*
+Le résultat pour le compte *orders-update* sur les différentes bases est :
 ![66ed1a36882f850e4769c9c66f1e54b8.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6c237af6bc414f9fae13cea181372a4e.png" | relative_url }})
 
-For *orders-invoice*
+puis pour *orders-invoice* :
 ![b16b1b38b04b311c2a79eb3b385181e8.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/66581cbe080044fda397887dc1e5ecd9.png" | relative_url }})
 
-and so on, you can execute it yourself with the code available in my blog or zoom on my results.
+Et ainsi de suite. On constate que les permissions initialement définies sont
+bien implémentées et appliquées aux différents comptes sur les différentes
+bases.
 
-# Permissions maintenance
-We initialized the projects, but things can change.
 
-## A new employee joins
-A new developer, Didier, joins the orders team.
+# Maintenance des permissions
+Après la phase de mise en place et d'initialisation des projets, les choses
+peuvent changer.
+
+## Arrivée d'un développeur
+Un nouveau développeur, Didier, rejoint l'équipe de développement du projet
+*orders*. 
 
 ![Slides - 56.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/702e407f3f71433a8ecaf303049c4c0a.png" | relative_url }})
 
-We only have to give him the *Orders-DEV* role and he will have the appropriate permissions on the cluster and the data.
+Il n'y a pas besoin de créer son compte dans les bases *orders* et *messaging*,
+puis de lui accorder des permissions spécifiques... Il suffit de lui attribuer
+le rôle *Orders-DEV* et le cluster Redis Enterprise se chargera du reste.
 
 ```bash
 UserCreate "Didier" "Didier@example.org" "Didier"
 UserSetRole "Didier" "Orders-DEV"
 ```
 
-## A developer switches to another team
-The existing developer, David, moves to the products team.
+## Changement de projet
+Un développeur existant, David, est retiré du projet *orders* pour se trouver
+affecter au projet *products*. 
 
 ![Slides - 57.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/e7d208a5788c450eb16255d53b9b8cab.png" | relative_url }})
 
-
-We only have to change his role, and he will no longer have his previous permissions, but only the new permissions.
+Encore une fois, il est inutile de parcourir les différentes bases pour l'en
+retirer, puis d'ajouter son compte et les permissions du projet *products* dans
+les bases *products* et *messaging*. Il suffit de changer son rattachement pour
+lui affecter le rôle *Products-DEV* :
 
 ```bash
 UserSetRole "David" "Products-DEV"
 ```
 
-## An employee leaves
-A developer, Denis, leaves the company.
+## Départ d'un développeur
+Un développeur, Denis, quitte le projet ou l'entreprise, que ce soit parce qu'il
+démissionne ou qu'il était consultant externe ou stagiaire.
 
 ![Slides - 58.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/33de59415b6c47fabb3f57644c4eea0b.png" | relative_url }})
 
-We only have to delete or disable this accounts.
+Il suffit de désactiver ou de supprimer son compte, le cluster Redis Enterprise
+s'occupera de supprimer son compte, mot de passe et ACL de toutes les bases où
+il avait été déclaré grâce à son rôle *Products-DEV*. Aucun risque d'erreur ou
+de permissions fantômes.
+
 ```bash
 UserDelete "Denis"
 ```
 
-## Access to new structures
-Streams usage needed in messaging DB.
+## Modification d'un projet
+Désormais, les fonctionalités de bus de communication entre les microservices
+nécessite l'utilisation des structures de données Streams de Redis. Il faut donc
+autoriser l'utilisation des commandes liées aux Streams.
 
 ![Slides - 59.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/3bf90d9456944ecf9bb8c69ff939eabc.png" | relative_url }})
 
-The messaging features need to use *streams* commands, from now, we only have to update the *Msg-RO* and *Msg-RW* ACLs.
+Pour cela, il suffit de mettre à jour les deux ACLs reflétant les permission de
+lecture-seule *Msg-RO* et de lecture-écriture *Msg-RW* pour l'usage des
+messages. Ces ACL sont accordées par les rôles à qui en a besoin, sur la base
+*messaging*.
 
 ```bash
 ACLUpdate "MsgRW"   '-@all +publish +subscribe +@stream -@dangerous ~*'
 ACLUpdate "MsgRO"   '-@all +subscribe +@stream -@write -@dangerous ~*'
 ```
 
-# Wrap-up and LDAP
+Les comptes ayant des rôles accordant ces ACLs seront automatiquement mis à jour
+dans la base *messaging*, sans en oublier aucun et sans erreur.
 
-Applications, developers, project managers and admins are uniquely identified with their own authentication and have specific permissions on the cluster and on the data. My next contents will talk about LDAP to roles mapping, because it is a pain to maintain when new people are hired, when people leave, when people move from one project to another, when people work on several projects...  whereas all these information are already available and maintained up-to-date in the Enterprise LDAP.
+# Conclusion et LDAP
+
+Désormais, les applications, les développeurs, les chefs de projet et les
+administrateurs sont authentifié par un identifiant et un mot de passe personnel
+dans les bases auxquelles ils doivent avoir accès. Par ailleurs, il ne disposent
+que des permissions nécessaires selon leur rôle dans ces bases et dans le
+cluster. Mon prochain article traitera de l'association automatique entre LDAP
+et les rôles. En effet, même si les rôles facilitent et industrialisent la
+gestion des permissions pour éviter les oublis et les erreurs, ils dupliquent
+des informations se trouvant déjà dans l'annuaire LDAP de l'entreprise. Autant
+en bénéficier et refléter les informations du LDAP dans les rôles,
+automatiquement et en temps réel.
 
 # Supports et liens
 
@@ -603,3 +736,4 @@ Applications, developers, project managers and admins are uniquely identified wi
 # Notes de bas de page
 
 [Video]: https://youtu.be/hFKZHZrpusM "Vidéo d'explication et de démonstration"
+[RedisACLs]: {% post_url 2022-05-13-CommentGererSecuriteAccesAuxDonneesEtPermissionsAvecLesACLRedis-fr %} "ACL avec Redis"

@@ -33,10 +33,10 @@ sleep 15
 ```
 
 # Prerequisites
-This contents assume that you already know what are Redis ACL. If you did you watch it previously, I recommend that you watch the Redis ACL contents before this one. If you want to reproduce the following steps by yourself, you need to install *docker*, *curl* and *jq*. The commands are not purely POSIX shell compliant and need some *bash* extensions.
+This contents assume that you already know what are Redis ACL. If you did you watch it previously, I recommend that you watch the [How to manage security, data-access and permissions with Redis ACL][RedisACLs] contents before this one. If you want to reproduce the following steps by yourself, you need to install *docker*, *curl* and *jq*. The commands are not purely POSIX shell compliant and need some *bash* extensions.
 ![8a37ebdcb286aa6ce72cc6da0b92a6e3.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/2a2fa48640b942fe9774a5134706509b.png" | relative_url }})
 
-# What's the problem
+# A security and compliance issue
 Redis is used in nearly every company in the world. The data access control is critical to ensure the data security and to respect the compliance rules such as GDPR. Each incoming connection needs to be authenticated and potentially granted permissions on available databases, commands and data.
 
 Lets imagine that you have three databases :
@@ -325,7 +325,7 @@ The Web administration interface makes some convenience abstractions to map ACLs
 
 ![a45c4d53a879039697f0c106217e962a.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/7a0ab21853824a3aa94ac1fc5379a3eb.png" | relative_url }})
 
-The REST API is operating at a lower level, directly manipulating the role-acl mapping in the database definitions. Let's create the mapping for the *orders* database and remove the default anonymous account access.
+The REST API is operating at a lower level, directly manipulating the role-acl mapping in the database definitions. Let's create the mapping for the *orders* database.
 
 | Roles        |  Orders DB |
 |:-------------|:-----------|
@@ -599,3 +599,4 @@ Applications, developers, project managers and admins are uniquely identified wi
 # Footnotes
 
 [Video]: https://youtu.be/eeJu15azF2Y "Video with explanation and demo"
+[RedisACLs]: {% post_url 2022-05-13-Howtomanagesecuritydataaccessandpermi-en %} "ACL with Redis"
