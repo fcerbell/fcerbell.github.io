@@ -45,21 +45,21 @@ Lets imagine that you have three databases :
 - a *products* database to store the product catalog and the product availability in stocks ;
 - a *messaging* database used as a message bus to communicate between all microservices with Redis PubSub.
 
-Two microservices :
-- One microservice to manage orders in the *orders* database, with two endpoints : *orders-update* to create and update orders (read-write), and *orders-invoice* to generate invoices (read-only), they also need a read-write and read-only access to the messaging database.
+Two microservices, each with two endpoints :
+- One microservice to manage orders in the *orders* database, with : the *orders-update* endpoint to create and update orders (read-write), and the *orders-invoice* endpoint to generate invoices (read-only), they also need a read-write and read-only access to the messaging database.
 - The other microservice to manage the product catalog with two endpoints, *products-update* to update products and *products-stocks* to check a product availability. They also need a read-write and a read-only access to the messaging database.
 
 There are also people :
 - one administrator, *Angélina* who should not access the data
-- two project managers, *Paul* for the orders management, and *Pierre* for the product catalog. They need to access the logs, the database configuration, the monitoring and to change their projects data.
-- one developer *David*, working both on the *orders* project microservice and on the *products* microservice, and one developer *Denis*, working on the *products* project microservice only. Each of them need a limited access to the monitoring and to read data from the database, and they both need to see the messages in the *messaging* database.
+- two project managers, *Paul* for the orders management, and *Pierre* for the product catalog. They need to access the logs, the database configuration, the monitoring and to change their projects data. They also need a read-write access to the message bus, the *messaging* database.
+- one developer *David*, working on the *orders* project microservice only, and one developer *Denis*, working on the *products* project microservice only. Each of them need a limited access to the monitoring, a read-only access to their own database only and a subscribe-only (read-only) access to the messages in the *messaging* database.
 
 This is a fairly simple example compared to real enterprise needs. The permissions are easy to implement, but not to scale if you have several projects, several profiles such as developers, managers, architects, administrators, and several databases. Security with ACL administration quickly becomes a nightmare and needs to be industrialized and automated. Lets see how Redis Enterprise manage this example.
 
 # Simple Redis ACLs limits
 Despite Redis is widely known and used by developers as a database, the security belongs to Ops who are not always aware of the security features. Since version 6, Redis includes authentication by username and data access authorizations with Access Control Lists (ACL). 
 
-Ok, lets have a look at their needed permissions, on the cluster and databases. We potentially need to create the users in each database.
+Ok, lets have a look at their needed permissions, on the cluster and databases. We will potentially need to create the users in each database.
 
 | Account         | Cluster  | Orders DB                                  | Products DB                                | Messaging DB                               |
 |:----------------|:---------|:-------------------------------------------|:-------------------------------------------|:-------------------------------------------|
@@ -75,12 +75,12 @@ Ok, lets have a look at their needed permissions, on the cluster and databases. 
 
 ![Slides - 11.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/fc3c0eaa42084fcb8a56b7ff628e3cc0.png" | relative_url }})
 
-You would have to connect to each database, create all the accounts with a password, then to create the ACLs individually. a project needs to change the ACL, it needs to be changed for all the relevant users in each database, individually. What a pain to maintain when a new developer join or leave one or several projects, when new projects are created, when projects need access to different datastructures ... Let's try to factorize these. 
+You would have to connect to each database, create all the accounts with a password, then to create the ACLs individually. If a project has any change, it needs to change the ACL definitions for all the relevant users in each database, individually. What a pain to maintain when a new developer join or leave one or several projects, when new projects are created, when projects need access to different datastructures ... Let's try to factorize these. 
 
 # Implementing roles with Redis Enterprise
 On top of ACLs, Redis Enterprise implemented TLS mutual authentication and Roles Based Access Control (RBAC) to make the ACL management more efficient and more scalable with multiple databases. What are the best practices on how to implement authentication, ACLs and roles in Redis Enterprise, and what can be easily achieved with them ?
 
-Redis Enterprise Roles can be compared to groups or profiles. A role grants permissions globally on the Redis enterprise cluster and apply specific ACLs on each database. It creates the accounts and configure the ACL automatically in each relevant database.
+Redis Enterprise Roles can be compared to groups or profiles. A role grants permissions globally on the Redis enterprise cluster administration and apply specific ACLs on each database. It automatically creates the accounts, configure the ACL and maintain everything up-to-date in each relevant database.
 
 ## Create databases
 You can create them with the web admin interface
@@ -128,17 +128,24 @@ DBCreate orders 102400 '"port":12000'
 DBCreate products 102400 '"port":12001'
 DBCreate messaging 102400 '"port":12002'
 ```
+
 ![0105ea156ea70f059d4b5fa1cdd1c09f.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/699b2f4706a441f283e20a3acda0cc77.png" | relative_url }})
+
+The final result is the same and all the databases are successfully created :
 
 ![4a40e838816d27249fe710aafb86a5eb.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/deee53833c1e495298fc5b2f2573cc8d.png" | relative_url }})
 
 ## Create the accounts
+
+Then, we need to create all the accounts for the endpoints and for the users. We create them in the cluster and the cluster will automatically maintain a copy of them in the relevant databases.
 
 ![Slides - 21.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c4ccd935d0e34c77ba1a1724acb7da67.png" | relative_url }})
 
 The accounts can be created with the web interface
 
 ![042a8e64dd6614bb6e49cda533d47d3c.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/bf77c709def54075893f98fac7c9cb93.png" | relative_url }})
+
+Or with the REST API, to industrialize the creation and automate it.
 
 ```bash
 function UserCreate {
@@ -182,10 +189,12 @@ done
 
 ![35fd63152d9c443af3f9feea097d8774.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/7f38a122aff04a848a4968501a6daf64.png" | relative_url }})
 
+At the end, the result is the same and all the accounts are created in the cluster :
+
 ![7c54e3641f547d765a48d8a78c43132f.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/67e9b5f97c254476bdb0e756e082aa8c.png" | relative_url }})
 
 ## Create the ACL
-We can easily identify five distinct ACL : read-write access or read-only access to data, publish-subscribe or subscribe-only access to channels, and database administration.
+We have to define these ACLs in the cluster. They will be some sort of ACL templates to apply tu users in specific databases, depending on the granted roles. So, we need to find all the possible ACL to apply and define them in the cluster.  We can easily identify five distinct ACL : read-write access or read-only access to data, publish-subscribe or subscribe-only access to channels, and database administration.
 
 | ACL Name | ACL definition                             |
 |:---------|:-------------------------------------------|
@@ -317,6 +326,9 @@ RoleCreate "Products-DEV" "db_viewer"
 ![f6d0f8606349c0d0dae28e813f326d53.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/f8712f703f364c818d541bc2085b738d.png" | relative_url }})
 
 ## Map ACLs to roles in each database
+Then, in each database, we have to define if a specific ACL template should be
+applied to the members of specific roles. Let's start with the *orders*
+database.
 
 ![Slides - 46.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c803f2fbde2048a4bf8580475bb6d083.png" | relative_url }})
 
@@ -353,6 +365,8 @@ mapping="${mapping},`RoleACLMap Orders-PM DataRW`"
 mapping="${mapping},`RoleACLMap Orders-DEV DataRO`"
 DBUpdate "orders" '"roles_permissions":['"$mapping"']'
 ```
+
+We can check the result in the web interface.
 
 ![0a05afe4012f0d9b0fdcfcdf1da7ff95.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/c19061884ba64f80a2f5ac1e71762578.png" | relative_url }})
 
@@ -407,9 +421,17 @@ DBUpdate "messaging" '"roles_permissions":['"$mapping"']'
 ![5f0c5224dd81579a23eac4c0e52d7622.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6fb6ef7283ba425d9a763c942b97fbc0.png" | relative_url }})
 
 ## Disable default anonymous account
-Ok, now that we defined restricted permissions, we need to disable the default anonymous account in each database.
+By default, if an authentication idid not occur or fails, because the password
+is wrong or because the account does not exist in the database, the connexion is
+assigned to the default anonymous user, with default *allcommands* on *allkeys*
+permissions. We do not want that. we defined restricted permissions, we need to
+disable the default anonymous account in each database.
+
+Either from the web administration interface :
 
 ![395f482c6dcde00f8a59558589dea532.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/6ed55c8bb42e47029c419b3979889745.png" | relative_url }})
+
+Or with the REST API.
 
 ```bash
 DBUpdate "orders" '"default_user": false'
@@ -418,7 +440,7 @@ DBUpdate "messaging" '"default_user": false'
 ```
 
 ## Assign a roles to each account
-So, we defined 
+So, for each project, we defined 
 - a read-only application role,
 - a read-write application role,
 - a read-ony with limited admin permission developer role,
@@ -441,7 +463,11 @@ Lets assign roles to the accounts :
 
 ![Slides - 55.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/1c8e390d70884e1fb797ba3da16d5b34.png" | relative_url }})
 
+Once again, either from the web administration interface :
+
 ![077ef01dcf688381e38dafbb78d57c96.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/d92d6d91f6ee430bbdc64741e5741064.png" | relative_url }})
+
+Or with the REST API :
 
 ```bash
 function UserSetRole {
@@ -537,10 +563,10 @@ For *orders-invoice*
 
 ![b16b1b38b04b311c2a79eb3b385181e8.png](../{{ "/assets/posts/en/BlogVlogApprendreRedisAvecFrançois5minutes10HowtomanageRBACsecuritywithACLandRole/66581cbe080044fda397887dc1e5ecd9.png" | relative_url }})
 
-and so on, you can execute it yourself with the code available in my blog or zoom on my results.
+and so on, you can execute it yourself with the code available in my blog or zoom on my results in the [Video].
 
 # Permissions maintenance
-We initialized the projects, but things can change.
+We initialized the projects, but things can change over the time.
 
 ## A new employee joins
 A new developer, Didier, joins the orders team.
