@@ -132,6 +132,7 @@ cat <<EOF >> /etc/iptables/rules.v4
 
 -N SSH
 -A SSH -p tcp --dport 22 --tcp-flags FIN,SYN,RST,ACK SYN -j ACCEPT
+EOF
 ```
 
 The server is not a time server, but it needs to be a time client to synchronize his own clock. Thus I created an NTP rule to add to the OUTPUT chain.
@@ -191,7 +192,7 @@ I also preconfigure the forwarding rules if the server has multiple interfaces a
 ```bash
 cat <<EOF >> /etc/iptables/rules.v4
 -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A FORWARD -m limit --limit 10\/min -j LOG --log-prefix "[FORWARD] "
+-A FORWARD -m limit --limit 10/min -j LOG --log-prefix "[FORWARD] "
 COMMIT
 EOF
 ```

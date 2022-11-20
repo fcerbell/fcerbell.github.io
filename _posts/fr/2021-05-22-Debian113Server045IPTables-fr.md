@@ -161,6 +161,7 @@ cat <<EOF >> /etc/iptables/rules.v4
 
 -N SSH
 -A SSH -p tcp --dport 22 --tcp-flags FIN,SYN,RST,ACK SYN -j ACCEPT
+EOF
 ```
 
 Le serveur n'est pas (encore) un serveur d'horloge (NTP), mais il doit pouvoir être un client pour synchroniser sa propre horloge.
@@ -234,7 +235,7 @@ Cela servira dans le cas d'un serveur à plusieurs interfaces servant de routeur
 ```bash
 cat <<EOF >> /etc/iptables/rules.v4
 -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A FORWARD -m limit --limit 10\/min -j LOG --log-prefix "[FORWARD] "
+-A FORWARD -m limit --limit 10/min -j LOG --log-prefix "[FORWARD] "
 COMMIT
 EOF
 ```
