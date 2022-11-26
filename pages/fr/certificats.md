@@ -17,7 +17,7 @@ Voici les différentes possibilités :</p>
 
 <p>Voici l'unique fichier à ajouter à votre navigateur <em>avec l'autorisation
 de certifier tout type de service</em> (email, utilisateur, site web, ...) :<a
-href="{{ "/assets/pages/CERBELLE_SSL-cachain.pem" | relative_url }}">CERBELLE_SSL-cachain.pem</a></p>
+href="{{ "/assets/pages/cerbelle-cachain.pem" | relative_url }}">cerbelle-cachain.pem</a></p>
 
 <h3>Importer les certificats de mes deux CA</h3>
 
@@ -25,7 +25,7 @@ href="{{ "/assets/pages/CERBELLE_SSL-cachain.pem" | relative_url }}">CERBELLE_SS
 chaine, soit en format DER, soit au format PEM, en fonction de votre
 navigateur.<br/>
     <ul>
-        <li>CERBELLE_ROOT : <a href="{{ "/assets/pages/CERBELLE_ROOT-cacert.pem" | relative_url }}">PEM</a> ou <a href="{{ "/assets/pages/CERBELLE_ROOT-cacert.der" | relative_url }}">DER</a></li>
-        <li>CERBELLE_SSL : <a href="{{ "/assets/pages/CERBELLE_SSL-cacert.pem" | relative_url }}">PEM</a> ou <a href="{{ "/assets/pages/CERBELLE_SSL-cacert.der" | relative_url }}">DER</a></li>
+        <li>cerbelle-root <a href="{{ "/assets/pages/cerbelle-root.crt" | relative_url }}">PEM</a></li>
+        <li>cerbelle-servers <a href="{{ "/assets/pages/cerbelle-servers.crt" | relative_url }}">PEM</a></li>
     </ul>
 </p>

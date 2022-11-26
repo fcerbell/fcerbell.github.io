@@ -16,14 +16,14 @@ Here are the different options</p>
 
 <p>Here is the single file to add to your browser <em>with the ability to
 certify every kind of service</em> (user, email, websites, ...) : <a
-href="{{ "/assets/pages/CERBELLE_SSL-cachain.pem" | relative_url }}">CERBELLE_SSL-cachain.pem</a></p>
+href="{{ "/assets/pages/cerbelle-cachain.pem" | relative_url }}">cerbelle-cachain.pem</a></p>
 
 <h3>Import the two CA certificates</h3>
 
 <p>You can also import each of the two certificates contained in the chain,
 either in the DER or PEM format depending on your browser.<br/>
     <ul>
-        <li>CERBELLE_ROOT in <a href="{{ "/assets/pages/CERBELLE_ROOT-cacert.pem" | relative_url }}">PEM</a> or in <a href="{{ "/assets/pages/CERBELLE_ROOT-cacert.der" | relative_url }}">DER</a></li>
-        <li>CERBELLE_SSL in <a href="{{ "/assets/pages/CERBELLE_SSL-cacert.pem" | relative_url }}">PEM</a> or in <a href="{{ "/assets/pages/CERBELLE_SSL-cacert.der" | relative_url }}">DER</a></li>
+        <li>cerbelle-root in <a href="{{ "/assets/pages/cerbelle-root.crt" | relative_url }}">PEM</a></li>
+        <li>cerbelle-servers in <a href="{{ "/assets/pages/cerbelle-servers.crt" | relative_url }}">PEM</a></li>
     </ul>
 </p>
