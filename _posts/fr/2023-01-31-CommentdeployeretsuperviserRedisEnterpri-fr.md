@@ -3,7 +3,7 @@ uid: HowToDeployAndMonitorREAndAppWithOperatorInAKS
 title: Redis 11 - Comment déployer et superviser Redis Enterprise et une application avec l'opérateur dans AKS
 description: Nous allons voir comment déployer et superviser un cluster Redis Enterprise, des bases Redis et une application dans Azure Kubernetes Services (AKS), à l'aide de l'opérateur Redis pour Kubernetes (K8S), Prometheus et Grafana.
 category: Redis en 5 minutes
-tags: [ Redis, Azure, Kubernetes Services, AKS, K8S, Opérateur, Prometheus, Grafana, Conteneur, Docker, DockerHub, Superviser ]
+tags: [ Redis, Azure, Azure Kubernetes Services, AKS, K8S, Opérateur, Prometheus, Grafana, Conteneur, Docker, DockerHub, Superviser ]
 date: 2023-01-31 19:11:20 +01:00
 published: true
 ---
