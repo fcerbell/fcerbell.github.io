@@ -25,6 +25,6 @@ either in the DER or PEM format depending on your browser.<br/>
     <ul>
         <li>cerbelle-root <a href="{{ "/assets/pages/cerbelle-root.crt" | relative_url }}">PEM</a></li>
         <li>cerbelle-servers <a href="{{ "/assets/pages/cerbelle-servers.crt" | relative_url }}">PEM</a></li>
-        <li>sd-102086.dedibox.fr <a href="{{ "/assets/pages/sd-102086.dedibox.fr.crt" | relative_url }}">PEM</a></li>
+        <li>sd-151102.dedibox.fr <a href="{{ "/assets/pages/sd-151102.dedibox.fr.crt" | relative_url }}">PEM</a></li>
     </ul>
 </p>
