@@ -42,8 +42,13 @@ fi
 echo ${JOPLINFILE}
 
 echo -n "Page UID generation (Francois specific)..."
-JEKYLLUID=`echo "${JOPLINPATH}${JOPLINFILE}" | sed 's~[-_ ,]~~g;s~/\([[:digit:]]*\)[- ]*~\1~g;s~^\([-[:alnum:]]\+\).*~\1~'`
-JEKYLLUID=`echo "${JEKYLLUID}" | sed 's~^Installation~Debian11~'`
+#JEKYLLUID=`echo "${JOPLINPATH}${JOPLINFILE}" | sed 's~[-_ ,]~~g;s~/\([[:digit:]]*\)[- ]*~\1~g;s~^\([-[:alnum:]]\+\).*~\1~'`
+#JEKYLLUID=`echo "${JEKYLLUID}" | sed 's~^Installation~Debian11~'`
+JEKYLLUID=`cat "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}" | head -n 15 | grep '^uid:' | sed 's/^uid: *//'`
+if [ x"${JEKYLLUID}" == x ]; then
+    echo "uid not found in the Joplin file"
+    exit 3
+fi
 echo "${JEKYLLUID}"
 
 echo -n "Page title generation (Francois specific)..."
@@ -88,17 +93,19 @@ echo "${JEKYLLASSETS}"
 
 echo -n "Converting ${JOPLINBASE}${JOPLINPATH}${JOPLINFILE} to ${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}... "
 cat << EOF > "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
----
-uid: ${JEKYLLUID}
-title: ${JEKYLLTITLE}
-description: 
-category: Computers
-tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
-date: `date +"%F %T %:z"`
-published: true
----
 EOF
-tail -n +2 "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}" | sed 's~^\[toc\]~* TOC\n{:toc}~;s~{{~{% raw %}{{{% endraw %}~g' >> "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
+#---
+#uid: ${JEKYLLUID}
+#title: ${JEKYLLTITLE}
+#description: 
+#category: Computers
+#tags: [ GNU Linux, Linux, Debian, Debian 10, Debian 11, Buster, Bullseye, Server, Installation ]
+#date: `date +"%F %T %:z"`
+#published: true
+#---
+#EOF
+#tail -n +2 "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}" | sed 's~^\[toc\]~* TOC\n{:toc}~;s~{{~{% raw %}{{{% endraw %}~g' >> "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
+cat "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}" | sed 's~^\[toc\]~* TOC\n{:toc}~;s~{{~{% raw %}{{{% endraw %}~g' >> "${JEKYLLBASE}${JEKYLLPATH}${JEKYLLFILE}"
 #rm "${JOPLINBASE}${JOPLINPATH}${JOPLINFILE}"
 echo OK
 
